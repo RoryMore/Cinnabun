@@ -5,7 +5,6 @@ using UnityEngine;
 public class Camera : MonoBehaviour
 {
     public Transform focusTransform;
-    //Transform focus = null;
 
     [Header("Speed")]
     float xSpeed = 60.0f;
@@ -69,7 +68,6 @@ public class Camera : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             xAngle += Input.GetAxis("Mouse X") * xSpeed * mouseXSens * Time.unscaledDeltaTime * (invertMouseXAxis ? -1.0f : 1.0f);
-            //y += Input.GetAxis("Mouse Y") * ySpeed * Time.unscaledDeltaTime; // We aren't allowed to change our angle
 
             // If there is any object obstructing vision from the Camera to Focused Transform
             if (Physics.Linecast(focusTransform.position, transform.position, out RaycastHit hit))

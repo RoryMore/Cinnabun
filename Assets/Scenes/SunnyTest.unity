@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   focusTransform: {fileID: 712509007}
-  positionLerpSpeed: 0.2
+  lerpSpeed: 0.2
   minDistance: 10
   maxDistance: 100
   targetDistance: 25
