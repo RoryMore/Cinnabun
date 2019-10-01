@@ -33,6 +33,8 @@ public class SkillData : ScriptableObject
 
     [Tooltip("The time (in seconds) it will take to cast the skill before it does any effect")]
     public float windUp;
+    [HideInInspector]
+    public float timeSpentOnWindUp = 0;
 
     [Tooltip("The 'shape' that this skill will be.\n Radial: Uses Angle and Range values to determine the area from a point it will affect.\n Line: Uses Width and Range values to determine the area from a point it will affect.")]
     public SkillShape shape;
