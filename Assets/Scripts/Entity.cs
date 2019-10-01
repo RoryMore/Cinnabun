@@ -22,6 +22,8 @@ public class Entity : MonoBehaviour
     //Attributes
     public int level;
     public int experience;
+    [SerializeField] int xpToNextLevel;
+    int[] levelBrackets;
 
     public int strength;
     public int aglility;
@@ -41,30 +43,64 @@ public class Entity : MonoBehaviour
     [SerializeField] int physDamageReduction;
     [SerializeField] int magDamageReduction;
 
+    //Condition Immunities
+    public bool cannotBeTeleported;
 
 
     // Start is called before the first frame update
     void Start()
     {
         currentConditions = new List<Condition>();
+        //Make level brackets accurate
+        levelBrackets = new int[9];
+        levelBrackets[0] = 0;
+        levelBrackets[1] = 100;
+        levelBrackets[2] = 250;
+        levelBrackets[3] = 600;
+        levelBrackets[4] = 1350;
+        levelBrackets[5] = 2900;
+        levelBrackets[6] = 6050;
+        levelBrackets[7] = 16000;
+        levelBrackets[8] = 32350;
+        levelBrackets[9] = 65100;
 
-        Condition delayedBlastTest = new Condition();
-        delayedBlastTest.duration = 5.0f;
-        delayedBlastTest.conditionType = ConditionType.DELAYEDBLAST;
-
-        currentConditions.Add(delayedBlastTest);
 
         CalculateMaxHP();
         CalculateMovementSpeed();
         CalculateDodgeChance();
         CalculateMagDamagePotential();
         CalculatePhysDamagePotential();
+
+
+        //How you give a condition
+        //Condition delayedBlastTest = new Condition();
+        //delayedBlastTest.duration = 5.0f;
+        //delayedBlastTest.conditionType = ConditionType.DELAYEDBLAST;
+
+        //currentConditions.Add(delayedBlastTest);
     }
 
     // Update is called once per frame
     void Update()
     {
         UpdateAllConditions();
+    }
+
+     void GiveExperience(int value)
+    {
+        experience += value;
+        if (experience <= levelBrackets[level])
+        {
+            //You leveled up!
+            level++;
+
+            CalculateMaxHP();
+            CalculateMovementSpeed();
+            CalculateDodgeChance();
+            CalculateMagDamagePotential();
+            CalculatePhysDamagePotential();
+
+        }
     }
 
     void UpdateAllConditions()
@@ -77,10 +113,19 @@ public class Entity : MonoBehaviour
                 //Wait for player input of kaboom
                 //If have condition, detonate and remove condition
 
-                //Debug.Log("You have explosion sickness");
+                
             }
+
+            //At moment of adding condition
+            //timeLeft = condition.duration;
+
+            //timeLeft -= Time.DeltaTime;
+            //if (timeLeft >= 0)
+            //{
+                //remove condition
+           // }
         }
-        
+
     }
 
     void CalculateMaxHP()
