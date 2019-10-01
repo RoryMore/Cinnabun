@@ -26,7 +26,7 @@ public class Entity : MonoBehaviour
     int[] levelBrackets;
 
     public int strength;
-    public int aglility;
+    public int agility;
     public int constitution;
     public int intellect;
     public int physicalArmour;
@@ -89,7 +89,7 @@ public class Entity : MonoBehaviour
      void GiveExperience(int value)
     {
         experience += value;
-        if (experience <= levelBrackets[level])
+        if (experience >= levelBrackets[level])
         {
             //You leveled up!
             level++;
@@ -135,7 +135,7 @@ public class Entity : MonoBehaviour
 
     void CalculateMovementSpeed()
     {
-        movementSpeed = aglility;
+        movementSpeed = agility;
     }
 
     void CalculateDodgeChance()
