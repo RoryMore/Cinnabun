@@ -28,6 +28,8 @@ public class SkillData : ScriptableObject
 
     [Tooltip("The time (in seconds) that needs to pass before the player is able to cast this skill again")]
     public float cooldown;
+    [HideInInspector]
+    public float timeBeenOnCooldown = 0;
 
     [Tooltip("The time (in seconds) it will take to cast the skill before it does any effect")]
     public float windUp;
@@ -51,9 +53,45 @@ public class SkillData : ScriptableObject
     [Tooltip("Whether this skill deals Physical or Magical damage")]
     public DamageType damageType;
 
-    // Add access to functions that are of return type bool
-    // These functions will calculate if a given objects position, if they are inside an area based on a Mesh for Line skills,
-    // and area derived from angles and positions for Radial skills
-    // Function parameter for Line skill damage check will require a mesh, and objects position
-    // Check in other prototype if any parameters besides objects position is required for radial skill damage check
+    public bool CheckLineSkillHit(Vector3 hitCheckPosition, Mesh lineIndicatorMesh)
+    {
+        // This checks if the x & z values are within the bounds of the rectangular mesh -> Returns true if hit, false if not
+        // Can add additional checks for y component of position if necessary to add to make height checks relevant
+        Vector3 meshYPosition = new Vector3(hitCheckPosition.x, lineIndicatorMesh.bounds.center.y, hitCheckPosition.z);
+        if (lineIndicatorMesh.bounds.Contains(meshYPosition))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool CheckRadialSkillHit(Vector3 hitCheckPosition, Transform zoneStart)
+    {
+        // Based on zoneStart (where the radial skill area is starting from with a given rotation) and the position we are checking
+        // Returns whether hitCheckPosition is within the arc area of the radial skill
+        // Note: zoneStart is equivelent to the zoneStart parameter used for the radial skill indicator
+        float forwardAngle = 90 - Mathf.Rad2Deg * Mathf.Atan2(zoneStart.forward.z, zoneStart.forward.x);
+
+        float positionAngle = Vector3.Angle(hitCheckPosition - zoneStart.position, zoneStart.forward);
+        float distance = Vector3.Distance(hitCheckPosition, zoneStart.position);
+
+        if (positionAngle <= angle)
+        {
+            if (distance <= range)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
