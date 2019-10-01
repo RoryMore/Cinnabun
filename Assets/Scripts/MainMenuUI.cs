@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 public class MainMenuUI : MonoBehaviour
 {
 
-    public Button playButton;
-    public Button quitButton;
+    public GameObject menuButtons;
+    public GameObject credits;
+
 
     void OnClickPlay()
     {
@@ -16,6 +17,17 @@ public class MainMenuUI : MonoBehaviour
     void OnClickQuit()
     {
         Application.Quit();
-        Debug.Log("Game is exiting");
+    }
+
+    public void OnClickCredits()
+    {
+        menuButtons.SetActive(false);
+        credits.SetActive(true);
+    }
+
+    public void OnClickReturn()
+    {
+        menuButtons.SetActive(true);
+        credits.SetActive(false);
     }
 }

@@ -4,10 +4,16 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuUI : MonoBehaviour
 {
-    public Button resumeButton;
-    public Button quitButton;
+
+    GameObject[] pauseObjects;
 
     bool isPaused;
+
+    void Start()
+    {
+        pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
+        hidePaused();
+    }
 
     public void OnClickResume()
     {
@@ -22,9 +28,15 @@ public class PauseMenuUI : MonoBehaviour
 #endif
     }
 
+    public void OnClickToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
         {
             onPaused();
         }    
@@ -32,12 +44,18 @@ public class PauseMenuUI : MonoBehaviour
 
     public void showPaused()
     {
-
+        foreach (GameObject g in pauseObjects)
+        {
+            g.SetActive(true);
+        }
     }
 
     public void hidePaused()
     {
-
+        foreach (GameObject g in pauseObjects)
+        {
+            g.SetActive(false);
+        }
     }
 
     public void onPaused()
@@ -46,15 +64,13 @@ public class PauseMenuUI : MonoBehaviour
         {
             Time.timeScale = 0;
             isPaused = true;
-            Debug.Log("IsPaused");
-            //showPaused();
+            showPaused();
         }
         else if (isPaused == true)
         {
             Time.timeScale = 1;
-            Debug.Log("IsResumed");
             isPaused = false;
-            //hidePaused();
+            hidePaused();
         }
     }
 }
