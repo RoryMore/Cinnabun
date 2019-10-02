@@ -64,27 +64,14 @@ public class PauseMenuUI : MonoBehaviour
     {       
         if (isPaused == false)
         {
-            Time.timeScale = 0;
             isPaused = true;
             showPaused();
         }
         else if (isPaused == true)
         {
-            isTimeStopped();
             isPaused = false;
             hidePaused();
         }
     }
 
-    void isTimeStopped()
-    {
-        if (pauseAbility.states == PauseAbility.GameStates.TIMESTOP)
-        {
-            Time.timeScale = 0;
-        }
-        else if (pauseAbility.states == PauseAbility.GameStates.PLAY)
-        {
-            Time.timeScale = 1;
-        }
-    }
 }

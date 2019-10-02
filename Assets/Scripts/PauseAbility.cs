@@ -5,12 +5,13 @@ using UnityEngine;
 public class PauseAbility : MonoBehaviour
 {
 
-    int actionsLeft;
+    int actionsLeft = 2;
+    public bool inBattle;
+    bool isTimeStopped;
 
 
     public enum GameStates
     {
-        PAUSED,
         PLAY,
         TIMESTOP
 
@@ -28,27 +29,67 @@ public class PauseAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Time.timeScale);
+        switch (states)
+        {
+            case GameStates.PLAY:
+
+                isTimeStopped = false;
+
+                break;
+
+            case GameStates.TIMESTOP:
+                //this is where the check for how meny actions the player has left and to carry out the unpausing 
+                // and repauseing after an ability is done
+                //also need to add the auto unpause
+
+                if (actionsLeft >= 0)
+                {
+                    isTimeStopped = true;
+                }
+                if (actionsLeft <= 0)
+                {
+                    states = GameStates.PLAY;
+                }
+                break;
+        }
+
         if (!pauseMenu.isPaused)
         {
             TimeStop();
+            checkTime();
         }
+        else if (pauseMenu.isPaused)
+        {
+            Time.timeScale = 0;
+        }
+
     }
 
     void TimeStop()
     {
+        //Add in to check if player is casting an ability, cannot Starttime again until this is complete
         if (Input.GetKeyDown(KeyCode.Space))
+        {    
+          if (states == GameStates.PLAY)
+          {    
+                states = GameStates.TIMESTOP;  
+          }
+          else if (states == GameStates.TIMESTOP)
+          {
+                states = GameStates.PLAY; 
+          }
+        }
+    }
+
+    void checkTime()
+    {
+        if (isTimeStopped == true)
         {
-           if (states != GameStates.TIMESTOP)
-           {
-               Time.timeScale = 0;
-               states = GameStates.TIMESTOP;               
-           }
-           else if (states == GameStates.TIMESTOP)
-           {
-               Time.timeScale = 1;
-               states = GameStates.PLAY;          
-           }
+            Time.timeScale = 0;
+        }
+        else if (isTimeStopped == false)
+        {
+            Time.timeScale = 1;
         }
     }
 
