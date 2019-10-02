@@ -179,15 +179,13 @@ public class Player : Entity
     {
         foreach (SkillData checkedSkill in skillList)
         {
-            switch (checkedSkill.skill)
+            if (checkedSkill.radialRangeIndicator != null)
             {
-                case SkillData.SkillList.TELEPORT:
-                    ExampleSkill temp = checkedSkill as ExampleSkill;
-                    temp.coneRangeIndicator.Init(temp.angle);
-                    break;
-
-                default:
-                    break;
+                checkedSkill.radialRangeIndicator.Init(checkedSkill.angle);
+            }
+            if (checkedSkill.rectangleRangeIndicator != null)
+            {
+                checkedSkill.rectangleRangeIndicator.Init();
             }
         }
     }
