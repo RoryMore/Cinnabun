@@ -31,9 +31,9 @@ public class ExampleSkill : SkillData
 
     // If wanting to draw indicators here without doing it outside the skill
     // This function needs to take in a Transform, otherwise it doesn't need any parameter
-    public void CastSkill(Transform zoneStart)
+    public override void CastSkill(Transform zoneStart)
     {
-        currentlyCasting = true;
+        //currentlyCasting = true;
 
         DrawRangeIndicator(zoneStart);
         float drawPercent = (timeSpentOnWindUp / windUp) * range;
