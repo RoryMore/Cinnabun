@@ -6,12 +6,14 @@ public class PauseMenuUI : MonoBehaviour
 {
 
     GameObject[] pauseObjects;
+    PauseAbility pauseAbility; 
 
-    bool isPaused;
+    public bool isPaused;
 
     void Start()
     {
         pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
+        pauseAbility = FindObjectOfType<PauseAbility>();
         hidePaused();
     }
 
@@ -68,9 +70,21 @@ public class PauseMenuUI : MonoBehaviour
         }
         else if (isPaused == true)
         {
-            Time.timeScale = 1;
+            isTimeStopped();
             isPaused = false;
             hidePaused();
+        }
+    }
+
+    void isTimeStopped()
+    {
+        if (pauseAbility.states == PauseAbility.GameStates.TIMESTOP)
+        {
+            Time.timeScale = 0;
+        }
+        else if (pauseAbility.states == PauseAbility.GameStates.PLAY)
+        {
+            Time.timeScale = 1;
         }
     }
 }

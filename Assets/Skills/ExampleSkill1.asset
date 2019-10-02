@@ -23,3 +23,5 @@ MonoBehaviour:
   skill: 0
   baseDamage: 0
   damageType: 0
+  currentlyCasting: 0
+  coneRangeIndicator: {fileID: 11400000, guid: b8da115666470a546a828be906872698, type: 2}
