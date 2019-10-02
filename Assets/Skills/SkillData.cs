@@ -29,7 +29,7 @@ public class SkillData : ScriptableObject
     [Tooltip("The time (in seconds) that needs to pass before the player is able to cast this skill again")]
     public float cooldown;
     [HideInInspector]
-    public float timeBeenOnCooldown = 0;
+    public float timeBeenOnCooldown = 10.0f;
 
     [Tooltip("The time (in seconds) it will take to cast the skill before it does any effect")]
     public float windUp;
@@ -54,6 +54,9 @@ public class SkillData : ScriptableObject
 
     [Tooltip("Whether this skill deals Physical or Magical damage")]
     public DamageType damageType;
+
+    [HideInInspector]
+    public bool currentlyCasting = false;
 
     public bool CheckLineSkillHit(Vector3 hitCheckPosition, Mesh lineIndicatorMesh)
     {

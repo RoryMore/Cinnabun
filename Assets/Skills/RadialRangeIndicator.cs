@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RadialRangeIndicator : MonoBehaviour
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/RadialIndicator", order = 1)]
+public class RadialRangeIndicator : ScriptableObject
 {
     int quality = 15;
 
@@ -91,11 +92,11 @@ public class RadialRangeIndicator : MonoBehaviour
             Vector3 sphereNext = new Vector3(Mathf.Sin(Mathf.Deg2Rad * (angleNext)), 0,
                                              Mathf.Cos(Mathf.Deg2Rad * (angleNext)));
 
-            posCurrentMin = transform.position + sphereCurrent * minRange;
-            posCurrentMax = transform.position + sphereCurrent * maxRange;
+            posCurrentMin = zoneStart.position + sphereCurrent * minRange;
+            posCurrentMax = zoneStart.position + sphereCurrent * maxRange;
 
-            posNextMin = transform.position + sphereNext * minRange;
-            posNextMax = transform.position + sphereNext * maxRange;
+            posNextMin = zoneStart.position + sphereNext * minRange;
+            posNextMax = zoneStart.position + sphereNext * maxRange;
 
             int a = 4 * i;
             int b = 4 * i + 1;
@@ -160,11 +161,11 @@ public class RadialRangeIndicator : MonoBehaviour
             Vector3 sphereNext = new Vector3(Mathf.Sin(Mathf.Deg2Rad * (angleNext)), 0,
                                              Mathf.Cos(Mathf.Deg2Rad * (angleNext)));
 
-            posCurrentMin = transform.position + sphereCurrent * minRange;
-            posCurrentMax = transform.position + sphereCurrent * drawDistance;
+            posCurrentMin = zoneStart.position + sphereCurrent * minRange;
+            posCurrentMax = zoneStart.position + sphereCurrent * drawDistance;
 
-            posNextMin = transform.position + sphereNext * minRange;
-            posNextMax = transform.position + sphereNext * drawDistance;
+            posNextMin = zoneStart.position + sphereNext * minRange;
+            posNextMax = zoneStart.position + sphereNext * drawDistance;
 
             int a = 4 * i;
             int b = 4 * i + 1;
