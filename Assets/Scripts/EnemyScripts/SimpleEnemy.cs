@@ -19,20 +19,22 @@ public class SimpleEnemy : EnemyScript
     {
 
         target = GameObject.Find("Player").transform;
-        simpleBasicAttack.coneRangeIndicator.Init(simpleBasicAttack.angle);
+        skillList[0].radialRangeIndicator.Init(skillList[0].angle);
 
 
-        foreach (SkillData skill in skillList)
-        {
-            if (skill.cooldown != 0)
-            {
-                //This skill is not ready to use!
-            }
-            else
-            {
+        //foreach (SkillData skill in skillList)
+        //{
+        //    if (skill.cooldown != 0)
+        //    {
+        //        //This skill is not ready to use!
+        //    }
+        //    else
+        //    {
 
-            }
-        }
+        //    }
+        //}
+
+
 
         
         

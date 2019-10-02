@@ -9,7 +9,6 @@ using UnityEngine;
 public class BasicAttack : SkillData
 {
     //Indicator
-    public RadialRangeIndicator coneRangeIndicator;
 
     // Start is called before the first frame update
     void Start()
@@ -25,16 +24,16 @@ public class BasicAttack : SkillData
 
     public void DrawRangeIndicator(Transform zoneStart)
     {
-        coneRangeIndicator.DrawIndicator(zoneStart, angle, 0.0f, range);
+        radialRangeIndicator.DrawIndicator(zoneStart, angle, 0.0f, range);
     }
 
-    public void CastSkill(Transform zoneStart)
+    public override void CastSkill(Transform zoneStart)
     {
         currentlyCasting = true;
 
         DrawRangeIndicator(zoneStart);
         float drawPercent = (timeSpentOnWindUp / windUp) * range;
-        coneRangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, drawPercent);
+        radialRangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, drawPercent);
         // Increment the time spent winding up the skill
         timeSpentOnWindUp += Time.deltaTime;
 
