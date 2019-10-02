@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SimpleEnemy : Entity
+public class SimpleEnemy : EnemyScript
 {
 
     public float meleeAttackRange;
-    NavMeshAgent nav;
+    
 
     Transform target;
 
@@ -18,7 +18,7 @@ public class SimpleEnemy : Entity
 
         target = GameObject.Find("Player").transform;
 
-        nav = GetComponent<NavMeshAgent>();
+        
 
 
 
