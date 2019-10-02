@@ -55,6 +55,10 @@ public class SkillData : ScriptableObject
     [Tooltip("Whether this skill deals Physical or Magical damage")]
     public DamageType damageType;
 
+    [Header("Indicator")]
+    public RadialRangeIndicator radialRangeIndicator = null;
+    public RectangleRangeIndicator rectangleRangeIndicator = null;
+
     [HideInInspector]
     public bool currentlyCasting = false;
 
@@ -99,4 +103,6 @@ public class SkillData : ScriptableObject
             return false;
         }
     }
+
+    public virtual void CastSkill(Transform zoneStart) { }
 }

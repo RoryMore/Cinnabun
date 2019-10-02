@@ -5,70 +5,58 @@ using UnityEngine.AI;
 
 public class Player : Entity
 {
-    public List<SkillData> skillList;
-    SkillData selectedSkill = null;
+    public enum PlayerState
+    {
+        FREE,
+        SKILLSELECTED,
+        SKILLCASTING
+    }
 
-    // Locally used to avoid multiple checks every time we want to check if a skill is being used
-    [SerializeField]
-    bool playerCasting = false;
-    [SerializeField]
-    bool skillSelected = false;
+    [Header("State")]
+    public PlayerState playerState;
+
+    [Header("Skills & Casting")]
+    public List<SkillData> skillList;
+    [HideInInspector] public SkillData selectedSkill = null;
+
+    // Local unlisted reference
+    ExampleSkill temp;
 
     NavMeshAgent navAgent = null;
-
-    ExampleSkill temp;
 
     // Start is called before the first frame update
     void Start()
     {
         navAgent = GetComponent<NavMeshAgent>();
-        
+        playerState = PlayerState.FREE;
     }
 
     private void Awake()
     {
-        
+        InitialiseSkills();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!playerCasting)
+        switch (playerState)
         {
-            if (!skillSelected)
-            {
+            case PlayerState.FREE:  // Player can move, and if in combat can receive input for selecting a skill
                 Move();
                 EvaluateInputForSkillSelection();
-            }
-            else
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit, 200.0f))
-                {
-                    Vector3 lookAt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-                    transform.LookAt(lookAt);
+                break;
 
-                    temp.DrawRangeIndicator(transform);
+            case PlayerState.SKILLSELECTED: // Player has selected a skill. Choose where to cast
+                TargetSkill();
+                break;
 
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        temp.CastSkill(transform);
-                        playerCasting = true;
-                    }
-                }
-            }
-        }
-        else
-        {
-            if (temp.currentlyCasting)
-            {
-                temp.CastSkill(transform);
-            }
-            else
-            {
-                skillSelected = false;
-                playerCasting = false;
-            }
+            case PlayerState.SKILLCASTING:  // Player is casting, skill will activate
+                // Make the player stop moving
+                CastSelectedSkill();
+                break;
+
+            default:
+                break;
         }
     }
 
@@ -104,8 +92,100 @@ public class Player : Entity
             if (checkedSkill.skill == skill)
             {
                 temp = (ExampleSkill)checkedSkill;
-                temp.coneRangeIndicator.Init(temp.angle);
-                skillSelected = true;
+                playerState = PlayerState.SKILLSELECTED;
+            }
+            switch (checkedSkill.skill)
+            {
+                case SkillData.SkillList.TELEPORT:
+                    selectedSkill = checkedSkill;
+                    playerState = PlayerState.SKILLSELECTED;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    void TargetSkill()
+    {
+        if (selectedSkill != null)
+        {
+            switch (selectedSkill.skill)
+            {
+                case SkillData.SkillList.TELEPORT:
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out RaycastHit hit, 200.0f))
+                    {
+                        Vector3 lookAt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                        transform.LookAt(lookAt);
+
+                        temp.DrawRangeIndicator(transform);
+
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            temp.currentlyCasting = true;
+                            playerState = PlayerState.SKILLCASTING;
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            Debug.Log("While player is attempting to target skill; selectedSkill is null");
+        }
+    }
+
+    void CastSelectedSkill()
+    {
+        if (selectedSkill != null)
+        {
+            switch (selectedSkill.skill)
+            {
+                case SkillData.SkillList.TELEPORT:
+                    if (selectedSkill.currentlyCasting)
+                    {
+                        selectedSkill.CastSkill(transform);
+                    }
+                    else
+                    {
+                        playerState = PlayerState.FREE;
+                    }
+                    break;
+
+                default:
+                    if (selectedSkill.currentlyCasting)
+                    {
+                        selectedSkill.CastSkill(transform);
+                    }
+                    else
+                    {
+                        playerState = PlayerState.FREE;
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            Debug.Log("While player is attempting to cast selected skill; selectedSkill is null");
+        }
+    }
+
+    void InitialiseSkills()
+    {
+        foreach (SkillData checkedSkill in skillList)
+        {
+            if (checkedSkill.radialRangeIndicator != null)
+            {
+                checkedSkill.radialRangeIndicator.Init(checkedSkill.angle);
+            }
+            if (checkedSkill.rectangleRangeIndicator != null)
+            {
+                checkedSkill.rectangleRangeIndicator.Init();
             }
         }
     }
