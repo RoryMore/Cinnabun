@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RectangleRangeIndicator : MonoBehaviour
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/RectangleIndicator", order = 1)]
+public class RectangleRangeIndicator : ScriptableObject
 {
     [HideInInspector] public Mesh mesh;
     Mesh castTimeMesh;
@@ -78,18 +79,18 @@ public class RectangleRangeIndicator : MonoBehaviour
 
         for (int i = 0; i < 1; i++)
         {
-            posCurrentMin = transform.position;
+            posCurrentMin = zoneStart.position;
             posCurrentMin.z -= halfAttackWidth;
 
-            posCurrentMax = transform.position;
+            posCurrentMax = zoneStart.position;
             posCurrentMax.z -= halfAttackWidth;
             
             posCurrentMax.x += maxRange;
 
-            posNextMin = transform.position;
+            posNextMin = zoneStart.position;
             posNextMin.z += halfAttackWidth;
 
-            posNextMax = transform.position;
+            posNextMax = zoneStart.position;
             posNextMax.z += halfAttackWidth;
             
             posNextMax.x += maxRange;
@@ -106,20 +107,20 @@ public class RectangleRangeIndicator : MonoBehaviour
 
             Quaternion qangle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
 
-            vertices[a] -= transform.position;
-            vertices[b] -= transform.position;
-            vertices[c] -= transform.position;
-            vertices[d] -= transform.position;
+            vertices[a] -= zoneStart.position;
+            vertices[b] -= zoneStart.position;
+            vertices[c] -= zoneStart.position;
+            vertices[d] -= zoneStart.position;
 
             vertices[a] = qangle * vertices[a];
             vertices[b] = qangle * vertices[b];
             vertices[c] = qangle * vertices[c];
             vertices[d] = qangle * vertices[d];
 
-            vertices[a] += transform.position;
-            vertices[b] += transform.position;
-            vertices[c] += transform.position;
-            vertices[d] += transform.position;
+            vertices[a] += zoneStart.position;
+            vertices[b] += zoneStart.position;
+            vertices[c] += zoneStart.position;
+            vertices[d] += zoneStart.position;
 
             triangles[6 * i] = a;
             triangles[6 * i + 1] = d;
@@ -162,19 +163,19 @@ public class RectangleRangeIndicator : MonoBehaviour
         {
             
 
-            posCurrentMin = transform.position;
+            posCurrentMin = zoneStart.position;
             posCurrentMin.z -= (halfAttackWidth * drawPercent);
 
-            posCurrentMax = transform.position;
+            posCurrentMax = zoneStart.position;
             posCurrentMax.z -= (halfAttackWidth * drawPercent);
             
             posCurrentMax.x += maxRange;
             
 
-            posNextMin = transform.position;
+            posNextMin = zoneStart.position;
             posNextMin.z += (halfAttackWidth * drawPercent);
 
-            posNextMax = transform.position;
+            posNextMax = zoneStart.position;
             posNextMax.z += (halfAttackWidth * drawPercent);
             
             posNextMax.x += maxRange;
@@ -192,20 +193,20 @@ public class RectangleRangeIndicator : MonoBehaviour
 
             Quaternion qangle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
 
-            vertices[a] -= transform.position;
-            vertices[b] -= transform.position;
-            vertices[c] -= transform.position;
-            vertices[d] -= transform.position;
+            vertices[a] -= zoneStart.position;
+            vertices[b] -= zoneStart.position;
+            vertices[c] -= zoneStart.position;
+            vertices[d] -= zoneStart.position;
 
             vertices[a] = qangle * vertices[a];
             vertices[b] = qangle * vertices[b];
             vertices[c] = qangle * vertices[c];
             vertices[d] = qangle * vertices[d];
 
-            vertices[a] += transform.position;
-            vertices[b] += transform.position;
-            vertices[c] += transform.position;
-            vertices[d] += transform.position;
+            vertices[a] += zoneStart.position;
+            vertices[b] += zoneStart.position;
+            vertices[c] += zoneStart.position;
+            vertices[d] += zoneStart.position;
 
             triangles[6 * i] = a;
             triangles[6 * i + 1] = d;

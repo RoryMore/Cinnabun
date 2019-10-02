@@ -120,7 +120,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: b6126ca01f29ffe4c8e539b714c97f74, type: 2}
 --- !u!1 &112616028
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,8 +330,10 @@ GameObject:
   - component: {fileID: 712509006}
   - component: {fileID: 712509005}
   - component: {fileID: 712509004}
+  - component: {fileID: 712509009}
+  - component: {fileID: 712509008}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -411,6 +413,63 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &712509008
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712509003}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &712509009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712509003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb2b641f874edcc48b55e13931d83e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 0
+  experience: 0
+  xpToNextLevel: 0
+  strength: 0
+  agility: 0
+  constitution: 0
+  intellect: 0
+  physicalArmour: 0
+  magicalArmour: 0
+  maxHP: 0
+  currentHP: 0
+  movementSpeed: 0
+  dodgeChance: 0
+  physDamagePotential: 0
+  magDamagePotential: 0
+  experienceRequiredToNextLevel: 0
+  physDamageReduction: 0
+  magDamageReduction: 0
+  cannotBeTeleported: 0
+  skillList:
+  - {fileID: 11400000, guid: 13fef59984509c74180616024d3c3109, type: 2}
+  playerCasting: 0
+  skillSelected: 0
 --- !u!1 &1225293758
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +487,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!64 &1225293759
 MeshCollider:
@@ -500,7 +559,7 @@ Transform:
   m_GameObject: {fileID: 1225293758}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 7.1290507, y: 1, z: 5.4724994}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
