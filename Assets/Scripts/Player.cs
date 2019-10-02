@@ -9,7 +9,8 @@ public class Player : Entity
     {
         FREE,
         SKILLSELECTED,
-        SKILLCASTING
+        SKILLCASTING,
+        DEAD
     }
 
     [Header("State")]
@@ -29,6 +30,8 @@ public class Player : Entity
     {
         navAgent = GetComponent<NavMeshAgent>();
         playerState = PlayerState.FREE;
+
+
     }
 
     private void Awake()
@@ -39,6 +42,7 @@ public class Player : Entity
     // Update is called once per frame
     void Update()
     {
+        //if () // Check if player is dead. Send them to dead state if so
         switch (playerState)
         {
             case PlayerState.FREE:  // Player can move, and if in combat can receive input for selecting a skill
@@ -53,6 +57,10 @@ public class Player : Entity
             case PlayerState.SKILLCASTING:  // Player is casting, skill will activate
                 // Make the player stop moving
                 CastSelectedSkill();
+                break;
+
+            case PlayerState.DEAD:
+
                 break;
 
             default:
