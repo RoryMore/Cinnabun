@@ -19,12 +19,14 @@ public class Entity : MonoBehaviour
 
     public List<Condition> currentConditions;
 
+    [Header("Level")]
     //Attributes
     public int level;
     public int experience;
     [SerializeField] int xpToNextLevel;
     int[] levelBrackets;
 
+    [Header("Stats")]
     public int strength;
     public int agility;
     public int constitution;
@@ -32,6 +34,7 @@ public class Entity : MonoBehaviour
     public int physicalArmour;
     public int magicalArmour;
 
+    [Header("Derived Stats")]
     //Derrived attributes
     [SerializeField] int maxHP;
     [SerializeField] int currentHP;
@@ -43,6 +46,7 @@ public class Entity : MonoBehaviour
     [SerializeField] int physDamageReduction;
     [SerializeField] int magDamageReduction;
 
+    [Header("Condition Immunities")]
     //Condition Immunities
     public bool cannotBeTeleported;
 

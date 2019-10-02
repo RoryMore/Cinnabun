@@ -99,4 +99,6 @@ public class SkillData : ScriptableObject
             return false;
         }
     }
+
+    public virtual void CastSkill(Transform zoneStart) { }
 }
