@@ -52,7 +52,7 @@ public class Entity : MonoBehaviour
     {
         currentConditions = new List<Condition>();
         //Make level brackets accurate
-        levelBrackets = new int[9];
+        levelBrackets = new int[10];
         levelBrackets[0] = 0;
         levelBrackets[1] = 100;
         levelBrackets[2] = 250;
