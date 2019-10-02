@@ -51,35 +51,12 @@ public class Player : Entity
                 break;
 
             case PlayerState.SKILLCASTING:  // Player is casting, skill will activate
-
+                // Make the player stop moving
+                CastSelectedSkill();
                 break;
 
             default:
                 break;
-        }
-
-        if (!playerCasting)
-        {
-            if (!skillSelected)
-            {
-                //Move();
-                //EvaluateInputForSkillSelection();
-            }
-            else
-            {
-                
-            }
-        }
-        else
-        {
-            if (temp.currentlyCasting)
-            {
-                temp.CastSkill(transform);
-            }
-            else
-            {
-                
-            }
         }
     }
 
@@ -157,9 +134,46 @@ public class Player : Entity
                     break;
             }
         }
+        else
+        {
+            Debug.Log("While player is attempting to target skill; selectedSkill is null");
+        }
     }
 
-    void 
+    void CastSelectedSkill()
+    {
+        if (selectedSkill != null)
+        {
+            switch (selectedSkill.skill)
+            {
+                case SkillData.SkillList.TELEPORT:
+                    if (selectedSkill.currentlyCasting)
+                    {
+                        selectedSkill.CastSkill(transform);
+                    }
+                    else
+                    {
+                        playerState = PlayerState.FREE;
+                    }
+                    break;
+
+                default:
+                    if (selectedSkill.currentlyCasting)
+                    {
+                        selectedSkill.CastSkill(transform);
+                    }
+                    else
+                    {
+                        playerState = PlayerState.FREE;
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            Debug.Log("While player is attempting to cast selected skill; selectedSkill is null");
+        }
+    }
 
     void InitialiseSkills()
     {
