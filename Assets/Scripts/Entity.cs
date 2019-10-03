@@ -19,8 +19,14 @@ public class Entity : MonoBehaviour
 
     public List<Condition> currentConditions;
 
+    [Header("Health and Death")]
+    public int startingHealth = 100;
+    public int currentHealth;
+    public bool isDead;
+
     [Header("Level")]
     //Attributes
+
     public int level;
     public int experience;
     [SerializeField] int xpToNextLevel;
@@ -54,26 +60,7 @@ public class Entity : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentConditions = new List<Condition>();
-        //Make level brackets accurate
-        levelBrackets = new int[10];
-        levelBrackets[0] = 0;
-        levelBrackets[1] = 100;
-        levelBrackets[2] = 250;
-        levelBrackets[3] = 600;
-        levelBrackets[4] = 1350;
-        levelBrackets[5] = 2900;
-        levelBrackets[6] = 6050;
-        levelBrackets[7] = 16000;
-        levelBrackets[8] = 32350;
-        levelBrackets[9] = 65100;
 
-
-        CalculateMaxHP();
-        CalculateMovementSpeed();
-        CalculateDodgeChance();
-        CalculateMagDamagePotential();
-        CalculatePhysDamagePotential();
 
 
         //How you give a condition
@@ -87,7 +74,9 @@ public class Entity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //mAKE SURE to update all conditions for any other object that inhereits from entity
         UpdateAllConditions();
+
     }
 
      void GiveExperience(int value)
@@ -107,28 +96,54 @@ public class Entity : MonoBehaviour
         }
     }
 
-    void UpdateAllConditions()
+    //Function that is called when the player deals damage to you
+    //Default condition format
+    public virtual void TakeDamage(int amount)
     {
-        foreach (Condition condition in currentConditions)
+        if (isDead)
+            return;
+
+        currentHealth -= amount;
+
+        if (currentHealth <= 0)
         {
-            if (condition.conditionType == ConditionType.DELAYEDBLAST)
-            {
-                //Do the thing!
-                //Wait for player input of kaboom
-                //If have condition, detonate and remove condition
-
-                
-            }
-
-            //At moment of adding condition
-            //timeLeft = condition.duration;
-
-            //timeLeft -= Time.DeltaTime;
-            //if (timeLeft >= 0)
-            //{
-                //remove condition
-           // }
+            Death();
         }
+    }
+
+
+    public virtual void Death()
+    {
+        isDead = true;
+
+    }
+
+    public void UpdateAllConditions()
+    {
+        if (currentConditions.Count != 0)
+        {
+            foreach (Condition condition in currentConditions)
+            {
+                if (condition.conditionType == ConditionType.DELAYEDBLAST)
+                {
+                    //Do the thing!
+                    //Wait for player input of kaboom
+                    //If have condition, detonate and remove condition
+
+
+                }
+
+                //At moment of adding condition
+                //timeLeft = condition.duration;
+
+                //timeLeft -= Time.DeltaTime;
+                //if (timeLeft >= 0)
+                //{
+                //remove condition
+                // }
+            }
+        }
+
 
     }
 
@@ -157,6 +172,31 @@ public class Entity : MonoBehaviour
         magDamagePotential = Mathf.Abs(intellect * (intellect / 2)) * level;
     }
 
+    public void InitialiseAll()
+    {
+        currentConditions = new List<Condition>();
+        //Make level brackets accurate
+        levelBrackets = new int[10];
+        levelBrackets[0] = 0;
+        levelBrackets[1] = 100;
+        levelBrackets[2] = 250;
+        levelBrackets[3] = 600;
+        levelBrackets[4] = 1350;
+        levelBrackets[5] = 2900;
+        levelBrackets[6] = 6050;
+        levelBrackets[7] = 16000;
+        levelBrackets[8] = 32350;
+        levelBrackets[9] = 65100;
+    
+
+
+        CalculateMaxHP();
+        CalculateMovementSpeed();
+        CalculateDodgeChance();
+        CalculateMagDamagePotential();
+        CalculatePhysDamagePotential();
+    }
+
     public void CalculateAllDerivedStats()
     {
         CalculateMaxHP();
@@ -165,5 +205,4 @@ public class Entity : MonoBehaviour
         CalculateMagDamagePotential();
         CalculatePhysDamagePotential();
     }
-
 }

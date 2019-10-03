@@ -13,16 +13,37 @@ public class SimpleEnemy : EnemyScript
 
     bool isAttacking = false;
 
+    BasicAttack simpleBasicAttack;
+
+    private void Start()
+    {
+        InitialiseAll();
+        nav = GetComponent<NavMeshAgent>();
+    }
+
     void Awake()
     {
 
         target = GameObject.Find("Player").transform;
+        skillList[0].radialRangeIndicator.Init(skillList[0].angle);
+
+
+        //foreach (SkillData skill in skillList)
+        //{
+        //    if (skill.cooldown != 0)
+        //    {
+        //        //This skill is not ready to use!
+        //    }
+        //    else
+        //    {
+
+        //    }
+        //}
+
+
 
         
-
-
-
-
+        
 
     }
 
@@ -30,7 +51,20 @@ public class SimpleEnemy : EnemyScript
     void Update()
     {
         Movement();
+        UpdateAllConditions();
 
+        
+        
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            skillList[0].currentlyCasting = true;
+            //simpleBasicAttack.currentlyCasting = true;
+        }
+
+        if (skillList[0].currentlyCasting == true)
+        {
+            skillList[0].CastSkill(transform);
+        }
 
     }
 
@@ -38,6 +72,7 @@ public class SimpleEnemy : EnemyScript
     public void Movement()
     {
         nav.SetDestination(target.transform.position);
+
     }
 
     //TEMPORARY FUNCTION FOR WHEN JASMINE FINISHES HER TURN COUNTER

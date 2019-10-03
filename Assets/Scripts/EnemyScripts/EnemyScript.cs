@@ -7,8 +7,7 @@ using UnityEngine.AI;
 
 public class EnemyScript : Entity
 {
-    public int startingHealth = 100;
-    public int currentHealth;
+
 
     //Value required before they take their action
     public float enemyCooldown;
@@ -37,13 +36,12 @@ public class EnemyScript : Entity
     public EnemyManager enemyManager;
     
 
-    public bool isDead;
-    public bool isSinking;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        nav = GetComponent<NavMeshAgent>();
+        
     }
 
     void Awake()
@@ -65,34 +63,7 @@ public class EnemyScript : Entity
     }
 
 
-    //Function that is called when the player deals damage to you
-    //Default condition format
-    public void TakeDamage(int amount, Vector3 hitPoint)
-    {
-        
-
-        if (isDead)
-            return;
-
-        //hitParticles.transform.position = hitPoint;
-        //hitParticles.Play();
-
-        //Audio Cue
-        //enemyAudio.Play();
-
-        currentHealth -= amount;
-        enemyManager.healList.Add(this.gameObject);
-        anim.SetTrigger("damaged");
-
-
-
-        
-
-        if (currentHealth <= 0)
-        {
-            Death();
-        }
-    }
+ 
 
     public void FaceTarget(Transform target)
     {
@@ -100,23 +71,18 @@ public class EnemyScript : Entity
 
         // Rotate our transform a step closer to the target's.
         transform.rotation = Quaternion.RotateTowards(transform.rotation, target.rotation, step);
-        
-    }
-
-    public void Death()
-    {
-        isDead = true;
-
-        
-
-        //anim.SetTrigger("Dead");
-        enemyManager.healList.Remove(this.gameObject);
-        enemyManager.initiativeList.Remove(this.gameObject);
-        nav.enabled = false;
-
 
     }
 
+    //Take Damage
+    //enemyManager.healList.Add(this.gameObject);
+    //anim.SetTrigger("damaged");
+
+    //Death
+    //anim.SetTrigger("Dead");
+    //enemyManager.healList.Remove(this.gameObject);
+    //enemyManager.initiativeList.Remove(this.gameObject);
+    //nav.enabled = false;
 
 }
 
