@@ -364,6 +364,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: agility
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 819698099673919357, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
       propertyPath: m_IsTrigger
@@ -603,6 +613,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf7ad995055b284386351e7e725be9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingHealth: 100
+  currentHealth: 0
+  isDead: 0
   level: 1
   experience: 0
   xpToNextLevel: 0
@@ -622,8 +635,6 @@ MonoBehaviour:
   physDamageReduction: 0
   magDamageReduction: 0
   cannotBeTeleported: 0
-  startingHealth: 100
-  currentHealth: 0
   enemyCooldown: 0
   initiativeSpeed: 0
   enemyTakingAction: 0
@@ -636,8 +647,6 @@ MonoBehaviour:
   skillList:
   - {fileID: 11400000, guid: d393387bb3717764b9b33e41c19f6b50, type: 2}
   enemyManager: {fileID: 0}
-  isDead: 0
-  isSinking: 0
   meleeAttackRange: 1
 --- !u!65 &1533806661
 BoxCollider:
