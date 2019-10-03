@@ -15,6 +15,12 @@ public class SimpleEnemy : EnemyScript
 
     BasicAttack simpleBasicAttack;
 
+    private void Start()
+    {
+        InitialiseAll();
+        nav = GetComponent<NavMeshAgent>();
+    }
+
     void Awake()
     {
 
@@ -45,6 +51,10 @@ public class SimpleEnemy : EnemyScript
     void Update()
     {
         Movement();
+        UpdateAllConditions();
+
+        
+        
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             skillList[0].currentlyCasting = true;
