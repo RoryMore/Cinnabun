@@ -15,11 +15,17 @@ public class SimpleEnemy : EnemyScript
 
     BasicAttack simpleBasicAttack;
 
+    private void Start()
+    {
+        InitialiseAll();
+        nav = GetComponent<NavMeshAgent>();
+    }
+
     void Awake()
     {
 
         target = GameObject.Find("Player").transform;
-        skillList[0].radialRangeIndicator.Init(skillList[0].angle);
+        skillList[0].rangeIndicator.Init(skillList[0].shape, skillList[0].angleWidth);
 
 
         //foreach (SkillData skill in skillList)
@@ -45,6 +51,10 @@ public class SimpleEnemy : EnemyScript
     void Update()
     {
         Movement();
+        UpdateAllConditions();
+
+        
+        
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             skillList[0].currentlyCasting = true;
@@ -53,7 +63,7 @@ public class SimpleEnemy : EnemyScript
 
         if (skillList[0].currentlyCasting == true)
         {
-            skillList[0].CastSkill(transform);
+            skillList[0].CastSkill(transform, skillList[0].shape);
         }
 
     }
