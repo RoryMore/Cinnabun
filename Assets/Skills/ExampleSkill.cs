@@ -14,26 +14,19 @@ public class ExampleSkill : SkillData
     // Update is called once per frame
     void Update()
     {
-        if (timeBeenOnCooldown < cooldown)
-        {
-            timeBeenOnCooldown += cooldown;
-        }
+        
     }
 
     // This function can be split into two functions for cast time indicators and maxRange indicators
     // Called by the entity casting the skill
-    public void DrawRangeIndicator(Transform zoneStart)
-    {
-        radialRangeIndicator.DrawIndicator(zoneStart, angle, 0.0f, range);
-    }
+    
 
     // If wanting to draw indicators here without doing it outside the skill
     // This function needs to take in a Transform, otherwise it doesn't need any parameter
-    public override void CastSkill(Transform zoneStart)
+    public override void CastSkill(Transform zoneStart, SkillShape shape)
     {
-        //currentlyCasting = true;
+        DrawRangeIndicator(zoneStart, shape);
 
-        DrawRangeIndicator(zoneStart);
         float drawPercent = (timeSpentOnWindUp / windUp) * range;
         radialRangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, drawPercent);
         // Increment the time spent winding up the skill
@@ -50,6 +43,7 @@ public class ExampleSkill : SkillData
 
     void ActivateSkill()
     {
+        timeBeenOnCooldown = 0.0f;
         // What happens when the skill is activated
     }
 }
