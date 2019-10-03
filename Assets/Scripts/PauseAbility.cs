@@ -5,9 +5,14 @@ using UnityEngine;
 public class PauseAbility : MonoBehaviour
 {
 
-    int actionsLeft = 2;
+    public int actionsLeft = 2;
+    int maxActions = 2;
+    public float timeStopCoolDown;
+    public float abilityCastTime = 0;
     public bool inBattle;
     bool isTimeStopped;
+    public bool activatedAbility;
+
 
 
     public enum GameStates
@@ -49,13 +54,17 @@ public class PauseAbility : MonoBehaviour
                 if (actionsLeft <= 0)
                 {
                     states = GameStates.PLAY;
+                    calculateTimeStop();
                 }
                 break;
         }
 
         if (!pauseMenu.isPaused)
         {
-            TimeStop();
+            if (timeStopCoolDown <= 0)
+            {
+                TimeStop();
+            }
             checkTime();
         }
         else if (pauseMenu.isPaused)
@@ -63,6 +72,24 @@ public class PauseAbility : MonoBehaviour
             Time.timeScale = 0;
         }
 
+        checkAbilityCastTime();
+        checkTimeStopOnCoolDown();
+        test();
+    }
+
+    void test()
+    {
+        if (states == GameStates.TIMESTOP)
+        {
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                actionsLeft -= 1;
+                abilityCastTime = 1;
+                states = GameStates.PLAY;
+                activatedAbility = true;
+
+            }
+        }
     }
 
     void TimeStop()
@@ -76,7 +103,8 @@ public class PauseAbility : MonoBehaviour
           }
           else if (states == GameStates.TIMESTOP)
           {
-                states = GameStates.PLAY; 
+                states = GameStates.PLAY;   
+                calculateTimeStop();
           }
         }
     }
@@ -91,6 +119,63 @@ public class PauseAbility : MonoBehaviour
         {
             Time.timeScale = 1;
         }
+    }
+
+    void checkTimeStopOnCoolDown()
+    {
+        if (states == GameStates.PLAY)
+        {
+            if (timeStopCoolDown >= 0)
+            {
+                timeStopCoolDown -= Time.deltaTime;
+            }
+        }
+    }
+
+    void calculateTimeStop()
+    {
+        timeStopCoolDown = maxActions;
+        timeStopCoolDown -= actionsLeft;
+        timeStopCoolDown += 2;
+        actionsLeft = maxActions;
+    }
+
+    void checkAbilityCastTime()
+    {
+        if (abilityCastTime >= 0)
+        {
+            abilityCastTime -= Time.deltaTime;
+        }
+
+        if (activatedAbility == true)
+        {
+            if (actionsLeft > 0)
+            {
+                if (abilityCastTime >= 0)
+                {
+                    states = GameStates.PLAY;
+                }
+
+                if (abilityCastTime <= 0)
+                {
+                    states = GameStates.TIMESTOP;
+                    activatedAbility = false;
+                }
+            }
+        }
+
+        if (abilityCastTime <= 0)
+        {
+            activatedAbility = false;
+        }
+
+        if (actionsLeft == 0 && abilityCastTime <= 0)
+        {
+            calculateTimeStop();
+            actionsLeft = maxActions;
+           
+        }
+
     }
 
 }

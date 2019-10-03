@@ -56,10 +56,10 @@ public class Player : Entity
                 case PlayerState.FREE:  // Player can move, and if in combat can receive input for selecting a skill
                     Move();
 
-                    if (pause.states == PauseAbility.GameStates.TIMESTOP)
-                    {
+                    //if (pause.states == PauseAbility.GameStates.TIMESTOP)
+                    //{
                         EvaluateInputForSkillSelection();
-                    }
+                    //}
                     break;
 
                 case PlayerState.SKILLSELECTED: // Player has selected a skill. Choose where to cast
@@ -216,13 +216,22 @@ public class Player : Entity
     {
         foreach (SkillData checkedSkill in skillList)
         {
-            if (checkedSkill.radialRangeIndicator != null)
+            if (checkedSkill.rangeIndicator != null)
             {
-                checkedSkill.radialRangeIndicator.Init(checkedSkill.angle);
-            }
-            if (checkedSkill.rectangleRangeIndicator != null)
-            {
-                checkedSkill.rectangleRangeIndicator.Init();
+                switch (checkedSkill.shape)
+                {
+                    case SkillData.SkillShape.LINE:
+                        checkedSkill.rangeIndicator.Init(checkedSkill.shape);
+                        break;
+
+                    case SkillData.SkillShape.RADIAL:
+                        checkedSkill.rangeIndicator.Init(checkedSkill.shape, checkedSkill.angleWidth);
+                        break;
+
+                    default:
+                        break;
+                }
+                
             }
         }
     }

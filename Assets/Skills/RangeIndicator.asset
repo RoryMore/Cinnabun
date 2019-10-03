@@ -9,7 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c37de4568e73a9349ba61b2279541203, type: 3}
-  m_Name: RadialIndicator
+  m_Script: {fileID: 11500000, guid: bd730a6ed0711cc4692db43d4ae7fb47, type: 3}
+  m_Name: RangeIndicator
   m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
   indicatorMaterial: {fileID: 2100000, guid: 3c6c47126b1480347ac2f55825168a69, type: 2}
+  corner1: {x: -1.7180208, y: 0.5833333, z: 3.8996649}
+  corner2: {x: -11.487284, y: 0.5833333, z: 6.0354295}
+  corner3: {x: -11.700861, y: 0.5833333, z: 5.058503}
+  corner4: {x: -1.9315974, y: 0.5833333, z: 2.9227386}

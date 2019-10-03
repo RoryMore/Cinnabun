@@ -39,11 +39,8 @@ public class SkillData : ScriptableObject
     [Tooltip("The 'shape' that this skill will be.\n Radial: Uses Angle and Range values to determine the area from a point it will affect.\n Line: Uses Width and Range values to determine the area from a point it will affect.")]
     public SkillShape shape;
 
-    [Tooltip("Skills that require an angle are skills that use Radial shape.")]
-    public float angle;
-
-    [Tooltip("Skills that require a width are skills that use Line shape.")]
-    public float width;
+    [Tooltip("The Width a line Skill will have, or the Angle a Radial skill will use")]
+    public float angleWidth;
 
     [Tooltip("Which skill this actually is")]
     public SkillList skill;
@@ -56,8 +53,7 @@ public class SkillData : ScriptableObject
     public DamageType damageType;
 
     [Header("Indicator")]
-    public RadialRangeIndicator radialRangeIndicator = null;
-    public RectangleRangeIndicator rectangleRangeIndicator = null;
+    public RangeIndicator rangeIndicator = null;
 
     [HideInInspector]
     public bool currentlyCasting = false;
@@ -74,8 +70,8 @@ public class SkillData : ScriptableObject
     {
         // This checks if the x & z values are within the bounds of the rectangular mesh -> Returns true if hit, false if not
         // Can add additional checks for y component of position if necessary to add to make height checks relevant
-        Vector3 meshYPosition = new Vector3(hitCheckPosition.x, rectangleRangeIndicator.mesh.bounds.center.y, hitCheckPosition.z);
-        if (rectangleRangeIndicator.mesh.bounds.Contains(meshYPosition))
+        Vector3 meshYPosition = new Vector3(hitCheckPosition.x, rangeIndicator.mesh.bounds.center.y, hitCheckPosition.z);
+        if (rangeIndicator.mesh.bounds.Contains(meshYPosition))
         {
             return true;
         }
@@ -95,7 +91,7 @@ public class SkillData : ScriptableObject
         float positionAngle = Vector3.Angle(hitCheckPosition - zoneStart.position, zoneStart.forward);
         float distance = Vector3.Distance(hitCheckPosition, zoneStart.position);
 
-        if (positionAngle <= angle)
+        if (positionAngle <= angleWidth)
         {
             if (distance <= range)
             {
@@ -114,18 +110,19 @@ public class SkillData : ScriptableObject
 
     public void DrawRangeIndicator(Transform zoneStart, SkillShape shape)
     {
-        switch (shape)
-        {
-            case SkillShape.LINE:
-                rectangleRangeIndicator.DrawIndicator(zoneStart, angle, 0.0f, range);
-                break;
-
-            case SkillShape.RADIAL:
-                radialRangeIndicator.DrawIndicator(zoneStart, angle, 0.0f, range);
-                break;
-            default:
-                break;
-        }
+        rangeIndicator.DrawIndicator(zoneStart, angleWidth, 0.0f, range);
+        //switch (shape)
+        //{
+        //    case SkillShape.LINE:
+        //        rectangleRangeIndicator.DrawIndicator(zoneStart, angleWidth, 0.0f, range);
+        //        break;
+        //
+        //    case SkillShape.RADIAL:
+        //        radialRangeIndicator.DrawIndicator(zoneStart, angleWidth, 0.0f, range);
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
 
     public bool CheckInRange(Vector3 castPosition, Vector3 targetPosition)
