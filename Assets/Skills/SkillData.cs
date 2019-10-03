@@ -62,12 +62,20 @@ public class SkillData : ScriptableObject
     [HideInInspector]
     public bool currentlyCasting = false;
 
-    public bool CheckLineSkillHit(Vector3 hitCheckPosition, Mesh lineIndicatorMesh)
+    public void ProgressCooldown()
+    {
+        if (timeBeenOnCooldown < cooldown)
+        {
+            timeBeenOnCooldown += Time.deltaTime;
+        }
+    }
+
+    public bool CheckLineSkillHit(Vector3 hitCheckPosition)
     {
         // This checks if the x & z values are within the bounds of the rectangular mesh -> Returns true if hit, false if not
         // Can add additional checks for y component of position if necessary to add to make height checks relevant
-        Vector3 meshYPosition = new Vector3(hitCheckPosition.x, lineIndicatorMesh.bounds.center.y, hitCheckPosition.z);
-        if (lineIndicatorMesh.bounds.Contains(meshYPosition))
+        Vector3 meshYPosition = new Vector3(hitCheckPosition.x, rectangleRangeIndicator.mesh.bounds.center.y, hitCheckPosition.z);
+        if (rectangleRangeIndicator.mesh.bounds.Contains(meshYPosition))
         {
             return true;
         }
@@ -104,5 +112,33 @@ public class SkillData : ScriptableObject
         }
     }
 
-    public virtual void CastSkill(Transform zoneStart) { }
+    public void DrawRangeIndicator(Transform zoneStart, SkillShape shape)
+    {
+        switch (shape)
+        {
+            case SkillShape.LINE:
+                rectangleRangeIndicator.DrawIndicator(zoneStart, angle, 0.0f, range);
+                break;
+
+            case SkillShape.RADIAL:
+                radialRangeIndicator.DrawIndicator(zoneStart, angle, 0.0f, range);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public bool CheckInRange(Vector3 castPosition, Vector3 targetPosition)
+    {
+        // If the targets position is within the range of the skill,
+        // Return true
+        if (Vector3.Distance(castPosition, targetPosition) <= range)
+        {
+            return true;
+        }
+        // Targets position from caster position is out of skill range
+        return false;
+    }
+
+    public virtual void CastSkill(Transform zoneStart, SkillShape shape) { }
 }
