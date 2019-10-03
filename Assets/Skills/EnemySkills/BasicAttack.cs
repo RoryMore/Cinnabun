@@ -27,8 +27,9 @@ public class BasicAttack : SkillData
         currentlyCasting = true;
 
         DrawRangeIndicator(zoneStart, shape);
-        float drawPercent = (timeSpentOnWindUp / windUp) * range;
-        radialRangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, drawPercent);
+        float drawPercent = (timeSpentOnWindUp / windUp);
+        rangeIndicator.DrawCastTimeIndicator(zoneStart, angleWidth, 0.0f, range, drawPercent);
+        
         // Increment the time spent winding up the skill
         timeSpentOnWindUp += Time.deltaTime;
 
