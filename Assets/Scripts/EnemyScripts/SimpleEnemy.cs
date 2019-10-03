@@ -25,7 +25,7 @@ public class SimpleEnemy : EnemyScript
     {
 
         target = GameObject.Find("Player").transform;
-        skillList[0].radialRangeIndicator.Init(skillList[0].angle);
+        skillList[0].rangeIndicator.Init(skillList[0].shape, skillList[0].angleWidth);
 
 
         //foreach (SkillData skill in skillList)
