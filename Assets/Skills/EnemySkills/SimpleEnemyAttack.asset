@@ -16,14 +16,11 @@ MonoBehaviour:
   cooldown: 1
   timeBeenOnCooldown: 10
   windUp: 2
-  timeSpentOnWindUp: 1.9402437
+  timeSpentOnWindUp: 0
   shape: 0
-  angle: 35
-  width: 0
+  angleWidth: 0
   skill: 0
   baseDamage: 0
   damageType: 0
-  radialRangeIndicator: {fileID: 11400000, guid: b8da115666470a546a828be906872698,
-    type: 2}
-  rectangleRangeIndicator: {fileID: 0}
-  currentlyCasting: 1
+  rangeIndicator: {fileID: 11400000, guid: 882b7b97dbe6427489abe2b208750bf0, type: 2}
+  currentlyCasting: 0
