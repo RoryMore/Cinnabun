@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,15 +42,15 @@ public class Entity : MonoBehaviour
 
     [Header("Derived Stats")]
     //Derrived attributes
-    [SerializeField] int maxHP;
-    [SerializeField] int currentHP;
-    [SerializeField] int movementSpeed;
-    [SerializeField] int dodgeChance;
-    [SerializeField] int physDamagePotential;
-    [SerializeField] int magDamagePotential;
-    [SerializeField] int experienceRequiredToNextLevel;
-    [SerializeField] int physDamageReduction;
-    [SerializeField] int magDamageReduction;
+    public int maxHP;
+    public int currentHP;
+    public int movementSpeed;
+    public int dodgeChance;
+    public int physDamagePotential;
+    public int magDamagePotential;
+    public int experienceRequiredToNextLevel;
+    public int physDamageReduction;
+    public int magDamageReduction;
 
     [Header("Condition Immunities")]
     //Condition Immunities
@@ -187,6 +187,7 @@ public class Entity : MonoBehaviour
         levelBrackets[7] = 16000;
         levelBrackets[8] = 32350;
         levelBrackets[9] = 65100;
+    
 
 
         CalculateMaxHP();
@@ -196,4 +197,12 @@ public class Entity : MonoBehaviour
         CalculatePhysDamagePotential();
     }
 
+    public void CalculateAllDerivedStats()
+    {
+        CalculateMaxHP();
+        CalculateMovementSpeed();
+        CalculateDodgeChance();
+        CalculateMagDamagePotential();
+        CalculatePhysDamagePotential();
+    }
 }
