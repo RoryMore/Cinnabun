@@ -11,7 +11,8 @@ public class MainMenuUI : MonoBehaviour
 
     void OnClickPlay()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("AITestScene");
+        Time.timeScale = 1;
     }
 
     void OnClickQuit()
