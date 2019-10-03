@@ -187,14 +187,8 @@ public class Entity : MonoBehaviour
         levelBrackets[7] = 16000;
         levelBrackets[8] = 32350;
         levelBrackets[9] = 65100;
-    
 
-
-        CalculateMaxHP();
-        CalculateMovementSpeed();
-        CalculateDodgeChance();
-        CalculateMagDamagePotential();
-        CalculatePhysDamagePotential();
+        CalculateAllDerivedStats();
     }
 
     public void CalculateAllDerivedStats()
