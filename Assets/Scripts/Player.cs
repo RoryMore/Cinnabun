@@ -9,8 +9,7 @@ public class Player : Entity
     {
         FREE,
         SKILLSELECTED,
-        SKILLCASTING,
-        DEAD
+        SKILLCASTING
     }
 
     [Header("State")]
@@ -28,7 +27,13 @@ public class Player : Entity
     // Start is called before the first frame update
     void Start()
     {
+        level = 1;
+        // Using base given stats, get derived stats
+        CalculateAllDerivedStats();
+        currentHP = maxHP;
+        
         navAgent = GetComponent<NavMeshAgent>();
+        navAgent.speed = movementSpeed;
         playerState = PlayerState.FREE;
 
 
@@ -37,12 +42,13 @@ public class Player : Entity
     private void Awake()
     {
         InitialiseSkills();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if () // Check if player is dead. Send them to dead state if so
+        //if () // Check if player is dead
         switch (playerState)
         {
             case PlayerState.FREE:  // Player can move, and if in combat can receive input for selecting a skill
@@ -59,10 +65,6 @@ public class Player : Entity
                 CastSelectedSkill();
                 break;
 
-            case PlayerState.DEAD:
-
-                break;
-
             default:
                 break;
         }
@@ -76,7 +78,7 @@ public class Player : Entity
 
             if (Physics.Raycast(ray, out RaycastHit hit, 200.0f))
             {
-                //if (hit.collider.tag.Contains("Ground"))
+                //if (hit.collider.tag.Contains("Finish"))
                 //{
                     navAgent.SetDestination(hit.point);
                 //}
