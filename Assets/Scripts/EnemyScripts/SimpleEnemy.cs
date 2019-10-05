@@ -15,9 +15,16 @@ public class SimpleEnemy : EnemyScript
 
     BasicAttack simpleBasicAttack;
 
+    
+
     private void Start()
     {
         InitialiseAll();
+
+        //GetComponent<Entity>().rewindPoint = new RewindPoint();
+
+
+
         nav = GetComponent<NavMeshAgent>();
     }
 
@@ -59,6 +66,20 @@ public class SimpleEnemy : EnemyScript
         {
             skillList[0].currentlyCasting = true;
             //simpleBasicAttack.currentlyCasting = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            print(rewindPoint.locationRewind.position.x);
+            //SaveRewindPoint();
+            
+            Debug.Log("Saved Point");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            LoadRewindPoint();
+            Debug.Log("Loaded Point");
         }
 
         if (skillList[0].currentlyCasting == true)

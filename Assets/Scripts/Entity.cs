@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    
     public struct Condition
     {
 
@@ -17,15 +18,23 @@ public class Entity : MonoBehaviour
         DELAYEDBLAST,
     }
 
-    public List<Condition> currentConditions;
+    public struct RewindPoint
+    {
+        public int currentHealthRewind;
+        public bool isDeadRewind;
+        public Transform locationRewind;
+        public List<Condition> currentConditionsRewind;
+
+    }
+
 
     [Header("Health and Death")]
+
     public int startingHealth = 100;
     public int currentHealth;
     public bool isDead;
 
     [Header("Level")]
-    //Attributes
 
     public int level;
     public int experience;
@@ -33,6 +42,7 @@ public class Entity : MonoBehaviour
     int[] levelBrackets;
 
     [Header("Stats")]
+
     public int strength;
     public int agility;
     public int constitution;
@@ -41,7 +51,7 @@ public class Entity : MonoBehaviour
     public int magicalArmour;
 
     [Header("Derived Stats")]
-    //Derrived attributes
+    
     public int maxHP;
     public int currentHP;
     public int movementSpeed;
@@ -52,9 +62,14 @@ public class Entity : MonoBehaviour
     public int physDamageReduction;
     public int magDamageReduction;
 
-    [Header("Condition Immunities")]
-    //Condition Immunities
+    [Header("Conditions and Immunities")]
+
+    public List<Condition> currentConditions;
     public bool cannotBeTeleported;
+
+    [Header("Rewind Point")]
+
+    public RewindPoint rewindPoint;
 
 
     // Start is called before the first frame update
@@ -175,6 +190,10 @@ public class Entity : MonoBehaviour
     public void InitialiseAll()
     {
         currentConditions = new List<Condition>();
+        
+        rewindPoint = new RewindPoint();
+        Debug.Log("New return point made");
+
         //Make level brackets accurate
         levelBrackets = new int[10];
         levelBrackets[0] = 0;
@@ -198,5 +217,24 @@ public class Entity : MonoBehaviour
         CalculateDodgeChance();
         CalculateMagDamagePotential();
         CalculatePhysDamagePotential();
+    }
+
+    public void SaveRewindPoint()
+    {
+
+        rewindPoint.locationRewind.position = transform.position;
+        rewindPoint.locationRewind.rotation = transform.rotation;
+        rewindPoint.isDeadRewind = isDead;
+        rewindPoint.currentConditionsRewind = currentConditions;
+    }
+
+    public void LoadRewindPoint()
+    {
+        //location
+        transform.position = rewindPoint.locationRewind.position;
+        transform.rotation = rewindPoint.locationRewind.rotation;
+
+        isDead = rewindPoint.isDeadRewind;
+        currentConditions = rewindPoint.currentConditionsRewind;
     }
 }
