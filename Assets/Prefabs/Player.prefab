@@ -107,15 +107,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2b641f874edcc48b55e13931d83e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 0
+  startingHealth: 100
+  currentHealth: 0
+  isDead: 0
+  level: 1
   experience: 0
   xpToNextLevel: 0
-  strength: 0
-  agility: 0
-  constitution: 0
-  intellect: 0
-  physicalArmour: 0
-  magicalArmour: 0
+  strength: 1
+  agility: 1
+  constitution: 1
+  intellect: 1
+  physicalArmour: 1
+  magicalArmour: 1
   maxHP: 0
   currentHP: 0
   movementSpeed: 0
@@ -126,10 +129,10 @@ MonoBehaviour:
   physDamageReduction: 0
   magDamageReduction: 0
   cannotBeTeleported: 0
+  playerState: 0
   skillList:
   - {fileID: 11400000, guid: 13fef59984509c74180616024d3c3109, type: 2}
-  playerCasting: 0
-  skillSelected: 0
+  selectedSkill: {fileID: 0}
 --- !u!195 &819698099673919329
 NavMeshAgent:
   m_ObjectHideFlags: 0

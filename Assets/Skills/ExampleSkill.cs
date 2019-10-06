@@ -13,7 +13,6 @@ public class ExampleSkill : SkillData
 
         float drawPercent = (timeSpentOnWindUp / windUp);
         rangeIndicator.DrawCastTimeIndicator(zoneStart, angleWidth, 0.0f, range, drawPercent);
-        //rectangleRangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, drawPercent, range);
         
         // Increment the time spent winding up the skill
         timeSpentOnWindUp += Time.deltaTime;
