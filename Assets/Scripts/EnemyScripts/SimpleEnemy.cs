@@ -13,7 +13,7 @@ public class SimpleEnemy : EnemyScript
 
     bool isAttacking = false;
 
-    BasicAttack simpleBasicAttack;
+    
 
     
 
@@ -96,7 +96,7 @@ public class SimpleEnemy : EnemyScript
 
     }
 
-    //TEMPORARY FUNCTION FOR WHEN JASMINE FINISHES HER TURN COUNTER
+  
 
 
 
