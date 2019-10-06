@@ -9,16 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 811fa41709b42724c9732c32973b0aab, type: 3}
-  m_Name: SimpleEnemyAttack
+  m_Script: {fileID: 11500000, guid: 698ab66c30f238f42ac5a4dae2326323, type: 3}
+  m_Name: Teleport
   m_EditorClassIdentifier: 
-  range: 4
-  cooldown: 1
-  timeBeenOnCooldown: 10
-  windUp: 2
+  range: 20
+  cooldown: 2
+  timeBeenOnCooldown: 1.4388901
+  windUp: 4
   timeSpentOnWindUp: 0
   shape: 0
-  angleWidth: 0
+  angleWidth: 360
   skill: 0
   baseDamage: 0
   damageType: 0

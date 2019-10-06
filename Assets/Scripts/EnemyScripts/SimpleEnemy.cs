@@ -13,11 +13,18 @@ public class SimpleEnemy : EnemyScript
 
     bool isAttacking = false;
 
-    BasicAttack simpleBasicAttack;
+    
+
+    
 
     private void Start()
     {
         InitialiseAll();
+
+        //GetComponent<Entity>().rewindPoint = new RewindPoint();
+
+
+
         nav = GetComponent<NavMeshAgent>();
     }
 
@@ -61,6 +68,20 @@ public class SimpleEnemy : EnemyScript
             //simpleBasicAttack.currentlyCasting = true;
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            print(rewindPoint.locationRewind.position.x);
+            //SaveRewindPoint();
+            
+            Debug.Log("Saved Point");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            LoadRewindPoint();
+            Debug.Log("Loaded Point");
+        }
+
         if (skillList[0].currentlyCasting == true)
         {
             skillList[0].CastSkill(transform, skillList[0].shape);
@@ -75,7 +96,7 @@ public class SimpleEnemy : EnemyScript
 
     }
 
-    //TEMPORARY FUNCTION FOR WHEN JASMINE FINISHES HER TURN COUNTER
+  
 
 
 
