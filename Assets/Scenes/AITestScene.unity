@@ -139,6 +139,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseMenuUI
       objectReference: {fileID: 0}
+    - target: {fileID: 839651118510784212, guid: fb54e2a727e82a04a9af8bd552a44527,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4861002703094385501, guid: fb54e2a727e82a04a9af8bd552a44527,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -424,6 +429,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: agility
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 819698099673919357, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}

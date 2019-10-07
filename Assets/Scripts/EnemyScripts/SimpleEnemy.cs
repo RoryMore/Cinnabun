@@ -32,8 +32,8 @@ public class SimpleEnemy : EnemyScript
     {
 
         target = GameObject.Find("Player").transform;
-        skillList[0].rangeIndicator.Init(skillList[0].shape, skillList[0].angleWidth);
-
+        //skillList[0].rangeIndicator.Init(skillList[0].shape, skillList[0].angleWidth);
+        skillList[0].Initialise();
 
         //foreach (SkillData skill in skillList)
         //{
@@ -70,7 +70,7 @@ public class SimpleEnemy : EnemyScript
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            print(rewindPoint.locationRewind.position.x);
+            //print(rewindPoint.locationRewind.position.x);
             //SaveRewindPoint();
             
             Debug.Log("Saved Point");
@@ -78,7 +78,7 @@ public class SimpleEnemy : EnemyScript
 
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            LoadRewindPoint();
+            //LoadRewindPoint();
             Debug.Log("Loaded Point");
         }
 

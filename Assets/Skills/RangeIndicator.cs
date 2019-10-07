@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/RangeIndicator", order = 1)]
-public class RangeIndicator : ScriptableObject
+//[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/RangeIndicator", order = 1)]
+public class RangeIndicator : MonoBehaviour
 {
     enum IndicatorShape
     {
@@ -21,9 +21,6 @@ public class RangeIndicator : ScriptableObject
 
     Vector3[] normals;
     Vector2[] uv;
-
-    Vector3[] vertices;
-    int[] triangles;
 
     [HideInInspector] public Vector3 corner1;
     [HideInInspector] public Vector3 corner2;
@@ -78,6 +75,8 @@ public class RangeIndicator : ScriptableObject
                 break;
 
             case IndicatorShape.RECTANGULAR:
+                quality = 1;
+
                 mesh = new Mesh();
                 mesh.vertices = new Vector3[4];
                 mesh.triangles = new int[3 * 2];
@@ -98,8 +97,8 @@ public class RangeIndicator : ScriptableObject
                     normals[i] = new Vector3(0, 1, 0);
                 }
 
-                vertices = new Vector3[4];
-                triangles = new int[3 * 2];
+                //vertices = new Vector3[4];
+                //triangles = new int[3 * 2];
 
                 mesh.uv = uv;
                 mesh.normals = normals;
@@ -124,6 +123,9 @@ public class RangeIndicator : ScriptableObject
         Vector3 posNextMin = Vector3.zero;
         Vector3 posNextMax = Vector3.zero;
 
+        Vector3[] vertices = new Vector3[4 * quality];
+        int[] triangles = new int[3 * 2 * quality];
+
         switch (shape)
         {
             case IndicatorShape.RADIAL:
@@ -136,8 +138,8 @@ public class RangeIndicator : ScriptableObject
                 float angleCurrent = angleStart;
                 float angleNext = angleStart + angleDelta;
 
-                vertices = new Vector3[4 * quality];
-                triangles = new int[3 * 2 * quality];
+                //vertices = new Vector3[4 * quality];
+                //triangles = new int[3 * 2 * quality];
 
                 for (int i = 0; i < quality; i++)
                 {
@@ -193,8 +195,8 @@ public class RangeIndicator : ScriptableObject
 
                 float halfAttackWidth = angleOrWidth * 0.5f;
 
-                vertices = new Vector3[4];
-                triangles = new int[3 * 2];
+                //vertices = new Vector3[4];
+                //triangles = new int[3 * 2];
 
                 for (int i = 0; i < 1; i++)
                 {
@@ -279,6 +281,9 @@ public class RangeIndicator : ScriptableObject
         Vector3 posNextMin = Vector3.zero;
         Vector3 posNextMax = Vector3.zero;
 
+        Vector3[] vertices = new Vector3 [4 * quality];
+        int[] triangles = new int[3 * 2 * quality];
+
         switch (shape)
         {
             case IndicatorShape.RADIAL:
@@ -291,8 +296,8 @@ public class RangeIndicator : ScriptableObject
                 float angleCurrent = angleStart;
                 float angleNext = angleStart + angleDelta;
 
-                vertices = new Vector3[4 * quality];
-                triangles = new int[3 * 2 * quality];
+                //vertices = new Vector3[4 * quality];
+                //triangles = new int[3 * 2 * quality];
 
                 for (int i = 0; i < quality; i++)
                 {
@@ -348,8 +353,8 @@ public class RangeIndicator : ScriptableObject
 
                 float halfAttackWidth = angleOrWidth * 0.5f;
 
-                vertices = new Vector3[4];
-                triangles = new int[3 * 2];
+                //vertices = new Vector3[4];
+                //triangles = new int[3 * 2];
 
                 for (int i = 0; i < 1; i++)
                 {
