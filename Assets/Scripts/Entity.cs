@@ -69,8 +69,9 @@ public class Entity : MonoBehaviour
 
     [Header("Rewind Point")]
 
-    public RewindPoint rewindPoint;
 
+    //public RewindPoint rewindPoint;
+    public List<RewindPoint> rewindPoints;
 
     // Start is called before the first frame update
     void Start()
@@ -191,7 +192,7 @@ public class Entity : MonoBehaviour
     {
         currentConditions = new List<Condition>();
         
-        rewindPoint = new RewindPoint();
+        rewindPoints = new List<RewindPoint>();
         Debug.Log("New return point made");
 
         //Make level brackets accurate
@@ -208,6 +209,8 @@ public class Entity : MonoBehaviour
         levelBrackets[9] = 65100;
 
         CalculateAllDerivedStats();
+
+
     }
 
     public void CalculateAllDerivedStats()
@@ -219,22 +222,20 @@ public class Entity : MonoBehaviour
         CalculatePhysDamagePotential();
     }
 
-    public void SaveRewindPoint()
+    public void RecordRewind()
     {
+        RewindPoint temp;
 
-        rewindPoint.locationRewind.position = transform.position;
-        rewindPoint.locationRewind.rotation = transform.rotation;
-        rewindPoint.isDeadRewind = isDead;
-        rewindPoint.currentConditionsRewind = currentConditions;
+        temp.currentHealthRewind = currentHealth;
+        temp.isDeadRewind = isDead;
+        temp.locationRewind = transform;
+        temp.currentConditionsRewind = currentConditions;
+
+        // add check to delete list contents if no longer needed
+        //if()
+        // rewindPoints.RemoveAt(rewindPoints.Count - 1);
+
+        rewindPoints.Insert(0, temp);
     }
 
-    public void LoadRewindPoint()
-    {
-        //location
-        transform.position = rewindPoint.locationRewind.position;
-        transform.rotation = rewindPoint.locationRewind.rotation;
-
-        isDead = rewindPoint.isDeadRewind;
-        currentConditions = rewindPoint.currentConditionsRewind;
-    }
 }
