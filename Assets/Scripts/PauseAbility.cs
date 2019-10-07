@@ -84,7 +84,7 @@ public class PauseAbility : MonoBehaviour
 
         checkAbilityCastTime();
         checkTimeStopOnCoolDown();
-        //test();
+        test();
     }
 
     void test()
@@ -95,7 +95,7 @@ public class PauseAbility : MonoBehaviour
             {
                 actionsLeft -= 1;
                 //abilityCastTime = 1;
-                states = GameStates.PLAY;
+                //states = GameStates.PLAY;
                 //activatedAbility = true;
 
             }
@@ -179,7 +179,9 @@ public class PauseAbility : MonoBehaviour
         if (actionsLeft == 0 && player.selectedSkill == null)
         {
             calculateTimeStop();
-            actionsLeft = maxActions;    
+            unPaused = true;
+            actionsLeft = maxActions;
+            states = GameStates.PLAY;
         }
 
 

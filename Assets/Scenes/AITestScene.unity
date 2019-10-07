@@ -433,12 +433,12 @@ PrefabInstance:
     - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
       propertyPath: level
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
       propertyPath: agility
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
@@ -459,7 +459,7 @@ PrefabInstance:
         type: 3}
       propertyPath: skillList.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 13fef59984509c74180616024d3c3109,
+      objectReference: {fileID: 11400000, guid: 30b522a64b888f6439fce8cbcad8a8f6,
         type: 2}
     - target: {fileID: 819698099673919357, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
@@ -700,6 +700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf7ad995055b284386351e7e725be9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rewind: 0
   startingHealth: 100
   currentHealth: 10
   isDead: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
     PauseAbility pause = null;
-    
+
     public struct Condition
     {
 
@@ -27,6 +27,8 @@ public class Entity : MonoBehaviour
         public List<Condition> currentConditionsRewind;
 
     }
+
+    [HideInInspector] public bool rewind = false;
 
 
     [Header("Health and Death")]
@@ -228,23 +230,18 @@ public class Entity : MonoBehaviour
     public void RecordRewind()
     {
         RewindPoint temp;
-        RewindPoint savePoint;
 
         temp.currentHealthRewind = currentHealth;
         temp.isDeadRewind = isDead;
         temp.locationRewind = transform;
         temp.currentConditionsRewind = currentConditions;
 
-        // add check to delete list contents if no longer needed
-        //if()
-        // rewindPoints.RemoveAt(rewindPoints.Count - 1);
-
        if (pause.unPaused == true)
        {
-            rewindPoints.Insert(0, temp);
-            savePoint = temp;
-            Debug.Log("Save Point");
+         
+            rewindPoints.Insert(0, temp);  
            // Debug.Log(temp.locationRewind.position);
+          //  Debug.Log("NewPoint");
 
             pause.unPaused = false;
        }
@@ -252,6 +249,7 @@ public class Entity : MonoBehaviour
        {
 
        }
+       
     }
 
 }
