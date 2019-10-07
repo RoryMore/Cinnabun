@@ -54,9 +54,19 @@ public class SkillData : ScriptableObject
 
     [Header("Indicator")]
     public RangeIndicator rangeIndicator = null;
+    public Material indicatorMaterial;
 
     [HideInInspector]
     public bool currentlyCasting = false;
+
+    public void Initialise()
+    {
+        rangeIndicator = new RangeIndicator();
+        rangeIndicator.Init(shape, angleWidth);
+        rangeIndicator.indicatorMaterial = indicatorMaterial;
+
+        timeBeenOnCooldown = cooldown;
+    }
 
     public void ProgressCooldown()
     {
