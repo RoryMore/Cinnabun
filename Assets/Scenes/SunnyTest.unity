@@ -723,5 +723,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: skillList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7cc6400336326fb4da66c314ca6fab7f,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 768628249c4c2f647b7f7962b17fc210, type: 3}
