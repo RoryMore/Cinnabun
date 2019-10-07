@@ -70,7 +70,7 @@ public class SimpleEnemy : EnemyScript
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            print(rewindPoint.locationRewind.position.x);
+            //print(rewindPoint.locationRewind.position.x);
             //SaveRewindPoint();
             
             Debug.Log("Saved Point");
@@ -78,7 +78,7 @@ public class SimpleEnemy : EnemyScript
 
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            LoadRewindPoint();
+            //LoadRewindPoint();
             Debug.Log("Loaded Point");
         }
 
