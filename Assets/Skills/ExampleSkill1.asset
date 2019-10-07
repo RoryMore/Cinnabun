@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 10
   cooldown: 3
-  timeBeenOnCooldown: 0.34758422
+  timeBeenOnCooldown: 3.001539
   windUp: 1
   timeSpentOnWindUp: 0
   shape: 0
@@ -22,5 +22,6 @@ MonoBehaviour:
   skill: 0
   baseDamage: 0
   damageType: 0
-  rangeIndicator: {fileID: 11400000, guid: 882b7b97dbe6427489abe2b208750bf0, type: 2}
+  rangeIndicator: {fileID: 0}
+  indicatorMaterial: {fileID: 2100000, guid: 3c6c47126b1480347ac2f55825168a69, type: 2}
   currentlyCasting: 0

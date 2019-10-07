@@ -19,9 +19,11 @@ public class Player : Entity
     public List<SkillData> skillList;
     [HideInInspector] public SkillData selectedSkill = null;
 
-    PauseAbility pause;
+    PauseAbility pause = null;
 
+    [Header("Navigation")]
     NavMeshAgent navAgent = null;
+    public float turningSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +42,7 @@ public class Player : Entity
 
     private void Awake()
     {
+        pause = FindObjectOfType<PauseAbility>();
         InitialiseSkills();
     }
 
@@ -56,10 +59,13 @@ public class Player : Entity
                 case PlayerState.FREE:  // Player can move, and if in combat can receive input for selecting a skill
                     Move();
 
-                    //if (pause.states == PauseAbility.GameStates.TIMESTOP)
-                    //{
+                    
+                    // Player can only select a skill to use if they have paused
+                    if (pause.states == PauseAbility.GameStates.TIMESTOP)
+                    {
+                        //Time.timeScale = 0.001f;
                         EvaluateInputForSkillSelection();
-                    //}
+                    }
                     break;
 
                 case PlayerState.SKILLSELECTED: // Player has selected a skill. Choose where to cast
@@ -71,6 +77,7 @@ public class Player : Entity
                     }
 
                     navAgent.speed = 0.0f;
+                    navAgent.angularSpeed = 0.0f;
                     TargetSkill();
                     break;
 
@@ -117,7 +124,10 @@ public class Player : Entity
         
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SelectSkill(SkillData.SkillList.TELEPORT);
+            //if (pause.states == PauseAbility.GameStates.TIMESTOP)
+            //{
+                SelectSkill(SkillData.SkillList.TELEPORT);
+            //}
         }
     }
 
@@ -151,7 +161,7 @@ public class Player : Entity
             {
                 case SkillData.SkillList.TELEPORT:
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    if (Physics.Raycast(ray, out RaycastHit hit, 200.0f))
+                    if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
                     {
                         Vector3 lookAt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                         transform.LookAt(lookAt);
@@ -162,6 +172,8 @@ public class Player : Entity
                         {
                             selectedSkill.currentlyCasting = true;
                             playerState = PlayerState.SKILLCASTING;
+
+                            Debug.Log("Player started Casting a skill");
                         }
                     }
                     break;
@@ -180,29 +192,32 @@ public class Player : Entity
     {
         if (selectedSkill != null)
         {
-            switch (selectedSkill.skill)
+            if (selectedSkill.currentlyCasting)
             {
-                case SkillData.SkillList.TELEPORT:
-                    if (selectedSkill.currentlyCasting)
-                    {
+                Debug.Log("Skill being cast");
+                switch (selectedSkill.skill)
+                {
+                    case SkillData.SkillList.TELEPORT:
                         selectedSkill.CastSkill(transform, selectedSkill.shape);
-                    }
-                    else
-                    {
-                        playerState = PlayerState.FREE;
-                    }
-                    break;
 
-                default:
-                    if (selectedSkill.currentlyCasting)
-                    {
+                        break;
+
+                    default:
                         selectedSkill.CastSkill(transform, selectedSkill.shape);
-                    }
-                    else
-                    {
-                        playerState = PlayerState.FREE;
-                    }
-                    break;
+
+                        break;
+                }
+            }
+            else
+            {
+                Debug.Log("Skill finished cast");
+                navAgent.angularSpeed = turningSpeed;
+
+                pause.actionsLeft--;
+                playerState = PlayerState.FREE;
+                selectedSkill = null;
+
+                
             }
         }
         else
@@ -216,23 +231,7 @@ public class Player : Entity
     {
         foreach (SkillData checkedSkill in skillList)
         {
-            if (checkedSkill.rangeIndicator != null)
-            {
-                switch (checkedSkill.shape)
-                {
-                    case SkillData.SkillShape.LINE:
-                        checkedSkill.rangeIndicator.Init(checkedSkill.shape);
-                        break;
-
-                    case SkillData.SkillShape.RADIAL:
-                        checkedSkill.rangeIndicator.Init(checkedSkill.shape, checkedSkill.angleWidth);
-                        break;
-
-                    default:
-                        break;
-                }
-                
-            }
+            checkedSkill.Initialise();
         }
     }
 

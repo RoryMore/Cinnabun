@@ -6,14 +6,14 @@ public class PauseAbility : MonoBehaviour
 {
 
     public int actionsLeft = 2;
-    int maxActions = 2;
+    [SerializeField] int maxActions = 2;
     public float timeStopCoolDown;
     public float abilityCastTime = 0;
     public bool inBattle;
     bool isTimeStopped;
     public bool activatedAbility;
 
-
+    Player player;
 
     public enum GameStates
     {
@@ -29,6 +29,12 @@ public class PauseAbility : MonoBehaviour
     {
        pauseMenu = FindObjectOfType<PauseMenuUI>();
        states = GameStates.PLAY;
+    }
+
+    private void Awake()
+    {
+        // Find reference to the Player
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -51,7 +57,7 @@ public class PauseAbility : MonoBehaviour
                 {
                     isTimeStopped = true;
                 }
-                if (actionsLeft <= 0)
+                else if (actionsLeft <= 0)
                 {
                     states = GameStates.PLAY;
                     calculateTimeStop();
@@ -74,7 +80,7 @@ public class PauseAbility : MonoBehaviour
 
         checkAbilityCastTime();
         checkTimeStopOnCoolDown();
-        test();
+        //test();
     }
 
     void test()
@@ -84,9 +90,9 @@ public class PauseAbility : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.T))
             {
                 actionsLeft -= 1;
-                abilityCastTime = 1;
+                //abilityCastTime = 1;
                 states = GameStates.PLAY;
-                activatedAbility = true;
+                //activatedAbility = true;
 
             }
         }
@@ -103,7 +109,7 @@ public class PauseAbility : MonoBehaviour
           }
           else if (states == GameStates.TIMESTOP)
           {
-                states = GameStates.PLAY;   
+                states = GameStates.PLAY;
                 calculateTimeStop();
           }
         }
@@ -142,34 +148,37 @@ public class PauseAbility : MonoBehaviour
 
     void checkAbilityCastTime()
     {
-        if (abilityCastTime >= 0)
-        {
-            abilityCastTime -= Time.deltaTime;
-        }
+        //if (abilityCastTime >= 0)
+        //{
+        //    abilityCastTime -= Time.deltaTime;
+        //}
 
-        if (activatedAbility == true)
+        
+        if (actionsLeft > 0)
         {
-            if (actionsLeft > 0)
+            if (player.selectedSkill != null)
             {
-                if (abilityCastTime >= 0)
+                // If the player is casting
+                if (player.selectedSkill.currentlyCasting)
                 {
                     states = GameStates.PLAY;
                 }
-
-                if (abilityCastTime <= 0)
+                // Else stop again
+                else
                 {
                     states = GameStates.TIMESTOP;
-                    activatedAbility = false;
+                    //activatedAbility = false;
                 }
             }
         }
+        
 
-        if (abilityCastTime <= 0)
-        {
-            activatedAbility = false;
-        }
+        //if (abilityCastTime <= 0)
+        //{
+        //    activatedAbility = false;
+        //}
 
-        if (actionsLeft == 0 && abilityCastTime <= 0)
+        if (actionsLeft == 0 && !player.selectedSkill.currentlyCasting)
         {
             calculateTimeStop();
             actionsLeft = maxActions;
