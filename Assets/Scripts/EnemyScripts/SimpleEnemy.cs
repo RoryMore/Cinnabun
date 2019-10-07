@@ -85,7 +85,8 @@ public class SimpleEnemy : EnemyScript
 
         if (skillList[0].currentlyCasting == true)
         {
-            skillList[0].CastSkill(transform, skillList[0].shape);
+            skillList[0].TargetSkill(transform);
+            //skillList[0].CastSkill(transform);
         }
 
     }

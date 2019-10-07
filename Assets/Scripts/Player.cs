@@ -8,8 +8,7 @@ public class Player : Entity
     public enum PlayerState
     {
         FREE,
-        SKILLSELECTED,
-        SKILLCASTING
+        DOINGSKILL
     }
 
     [Header("State")]
@@ -59,7 +58,6 @@ public class Player : Entity
                 case PlayerState.FREE:  // Player can move, and if in combat can receive input for selecting a skill
                     Move();
 
-                    
                     // Player can only select a skill to use if they have paused
                     if (pause.states == PauseAbility.GameStates.TIMESTOP)
                     {
@@ -68,7 +66,7 @@ public class Player : Entity
                     }
                     break;
 
-                case PlayerState.SKILLSELECTED: // Player has selected a skill. Choose where to cast
+                case PlayerState.DOINGSKILL: // Player has selected a skill. Choose where to cast
                                                 // Make the player stop moving
                     
                     if (Input.GetMouseButtonDown(1))
@@ -78,12 +76,25 @@ public class Player : Entity
 
                     navAgent.speed = 0.0f;
                     navAgent.angularSpeed = 0.0f;
-                    TargetSkill();
-                    break;
+                    //TargetSkill();
+                    switch (selectedSkill.skill)
+                    {
+                        // Special skills that need different transform
 
-                case PlayerState.SKILLCASTING:  // Player is casting, skill will activate
+                        default:
+                            selectedSkill.TargetSkill(transform);
+                            
+                            break;
+                    }
+                    // skill has ended and been fully cast
+                    if (selectedSkill.timeBeenOnCooldown == 0.0f && !selectedSkill.currentlyCasting)
+                    {
+                        navAgent.angularSpeed = turningSpeed;
+                        pause.actionsLeft--;
+                        selectedSkill = null;
+                        playerState = PlayerState.FREE;
+                    }
 
-                    CastSelectedSkill();
                     break;
 
                 default:
@@ -143,7 +154,7 @@ public class Player : Entity
                 {
                     case SkillData.SkillList.TELEPORT:
                         selectedSkill = checkedSkill;
-                        playerState = PlayerState.SKILLSELECTED;
+                        playerState = PlayerState.DOINGSKILL;
                         break;
 
                     default:
@@ -153,80 +164,79 @@ public class Player : Entity
         }
     }
 
-    void TargetSkill()
-    {
-        if (selectedSkill != null)
-        {
-            switch (selectedSkill.skill)
-            {
-                case SkillData.SkillList.TELEPORT:
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
-                    {
-                        Vector3 lookAt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-                        transform.LookAt(lookAt);
+    //void TargetSkill()
+    //{
+    //    if (selectedSkill != null)
+    //    {
+    //        switch (selectedSkill.skill)
+    //        {
+    //            case SkillData.SkillList.TELEPORT:
+    //                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+    //                {
+    //                    Vector3 lookAt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+    //                    transform.LookAt(lookAt);
 
-                        selectedSkill.DrawRangeIndicator(transform, selectedSkill.shape);
+    //                    selectedSkill.DrawRangeIndicator(transform, selectedSkill.shape);
 
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            selectedSkill.currentlyCasting = true;
-                            playerState = PlayerState.SKILLCASTING;
+    //                    if (Input.GetMouseButtonDown(0))
+    //                    {
+    //                        selectedSkill.currentlyCasting = true;
+    //                        playerState = PlayerState.SKILLCASTING;
 
-                            Debug.Log("Player started Casting a skill");
-                        }
-                    }
-                    break;
+    //                        Debug.Log("Player started Casting a skill");
+    //                    }
+    //                }
+    //                break;
 
-                default:
-                    break;
-            }
-        }
-        else
-        {
-            Debug.Log("While player is attempting to target skill; selectedSkill is null");
-        }
-    }
+    //            default:
+    //                break;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("While player is attempting to target skill; selectedSkill is null");
+    //    }
+    //}
 
-    void CastSelectedSkill()
-    {
-        if (selectedSkill != null)
-        {
-            if (selectedSkill.currentlyCasting)
-            {
-                Debug.Log("Skill being cast");
-                switch (selectedSkill.skill)
-                {
-                    case SkillData.SkillList.TELEPORT:
-                        selectedSkill.CastSkill(transform, selectedSkill.shape);
+    //void CastSelectedSkill()
+    //{
+    //    if (selectedSkill != null)
+    //    {
+    //        if (selectedSkill.currentlyCasting)
+    //        {
+    //            Debug.Log("Skill being cast");
+    //            switch (selectedSkill.skill)
+    //            {
+    //                case SkillData.SkillList.TELEPORT:
+    //                    selectedSkill.CastSkill(transform, selectedSkill.shape);
 
-                        break;
+    //                    break;
 
-                    default:
-                        selectedSkill.CastSkill(transform, selectedSkill.shape);
+    //                default:
+    //                    selectedSkill.CastSkill(transform, selectedSkill.shape);
 
-                        break;
-                }
-            }
-            else
-            {
-                Debug.Log("Skill finished cast");
-                navAgent.angularSpeed = turningSpeed;
+    //                    break;
+    //            }
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("Skill finished cast");
+    //            navAgent.angularSpeed = turningSpeed;
+
+    //            pause.actionsLeft--;
+    //            playerState = PlayerState.FREE;
+    //            selectedSkill = null;
 
                 
-                pause.actionsLeft--;
-                playerState = PlayerState.FREE;
-                selectedSkill = null;
-
-                
-            }
-        }
-        else
-        {
-            Debug.Log("While player is attempting to cast selected skill; selectedSkill is null");
-            playerState = PlayerState.FREE;
-        }
-    }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("While player is attempting to cast selected skill; selectedSkill is null");
+    //        playerState = PlayerState.FREE;
+    //    }
+    //}
 
     void InitialiseSkills()
     {

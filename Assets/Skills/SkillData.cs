@@ -66,6 +66,7 @@ public class SkillData : ScriptableObject
         rangeIndicator.indicatorMaterial = indicatorMaterial;
 
         timeBeenOnCooldown = cooldown;
+        timeSpentOnWindUp = 0.0f;
     }
 
     public void ProgressCooldown()
@@ -147,5 +148,49 @@ public class SkillData : ScriptableObject
         return false;
     }
 
-    public virtual void CastSkill(Transform zoneStart, SkillShape shape) { }
+    protected virtual void SelectTargetRay(Transform zoneStart, ref Entity entityToSet)
+    {
+        if (entityToSet == null)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (Physics.Raycast(ray, out RaycastHit hit, 400))
+                {
+                    Debug.Log("Skill is raycasting");
+                    if (CheckInRange(zoneStart.position, hit.point))
+                    {
+                        Debug.Log("Entity reference set for skill");
+                        entityToSet = hit.collider.gameObject.GetComponent<Entity>();
+                    }
+                }
+            }
+        }
+    }
+
+    protected bool SelectTargetRay(Transform zoneStart, ref Vector3 pointToSet)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (Physics.Raycast(ray, out RaycastHit hit, 400))
+            {
+                if (CheckInRange(zoneStart.position, hit.point))
+                {
+                    Debug.Log("Position reference set for skill");
+                    pointToSet = hit.point;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    protected virtual void CastSkill(Transform zoneStart) { }
+
+    protected virtual void ActivateSkill() { }
+
+    public virtual void TargetSkill(Transform zoneStart) { }
 }

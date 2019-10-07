@@ -7,28 +7,28 @@ public class ExampleSkill : SkillData
 {
     // If wanting to draw indicators here without doing it outside the skill
     // This function needs to take in a Transform, otherwise it doesn't need any parameter
-    public override void CastSkill(Transform zoneStart, SkillShape shape)
-    {
-        DrawRangeIndicator(zoneStart, shape);
+    //public override void CastSkill(Transform zoneStart, SkillShape shape)
+    //{
+    //    DrawRangeIndicator(zoneStart, shape);
 
-        float drawPercent = (timeSpentOnWindUp / windUp);
-        rangeIndicator.DrawCastTimeIndicator(zoneStart, angleWidth, 0.0f, range, drawPercent);
+    //    float drawPercent = (timeSpentOnWindUp / windUp);
+    //    rangeIndicator.DrawCastTimeIndicator(zoneStart, angleWidth, 0.0f, range, drawPercent);
         
-        // Increment the time spent winding up the skill
-        timeSpentOnWindUp += Time.deltaTime;
+    //    // Increment the time spent winding up the skill
+    //    timeSpentOnWindUp += Time.deltaTime;
 
-        // When the skill can be activated
-        if (timeSpentOnWindUp >= windUp)
-        {
-            ActivateSkill();
-            timeSpentOnWindUp = 0.0f;
-            currentlyCasting = false;
-        }
-    }
+    //    // When the skill can be activated
+    //    if (timeSpentOnWindUp >= windUp)
+    //    {
+    //        ActivateSkill();
+    //        timeSpentOnWindUp = 0.0f;
+    //        currentlyCasting = false;
+    //    }
+    //}
 
-    void ActivateSkill()
-    {
-        timeBeenOnCooldown = 0.0f;
-        // What happens when the skill is activated
-    }
+    //void ActivateSkill()
+    //{
+    //    timeBeenOnCooldown = 0.0f;
+    //    // What happens when the skill is activated
+    //}
 }

@@ -117,6 +117,7 @@ public class Entity : MonoBehaviour
     //Default condition format
     public virtual void TakeDamage(int amount)
     {
+        Debug.Log("OOF x " + amount);
         if (isDead)
             return;
 
