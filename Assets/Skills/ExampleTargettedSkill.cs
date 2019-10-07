@@ -7,6 +7,7 @@ public class ExampleTargettedSkill : SkillData
 {
     Entity entityTarget1 = null;
     Vector3 teleportLocation;
+    bool destination1Set = false;
 
     public override void TargetSkill(Transform zoneStart)
     {
@@ -21,8 +22,14 @@ public class ExampleTargettedSkill : SkillData
 
             DrawRangeIndicator(zoneStart, shape);
             SelectTargetRay(zoneStart, ref entityTarget1);
+            destination1Set = false;
         }
-        else
+        else if (!destination1Set && entityTarget1 != null)
+        {
+            DrawRangeIndicator(zoneStart, shape);
+            destination1Set = SelectTargetRay(zoneStart, ref teleportLocation);
+        }
+        else if (destination1Set && entityTarget1 != null)
         {
             CastSkill(zoneStart);
         }
@@ -54,15 +61,15 @@ public class ExampleTargettedSkill : SkillData
 
     protected override void ActivateSkill()
     {
-        
-
         timeBeenOnCooldown = 0.0f;
         // What happens when the skill is activated
 
         // Very basic dealt damage
         entityTarget1.TakeDamage(baseDamage);   // End up passing in damage type later
+        entityTarget1.transform.position = teleportLocation;
 
         // Don't forget to nullify your targets after use
         entityTarget1 = null;
+        teleportLocation = Vector3.zero;
     }
 }

@@ -169,7 +169,7 @@ public class SkillData : ScriptableObject
         }
     }
 
-    protected void SelectTargetRay(Transform zoneStart, Vector3 pointToSet)
+    protected bool SelectTargetRay(Transform zoneStart, ref Vector3 pointToSet)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -179,10 +179,13 @@ public class SkillData : ScriptableObject
             {
                 if (CheckInRange(zoneStart.position, hit.point))
                 {
+                    Debug.Log("Position reference set for skill");
                     pointToSet = hit.point;
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     protected virtual void CastSkill(Transform zoneStart) { }
