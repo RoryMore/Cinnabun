@@ -227,6 +227,7 @@ public class Entity : MonoBehaviour
     public void RecordRewind()
     {
         RewindPoint temp;
+        RewindPoint savePoint;
 
         temp.currentHealthRewind = currentHealth;
         temp.isDeadRewind = isDead;
@@ -240,13 +241,16 @@ public class Entity : MonoBehaviour
        if (pause.unPaused == true)
        {
             rewindPoints.Insert(0, temp);
+            savePoint = temp;
+            Debug.Log("Save Point");
            // Debug.Log(temp.locationRewind.position);
-            pause.unPaused = false;
-        }
-        else
-        {
 
-        }
+            pause.unPaused = false;
+       }
+       else
+       {
+
+       }
     }
 
 }
