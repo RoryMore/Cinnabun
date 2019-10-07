@@ -430,6 +430,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: agility
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 819698099673919357, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
       propertyPath: m_IsTrigger
