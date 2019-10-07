@@ -213,6 +213,7 @@ public class Player : Entity
                 Debug.Log("Skill finished cast");
                 navAgent.angularSpeed = turningSpeed;
 
+                
                 pause.actionsLeft--;
                 playerState = PlayerState.FREE;
                 selectedSkill = null;

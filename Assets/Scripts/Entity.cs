@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    PauseAbility pause = null;
     
     public struct Condition
     {
@@ -78,7 +79,7 @@ public class Entity : MonoBehaviour
     {
 
 
-
+      
         //How you give a condition
         //Condition delayedBlastTest = new Condition();
         //delayedBlastTest.duration = 5.0f;
@@ -160,6 +161,7 @@ public class Entity : MonoBehaviour
             }
         }
 
+        RecordRewind();
 
     }
 
@@ -191,7 +193,7 @@ public class Entity : MonoBehaviour
     public void InitialiseAll()
     {
         currentConditions = new List<Condition>();
-        
+        pause = FindObjectOfType<PauseAbility>();
         rewindPoints = new List<RewindPoint>();
         Debug.Log("New return point made");
 
@@ -235,7 +237,16 @@ public class Entity : MonoBehaviour
         //if()
         // rewindPoints.RemoveAt(rewindPoints.Count - 1);
 
-        rewindPoints.Insert(0, temp);
+       if (pause.unPaused == true)
+       {
+            rewindPoints.Insert(0, temp);
+           // Debug.Log(temp.locationRewind.position);
+            pause.unPaused = false;
+        }
+        else
+        {
+
+        }
     }
 
 }

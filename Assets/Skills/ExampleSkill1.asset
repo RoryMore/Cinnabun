@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ExampleSkill1
   m_EditorClassIdentifier: 
   range: 10
-  cooldown: 3
-  timeBeenOnCooldown: 3.001539
+  cooldown: 0
+  timeBeenOnCooldown: 0
   windUp: 1
   timeSpentOnWindUp: 0
   shape: 0

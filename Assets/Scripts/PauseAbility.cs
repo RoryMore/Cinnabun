@@ -8,12 +8,14 @@ public class PauseAbility : MonoBehaviour
     public int actionsLeft = 2;
     [SerializeField] int maxActions = 2;
     public float timeStopCoolDown;
-    public float abilityCastTime = 0;
+    //public float abilityCastTime = 0;
     public bool inBattle;
     bool isTimeStopped;
     public bool activatedAbility;
+    public bool unPaused;
 
     Player player;
+    public GameObject[] entity;
 
     public enum GameStates
     {
@@ -28,6 +30,7 @@ public class PauseAbility : MonoBehaviour
     void Start()
     {
        pauseMenu = FindObjectOfType<PauseMenuUI>();
+       //entity = FindObjectOfType<Entity>();
        states = GameStates.PLAY;
     }
 
@@ -35,6 +38,7 @@ public class PauseAbility : MonoBehaviour
     {
         // Find reference to the Player
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        entity = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
     // Update is called once per frame
@@ -109,7 +113,9 @@ public class PauseAbility : MonoBehaviour
           }
           else if (states == GameStates.TIMESTOP)
           {
+                unPaused = true;
                 states = GameStates.PLAY;
+                //unPaused = false;
                 calculateTimeStop();
           }
         }
@@ -148,11 +154,6 @@ public class PauseAbility : MonoBehaviour
 
     void checkAbilityCastTime()
     {
-        //if (abilityCastTime >= 0)
-        //{
-        //    abilityCastTime -= Time.deltaTime;
-        //}
-
         
         if (actionsLeft > 0)
         {
@@ -166,24 +167,21 @@ public class PauseAbility : MonoBehaviour
                 // Else stop again
                 else
                 {
+                    //rewind state time stamp
+                   //entity.RecordRewind();
                     states = GameStates.TIMESTOP;
+
                     //activatedAbility = false;
                 }
             }
         }
-        
-
-        //if (abilityCastTime <= 0)
-        //{
-        //    activatedAbility = false;
-        //}
 
         if (actionsLeft == 0 && !player.selectedSkill.currentlyCasting)
         {
             calculateTimeStop();
-            actionsLeft = maxActions;
-           
+            actionsLeft = maxActions;    
         }
+
 
     }
 
