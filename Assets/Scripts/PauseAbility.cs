@@ -178,7 +178,7 @@ public class PauseAbility : MonoBehaviour
         //    activatedAbility = false;
         //}
 
-        if (actionsLeft == 0 && !player.selectedSkill.currentlyCasting)
+        if (actionsLeft == 0 && player.selectedSkill == null)
         {
             calculateTimeStop();
             actionsLeft = maxActions;
