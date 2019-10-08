@@ -28,10 +28,7 @@ public class Entity : MonoBehaviour
     }
 
 
-    [Header("Health and Death")]
-
-    public int startingHealth = 100;
-    public int currentHealth;
+    [Header("Death")]
     public bool isDead;
 
     [Header("Level")]
@@ -120,9 +117,9 @@ public class Entity : MonoBehaviour
         if (isDead)
             return;
 
-        currentHealth -= amount;
+        currentHP -= amount;
 
-        if (currentHealth <= 0)
+        if (currentHP <= 0)
         {
             Death();
         }
@@ -167,6 +164,7 @@ public class Entity : MonoBehaviour
     void CalculateMaxHP()
     {
         maxHP = (6 + constitution) * level;
+        currentHP = maxHP;
     }
 
     void CalculateMovementSpeed()
@@ -223,11 +221,17 @@ public class Entity : MonoBehaviour
         CalculatePhysDamagePotential();
     }
 
+
+    public List<Condition> ReturnConditions()
+    {
+        return currentConditions;
+    }
+
     public void RecordRewind()
     {
         RewindPoint temp;
 
-        temp.currentHealthRewind = currentHealth;
+        temp.currentHealthRewind = currentHP;
         temp.isDeadRewind = isDead;
         temp.locationRewind = transform;
         temp.currentConditionsRewind = currentConditions;
