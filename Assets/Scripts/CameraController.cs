@@ -52,7 +52,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Confined;
         }
         // Reveal and unlock cursor when RMB is released
         if (Input.GetMouseButtonUp(1))
