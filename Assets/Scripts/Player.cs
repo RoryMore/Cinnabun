@@ -21,8 +21,8 @@ public class Player : Entity
     PauseAbility pause = null;
 
     [Header("Navigation")]
-    NavMeshAgent navAgent = null;
     public float turningSpeed;
+    NavMeshAgent navAgent = null;
 
     // Start is called before the first frame update
     void Start()
@@ -69,11 +69,6 @@ public class Player : Entity
                 case PlayerState.DOINGSKILL: // Player has selected a skill. Choose where to cast
                                                 // Make the player stop moving
                     
-                    if (Input.GetMouseButtonDown(1))
-                    {
-                        CancelSkillSelection();
-                    }
-
                     navAgent.speed = 0.0f;
                     navAgent.angularSpeed = 0.0f;
                     //TargetSkill();
@@ -93,6 +88,11 @@ public class Player : Entity
                         pause.actionsLeft--;
                         selectedSkill = null;
                         playerState = PlayerState.FREE;
+                    }
+
+                    if (Input.GetMouseButtonDown(1))
+                    {
+                        CancelSkillSelection();
                     }
 
                     break;
@@ -132,13 +132,26 @@ public class Player : Entity
 
     void EvaluateInputForSkillSelection()
     {
-        
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            //if (pause.states == PauseAbility.GameStates.TIMESTOP)
-            //{
-                SelectSkill(SkillData.SkillList.TELEPORT);
-            //}
+            //SelectSkill(SkillData.SkillList.TELEPORT);
+            SelectSkill(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SelectSkill(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SelectSkill(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SelectSkill(3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            SelectSkill(4);
         }
     }
 
@@ -161,6 +174,15 @@ public class Player : Entity
                         break;
                 }
             }
+        }
+    }
+
+    void SelectSkill(int skillAtIndex)
+    {
+        if (skillAtIndex < skillList.Count)
+        {
+            selectedSkill = skillList[skillAtIndex];
+            playerState = PlayerState.DOINGSKILL;
         }
     }
 
@@ -250,5 +272,6 @@ public class Player : Entity
     {
         selectedSkill = null;
         playerState = PlayerState.FREE;
+        navAgent.angularSpeed = turningSpeed;
     }
 }
