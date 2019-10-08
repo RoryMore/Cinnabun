@@ -20,7 +20,9 @@ public class SkillData : ScriptableObject
 
     public enum SkillList  // Go through different Skills with team - discuss. Only small amounts of discussion on skills have been had. Think about Skill tree as well. How many skills we'll have, what "category" they are, if they're all unlocked through the skill tree, or if they're unlocked by doing something in the world or killing something specific
     {
-        TELEPORT
+        TELEPORT,
+        DELAYEDBLAST,
+        REWIND
     }
 
     [Tooltip("The maximum distance the skill can be used at from the casters position")]

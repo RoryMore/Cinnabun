@@ -155,7 +155,7 @@ public class Player : Entity
         }
     }
 
-    void SelectSkill(SkillData.SkillList skill)
+    public void SelectSkill(SkillData.SkillList skill)
     {
         foreach (SkillData checkedSkill in skillList)
         {
@@ -179,86 +179,19 @@ public class Player : Entity
 
     void SelectSkill(int skillAtIndex)
     {
+        // Are we allowed to access this index
         if (skillAtIndex < skillList.Count)
         {
-            selectedSkill = skillList[skillAtIndex];
-            playerState = PlayerState.DOINGSKILL;
+            // Is this skill on cooldown
+            SkillData checkedSkill = skillList[skillAtIndex];
+            if (checkedSkill.timeBeenOnCooldown >= checkedSkill.cooldown)
+            {
+                selectedSkill = skillList[skillAtIndex];
+                playerState = PlayerState.DOINGSKILL;
+            }
+            
         }
     }
-
-    //void TargetSkill()
-    //{
-    //    if (selectedSkill != null)
-    //    {
-    //        switch (selectedSkill.skill)
-    //        {
-    //            case SkillData.SkillList.TELEPORT:
-    //                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    //                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
-    //                {
-    //                    Vector3 lookAt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-    //                    transform.LookAt(lookAt);
-
-    //                    selectedSkill.DrawRangeIndicator(transform, selectedSkill.shape);
-
-    //                    if (Input.GetMouseButtonDown(0))
-    //                    {
-    //                        selectedSkill.currentlyCasting = true;
-    //                        playerState = PlayerState.SKILLCASTING;
-
-    //                        Debug.Log("Player started Casting a skill");
-    //                    }
-    //                }
-    //                break;
-
-    //            default:
-    //                break;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("While player is attempting to target skill; selectedSkill is null");
-    //    }
-    //}
-
-    //void CastSelectedSkill()
-    //{
-    //    if (selectedSkill != null)
-    //    {
-    //        if (selectedSkill.currentlyCasting)
-    //        {
-    //            Debug.Log("Skill being cast");
-    //            switch (selectedSkill.skill)
-    //            {
-    //                case SkillData.SkillList.TELEPORT:
-    //                    selectedSkill.CastSkill(transform, selectedSkill.shape);
-
-    //                    break;
-
-    //                default:
-    //                    selectedSkill.CastSkill(transform, selectedSkill.shape);
-
-    //                    break;
-    //            }
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("Skill finished cast");
-    //            navAgent.angularSpeed = turningSpeed;
-
-    //            pause.actionsLeft--;
-    //            playerState = PlayerState.FREE;
-    //            selectedSkill = null;
-
-                
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("While player is attempting to cast selected skill; selectedSkill is null");
-    //        playerState = PlayerState.FREE;
-    //    }
-    //}
 
     void InitialiseSkills()
     {
