@@ -11,7 +11,7 @@ public class PauseAbility : MonoBehaviour
     //public float abilityCastTime = 0;
     public bool inBattle;
     bool isTimeStopped;
-    public bool activatedAbility;
+    public bool takeingTurn;
 
     Player player;
     public List<Entity> entity;
@@ -89,23 +89,8 @@ public class PauseAbility : MonoBehaviour
 
         checkAbilityCastTime();
         checkTimeStopOnCoolDown();
-        test();
     }
 
-    void test()
-    {
-        if (states == GameStates.TIMESTOP)
-        {
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                actionsLeft -= 1;
-                //abilityCastTime = 1;
-                //states = GameStates.PLAY;
-                //activatedAbility = true;
-
-            }
-        }
-    }
 
     void TimeStop()
     {
@@ -119,10 +104,10 @@ public class PauseAbility : MonoBehaviour
           else if (states == GameStates.TIMESTOP)
           {
                 states = GameStates.PLAY;
-                //unPaused = false;
                 clearAllList();
                 calculateTimeStop();
-          }
+                takeingTurn = false;
+            }
         }
     }
 
@@ -163,23 +148,24 @@ public class PauseAbility : MonoBehaviour
         if (actionsLeft > 0)
         {
             if (player.selectedSkill != null)
-            {
-                // If the player is casting
-                if (player.selectedSkill.currentlyCasting)
-                {
-                    states = GameStates.PLAY;
-                }
-                // Else stop again
-                else
-                {
-                    //rewind state time stamp
-                   //entity.RecordRewind();
-                    states = GameStates.TIMESTOP;
-
-                    //activatedAbility = false;
-                }
-            }
+              {
+                  if (player.selectedSkill.currentlyCasting)
+                   {
+                       states = GameStates.PLAY;
+                       takeingTurn = true;
+                   }
+               }
+               else if (takeingTurn == true)
+               {
+                states = GameStates.TIMESTOP;
+               }
         }
+
+          //  if (takeingTurn == true)
+          // {
+         //       states = GameStates.TIMESTOP;
+        //    }
+
 
         if (actionsLeft == 0 && player.selectedSkill == null)
         {
@@ -187,6 +173,7 @@ public class PauseAbility : MonoBehaviour
             clearAllList();
             actionsLeft = maxActions;
             states = GameStates.PLAY;
+            takeingTurn = false;
         }
 
 
