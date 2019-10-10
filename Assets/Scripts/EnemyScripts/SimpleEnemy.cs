@@ -10,6 +10,7 @@ public class SimpleEnemy : EnemyScript
     
 
     Transform target;
+    public GameObject[] entity;
 
     bool isAttacking = false;
 
@@ -24,7 +25,7 @@ public class SimpleEnemy : EnemyScript
         //GetComponent<Entity>().rewindPoint = new RewindPoint();
 
 
-
+        entity = GameObject.FindGameObjectsWithTag("Enemy");
         nav = GetComponent<NavMeshAgent>();
     }
 
