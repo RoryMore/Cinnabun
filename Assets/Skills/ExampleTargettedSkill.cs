@@ -11,6 +11,7 @@ public class ExampleTargettedSkill : SkillData
 
     public override void TargetSkill(Transform zoneStart)
     {
+        // Entity is not set; therefore we need to wait until the user has set the entity
         if (entityTarget1 == null)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -20,24 +21,36 @@ public class ExampleTargettedSkill : SkillData
                 zoneStart.LookAt(lookAt);
             }
 
+            // We are drawing the range indicator here so the player knows if what they are clicking is in range
+            // If being in range is relevant
             DrawRangeIndicator(zoneStart, shape);
-            SelectTargetRay(zoneStart, ref entityTarget1);
-            destination1Set = false;
+
+            // Select our entity target
+            SelectTargetRay(zoneStart, ref entityTarget1, true);
+            // The true value in the SelectTargetRay function is specifying that we want to also make a check
+            // to see if the target is in range
+            // We can leave that extra field blank, or false, if we don't want to make that check
         }
+        // If entity target has been set but our destination point hasn't
         else if (!destination1Set && entityTarget1 != null)
         {
+            // We draw a range indicator if we feel it's necessary
             DrawRangeIndicator(zoneStart, shape);
-            destination1Set = SelectTargetRay(zoneStart, ref teleportLocation);
+
+            // The overloaded version of SelectTargetRay that sets a vector position also returns a bool
+            // This is so we can set a bool saying we have set a specific location, otherwise
+            // there aren't other succinct ways to check if we have set a destination point
+            destination1Set = SelectTargetRay(zoneStart, ref teleportLocation, true);
         }
+        // If we have an entity set and we have set our destination point
         else if (destination1Set && entityTarget1 != null)
         {
+            // Start casting the skill
             CastSkill(zoneStart);
         }
         
     }
 
-    // If wanting to draw indicators here without doing it outside the skill
-    // This function needs to take in a Transform, otherwise it doesn't need any parameter
     protected override void CastSkill(Transform zoneStart)
     {
         currentlyCasting = true;
@@ -64,11 +77,14 @@ public class ExampleTargettedSkill : SkillData
         timeBeenOnCooldown = 0.0f;
         // What happens when the skill is activated
 
-        // Very basic dealt damage
+        // Deal damage to our entity target
         entityTarget1.TakeDamage(baseDamage);   // End up passing in damage type later
+
+        // We move our entity target to our destination point we are moving it
         entityTarget1.transform.position = teleportLocation;
 
         // Don't forget to nullify your targets after use
+        // and reset any necessary values
         entityTarget1 = null;
         teleportLocation = Vector3.zero;
     }

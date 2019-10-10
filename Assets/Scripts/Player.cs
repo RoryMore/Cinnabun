@@ -21,8 +21,8 @@ public class Player : Entity
     PauseAbility pause = null;
 
     [Header("Navigation")]
-    NavMeshAgent navAgent = null;
     public float turningSpeed;
+    NavMeshAgent navAgent = null;
 
     // Start is called before the first frame update
     void Start()
@@ -69,11 +69,6 @@ public class Player : Entity
                 case PlayerState.DOINGSKILL: // Player has selected a skill. Choose where to cast
                                                 // Make the player stop moving
                     
-                    if (Input.GetMouseButtonDown(1))
-                    {
-                        CancelSkillSelection();
-                    }
-
                     navAgent.speed = 0.0f;
                     navAgent.angularSpeed = 0.0f;
                     //TargetSkill();
@@ -93,6 +88,11 @@ public class Player : Entity
                         pause.actionsLeft--;
                         selectedSkill = null;
                         playerState = PlayerState.FREE;
+                    }
+
+                    if (Input.GetMouseButtonDown(1))
+                    {
+                        CancelSkillSelection();
                     }
 
                     break;
@@ -132,17 +132,30 @@ public class Player : Entity
 
     void EvaluateInputForSkillSelection()
     {
-        
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            //if (pause.states == PauseAbility.GameStates.TIMESTOP)
-            //{
-                SelectSkill(SkillData.SkillList.TELEPORT);
-            //}
+            //SelectSkill(SkillData.SkillList.TELEPORT);
+            SelectSkill(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SelectSkill(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SelectSkill(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SelectSkill(3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            SelectSkill(4);
         }
     }
 
-    void SelectSkill(SkillData.SkillList skill)
+    public void SelectSkill(SkillData.SkillList skill)
     {
         foreach (SkillData checkedSkill in skillList)
         {
@@ -164,79 +177,21 @@ public class Player : Entity
         }
     }
 
-    //void TargetSkill()
-    //{
-    //    if (selectedSkill != null)
-    //    {
-    //        switch (selectedSkill.skill)
-    //        {
-    //            case SkillData.SkillList.TELEPORT:
-    //                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    //                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
-    //                {
-    //                    Vector3 lookAt = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-    //                    transform.LookAt(lookAt);
-
-    //                    selectedSkill.DrawRangeIndicator(transform, selectedSkill.shape);
-
-    //                    if (Input.GetMouseButtonDown(0))
-    //                    {
-    //                        selectedSkill.currentlyCasting = true;
-    //                        playerState = PlayerState.SKILLCASTING;
-
-    //                        Debug.Log("Player started Casting a skill");
-    //                    }
-    //                }
-    //                break;
-
-    //            default:
-    //                break;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("While player is attempting to target skill; selectedSkill is null");
-    //    }
-    //}
-
-    //void CastSelectedSkill()
-    //{
-    //    if (selectedSkill != null)
-    //    {
-    //        if (selectedSkill.currentlyCasting)
-    //        {
-    //            Debug.Log("Skill being cast");
-    //            switch (selectedSkill.skill)
-    //            {
-    //                case SkillData.SkillList.TELEPORT:
-    //                    selectedSkill.CastSkill(transform, selectedSkill.shape);
-
-    //                    break;
-
-    //                default:
-    //                    selectedSkill.CastSkill(transform, selectedSkill.shape);
-
-    //                    break;
-    //            }
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("Skill finished cast");
-    //            navAgent.angularSpeed = turningSpeed;
-
-    //            pause.actionsLeft--;
-    //            playerState = PlayerState.FREE;
-    //            selectedSkill = null;
-
-                
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("While player is attempting to cast selected skill; selectedSkill is null");
-    //        playerState = PlayerState.FREE;
-    //    }
-    //}
+    void SelectSkill(int skillAtIndex)
+    {
+        // Are we allowed to access this index
+        if (skillAtIndex < skillList.Count)
+        {
+            // Is this skill on cooldown
+            SkillData checkedSkill = skillList[skillAtIndex];
+            if (checkedSkill.timeBeenOnCooldown >= checkedSkill.cooldown)
+            {
+                selectedSkill = skillList[skillAtIndex];
+                playerState = PlayerState.DOINGSKILL;
+            }
+            
+        }
+    }
 
     void InitialiseSkills()
     {
@@ -250,5 +205,6 @@ public class Player : Entity
     {
         selectedSkill = null;
         playerState = PlayerState.FREE;
+        navAgent.angularSpeed = turningSpeed;
     }
 }

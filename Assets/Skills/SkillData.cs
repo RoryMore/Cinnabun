@@ -20,7 +20,9 @@ public class SkillData : ScriptableObject
 
     public enum SkillList  // Go through different Skills with team - discuss. Only small amounts of discussion on skills have been had. Think about Skill tree as well. How many skills we'll have, what "category" they are, if they're all unlocked through the skill tree, or if they're unlocked by doing something in the world or killing something specific
     {
-        TELEPORT
+        TELEPORT,
+        DELAYEDBLAST,
+        REWIND
     }
 
     [Tooltip("The maximum distance the skill can be used at from the casters position")]
@@ -148,7 +150,7 @@ public class SkillData : ScriptableObject
         return false;
     }
 
-    protected virtual void SelectTargetRay(Transform zoneStart, ref Entity entityToSet)
+    protected virtual void SelectTargetRay(Transform zoneStart, ref Entity entityToSet, bool checkInRange = false)
     {
         if (entityToSet == null)
         {
@@ -159,9 +161,16 @@ public class SkillData : ScriptableObject
                 if (Physics.Raycast(ray, out RaycastHit hit, 400))
                 {
                     Debug.Log("Skill is raycasting");
-                    if (CheckInRange(zoneStart.position, hit.point))
+                    if (checkInRange)
                     {
-                        Debug.Log("Entity reference set for skill");
+                        if (CheckInRange(zoneStart.position, hit.point))
+                        {
+                            Debug.Log("Entity reference set for skill");
+                            entityToSet = hit.collider.gameObject.GetComponent<Entity>();
+                        }
+                    }
+                    else
+                    {
                         entityToSet = hit.collider.gameObject.GetComponent<Entity>();
                     }
                 }
@@ -169,7 +178,7 @@ public class SkillData : ScriptableObject
         }
     }
 
-    protected bool SelectTargetRay(Transform zoneStart, ref Vector3 pointToSet)
+    protected bool SelectTargetRay(Transform zoneStart, ref Vector3 pointToSet, bool checkInRange = false)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -177,9 +186,17 @@ public class SkillData : ScriptableObject
         {
             if (Physics.Raycast(ray, out RaycastHit hit, 400))
             {
-                if (CheckInRange(zoneStart.position, hit.point))
+                if (checkInRange)
                 {
-                    Debug.Log("Position reference set for skill");
+                    if (CheckInRange(zoneStart.position, hit.point))
+                    {
+                        Debug.Log("Position reference set for skill");
+                        pointToSet = hit.point;
+                        return true;
+                    }
+                }
+                else
+                {
                     pointToSet = hit.point;
                     return true;
                 }
@@ -190,7 +207,13 @@ public class SkillData : ScriptableObject
 
     protected virtual void CastSkill(Transform zoneStart) { }
 
+    protected virtual void CastSkill(Transform zoneStart, List<Entity> entityList) { }
+
     protected virtual void ActivateSkill() { }
 
+    protected virtual void ActivateSkill(List<Entity> entityList) { }
+
     public virtual void TargetSkill(Transform zoneStart) { }
+
+    public virtual void TargetSkill(Transform zoneStart, List<Entity> entityList) { }
 }
