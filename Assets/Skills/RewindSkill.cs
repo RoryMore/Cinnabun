@@ -56,7 +56,7 @@ public class RewindSkill : SkillData
     protected override void ActivateSkill()
     {
         timeBeenOnCooldown = 0.0f;
-        entity.rewind = true;
+        entity.RewindBack();
 
         entity = null;
     }

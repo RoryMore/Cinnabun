@@ -12,10 +12,9 @@ public class PauseAbility : MonoBehaviour
     public bool inBattle;
     bool isTimeStopped;
     public bool activatedAbility;
-    public bool unPaused;
 
     Player player;
-    public GameObject[] entity;
+    public List<Entity> entity;
 
     public enum GameStates
     {
@@ -38,7 +37,13 @@ public class PauseAbility : MonoBehaviour
     {
         // Find reference to the Player
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        entity = GameObject.FindGameObjectsWithTag("Enemy");
+
+        //Entity[] tempArr = GameObject.FindObjectsOfType<Entity>();
+        //for (int i = 0; i < tempArr.Length; i++)
+        //{ 
+        //    entity.Add(tempArr[i].GetComponent<Entity>());
+        //}
+        entity.AddRange(GameObject.FindObjectsOfType<Entity>());
     }
 
     // Update is called once per frame
@@ -113,9 +118,9 @@ public class PauseAbility : MonoBehaviour
           }
           else if (states == GameStates.TIMESTOP)
           {
-                unPaused = true;
                 states = GameStates.PLAY;
                 //unPaused = false;
+                clearAllList();
                 calculateTimeStop();
           }
         }
@@ -179,12 +184,20 @@ public class PauseAbility : MonoBehaviour
         if (actionsLeft == 0 && player.selectedSkill == null)
         {
             calculateTimeStop();
-            unPaused = true;
+            clearAllList();
             actionsLeft = maxActions;
             states = GameStates.PLAY;
         }
 
 
+    }
+
+    void clearAllList()
+    {
+        foreach (Entity checkedEntity in entity)
+        {
+            checkedEntity.ClearList();
+        }
     }
 
 }
