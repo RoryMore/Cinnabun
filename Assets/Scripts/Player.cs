@@ -75,6 +75,9 @@ public class Player : Entity
                     switch (selectedSkill.skill)
                     {
                         // Special skills that need different transform
+                        case SkillData.SkillList.DELAYEDBLAST:
+                            selectedSkill.TargetSkill(transform, currentEncounter.initiativeList);
+                            break;
 
                         default:
                             selectedSkill.TargetSkill(transform);
@@ -186,8 +189,9 @@ public class Player : Entity
             SkillData checkedSkill = skillList[skillAtIndex];
             if (checkedSkill.timeBeenOnCooldown >= checkedSkill.cooldown)
             {
-                selectedSkill = skillList[skillAtIndex];
-                playerState = PlayerState.DOINGSKILL;
+                 selectedSkill = skillList[skillAtIndex];
+                 playerState = PlayerState.DOINGSKILL;
+                
             }
             
         }
@@ -206,5 +210,12 @@ public class Player : Entity
         selectedSkill = null;
         playerState = PlayerState.FREE;
         navAgent.angularSpeed = turningSpeed;
+    }
+
+    //OVERLOADS
+    public override void Death()
+    {
+        isDead = true;
+        Debug.Log("Game Over! Player is dead!");
     }
 }

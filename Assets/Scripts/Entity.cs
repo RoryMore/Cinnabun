@@ -28,21 +28,16 @@ public class Entity : MonoBehaviour
     }
 
 
-    [Header("Health and Death")]
-
-    public int startingHealth = 100;
-    public int currentHealth;
+    [Header("Death")]
     public bool isDead;
 
     [Header("Level")]
-
     public int level;
     public int experience;
     [SerializeField] int xpToNextLevel;
     int[] levelBrackets;
 
     [Header("Stats")]
-
     public int strength;
     public int agility;
     public int constitution;
@@ -51,7 +46,6 @@ public class Entity : MonoBehaviour
     public int magicalArmour;
 
     [Header("Derived Stats")]
-    
     public int maxHP;
     public int currentHP;
     public int movementSpeed;
@@ -63,15 +57,16 @@ public class Entity : MonoBehaviour
     public int magDamageReduction;
 
     [Header("Conditions and Immunities")]
-
     public List<Condition> currentConditions;
     public bool cannotBeTeleported;
 
     [Header("Rewind Point")]
 
-
     //public RewindPoint rewindPoint;
     public List<RewindPoint> rewindPoints;
+
+    [Header("Encounter")]
+    public Encounter currentEncounter;
 
     // Start is called before the first frame update
     void Start()
@@ -120,9 +115,9 @@ public class Entity : MonoBehaviour
         if (isDead)
             return;
 
-        currentHealth -= amount;
+        currentHP -= amount;
 
-        if (currentHealth <= 0)
+        if (currentHP <= 0)
         {
             Death();
         }
@@ -167,6 +162,7 @@ public class Entity : MonoBehaviour
     void CalculateMaxHP()
     {
         maxHP = (6 + constitution) * level;
+        currentHP = maxHP;
     }
 
     void CalculateMovementSpeed()
@@ -211,7 +207,7 @@ public class Entity : MonoBehaviour
 
         CalculateAllDerivedStats();
 
-
+        isDead = false;
     }
 
     public void CalculateAllDerivedStats()
@@ -223,11 +219,27 @@ public class Entity : MonoBehaviour
         CalculatePhysDamagePotential();
     }
 
+
+    public List<Condition> ReturnConditions()
+    {
+        return currentConditions;
+    }
+
+    public Encounter ReturnEncounter()
+    {
+        return currentEncounter;
+    }
+
+    public void SetCurrentEncounter(Encounter encounter)
+    {
+        currentEncounter = encounter;
+    }
+
     public void RecordRewind()
     {
         RewindPoint temp;
 
-        temp.currentHealthRewind = currentHealth;
+        temp.currentHealthRewind = currentHP;
         temp.isDeadRewind = isDead;
         temp.locationRewind = transform;
         temp.currentConditionsRewind = currentConditions;
