@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    PauseAbility pause = null;
-
+    
     public struct Condition
     {
 
@@ -23,13 +22,10 @@ public class Entity : MonoBehaviour
     {
         public int currentHealthRewind;
         public bool isDeadRewind;
-        public Vector3 locationRewind;
-        public Quaternion rotationRewind;
+        public Transform locationRewind;
         public List<Condition> currentConditionsRewind;
 
     }
-
-    [HideInInspector] public bool rewind = false;
 
 
     [Header("Death")]
@@ -77,7 +73,7 @@ public class Entity : MonoBehaviour
     {
 
 
-      
+
         //How you give a condition
         //Condition delayedBlastTest = new Condition();
         //delayedBlastTest.duration = 5.0f;
@@ -160,7 +156,6 @@ public class Entity : MonoBehaviour
             }
         }
 
-        RecordRewind();
 
     }
 
@@ -193,9 +188,8 @@ public class Entity : MonoBehaviour
     public void InitialiseAll()
     {
         currentConditions = new List<Condition>();
-        pause = FindObjectOfType<PauseAbility>();
-        rewindPoints = new List<RewindPoint>();
         
+        rewindPoints = new List<RewindPoint>();
         Debug.Log("New return point made");
 
         //Make level brackets accurate
@@ -247,34 +241,14 @@ public class Entity : MonoBehaviour
 
         temp.currentHealthRewind = currentHP;
         temp.isDeadRewind = isDead;
-        temp.locationRewind = transform.position;
-        temp.rotationRewind = transform.rotation;
+        temp.locationRewind = transform;
         temp.currentConditionsRewind = currentConditions;
 
-      //  if (pause.unPaused == true)
-       // {
-            //rewindPoints.Add(temp);
-            rewindPoints.Add(temp);
-            //Debug.Log(temp.locationRewind);
-           // pause.unPaused = false;
-     //   }       
-    }
+        // add check to delete list contents if no longer needed
+        //if()
+        // rewindPoints.RemoveAt(rewindPoints.Count - 1);
 
-    public void RewindBack()
-    {
-        RewindPoint point = new RewindPoint();
-        point = rewindPoints[0];
-        //Debug.Log(point.locationRewind);
-        transform.position = point.locationRewind;
-       // transform.position = new Vector3(0, 0, 0);
-        rewind = false;
-
-    }
-
-    public void ClearList()
-    {
-        Debug.Log("Rewind List Cleared");
-        rewindPoints.Clear();
+        rewindPoints.Insert(0, temp);
     }
 
 }
