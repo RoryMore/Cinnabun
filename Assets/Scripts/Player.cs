@@ -211,4 +211,11 @@ public class Player : Entity
         playerState = PlayerState.FREE;
         navAgent.angularSpeed = turningSpeed;
     }
+
+    //OVERLOADS
+    public override void Death()
+    {
+        isDead = true;
+        Debug.Log("Game Over! Player is dead!");
+    }
 }
