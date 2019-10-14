@@ -36,14 +36,12 @@ public class Entity : MonoBehaviour
     public bool isDead;
 
     [Header("Level")]
-
     public int level;
     public int experience;
     [SerializeField] int xpToNextLevel;
     int[] levelBrackets;
 
     [Header("Stats")]
-
     public int strength;
     public int agility;
     public int constitution;
@@ -52,7 +50,6 @@ public class Entity : MonoBehaviour
     public int magicalArmour;
 
     [Header("Derived Stats")]
-    
     public int maxHP;
     public int currentHP;
     public int movementSpeed;
@@ -64,16 +61,16 @@ public class Entity : MonoBehaviour
     public int magDamageReduction;
 
     [Header("Conditions and Immunities")]
-
     public List<Condition> currentConditions;
     public bool cannotBeTeleported;
 
     [Header("Rewind Point")]
 
-
     //public RewindPoint rewindPoint;
     public List<RewindPoint> rewindPoints;
 
+    [Header("Encounter")]
+    public Encounter currentEncounter;
 
     // Start is called before the first frame update
     void Start()
@@ -216,6 +213,7 @@ public class Entity : MonoBehaviour
 
         CalculateAllDerivedStats();
 
+        isDead = false;
     }
 
     public void CalculateAllDerivedStats()
@@ -231,6 +229,16 @@ public class Entity : MonoBehaviour
     public List<Condition> ReturnConditions()
     {
         return currentConditions;
+    }
+
+    public Encounter ReturnEncounter()
+    {
+        return currentEncounter;
+    }
+
+    public void SetCurrentEncounter(Encounter encounter)
+    {
+        currentEncounter = encounter;
     }
 
     public void RecordRewind()

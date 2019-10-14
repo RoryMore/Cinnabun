@@ -12,7 +12,7 @@ public class SimpleEnemy : EnemyScript
     Transform target;
     public GameObject[] entity;
 
-    bool isAttacking = false;
+    //bool isAttacking = false;
 
     
 
@@ -22,10 +22,11 @@ public class SimpleEnemy : EnemyScript
     {
         InitialiseAll();
 
-        //GetComponent<Entity>().rewindPoint = new RewindPoint();
 
-
-        entity = GameObject.FindGameObjectsWithTag("Enemy");
+        //THIS ONLY WORKS WITH CURRENT HIARCHY OF ENCOUNTER, SPAWN POINT AND THEN THE ENEMY!
+        myEncounter = transform.parent.parent.GetComponent<Encounter>();
+
+
         nav = GetComponent<NavMeshAgent>();
     }
 
@@ -33,7 +34,7 @@ public class SimpleEnemy : EnemyScript
     {
 
         target = GameObject.Find("Player").transform;
-        //skillList[0].rangeIndicator.Init(skillList[0].shape, skillList[0].angleWidth);
+
         skillList[0].Initialise();
 
         //foreach (SkillData skill in skillList)
@@ -58,36 +59,33 @@ public class SimpleEnemy : EnemyScript
 
     void Update()
     {
-        Movement();
-        UpdateAllConditions();
-
+        if (!isDead)
+        {
+            Movement();
+            UpdateAllConditions();
+
+
+
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                skillList[0].currentlyCasting = true;
+                //simpleBasicAttack.currentlyCasting = true;
+
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                TakeDamage(10000);
+            }
+
+
+            if (skillList[0].currentlyCasting == true)
+            {
+                skillList[0].TargetSkill(transform);
+                //skillList[0].CastSkill(transform);
+            }
+        }
         
-        
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            skillList[0].currentlyCasting = true;
-            //simpleBasicAttack.currentlyCasting = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            //print(rewindPoint.locationRewind.position.x);
-            //SaveRewindPoint();
-            
-            Debug.Log("Saved Point");
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            //LoadRewindPoint();
-            Debug.Log("Loaded Point");
-        }
-
-        if (skillList[0].currentlyCasting == true)
-        {
-            skillList[0].TargetSkill(transform);
-            //skillList[0].CastSkill(transform);
-        }
 
     }
 
@@ -95,8 +93,9 @@ public class SimpleEnemy : EnemyScript
     public void Movement()
     {
         nav.SetDestination(target.transform.position);
-
     }
+
+    
 
   
 

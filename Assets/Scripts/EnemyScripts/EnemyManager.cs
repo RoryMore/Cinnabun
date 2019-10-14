@@ -4,57 +4,67 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    public GameObject player;
+    public List<Encounter> encounters;
+
+    /*Each group of enemies is handled by their own personal "Encounter" manager. The enemy manager handles the
+    Global functions of managing the encounters themselves, disabling them and enabling them as required*/
+   
+
     //List all the types of enemies we want to be able to manage
-    public GameObject meleeEnemy;
-    public GameObject rangedEnemy;
-    public GameObject healerEnemy;
 
-    public List<GameObject> initiativeList;
-    public List<GameObject> healList;
-
-    public List<GameObject> spawnPoints;
     
     // Start is called before the first frame update
     void Start()
     {
-
-        foreach (GameObject location in spawnPoints)
+        foreach (Encounter encounter in encounters)
         {
-            if (location.name.Contains("MeleeSpawnPoint"))
-            {
-                Instantiate(meleeEnemy, location.transform);
-                
-            }
-            else if (location.name.Contains("RangedSpawnPoint"))
-            {
-                Instantiate(rangedEnemy, location.transform);
-            }
-            else if (location.name.Contains("HealerSpawnPoint"))
-            {
-                Instantiate(healerEnemy, location.transform);
-            }
+            encounter.enemyManager = this;
         }
-
-        initiativeList = new List<GameObject>();
-        //initiativeList.AddRange(GameObject.Find());
-        healList = new List<GameObject>();
-    
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateActiveEncounters();
+
     }
 
-    public void EnemyGotHurt(GameObject enemy)
+    public void UpdateActiveEncounters()
     {
-        healList.Add(enemy);
+        foreach (Encounter encounter in encounters)
+        {
+            float encounterDistance = Vector3.Distance(encounter.gameObject.transform.position, player.transform.position);
+            if (encounterDistance > 50) //Magic number, it really only needs to be the distance that covers the maximum zoo
+            {
+                encounter.gameObject.SetActive(false);
+            }
+            else
+            {
+                encounter.gameObject.SetActive(true);
+                player.GetComponent<Player>().SetCurrentEncounter(encounter);
+            }
+        }
     }
 
-    public void EnemyNoLongerNeedHealed(GameObject enemy)
+    public void CheckVictory()
     {
-        healList.Remove(enemy);
+        int numOfClearedEncounters = 0;
+
+        foreach (Encounter encounter in encounters)
+        {
+            if (encounter.cleared == true)
+            {
+                numOfClearedEncounters++;
+            }
+        }
+        if (numOfClearedEncounters == encounters.Count)
+        {
+            //You Won!
+            Debug.Log("You win!");
+        }
+
     }
+
 }
