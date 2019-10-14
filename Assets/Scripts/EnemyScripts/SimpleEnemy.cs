@@ -10,6 +10,7 @@ public class SimpleEnemy : EnemyScript
     
 
     Transform target;
+    public GameObject[] entity;
 
     //bool isAttacking = false;
 
@@ -23,9 +24,9 @@ public class SimpleEnemy : EnemyScript
 
 
         //THIS ONLY WORKS WITH CURRENT HIARCHY OF ENCOUNTER, SPAWN POINT AND THEN THE ENEMY!
-        myEncounter = transform.parent.parent.GetComponent<Encounter>();
-
-
+        myEncounter = transform.parent.parent.GetComponent<Encounter>();
+
+
         nav = GetComponent<NavMeshAgent>();
     }
 
@@ -58,31 +59,31 @@ public class SimpleEnemy : EnemyScript
 
     void Update()
     {
-        if (!isDead)
-        {
-            Movement();
-            UpdateAllConditions();
-
-
-
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                skillList[0].currentlyCasting = true;
-                //simpleBasicAttack.currentlyCasting = true;
-
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                TakeDamage(10000);
-            }
-
-
-            if (skillList[0].currentlyCasting == true)
-            {
-                skillList[0].TargetSkill(transform);
-                //skillList[0].CastSkill(transform);
-            }
+        if (!isDead)
+        {
+            Movement();
+            UpdateAllConditions();
+
+
+
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                skillList[0].currentlyCasting = true;
+                //simpleBasicAttack.currentlyCasting = true;
+
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                TakeDamage(10000);
+            }
+
+
+            if (skillList[0].currentlyCasting == true)
+            {
+                skillList[0].TargetSkill(transform);
+                //skillList[0].CastSkill(transform);
+            }
         }
         
 

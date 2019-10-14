@@ -9,16 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf210544db5280c449cbdae504831d6d, type: 3}
-  m_Name: ExampleSkill1
+  m_Script: {fileID: 11500000, guid: 8be064a4f024c8f488c761e915d8d217, type: 3}
+  m_Name: RewindSkill
   m_EditorClassIdentifier: 
-  range: 10
-  cooldown: 0
-  timeBeenOnCooldown: 0
+  range: 20
+  cooldown: 2
+  timeBeenOnCooldown: 2
   windUp: 1
   timeSpentOnWindUp: 0
   shape: 0
-  angleWidth: 35
+  angleWidth: 360
   skill: 0
   baseDamage: 0
   damageType: 0

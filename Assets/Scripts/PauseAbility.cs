@@ -8,12 +8,13 @@ public class PauseAbility : MonoBehaviour
     public int actionsLeft = 2;
     [SerializeField] int maxActions = 2;
     public float timeStopCoolDown;
-    public float abilityCastTime = 0;
+    //public float abilityCastTime = 0;
     public bool inBattle;
     bool isTimeStopped;
     public bool activatedAbility;
 
     Player player;
+    public List<Entity> entity;
 
     public enum GameStates
     {
@@ -28,6 +29,7 @@ public class PauseAbility : MonoBehaviour
     void Start()
     {
        pauseMenu = FindObjectOfType<PauseMenuUI>();
+       //entity = FindObjectOfType<Entity>();
        states = GameStates.PLAY;
     }
 
@@ -35,6 +37,13 @@ public class PauseAbility : MonoBehaviour
     {
         // Find reference to the Player
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
+        //Entity[] tempArr = GameObject.FindObjectsOfType<Entity>();
+        //for (int i = 0; i < tempArr.Length; i++)
+        //{ 
+        //    entity.Add(tempArr[i].GetComponent<Entity>());
+        //}
+        entity.AddRange(GameObject.FindObjectsOfType<Entity>());
     }
 
     // Update is called once per frame
@@ -80,7 +89,7 @@ public class PauseAbility : MonoBehaviour
 
         checkAbilityCastTime();
         checkTimeStopOnCoolDown();
-        //test();
+        test();
     }
 
     void test()
@@ -91,7 +100,7 @@ public class PauseAbility : MonoBehaviour
             {
                 actionsLeft -= 1;
                 //abilityCastTime = 1;
-                states = GameStates.PLAY;
+                //states = GameStates.PLAY;
                 //activatedAbility = true;
 
             }
@@ -110,6 +119,8 @@ public class PauseAbility : MonoBehaviour
           else if (states == GameStates.TIMESTOP)
           {
                 states = GameStates.PLAY;
+                //unPaused = false;
+                clearAllList();
                 calculateTimeStop();
           }
         }
@@ -148,11 +159,6 @@ public class PauseAbility : MonoBehaviour
 
     void checkAbilityCastTime()
     {
-        //if (abilityCastTime >= 0)
-        //{
-        //    abilityCastTime -= Time.deltaTime;
-        //}
-
         
         if (actionsLeft > 0)
         {
@@ -166,25 +172,32 @@ public class PauseAbility : MonoBehaviour
                 // Else stop again
                 else
                 {
+                    //rewind state time stamp
+                   //entity.RecordRewind();
                     states = GameStates.TIMESTOP;
+
                     //activatedAbility = false;
                 }
             }
         }
-        
-
-        //if (abilityCastTime <= 0)
-        //{
-        //    activatedAbility = false;
-        //}
 
         if (actionsLeft == 0 && player.selectedSkill == null)
         {
             calculateTimeStop();
+            clearAllList();
             actionsLeft = maxActions;
-           
+            states = GameStates.PLAY;
         }
 
+
+    }
+
+    void clearAllList()
+    {
+        foreach (Entity checkedEntity in entity)
+        {
+            checkedEntity.ClearList();
+        }
     }
 
 }
