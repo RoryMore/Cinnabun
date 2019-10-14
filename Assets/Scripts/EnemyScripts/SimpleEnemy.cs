@@ -65,14 +65,14 @@ public class SimpleEnemy : EnemyScript
 
 
 
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            if (Input.GetKeyDown(KeyCode.Alpha8))
             {
                 skillList[0].currentlyCasting = true;
                 //simpleBasicAttack.currentlyCasting = true;
 
             }
 
-            if (Input.GetKeyDown(KeyCode.Alpha3))
+            if (Input.GetKeyDown(KeyCode.Alpha9))
             {
                 TakeDamage(10000);
             }
