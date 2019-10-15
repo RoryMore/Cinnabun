@@ -61,7 +61,18 @@ public class SkillData : ScriptableObject
     [HideInInspector]
     public bool currentlyCasting = false;
 
-    public void Initialise()
+    public virtual void Initialise()
+    {
+        rangeIndicator = new RangeIndicator();
+        rangeIndicator.Init(shape, angleWidth);
+        rangeIndicator.indicatorMaterial = indicatorMaterial;
+
+        timeBeenOnCooldown = cooldown;
+        timeSpentOnWindUp = 0.0f;
+    }
+
+    // This virtual method is only used by the players WeaponAttack skill to make sure they can't punch themselves
+    public virtual void Initialise(Entity ownCaster)
     {
         rangeIndicator = new RangeIndicator();
         rangeIndicator.Init(shape, angleWidth);
@@ -138,6 +149,12 @@ public class SkillData : ScriptableObject
         //}
     }
 
+    // Used to draw an outline circle, instead of a filled circle
+    protected void DrawRangeIndicator(Transform zoneStart, SkillShape shape, float maxRange, float angle)
+    {
+        rangeIndicator.DrawIndicator(zoneStart, angle, 0.0f, maxRange);
+    }
+
     public bool CheckInRange(Vector3 castPosition, Vector3 targetPosition)
     {
         // If the targets position is within the range of the skill,
@@ -210,6 +227,8 @@ public class SkillData : ScriptableObject
     protected virtual void CastSkill(Transform zoneStart, List<Entity> entityList) { }
 
     protected virtual void ActivateSkill() { }
+
+    protected virtual void ActivateSkill(Transform zoneStart, List<Entity> entityList) { }
 
     protected virtual void ActivateSkill(List<Entity> entityList) { }
 

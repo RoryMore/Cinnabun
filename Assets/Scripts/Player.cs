@@ -15,6 +15,7 @@ public class Player : Entity
     public PlayerState playerState;
 
     [Header("Skills & Casting")]
+    public WeaponAttack weaponAttack;
     public List<SkillData> skillList;
     [HideInInspector] public SkillData selectedSkill = null;
 
@@ -108,6 +109,10 @@ public class Player : Entity
 
     void UpdateSkillCooldowns()
     {
+        if (weaponAttack != null)
+        {
+            weaponAttack.ProgressCooldown();
+        }
         foreach (SkillData checkedSkill in skillList)
         {
             checkedSkill.ProgressCooldown();
@@ -138,7 +143,15 @@ public class Player : Entity
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             //SelectSkill(SkillData.SkillList.TELEPORT);
-            SelectSkill(0);
+            //SelectSkill(0);
+            if (weaponAttack != null)
+            {
+                if (weaponAttack.timeBeenOnCooldown >= weaponAttack.cooldown)
+                {
+                    selectedSkill = weaponAttack;
+                    playerState = PlayerState.DOINGSKILL;
+                }
+            }
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -173,6 +186,16 @@ public class Player : Entity
                         playerState = PlayerState.DOINGSKILL;
                         break;
 
+                    case SkillData.SkillList.DELAYEDBLAST:
+                        selectedSkill = checkedSkill;
+                        playerState = PlayerState.DOINGSKILL;
+                        break;
+
+                    case SkillData.SkillList.REWIND:
+                        selectedSkill = checkedSkill;
+                        playerState = PlayerState.DOINGSKILL;
+                        break;
+
                     default:
                         break;
                 }
@@ -191,7 +214,6 @@ public class Player : Entity
             {
                  selectedSkill = skillList[skillAtIndex];
                  playerState = PlayerState.DOINGSKILL;
-                
             }
             
         }
