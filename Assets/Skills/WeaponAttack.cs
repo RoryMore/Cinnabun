@@ -267,5 +267,14 @@ public class WeaponAttack : SkillData
     public void WeaponChange(UsedWeaponType newUsedWeapon)
     {
         usedWeapon = newUsedWeapon;
+
+        if (usedWeapon == UsedWeaponType.Staff)
+        {
+            damageType = DamageType.MAGICAL;
+        }
+        else
+        {
+            damageType = DamageType.PHYSICAL;
+        }
     }
 }
