@@ -20,6 +20,7 @@ public class Player : Entity
     [HideInInspector] public SkillData selectedSkill = null;
 
     PauseAbility pause = null;
+    PauseMenuUI pauseMenu = null;
 
     [Header("Navigation")]
     public float turningSpeed;
@@ -36,13 +37,12 @@ public class Player : Entity
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.speed = movementSpeed;
         playerState = PlayerState.FREE;
-
-
     }
 
     private void Awake()
     {
         pause = FindObjectOfType<PauseAbility>();
+        pauseMenu = FindObjectOfType<PauseMenuUI>();
         InitialiseSkills();
     }
 
@@ -57,7 +57,20 @@ public class Player : Entity
             switch (playerState)
             {
                 case PlayerState.FREE:  // Player can move, and if in combat can receive input for selecting a skill
-                    Move();
+                    // If the game is paused. Player destination remains unchanged
+                    if (pauseMenu != null)
+                    {
+                        if (!pauseMenu.isPaused)
+                        {
+                            RotateWeapons();
+                            Move();
+                        }
+                    }
+                    else
+                    {
+                        RotateWeapons();
+                        Move();
+                    }
 
                     // Player can only select a skill to use if they have paused
                     if (pause.states == PauseAbility.GameStates.TIMESTOP)
@@ -81,7 +94,15 @@ public class Player : Entity
                             break;
 
                         default:
-                            selectedSkill.TargetSkill(transform);
+                            if (selectedSkill == weaponAttack)
+                            {
+                                // Need a current entity list to put into function parameter
+                                selectedSkill.TargetSkill(transform, currentEncounter.initiativeList);
+                            }
+                            else
+                            {
+                                selectedSkill.TargetSkill(transform);
+                            }
                             
                             break;
                     }
@@ -206,13 +227,13 @@ public class Player : Entity
     void SelectSkill(int skillAtIndex)
     {
         // Are we allowed to access this index
-        if (skillAtIndex < skillList.Count)
+        if (skillAtIndex-1 < skillList.Count)
         {
             // Is this skill on cooldown
-            SkillData checkedSkill = skillList[skillAtIndex];
+            SkillData checkedSkill = skillList[skillAtIndex-1];
             if (checkedSkill.timeBeenOnCooldown >= checkedSkill.cooldown)
             {
-                 selectedSkill = skillList[skillAtIndex];
+                 selectedSkill = skillList[skillAtIndex-1];
                  playerState = PlayerState.DOINGSKILL;
             }
             
@@ -221,6 +242,7 @@ public class Player : Entity
 
     void InitialiseSkills()
     {
+        weaponAttack.Initialise(this);
         foreach (SkillData checkedSkill in skillList)
         {
             checkedSkill.Initialise();
@@ -239,5 +261,37 @@ public class Player : Entity
     {
         isDead = true;
         Debug.Log("Game Over! Player is dead!");
+    }
+
+    void RotateWeapons()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            switch (weaponAttack.usedWeapon)
+            {
+                case WeaponAttack.UsedWeaponType.Unarmed:
+                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Sword);
+                    Debug.Log("Cinnabun starts using her Sword");
+                    break;
+
+                case WeaponAttack.UsedWeaponType.Sword:
+                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Staff);
+                    Debug.Log("Cinnabun put away her Sword, and starts using her Staff");
+                    break;
+
+                case WeaponAttack.UsedWeaponType.Staff:
+                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Bow);
+                    Debug.Log("Cinnabun put away her Staff, and starts using her Bow");
+                    break;
+
+                case WeaponAttack.UsedWeaponType.Bow:
+                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Unarmed);
+                    Debug.Log("Cinnabun put away her Bow, and starts fighting mano e mano");
+                    break;
+                default:
+                    break;
+            }
+            
+        }
     }
 }
