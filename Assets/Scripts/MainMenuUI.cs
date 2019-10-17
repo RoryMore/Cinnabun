@@ -11,7 +11,8 @@ public class MainMenuUI : MonoBehaviour
 
     void OnClickPlay()
     {
-        SceneManager.LoadScene("AITestScene");
+        // This is often changed with each feedback build. Keep an eye
+        SceneManager.LoadScene(1);
         Time.timeScale = 1;
     }
 
