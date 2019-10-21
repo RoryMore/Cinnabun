@@ -6,6 +6,7 @@ public class EnemyManager : MonoBehaviour
 {
     public GameObject player;
     public List<Encounter> encounters;
+    public float maxEncounterDistance;
 
     /*Each group of enemies is handled by their own personal "Encounter" manager. The enemy manager handles the
     Global functions of managing the encounters themselves, disabling them and enabling them as required*/
@@ -36,7 +37,7 @@ public class EnemyManager : MonoBehaviour
         foreach (Encounter encounter in encounters)
         {
             float encounterDistance = Vector3.Distance(encounter.gameObject.transform.position, player.transform.position);
-            if (encounterDistance > 50) //Magic number, it really only needs to be the distance that covers the maximum zoo
+            if (encounterDistance > maxEncounterDistance) //Magic number, it really only needs to be the distance that covers the maximum zoo
             {
                 encounter.gameObject.SetActive(false);
             }
