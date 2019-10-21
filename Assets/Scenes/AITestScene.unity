@@ -145,6 +145,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 818675403}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &358196475 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8187559357226828736, guid: 9c7804f169ce850459f8932636069698,
+    type: 3}
+  m_PrefabInstance: {fileID: 243670664}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &451752867
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -156,11 +162,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PauseMenuUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 839651118510784212, guid: fb54e2a727e82a04a9af8bd552a44527,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4861002703094385501, guid: fb54e2a727e82a04a9af8bd552a44527,
         type: 3}
@@ -220,10 +221,6 @@ PrefabInstance:
     - target: {fileID: 6280323003878653220, guid: fb54e2a727e82a04a9af8bd552a44527,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1919330310, guid: fb54e2a727e82a04a9af8bd552a44527, type: 3}
-      propertyPath: timeStopCoolDown
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -248,7 +248,19 @@ public class Entity : MonoBehaviour
         //if()
         // rewindPoints.RemoveAt(rewindPoints.Count - 1);
 
-        rewindPoints.Insert(0, temp);
+    public void RewindBack()
+    {
+        RewindPoint point = new RewindPoint();
+        point = rewindPoints[0];
+        //Debug.Log(point.locationRewind);
+        transform.position = point.locationRewind;
+        currentHP = point.currentHealthRewind;
+        isDead = point.isDeadRewind;
+        currentConditions = point.currentConditionsRewind;
+        transform.rotation = point.rotationRewind;
+       // transform.position = new Vector3(0, 0, 0);
+        rewind = false;
+
     }
 
 }
