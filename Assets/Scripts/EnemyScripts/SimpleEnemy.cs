@@ -91,7 +91,16 @@ public class SimpleEnemy : EnemyScript
 
     public void Movement()
     {
-        nav.SetDestination(target.transform.position);
+        if (Vector3.Distance(myEncounter.gameObject.transform.position, target.transform.position) > myEncounter.enemyManager.maxEncounterDistance * 0.5)
+        {
+            //Return home
+            nav.SetDestination(myEncounter.gameObject.transform.position);
+        }
+        else
+        {
+            nav.SetDestination(target.transform.position);
+        }
+        
     }
 
     

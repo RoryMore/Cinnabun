@@ -11,7 +11,9 @@ public class PauseAbility : MonoBehaviour
     public float abilityCastTime = 0;
     public bool inBattle;
     bool isTimeStopped;
-    public bool activatedAbility;
+    public bool takeingTurn;
+
+    public List<Entity> entity;
 
     Player player;
 
@@ -35,6 +37,9 @@ public class PauseAbility : MonoBehaviour
     {
         // Find reference to the Player
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
+        entity.AddRange(GameObject.FindObjectsOfType<Entity>());
+
     }
 
     // Update is called once per frame
@@ -80,23 +85,8 @@ public class PauseAbility : MonoBehaviour
 
         checkAbilityCastTime();
         checkTimeStopOnCoolDown();
-        //test();
     }
 
-    void test()
-    {
-        if (states == GameStates.TIMESTOP)
-        {
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                actionsLeft -= 1;
-                //abilityCastTime = 1;
-                states = GameStates.PLAY;
-                //activatedAbility = true;
-
-            }
-        }
-    }
 
     void TimeStop()
     {
@@ -110,8 +100,10 @@ public class PauseAbility : MonoBehaviour
           else if (states == GameStates.TIMESTOP)
           {
                 states = GameStates.PLAY;
+                clearAllList();
                 calculateTimeStop();
-          }
+                takeingTurn = false;
+            }
         }
     }
 
@@ -157,34 +149,52 @@ public class PauseAbility : MonoBehaviour
         if (actionsLeft > 0)
         {
             if (player.selectedSkill != null)
-            {
-                // If the player is casting
-                if (player.selectedSkill.currentlyCasting)
-                {
-                    states = GameStates.PLAY;
-                }
-                // Else stop again
-                else
-                {
-                    states = GameStates.TIMESTOP;
-                    //activatedAbility = false;
-                }
-            }
+              {
+                  if (player.selectedSkill.currentlyCasting)
+                   {
+                       states = GameStates.PLAY;
+                       takeingTurn = true;
+                   }
+               }
+               else if (takeingTurn == true)
+               {
+                states = GameStates.TIMESTOP;
+               }
         }
         
 
-        //if (abilityCastTime <= 0)
-        //{
-        //    activatedAbility = false;
-        //}
+          //  if (takeingTurn == true)
+          // {
+         //       states = GameStates.TIMESTOP;
+        //    }
+
 
         if (actionsLeft == 0 && player.selectedSkill == null)
         {
             calculateTimeStop();
+            clearAllList();
             actionsLeft = maxActions;
-           
+            states = GameStates.PLAY;
+            takeingTurn = false;
         }
 
     }
 
+    void clearAllList()
+    {
+        //foreach (Entity checkedEntity in entity)
+        //{
+        //    checkedEntity.ClearList();
+        //}
+
+        // For our current encounter (other entities are irrelevant)
+        // Clear the rewind points
+        foreach (Entity checkedEntity in Entity.currentEncounter.initiativeList)
+        {
+            checkedEntity.ClearList();
+        }
+        // Player isn't held in encounter
+        // Clear player rewindpoints
+        player.ClearList();
+    }
 }
