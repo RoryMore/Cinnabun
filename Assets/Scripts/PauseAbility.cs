@@ -95,7 +95,7 @@ public class PauseAbility : MonoBehaviour
           else if (states == GameStates.TIMESTOP)
           {
                 states = GameStates.PLAY;
-                clearAllList();
+                //clearAllList();
                 calculateTimeStop();
                 takeingTurn = false;
             }

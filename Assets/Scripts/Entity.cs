@@ -27,6 +27,7 @@ public class Entity : MonoBehaviour
 
     }
 
+    [HideInInspector] public bool rewind;
 
     [Header("Death")]
     public bool isDead;
@@ -247,17 +248,17 @@ public class Entity : MonoBehaviour
         // add check to delete list contents if no longer needed
         //if()
         // rewindPoints.RemoveAt(rewindPoints.Count - 1);
-
+    }
     public void RewindBack()
     {
         RewindPoint point = new RewindPoint();
         point = rewindPoints[0];
         //Debug.Log(point.locationRewind);
-        transform.position = point.locationRewind;
+        transform.position = point.locationRewind.position;
         currentHP = point.currentHealthRewind;
         isDead = point.isDeadRewind;
         currentConditions = point.currentConditionsRewind;
-        transform.rotation = point.rotationRewind;
+        transform.rotation = point.locationRewind.rotation;
        // transform.position = new Vector3(0, 0, 0);
         rewind = false;
 
