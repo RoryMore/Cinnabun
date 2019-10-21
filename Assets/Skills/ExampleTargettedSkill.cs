@@ -87,5 +87,6 @@ public class ExampleTargettedSkill : SkillData
         // and reset any necessary values
         entityTarget1 = null;
         teleportLocation = Vector3.zero;
+        destination1Set = false;
     }
 }
