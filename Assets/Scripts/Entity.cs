@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    PauseAbility pause = null;
-
+    
     public struct Condition
     {
 
@@ -24,26 +23,23 @@ public class Entity : MonoBehaviour
         public int currentHealthRewind;
         public bool isDeadRewind;
         public Vector3 locationRewind;
-        public Quaternion rotationRewind;
+        public Quaternion rotaionRewind;
         public List<Condition> currentConditionsRewind;
 
     }
 
     [HideInInspector] public bool rewind = false;
 
-
     [Header("Death")]
     public bool isDead;
 
     [Header("Level")]
-
     public int level;
     public int experience;
     [SerializeField] int xpToNextLevel;
     int[] levelBrackets;
 
     [Header("Stats")]
-
     public int strength;
     public int agility;
     public int constitution;
@@ -52,7 +48,6 @@ public class Entity : MonoBehaviour
     public int magicalArmour;
 
     [Header("Derived Stats")]
-    
     public int maxHP;
     public int currentHP;
     public int movementSpeed;
@@ -64,23 +59,23 @@ public class Entity : MonoBehaviour
     public int magDamageReduction;
 
     [Header("Conditions and Immunities")]
-
     public List<Condition> currentConditions;
     public bool cannotBeTeleported;
 
     [Header("Rewind Point")]
 
-
     //public RewindPoint rewindPoint;
     public List<RewindPoint> rewindPoints;
 
+    [Header("Encounter")]
+    public static Encounter currentEncounter;
 
     // Start is called before the first frame update
     void Start()
     {
 
 
-      
+
         //How you give a condition
         //Condition delayedBlastTest = new Condition();
         //delayedBlastTest.duration = 5.0f;
@@ -164,7 +159,6 @@ public class Entity : MonoBehaviour
         }
 
         RecordRewind();
-
     }
 
     void CalculateMaxHP()
@@ -196,10 +190,9 @@ public class Entity : MonoBehaviour
     public void InitialiseAll()
     {
         currentConditions = new List<Condition>();
-        pause = FindObjectOfType<PauseAbility>();
+        
         rewindPoints = new List<RewindPoint>();
         
-        Debug.Log("New return point made");
 
         //Make level brackets accurate
         levelBrackets = new int[10];
@@ -216,6 +209,7 @@ public class Entity : MonoBehaviour
 
         CalculateAllDerivedStats();
 
+        isDead = false;
     }
 
     public void CalculateAllDerivedStats()
@@ -233,6 +227,16 @@ public class Entity : MonoBehaviour
         return currentConditions;
     }
 
+    public Encounter ReturnEncounter()
+    {
+        return currentEncounter;
+    }
+
+    public void SetCurrentEncounter(Encounter encounter)
+    {
+        currentEncounter = encounter;
+    }
+
     public void RecordRewind()
     {
         RewindPoint temp;
@@ -240,28 +244,21 @@ public class Entity : MonoBehaviour
         temp.currentHealthRewind = currentHP;
         temp.isDeadRewind = isDead;
         temp.locationRewind = transform.position;
-        temp.rotationRewind = transform.rotation;
+        temp.rotaionRewind = transform.rotation;
         temp.currentConditionsRewind = currentConditions;
 
-      //  if (pause.unPaused == true)
-       // {
-            //rewindPoints.Add(temp);
-            rewindPoints.Add(temp);
-            //Debug.Log(temp.locationRewind);
-           // pause.unPaused = false;
-     //   }       
+        rewindPoints.Add(temp);
     }
-
     public void RewindBack()
     {
         RewindPoint point = new RewindPoint();
         point = rewindPoints[0];
-        //Debug.Log(point.locationRewind);
+        Debug.Log(point.locationRewind);
         transform.position = point.locationRewind;
         currentHP = point.currentHealthRewind;
         isDead = point.isDeadRewind;
         currentConditions = point.currentConditionsRewind;
-        transform.rotation = point.rotationRewind;
+        transform.rotation = point.rotaionRewind;
        // transform.position = new Vector3(0, 0, 0);
         rewind = false;
 
@@ -269,8 +266,7 @@ public class Entity : MonoBehaviour
 
     public void ClearList()
     {
-        Debug.Log("Rewind List Cleared");
+        Debug.Log("List clear!");
         rewindPoints.Clear();
     }
-
 }

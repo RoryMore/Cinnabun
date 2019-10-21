@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/RewindSkill", order = 1)]
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Rewind", order = 1)]
 
 
-public class RewindSkill : SkillData
+public class Rewind : SkillData
 {
 
     Entity entity = null;
@@ -25,7 +25,7 @@ public class RewindSkill : SkillData
 
             DrawRangeIndicator(zoneStart, shape);
             SelectTargetRay(zoneStart, ref entity);
-            
+
         }
         else
         {

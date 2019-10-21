@@ -9,7 +9,10 @@ public class DelayedBlast : SkillData
     Entity entityTarget1 = null;
     int numOfDelayedBlasts = 0;
 
-    public override void TargetSkill(Transform zoneStart)
+    public float explosionRadius;
+    
+
+    public override void TargetSkill(Transform zoneStart, List<Entity> entityList)
     {
         // Entity is not set; therefore we need to wait until the user has set the entity
         if (entityTarget1 == null)
@@ -34,12 +37,12 @@ public class DelayedBlast : SkillData
         else if (entityTarget1 != null)
         {
             // Start casting the skill
-            CastSkill(zoneStart);
+            CastSkill(zoneStart, entityList);
         }
 
     }
 
-    protected override void CastSkill(Transform zoneStart)
+    protected override void CastSkill(Transform zoneStart, List<Entity> entityList)
     {
         currentlyCasting = true;
 
@@ -55,12 +58,12 @@ public class DelayedBlast : SkillData
         if (timeSpentOnWindUp >= windUp)
         {
             currentlyCasting = false;
-            ActivateSkill();
+            ActivateSkill(entityList);
             timeSpentOnWindUp = 0.0f;
         }
     }
 
-    protected override void ActivateSkill()
+    protected override void ActivateSkill(List<Entity> entityList)
     {
         timeBeenOnCooldown = 0.0f;
         numOfDelayedBlasts = 0;
@@ -75,8 +78,6 @@ public class DelayedBlast : SkillData
             Debug.Log("Tick tick tick...");
             entityTarget1 = null;
 
-
-
         }
         else
         {
@@ -86,15 +87,35 @@ public class DelayedBlast : SkillData
                 if (entityTarget1.currentConditions[i].conditionType == Entity.ConditionType.DELAYEDBLAST)
                 {
                     entityTarget1.currentConditions.Remove(entityTarget1.currentConditions[i]);
-                    entityTarget1.TakeDamage(baseDamage);
+                    //entityTarget1.TakeDamage(baseDamage);
+
+                    if (entityList != null)
+                    {
+ 
+                        //Deal splash damage to enemies
+                        rangeIndicator.DrawIndicator(entityTarget1.transform, 360, 0, explosionRadius);
+                        foreach (Entity enemy in entityList)
+                        {
+                            //Make sure we don't deal double damage
+                            //if (enemy == entityTarget1)
+                            //{
+                                //break;
+                            //}
+                            if (Vector3.Distance(enemy.transform.position, entityTarget1.transform.position) < explosionRadius)
+                            {
+                                enemy.TakeDamage(baseDamage);
+                            }
+                        }
+
+                    }
+
+
                     numOfDelayedBlasts++;
                     Debug.Log("BOOM!");
                     entityTarget1 = null;
                     break;
                 }
-                
             }
-            
 
             if (numOfDelayedBlasts == 0)
             {
@@ -105,7 +126,6 @@ public class DelayedBlast : SkillData
             Debug.Log("Tick tick tick...");
             entityTarget1 = null;
             }
-
         }
     }
 }

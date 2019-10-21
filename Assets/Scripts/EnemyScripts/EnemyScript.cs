@@ -34,6 +34,8 @@ public class EnemyScript : Entity
 
     
     public EnemyManager enemyManager;
+
+    public Encounter myEncounter;
     
 
 
@@ -52,7 +54,7 @@ public class EnemyScript : Entity
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     //Every time the enemy is unable to act on their turn, simply reset their initiative with a slight stacking advantage
@@ -63,8 +65,6 @@ public class EnemyScript : Entity
     }
 
 
- 
-
     public void FaceTarget(Transform target)
     {
         var step = turnSpeed * Time.deltaTime;
@@ -74,15 +74,33 @@ public class EnemyScript : Entity
 
     }
 
-    //Take Damage
-    //enemyManager.healList.Add(this.gameObject);
-    //anim.SetTrigger("damaged");
+    public override void TakeDamage(int amount)
+    {
+        Debug.Log("OOF x " + amount);
+        if (isDead)
+            return;
 
-    //Death
-    //anim.SetTrigger("Dead");
-    //enemyManager.healList.Remove(this.gameObject);
-    //enemyManager.initiativeList.Remove(this.gameObject);
-    //nav.enabled = false;
+        currentHP -= amount;
+        myEncounter.healList.Add(this);
+        //anim.SetTrigger("damaged");
+
+        if (currentHP <= 0)
+        {
+            Death();
+        }
+    }
+
+    public override void Death()
+    {
+        isDead = true;
+        //anim.SetTrigger("Dead");
+        //Ensure that the target is no longer in the initiative 
+        myEncounter.initiativeList.Remove(this);
+        myEncounter.healList.Remove(this);
+        nav.enabled = false;
+    }
+
+
 
 }
 

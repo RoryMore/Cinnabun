@@ -11,10 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 8db11d5b700a7a940ab88c58d6bb3ca6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/JasmineScene.unity
     guid: 1fe026a925f28db429df69b5949feed3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/AITestScene.unity
     guid: a0f85e7ae4b082a43acd64d55914dfb5
+  - enabled: 1
+    path: Assets/Scenes/GreyboxLevel.unity
+    guid: 6ff6f7b756ce7df4aa8b0c8bc81ea597
   m_configObjects: {}

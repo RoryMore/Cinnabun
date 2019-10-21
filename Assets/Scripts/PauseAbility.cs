@@ -8,13 +8,14 @@ public class PauseAbility : MonoBehaviour
     public int actionsLeft = 2;
     [SerializeField] int maxActions = 2;
     public float timeStopCoolDown;
-    //public float abilityCastTime = 0;
+    public float abilityCastTime = 0;
     public bool inBattle;
     bool isTimeStopped;
     public bool takeingTurn;
 
-    Player player;
     public List<Entity> entity;
+
+    Player player;
 
     public enum GameStates
     {
@@ -29,7 +30,6 @@ public class PauseAbility : MonoBehaviour
     void Start()
     {
        pauseMenu = FindObjectOfType<PauseMenuUI>();
-       //entity = FindObjectOfType<Entity>();
        states = GameStates.PLAY;
     }
 
@@ -38,12 +38,8 @@ public class PauseAbility : MonoBehaviour
         // Find reference to the Player
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
-        //Entity[] tempArr = GameObject.FindObjectsOfType<Entity>();
-        //for (int i = 0; i < tempArr.Length; i++)
-        //{ 
-        //    entity.Add(tempArr[i].GetComponent<Entity>());
-        //}
         entity.AddRange(GameObject.FindObjectsOfType<Entity>());
+
     }
 
     // Update is called once per frame
@@ -144,6 +140,11 @@ public class PauseAbility : MonoBehaviour
 
     void checkAbilityCastTime()
     {
+        //if (abilityCastTime >= 0)
+        //{
+        //    abilityCastTime -= Time.deltaTime;
+        //}
+
         
         if (actionsLeft > 0)
         {
@@ -160,6 +161,7 @@ public class PauseAbility : MonoBehaviour
                 states = GameStates.TIMESTOP;
                }
         }
+        
 
           //  if (takeingTurn == true)
           // {
@@ -176,15 +178,23 @@ public class PauseAbility : MonoBehaviour
             takeingTurn = false;
         }
 
-
     }
 
     void clearAllList()
     {
-        foreach (Entity checkedEntity in entity)
+        //foreach (Entity checkedEntity in entity)
+        //{
+        //    checkedEntity.ClearList();
+        //}
+
+        // For our current encounter (other entities are irrelevant)
+        // Clear the rewind points
+        foreach (Entity checkedEntity in Entity.currentEncounter.initiativeList)
         {
             checkedEntity.ClearList();
         }
+        // Player isn't held in encounter
+        // Clear player rewindpoints
+        player.ClearList();
     }
-
 }
