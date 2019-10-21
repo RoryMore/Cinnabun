@@ -381,7 +381,7 @@ PrefabInstance:
     - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
       propertyPath: skillList.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
@@ -419,6 +419,12 @@ PrefabInstance:
       propertyPath: skillList.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: a4f27904e37148a42800f7a0c414d406,
+        type: 2}
+    - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: skillList.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: c024a6ac81891f543b52d28ae2c8dbfc,
         type: 2}
     - target: {fileID: 819698099673919357, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
@@ -642,6 +648,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: VisualNovel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8187559357226828740, guid: 9c7804f169ce850459f8932636069698,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8187559357226828737, guid: 9c7804f169ce850459f8932636069698,
         type: 3}

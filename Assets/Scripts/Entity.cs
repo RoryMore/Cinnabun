@@ -22,12 +22,13 @@ public class Entity : MonoBehaviour
     {
         public int currentHealthRewind;
         public bool isDeadRewind;
-        public Transform locationRewind;
+        public Vector3 locationRewind;
+        public Quaternion rotaionRewind;
         public List<Condition> currentConditionsRewind;
 
     }
 
-    [HideInInspector] public bool rewind;
+    [HideInInspector] public bool rewind = false;
 
     [Header("Death")]
     public bool isDead;
@@ -67,7 +68,7 @@ public class Entity : MonoBehaviour
     public List<RewindPoint> rewindPoints;
 
     [Header("Encounter")]
-    public Encounter currentEncounter;
+    public static Encounter currentEncounter;
 
     // Start is called before the first frame update
     void Start()
@@ -157,7 +158,7 @@ public class Entity : MonoBehaviour
             }
         }
 
-
+        RecordRewind();
     }
 
     void CalculateMaxHP()
@@ -242,26 +243,30 @@ public class Entity : MonoBehaviour
 
         temp.currentHealthRewind = currentHP;
         temp.isDeadRewind = isDead;
-        temp.locationRewind = transform;
+        temp.locationRewind = transform.position;
+        temp.rotaionRewind = transform.rotation;
         temp.currentConditionsRewind = currentConditions;
 
-        // add check to delete list contents if no longer needed
-        //if()
-        // rewindPoints.RemoveAt(rewindPoints.Count - 1);
+        rewindPoints.Add(temp);
     }
     public void RewindBack()
     {
         RewindPoint point = new RewindPoint();
         point = rewindPoints[0];
-        //Debug.Log(point.locationRewind);
-        transform.position = point.locationRewind.position;
+        Debug.Log(point.locationRewind);
+        transform.position = point.locationRewind;
         currentHP = point.currentHealthRewind;
         isDead = point.isDeadRewind;
         currentConditions = point.currentConditionsRewind;
-        transform.rotation = point.locationRewind.rotation;
+        transform.rotation = point.rotaionRewind;
        // transform.position = new Vector3(0, 0, 0);
         rewind = false;
 
     }
 
+    public void ClearList()
+    {
+        Debug.Log("List clear!");
+        rewindPoints.Clear();
+    }
 }

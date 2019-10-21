@@ -13,6 +13,8 @@ public class PauseAbility : MonoBehaviour
     bool isTimeStopped;
     public bool takeingTurn;
 
+    public List<Entity> entity;
+
     Player player;
 
     public enum GameStates
@@ -35,6 +37,9 @@ public class PauseAbility : MonoBehaviour
     {
         // Find reference to the Player
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
+        entity.AddRange(GameObject.FindObjectsOfType<Entity>());
+
     }
 
     // Update is called once per frame
@@ -95,7 +100,7 @@ public class PauseAbility : MonoBehaviour
           else if (states == GameStates.TIMESTOP)
           {
                 states = GameStates.PLAY;
-                //clearAllList();
+                clearAllList();
                 calculateTimeStop();
                 takeingTurn = false;
             }
@@ -167,6 +172,7 @@ public class PauseAbility : MonoBehaviour
         if (actionsLeft == 0 && player.selectedSkill == null)
         {
             calculateTimeStop();
+            clearAllList();
             actionsLeft = maxActions;
             states = GameStates.PLAY;
             takeingTurn = false;
@@ -174,4 +180,21 @@ public class PauseAbility : MonoBehaviour
 
     }
 
+    void clearAllList()
+    {
+        //foreach (Entity checkedEntity in entity)
+        //{
+        //    checkedEntity.ClearList();
+        //}
+
+        // For our current encounter (other entities are irrelevant)
+        // Clear the rewind points
+        foreach (Entity checkedEntity in Entity.currentEncounter.initiativeList)
+        {
+            checkedEntity.ClearList();
+        }
+        // Player isn't held in encounter
+        // Clear player rewindpoints
+        player.ClearList();
+    }
 }
