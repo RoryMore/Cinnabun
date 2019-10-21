@@ -635,6 +635,18 @@ MonoBehaviour:
   mouseScrollSens: 2
   mouseXSens: 2
   yAngle: 65
+--- !u!114 &1822070040 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7169829053648171811, guid: ad4f0e7e9a260aa4b8a9cd61ae95e8d0,
+    type: 3}
+  m_PrefabInstance: {fileID: 7169829053139419220}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f84bf4d3e359047aa3e88d74b066a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7169829053139419220
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -712,6 +724,11 @@ PrefabInstance:
       propertyPath: encounters.Array.data[0]
       value: 
       objectReference: {fileID: 301987569}
+    - target: {fileID: 7169829053648171811, guid: ad4f0e7e9a260aa4b8a9cd61ae95e8d0,
+        type: 3}
+      propertyPath: maxEncounterDistance
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad4f0e7e9a260aa4b8a9cd61ae95e8d0, type: 3}
 --- !u!1001 &7330141679455115894
@@ -721,6 +738,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7330141679716592775, guid: e9657db93e051a34aaff4380ca64400e,
+        type: 3}
+      propertyPath: enemyManager
+      value: 
+      objectReference: {fileID: 1822070040}
     - target: {fileID: 7330141679716592774, guid: e9657db93e051a34aaff4380ca64400e,
         type: 3}
       propertyPath: m_Name

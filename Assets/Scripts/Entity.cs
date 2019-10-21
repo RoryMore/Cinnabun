@@ -190,7 +190,7 @@ public class Entity : MonoBehaviour
         currentConditions = new List<Condition>();
         
         rewindPoints = new List<RewindPoint>();
-        Debug.Log("New return point made");
+        
 
         //Make level brackets accurate
         levelBrackets = new int[10];
