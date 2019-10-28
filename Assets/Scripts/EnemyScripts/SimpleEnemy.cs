@@ -6,10 +6,10 @@ using UnityEngine.AI;
 public class SimpleEnemy : EnemyScript
 {
 
-    public float meleeAttackRange;
     
-
+   
     Transform target;
+    Entity player; //All intents and purposes, same as 
 
     //bool isAttacking = false;
 
@@ -27,30 +27,24 @@ public class SimpleEnemy : EnemyScript
 
 
         nav = GetComponent<NavMeshAgent>();
+
+        //Personal Variables
+        enemyCooldown = 6.0f;
+        initiativeSpeed = 1.5f;
+
+
     }
 
     void Awake()
     {
 
         target = GameObject.Find("Player").transform;
+        player = GameObject.Find("Player").GetComponent<Entity>();
 
-        skillList[0].Initialise();
-
-        //foreach (SkillData skill in skillList)
-        //{
-        //    if (skill.cooldown != 0)
-        //    {
-        //        //This skill is not ready to use!
-        //    }
-        //    else
-        //    {
-
-        //    }
-        //}
-
-
-
-        
+        foreach (SkillData checkedSkill in skillList)
+        {
+            checkedSkill.Initialise();
+        }
         
 
     }
@@ -58,9 +52,11 @@ public class SimpleEnemy : EnemyScript
 
     void Update()
     {
+        
         if (!isDead)
         {
             Movement();
+            Turn();
             UpdateAllConditions();
 
 
@@ -80,7 +76,7 @@ public class SimpleEnemy : EnemyScript
 
             if (skillList[0].currentlyCasting == true)
             {
-                skillList[0].TargetSkill(transform);
+                skillList[0].TargetSkill(transform, myEncounter.masterInitiativeList);
                 //skillList[0].CastSkill(transform);
             }
         }
@@ -96,16 +92,43 @@ public class SimpleEnemy : EnemyScript
             //Return home
             nav.SetDestination(myEncounter.gameObject.transform.position);
         }
-        else
+        else if (!isDead)
         {
             nav.SetDestination(target.transform.position);
+
+            //Later this should set to the range of the technique it chooses! For now, It is not important
+
+            if (Vector3.Distance(transform.position, player.gameObject.transform.position) < skillList[0].range) //meleeAttackRange)
+            {
+                nav.SetDestination(transform.position);
+                //transform.LookAt(player.transform);
+                FaceTarget(player.transform);
+                //anim.SetBool("isWalking", false);
+
+            }
+            else
+            {
+                //GameObject.Find("Player")
+                nav.SetDestination(player.transform.position);
+                //anim.SetBool("isWalking", true);
+
+            }
         }
-        
+
+        else
+        {
+            nav.enabled = false;
+            //anim.SetBool("isWalking", false);
+        }
+
     }
 
-    
+    public void Turn()
+    {
+        enemyCooldown -= 1f * Time.deltaTime;
+    }
 
-  
+
 
 
 

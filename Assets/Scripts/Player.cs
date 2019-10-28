@@ -90,14 +90,14 @@ public class Player : Entity
                     {
                         // Special skills that need different transform
                         case SkillData.SkillList.DELAYEDBLAST:
-                            selectedSkill.TargetSkill(transform, currentEncounter.initiativeList);
+                            selectedSkill.TargetSkill(transform, currentEncounter.masterInitiativeList);
                             break;
 
                         default:
                             if (selectedSkill == weaponAttack)
                             {
                                 // Need a current entity list to put into function parameter
-                                selectedSkill.TargetSkill(transform, currentEncounter.initiativeList);
+                                selectedSkill.TargetSkill(transform, currentEncounter.masterInitiativeList);
                             }
                             else
                             {
