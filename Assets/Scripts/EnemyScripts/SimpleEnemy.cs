@@ -57,6 +57,7 @@ public class SimpleEnemy : EnemyScript
         {
             Movement();
             Turn();
+            
             UpdateAllConditions();
 
 
@@ -98,17 +99,16 @@ public class SimpleEnemy : EnemyScript
 
             //Later this should set to the range of the technique it chooses! For now, It is not important
 
-            if (Vector3.Distance(transform.position, player.gameObject.transform.position) < skillList[0].range) //meleeAttackRange)
+            if (Vector3.Distance(transform.position, player.gameObject.transform.position) < skillList[0].range)
             {
                 nav.SetDestination(transform.position);
-                //transform.LookAt(player.transform);
+                
                 FaceTarget(player.transform);
                 //anim.SetBool("isWalking", false);
 
             }
             else
             {
-                //GameObject.Find("Player")
                 nav.SetDestination(player.transform.position);
                 //anim.SetBool("isWalking", true);
 
@@ -123,14 +123,13 @@ public class SimpleEnemy : EnemyScript
 
     }
 
-    public void Turn()
+
+
+    
+
+    public void Attack()
     {
-        enemyCooldown -= 1f * Time.deltaTime;
+
     }
-
-
-
-
-
 }
 
