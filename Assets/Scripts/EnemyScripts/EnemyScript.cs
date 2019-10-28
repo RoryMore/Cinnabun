@@ -29,32 +29,15 @@ public class EnemyScript : Entity
     //AudioSource enemyAudio;
     public ParticleSystem hitParticles;
     public NavMeshAgent nav;
-
     public List<SkillData> skillList;
 
-    
     public EnemyManager enemyManager;
-
     public Encounter myEncounter;
     
 
-
-
-    // Start is called before the first frame update
-    void Start()
+    public void Turn()
     {
-        
-    }
-
-    void Awake()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        enemyCooldown -= 1f * Time.deltaTime;
     }
 
     //Every time the enemy is unable to act on their turn, simply reset their initiative with a slight stacking advantage

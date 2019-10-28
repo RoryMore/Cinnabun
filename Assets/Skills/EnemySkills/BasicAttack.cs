@@ -8,42 +8,71 @@ using UnityEngine;
 
 public class BasicAttack : SkillData
 {
-    //Indicator
 
-    // Start is called before the first frame update
-    void Start()
+    Entity target = null;
+    
+    public int damage;
+
+    public override void TargetSkill(Transform zoneStart, List<Entity> entityList)
     {
+        //This.. may not work!
+        target = GameObject.FindWithTag("Player").GetComponent<Entity>();
+
+        //Init
+        rangeIndicator.Init(SkillShape.RADIAL, 90.0f);
+
+        //Face target
+        zoneStart.LookAt(target.transform);
+        DrawRangeIndicator(zoneStart, shape, range, 90.0f);
+
+        //Select?
+        SelectTargetRay(zoneStart, ref target, true);
+
+
+        CastSkill(zoneStart, entityList);
+
+    }
+
+    protected override void CastSkill(Transform zoneStart, List<Entity> entityList)
+    {
+        currentlyCasting = true;
+
+        float drawPercent = (timeSpentOnWindUp / windUp);
+
+
+
+        DrawRangeIndicator(zoneStart, SkillShape.RADIAL, range, 360.0f);
+
+        rangeIndicator.DrawCastTimeIndicator(zoneStart, 360.0f, 0.0f, range, drawPercent);
+
+
+
+        timeSpentOnWindUp += Time.deltaTime;
+
+        // When the skill can be activated
+        if (timeSpentOnWindUp >= windUp)
+        {
+            currentlyCasting = false;
+            ActivateSkill(zoneStart, entityList);
+            timeSpentOnWindUp = 0.0f;
+        }
+    }
+
+    protected override void ActivateSkill(Transform zoneStart, List<Entity> entityList)
+    {
+        timeBeenOnCooldown = 0.0f;
+
+        foreach (Entity testedEntity in entityList)
+        {
+            if (CheckRadialSkillHit(testedEntity.transform.position, zoneStart))
+            {
+                testedEntity.TakeDamage(damage);
+            }
+        }
+
+        target = null;
         
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        timeBeenOnCooldown += cooldown;
-    }
-
-    //public override void CastSkill(Transform zoneStart, SkillShape shape)
-    //{
-    //    currentlyCasting = true;
-
-    //    DrawRangeIndicator(zoneStart, shape);
-    //    float drawPercent = (timeSpentOnWindUp / windUp);
-    //    rangeIndicator.DrawCastTimeIndicator(zoneStart, angleWidth, 0.0f, range, drawPercent);
-        
-    //    // Increment the time spent winding up the skill
-    //    timeSpentOnWindUp += Time.deltaTime;
-
-    //    // When the skill can be activated
-    //    if (timeSpentOnWindUp >= windUp)
-    //    {
-    //        ActivateSkill();
-    //        timeSpentOnWindUp = 0.0f;
-    //        currentlyCasting = false;
-    //    }
-    //}
-
-    void ActivateSkill()
-    {
-        Debug.Log("KOBE!");
-    }
 }
