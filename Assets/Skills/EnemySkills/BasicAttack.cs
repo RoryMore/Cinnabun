@@ -19,17 +19,17 @@ public class BasicAttack : SkillData
         target = GameObject.FindWithTag("Player").GetComponent<Entity>();
 
         //Init
-        rangeIndicator.Init(SkillShape.RADIAL, 90.0f);
+        //rangeIndicator.Init(SkillShape.RADIAL, 90.0f);
 
         //Face target
         zoneStart.LookAt(target.transform);
-        DrawRangeIndicator(zoneStart, shape, range, 90.0f);
+        //DrawRangeIndicator(zoneStart, shape, range, 90.0f);
 
         //Select?
-        SelectTargetRay(zoneStart, ref target, true);
+        //SelectTargetRay(zoneStart, ref target, true);
 
 
-        CastSkill(zoneStart, entityList);
+        CastSkill(zoneStart, entityList); 
 
     }
 
@@ -41,9 +41,9 @@ public class BasicAttack : SkillData
 
 
 
-        DrawRangeIndicator(zoneStart, SkillShape.RADIAL, range, 360.0f);
+        DrawRangeIndicator(zoneStart, SkillShape.RADIAL, range, 90.0f);
 
-        rangeIndicator.DrawCastTimeIndicator(zoneStart, 360.0f, 0.0f, range, drawPercent);
+        rangeIndicator.DrawCastTimeIndicator(zoneStart, angleWidth, 0.0f, range, drawPercent);
 
 
 
@@ -66,7 +66,11 @@ public class BasicAttack : SkillData
         {
             if (CheckRadialSkillHit(testedEntity.transform.position, zoneStart))
             {
-                testedEntity.TakeDamage(damage);
+                if (testedEntity != this)
+                {
+                    testedEntity.TakeDamage(damage);
+                }
+                
             }
         }
 
