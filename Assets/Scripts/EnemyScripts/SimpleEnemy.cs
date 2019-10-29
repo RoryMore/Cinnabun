@@ -65,19 +65,20 @@ public class SimpleEnemy : EnemyScript
             if (Input.GetKeyDown(KeyCode.Alpha8))
             {
                 skillList[0].currentlyCasting = true;
+                anim.SetTrigger("attacking");
                 //simpleBasicAttack.currentlyCasting = true;
 
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha9))
             {
-                TakeDamage(10000);
+                TakeDamage(10000000);
             }
 
 
             if (skillList[0].currentlyCasting == true)
             {
-                skillList[0].TargetSkill(transform, myEncounter.masterInitiativeList);
+                skillList[0].TargetSkill(transform, myEncounter.playerInclusiveInitiativeList);
                 //skillList[0].CastSkill(transform);
             }
         }
@@ -104,13 +105,14 @@ public class SimpleEnemy : EnemyScript
                 nav.SetDestination(transform.position);
                 
                 FaceTarget(player.transform);
-                //anim.SetBool("isWalking", false);
+                anim.SetBool("isWalking", false);
 
             }
             else
             {
                 nav.SetDestination(player.transform.position);
-                //anim.SetBool("isWalking", true);
+                anim.SetBool("isWalking", true);
+                
 
             }
         }
@@ -118,7 +120,7 @@ public class SimpleEnemy : EnemyScript
         else
         {
             nav.enabled = false;
-            //anim.SetBool("isWalking", false);
+            anim.SetBool("isWalking", false);
         }
 
     }
@@ -130,6 +132,18 @@ public class SimpleEnemy : EnemyScript
     public void Attack()
     {
 
+    }
+
+    public override void TakeDamage(int amount)
+    {
+        base.TakeDamage(amount);
+        anim.SetTrigger("getHit");
+    }
+
+    public override void Death()
+    {
+        base.Death();
+        anim.SetBool("isDead", true);
     }
 }
 

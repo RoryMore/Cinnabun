@@ -7,8 +7,9 @@ public class Encounter : MonoBehaviour
 
     public Entity enemy1;
 
-    public List<Entity> masterInitiativeList;
-    public List<Entity> initiativeList;
+    public List<Entity> masterInitiativeList; //Unchanging list of encounter made at its initilization
+    public List<Entity> initiativeList; //List that updates and changes as enemies die. Used for enemy manager, not for skills
+    public List<Entity> playerInclusiveInitiativeList; //Same as master but includes player for skill use, for enemy skills
     public List<Entity> healList;
 
     public List<GameObject> spawnPoints;
@@ -43,7 +44,11 @@ public class Encounter : MonoBehaviour
         }
 
         masterInitiativeList.AddRange(initiativeList);
-        
+
+        //Set up player inclusive
+        playerInclusiveInitiativeList.AddRange(masterInitiativeList);
+        playerInclusiveInitiativeList.Add(GameObject.Find("Player").GetComponent<Entity>());
+
     }
 
     void Awake()
