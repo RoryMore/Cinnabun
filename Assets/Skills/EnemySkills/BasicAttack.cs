@@ -66,7 +66,7 @@ public class BasicAttack : SkillData
         {
             if (CheckRadialSkillHit(testedEntity.transform.position, zoneStart))
             {
-                if (testedEntity != this)
+                if (testedEntity != caster)
                 {
                     testedEntity.TakeDamage(damage);
                 }
