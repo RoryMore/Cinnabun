@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811fa41709b42724c9732c32973b0aab, type: 3}
   m_Name: SimpleEnemyAttack
   m_EditorClassIdentifier: 
-  range: 0
-  cooldown: 0
+  range: 3
+  cooldown: 6
   timeBeenOnCooldown: 0
-  windUp: 0
+  windUp: 3
   timeSpentOnWindUp: 0
   shape: 0
-  angleWidth: 0
+  angleWidth: 45
   skill: 0
   baseDamage: 2
   damageType: 0
   rangeIndicator: {fileID: 0}
   indicatorMaterial: {fileID: 2100000, guid: 3c6c47126b1480347ac2f55825168a69, type: 2}
-  currentlyCasting: 1
-  damage: 2
+  currentlyCasting: 0
+  damage: 10
