@@ -104,6 +104,9 @@ public class DelayedBlast : SkillData
                             if (Vector3.Distance(enemy.transform.position, entityTarget1.transform.position) < explosionRadius)
                             {
                                 enemy.TakeDamage(baseDamage);
+
+                                // Call function that activates explosion particles
+                                enemy.ParticleExplosion();
                             }
                         }
 
