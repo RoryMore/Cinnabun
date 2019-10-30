@@ -4,11 +4,29 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-   // public AudioSource battleAmbient;
-   // public AudioSource battleMusic;
-   // public AudioSource slowMostionAmbient;
-   // public AudioSource slowMotionMusic;
+    // public AudioSource battleAmbient;
+    // public AudioSource battleMusic;
+    // public AudioSource slowMostionAmbient;
+    // public AudioSource slowMotionMusic;
+
+    [Header("Main Menu Music")]
+  //[Space(10)]
     public AudioSource mainMenuMusic;
+
+    [Header("Battle Music")]
+    public AudioSource battleMusic1;
+    public AudioSource battleMusic2;
+    public AudioSource battleMusic3;
+
+    [Header("Idle Music")]
+    public AudioSource idleMusic1;
+    public AudioSource idleMusic2;
+    public AudioSource idleMusic3;
+
+    [Header("Sound Effects")]
+    public AudioSource meeleSwing;
+
+   // public AudioSource millionaire;
 
     private AudioSource currentAmbient;
     private AudioSource currentMusic;
@@ -18,13 +36,22 @@ public class SoundManager : MonoBehaviour
     float ambiantProgress;
     float musicProgress;
 
+    PauseAbility pauseAbility;
+
+    public int random;
+    bool randomNumber = true;
+    bool playBattleMusic = true;
+    bool playIdleMusic = true;
+    bool inBattle = true;
+
     public enum MusicState
     {
         BATTLE,
-        SLOWMOTION,
+        PAUSEDSKILL,
         MAINMENU,
         START,
-        PAUSED
+        PAUSED,
+        IDLE
     }
 
     public MusicState state;
@@ -32,36 +59,86 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //state = MusicState.BATTLE;
-        MuteAllAudio();
+        pauseAbility = FindObjectOfType<PauseAbility>();
     }
 
     // Update is called once per frame
     void Update()
     {
+ 
+
+        checkState();
+        test();
+
         switch (state)
         {
             case MusicState.START:
 				{
-					MuteAllAudio();
+					//MuteAllAudio();
 					//battleMusic.pitch = Mathf.Lerp(battleMusic.pitch, 1f, Time.deltaTime / 0.5f);
-					//battleMusic.volume = Mathf.Lerp(battleMusic.volume, 0.7f, Time.deltaTime / 0.3f);
+					//scordbattleMusic.volume = Mathf.Lerp(battleMusic.volume, 0.7f, Time.deltaTime / 0.3f);
 					break;
 				}
             case MusicState.BATTLE:
                 {
-                    MuteAllAudio();
-                  //  battleMusic.pitch = Mathf.Lerp(battleMusic.pitch, 1f, Time.deltaTime / 0.5f);
-                  //  battleMusic.volume = Mathf.Lerp(battleMusic.volume, 0.7f, Time.deltaTime / 0.3f);
+                   // MuteAllAudio();
+                    getRandomNumber();
+
+                    //  battleMusic.pitch = Mathf.Lerp(battleMusic.pitch, 1f, Time.deltaTime / 0.5f);
+                    //  battleMusic.volume = Mathf.Lerp(battleMusic.volume, 0.7f, Time.deltaTime / 0.3f);
                     //battleAmbient.volume = Mathf.Lerp(battleAmbient.volume, 0.1f, Time.deltaTime / 0.5f);
+                    if (playBattleMusic == true)
+                    {
+                        MuteAllAudio();
+
+                        if (random == 0)
+                        {
+                            battleMusic1.Play();
+                          
+                        }
+                        else if (random == 1)
+                        {
+                            battleMusic2.Play();
+                          
+                        }
+                        if (random == 2)
+                        {
+                            battleMusic3.Play();
+                           
+                        }
+                    }
+                   // millionaire.volume = 0.0f;
+                    battleMusic1.volume = Mathf.Lerp(battleMusic1.volume, 0.8f, Time.unscaledDeltaTime / 0.1f);
+                    battleMusic2.volume = Mathf.Lerp(battleMusic2.volume, 0.8f, Time.unscaledDeltaTime / 0.1f);
+                    battleMusic3.volume = Mathf.Lerp(battleMusic3.volume, 0.8f, Time.unscaledDeltaTime / 0.1f);
+                    playBattleMusic = false;
                     break;
                 }
-            case MusicState.SLOWMOTION:
+            case MusicState.PAUSEDSKILL:
                 {
-                    MuteAllAudio();
-                   // battleAmbient.volume = Mathf.Lerp(battleAmbient.volume, 1.7f, Time.deltaTime / 0.2f);
-                   // battleMusic.pitch = Mathf.Lerp(battleMusic.pitch, 0.8f, Time.deltaTime / 0.05f);
+                     //MuteAllAudio();
+                   // millionaire.volume = 0.8f;
+                    battleMusic1.volume = Mathf.Lerp(battleMusic1.volume, 0.5f, Time.unscaledDeltaTime / 0.1f);
+                    battleMusic2.volume = Mathf.Lerp(battleMusic2.volume, 0.5f, Time.unscaledDeltaTime / 0.1f);
+                    battleMusic3.volume = Mathf.Lerp(battleMusic3.volume, 0.5f, Time.unscaledDeltaTime / 0.1f);
+                    // battleMusic.pitch = Mathf.Lerp(battleMusic.pitch, 0.8f, Time.deltaTime / 0.05f);
                     //battleMusic.volume = Mathf.Lerp(battleMusic.volume, 0.3f, Time.deltaTime / 0.1f);
+                    break;
+                }
+            case MusicState.IDLE:
+                {
+                    if (playIdleMusic == true)
+                    {
+                        MuteAllAudio();
+
+                        idleMusic3.Play();
+                        // battleAmbient.volume = Mathf.Lerp(battleAmbient.volume, 1.7f, Time.deltaTime / 0.2f);
+                        // battleMusic.pitch = Mathf.Lerp(battleMusic.pitch, 0.8f, Time.deltaTime / 0.05f);
+                        //battleMusic.volume = Mathf.Lerp(battleMusic.volume, 0.3f, Time.deltaTime / 0.1f);
+                    }
+                    // idleMusic1.volume = 0.7f;
+                    playIdleMusic = false;
+
                     break;
                 }
             case MusicState.MAINMENU:
@@ -76,13 +153,82 @@ public class SoundManager : MonoBehaviour
                     break;
                 }
         }
+
+    
+    }
+
+    void checkState()
+    {
+        if (pauseAbility.states == PauseAbility.GameStates.TIMESTOP)
+        {
+            state = MusicState.PAUSEDSKILL; 
+        }
+
+        if (inBattle == true)
+        {
+            if (pauseAbility.states != PauseAbility.GameStates.TIMESTOP)
+            {
+                state = MusicState.BATTLE;
+            }
+        }
+
+        if (inBattle == false)
+        {
+            state = MusicState.IDLE;
+        }
+
+        if (state != MusicState.BATTLE && state != MusicState.PAUSEDSKILL)
+        {
+            randomNumber = true;
+            playBattleMusic = true;
+        }
+
+        if (state != MusicState.IDLE)
+        {
+            playIdleMusic = true;
+        }
+    }
+
+    void getRandomNumber()
+    {
+        //MuteAllAudio();
+
+        if (randomNumber == true)
+        {
+            random = Random.Range(0, 3);
+        }
+        randomNumber = false;
+    }
+
+    void test()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            inBattle = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            inBattle = true;
+        }
     }
 
     void MuteAllAudio()
     {
         //battleMusic.volume = 0.0f;
        // slowMotionMusic.volume = 0.0f;
-        mainMenuMusic.volume = 0.0f;
-       // battleAmbient.volume = 0.0f;
+        mainMenuMusic.Stop();
+        //millionaire.volume = 0.0f;
+
+
+        battleMusic1.Stop();
+        battleMusic2.Stop();
+        battleMusic3.Stop();
+
+        idleMusic1.Stop();
+        idleMusic2.Stop();
+        idleMusic3.Stop();
+
+        // battleAmbient.volume = 0.0f;
     }
 }
