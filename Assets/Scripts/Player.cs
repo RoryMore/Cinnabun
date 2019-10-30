@@ -38,6 +38,10 @@ public class Player : Entity
     [SerializeField]
     GameObject delayedBlastCastParticles;
 
+    [Header("Inventory")]
+    [SerializeField]
+    GameObject inventory;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -78,7 +82,22 @@ public class Player : Entity
                         if (!pauseMenu.isPaused)
                         {
                             RotateWeapons();
-                            Move();
+                            if (!inventory.activeSelf)
+                            {
+                                Move();
+                            }
+
+                            if (Input.GetKeyDown(KeyCode.I))
+                            {
+                                if (!inventory.activeSelf)
+                                {
+                                    inventory.SetActive(true);
+                                }
+                                else
+                                {
+                                    inventory.SetActive(false);
+                                }
+                            }
                         }
                     }
                     else
