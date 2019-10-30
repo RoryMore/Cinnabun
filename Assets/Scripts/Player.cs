@@ -30,6 +30,14 @@ public class Player : Entity
     [Header("Animation")]
     public Animator animator;
 
+    [Header("Skill VFX")]
+    [SerializeField]
+    GameObject teleportCastParticles;
+    [SerializeField]
+    GameObject rewindCastParticles;
+    [SerializeField]
+    GameObject delayedBlastCastParticles;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -106,6 +114,38 @@ public class Player : Entity
 
                             if (selectedSkill.currentlyCasting)
                             {
+                                if (!delayedBlastCastParticles.activeSelf)
+                                {
+                                    delayedBlastCastParticles.SetActive(true);
+                                }
+                                animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
+                                animator.SetBool("skillCast", true);
+                            }
+                            break;
+
+                        case SkillData.SkillList.REWIND:
+                            selectedSkill.TargetSkill(transform);
+
+                            if (selectedSkill.currentlyCasting)
+                            {
+                                if (!rewindCastParticles.activeSelf)
+                                {
+                                    rewindCastParticles.SetActive(true);
+                                }
+                                animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
+                                animator.SetBool("skillCast", true);
+                            }
+                            break;
+
+                        case SkillData.SkillList.TELEPORT:
+                            selectedSkill.TargetSkill(transform);
+
+                            if (selectedSkill.currentlyCasting)
+                            {
+                                if (!teleportCastParticles.activeSelf)
+                                {
+                                    teleportCastParticles.SetActive(true);
+                                }
                                 animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
                                 animator.SetBool("skillCast", true);
                             }
@@ -154,6 +194,11 @@ public class Player : Entity
                         // Reset animator variables
                         animator.SetBool("weaponAttack", false);
                         animator.SetBool("skillCast", false);
+
+                        // Deactivate any active cast particles
+                        delayedBlastCastParticles.SetActive(false);
+                        rewindCastParticles.SetActive(false);
+                        teleportCastParticles.SetActive(false);
                     }
 
                     if (Input.GetMouseButtonDown(1))

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 20
   cooldown: 3
-  timeBeenOnCooldown: 3
+  timeBeenOnCooldown: 3.002474
   windUp: 2
   timeSpentOnWindUp: 0
   shape: 0
@@ -25,3 +25,4 @@ MonoBehaviour:
   rangeIndicator: {fileID: 0}
   indicatorMaterial: {fileID: 2100000, guid: 3c6c47126b1480347ac2f55825168a69, type: 2}
   currentlyCasting: 0
+  caster: {fileID: 0}

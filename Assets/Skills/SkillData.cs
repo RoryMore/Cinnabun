@@ -22,7 +22,8 @@ public class SkillData : ScriptableObject
     {
         TELEPORT,
         DELAYEDBLAST,
-        REWIND
+        REWIND,
+        NotAppliccable
     }
 
     [Tooltip("The maximum distance the skill can be used at from the casters position")]
