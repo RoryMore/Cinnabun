@@ -7,6 +7,7 @@ public class EnemyManager : MonoBehaviour
     public GameObject player;
     public List<Encounter> encounters;
     public float maxEncounterDistance;
+    public bool isInBattle;
 
     /*Each group of enemies is handled by their own personal "Encounter" manager. The enemy manager handles the
     Global functions of managing the encounters themselves, disabling them and enabling them as required*/
@@ -40,10 +41,12 @@ public class EnemyManager : MonoBehaviour
             if (encounterDistance > maxEncounterDistance) //Magic number, it really only needs to be the distance that covers the maximum zoo
             {
                 encounter.gameObject.SetActive(false);
+                isInBattle = false;
             }
             else
             {
                 encounter.gameObject.SetActive(true);
+                isInBattle = true;
                 player.GetComponent<Player>().SetCurrentEncounter(encounter);
             }
         }
@@ -67,5 +70,7 @@ public class EnemyManager : MonoBehaviour
         }
 
     }
+
+
 
 }
