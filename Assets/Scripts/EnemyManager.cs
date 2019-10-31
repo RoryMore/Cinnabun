@@ -39,12 +39,19 @@ public class EnemyManager : MonoBehaviour
             float encounterDistance = Vector3.Distance(encounter.gameObject.transform.position, player.transform.position);
             if (encounterDistance > maxEncounterDistance) //Magic number, it really only needs to be the distance that covers the maximum zoo
             {
-                encounter.gameObject.SetActive(false);
+                if (encounter.gameObject.activeInHierarchy == true)
+                {
+                    encounter.gameObject.SetActive(false);
+                }
             }
             else
             {
-                encounter.gameObject.SetActive(true);
-                player.GetComponent<Player>().SetCurrentEncounter(encounter);
+                if (encounter.gameObject.activeInHierarchy == false)
+                {
+                    encounter.gameObject.SetActive(true);
+                    player.GetComponent<Player>().SetCurrentEncounter(encounter);
+                }
+
             }
         }
     }
