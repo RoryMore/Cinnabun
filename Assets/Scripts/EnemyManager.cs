@@ -7,6 +7,7 @@ public class EnemyManager : MonoBehaviour
     public GameObject player;
     public List<Encounter> encounters;
     public float maxEncounterDistance;
+    public bool isInBattle;
 
     public bool inBattle;
 
@@ -78,5 +79,7 @@ public class EnemyManager : MonoBehaviour
         }
 
     }
+
+
 
 }

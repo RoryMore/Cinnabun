@@ -43,7 +43,7 @@ public class SoundManager : MonoBehaviour
     bool randomNumber = true;
     bool playBattleMusic = true;
     bool playIdleMusic = true;
-    bool inBattle = true;
+    bool inBattle;
 
     public enum MusicState
     {
@@ -120,9 +120,9 @@ public class SoundManager : MonoBehaviour
                 {
                      //MuteAllAudio();
                    // millionaire.volume = 0.8f;
-                    battleMusic1.volume = Mathf.Lerp(battleMusic1.volume, 0.5f, Time.unscaledDeltaTime / 0.1f);
-                    battleMusic2.volume = Mathf.Lerp(battleMusic2.volume, 0.5f, Time.unscaledDeltaTime / 0.1f);
-                    battleMusic3.volume = Mathf.Lerp(battleMusic3.volume, 0.5f, Time.unscaledDeltaTime / 0.1f);
+                    battleMusic1.volume = Mathf.Lerp(battleMusic1.volume, 0.2f, Time.unscaledDeltaTime / 0.1f);
+                    battleMusic2.volume = Mathf.Lerp(battleMusic2.volume, 0.2f, Time.unscaledDeltaTime / 0.1f);
+                    battleMusic3.volume = Mathf.Lerp(battleMusic3.volume, 0.2f, Time.unscaledDeltaTime / 0.1f);
                     // battleMusic.pitch = Mathf.Lerp(battleMusic.pitch, 0.8f, Time.deltaTime / 0.05f);
                     //battleMusic.volume = Mathf.Lerp(battleMusic.volume, 0.3f, Time.deltaTime / 0.1f);
                     break;
