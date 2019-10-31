@@ -37,12 +37,13 @@ public class SoundManager : MonoBehaviour
     float musicProgress;
 
     PauseAbility pauseAbility;
+    EnemyManager enemyManager;
 
     public int random;
     bool randomNumber = true;
     bool playBattleMusic = true;
     bool playIdleMusic = true;
-    bool inBattle = true;
+    bool inBattle;
 
     public enum MusicState
     {
@@ -60,13 +61,14 @@ public class SoundManager : MonoBehaviour
     void Start()
     {
         pauseAbility = FindObjectOfType<PauseAbility>();
+        enemyManager = FindObjectOfType<EnemyManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
- 
 
+        CheckInBattle();
         checkState();
         test();
 
@@ -118,9 +120,9 @@ public class SoundManager : MonoBehaviour
                 {
                      //MuteAllAudio();
                    // millionaire.volume = 0.8f;
-                    battleMusic1.volume = Mathf.Lerp(battleMusic1.volume, 0.5f, Time.unscaledDeltaTime / 0.1f);
-                    battleMusic2.volume = Mathf.Lerp(battleMusic2.volume, 0.5f, Time.unscaledDeltaTime / 0.1f);
-                    battleMusic3.volume = Mathf.Lerp(battleMusic3.volume, 0.5f, Time.unscaledDeltaTime / 0.1f);
+                    battleMusic1.volume = Mathf.Lerp(battleMusic1.volume, 0.2f, Time.unscaledDeltaTime / 0.1f);
+                    battleMusic2.volume = Mathf.Lerp(battleMusic2.volume, 0.2f, Time.unscaledDeltaTime / 0.1f);
+                    battleMusic3.volume = Mathf.Lerp(battleMusic3.volume, 0.2f, Time.unscaledDeltaTime / 0.1f);
                     // battleMusic.pitch = Mathf.Lerp(battleMusic.pitch, 0.8f, Time.deltaTime / 0.05f);
                     //battleMusic.volume = Mathf.Lerp(battleMusic.volume, 0.3f, Time.deltaTime / 0.1f);
                     break;
@@ -186,6 +188,19 @@ public class SoundManager : MonoBehaviour
         if (state != MusicState.IDLE)
         {
             playIdleMusic = true;
+        }
+    }
+
+    void CheckInBattle()
+    {
+        if (enemyManager.inBattle == true)
+        {
+            inBattle = true;
+        }
+
+        if (enemyManager.inBattle == false)
+        {
+            inBattle = false;
         }
     }
 
