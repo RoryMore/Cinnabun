@@ -10,12 +10,12 @@ public class SimpleEnemy : EnemyScript
    
     Transform target;
     Entity player; //All intents and purposes, same as 
+    SkillData chosenSkill; //For deciding AI behavior
+    bool isAttacking = false;
 
-    //bool isAttacking = false;
 
-    
 
-    
+
 
     private void Start()
     {
@@ -27,6 +27,10 @@ public class SimpleEnemy : EnemyScript
 
 
         nav = GetComponent<NavMeshAgent>();
+
+
+        chosenSkill = new SkillData();
+        chosenSkill.currentlyCasting = false;
 
         //Personal Variables
         enemyCooldown = 6.0f;
@@ -55,32 +59,32 @@ public class SimpleEnemy : EnemyScript
         
         if (!isDead)
         {
-            Movement();
             Turn();
-            
+            UpdateAllSkillCooldowns();
             UpdateAllConditions();
 
-
-
-            if (Input.GetKeyDown(KeyCode.Alpha8))
+            if (chosenSkill.currentlyCasting == false)
             {
-                skillList[0].currentlyCasting = true;
-                anim.SetTrigger("attacking");
-                //simpleBasicAttack.currentlyCasting = true;
-
+                Movement();
             }
-
-            if (Input.GetKeyDown(KeyCode.Alpha9))
+            
+            
+            if (enemyCooldown <= 0)
             {
-                TakeDamage(10000000);
+                Decide();
+                Attack(chosenSkill);
             }
+            
 
 
-            if (skillList[0].currentlyCasting == true)
-            {
-                skillList[0].TargetSkill(transform, myEncounter.playerInclusiveInitiativeList);
-                //skillList[0].CastSkill(transform);
-            }
+
+
+
+
+
+
+
+
         }
         
 
@@ -126,13 +130,54 @@ public class SimpleEnemy : EnemyScript
     }
 
 
+    public void Decide()
+    {
+        
+        chosenSkill.baseDamage = 0;
+        chosenSkill.range = 0;
+
+        //Choose how each enemy decides to take its actions
+        //Later I would also want the skill cooldowns to come into effect
+
+        //Step 1: If the turn is ready, begin the cycle
+
+        //For each skill...
+        foreach (SkillData checkedSkill in skillList)
+        {
+            //Check if the cooldown is complete...
+            if (checkedSkill.timeBeenOnCooldown >= checkedSkill.cooldown)
+            {
+                //Check if we are in range...
+                if (checkedSkill.CheckInRange(transform.position, target.position))
+                {
+                    //Check if damage of prior skill is greater than base damange
+                    if (chosenSkill.baseDamage < checkedSkill.baseDamage)
+                    {
+                        chosenSkill = checkedSkill;
+
+                        //Reset the enemy turn
+                        enemyCooldown = 6;
+                        chosenSkill.currentlyCasting = true;
+                        anim.SetTrigger("attacking");
+                       
+                    }
+                }
+            }
+        }
+    }
 
     
 
-    public void Attack()
+    public void Attack(SkillData attack)
     {
-
+        if (skillList[0].currentlyCasting == true)
+        {
+            skillList[0].TargetSkill(transform, myEncounter.playerInclusiveInitiativeList);
+            
+        }
     }
+
+    
 
     public override void TakeDamage(int amount)
     {
