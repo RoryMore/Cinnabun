@@ -70,6 +70,10 @@ public class Entity : MonoBehaviour
     [Header("Encounter")]
     public static Encounter currentEncounter;
 
+    [Header("Damaged VFX")]
+    [SerializeField]
+    GameObject explosionParticles;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -261,5 +265,14 @@ public class Entity : MonoBehaviour
     {
         Debug.Log("List clear!");
         rewindPoints.Clear();
+    }
+
+    public void ParticleExplosion()
+    {
+        if (explosionParticles != null)
+        {
+            explosionParticles.SetActive(false);
+            explosionParticles.SetActive(true);
+        }
     }
 }
