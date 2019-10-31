@@ -73,6 +73,14 @@ public class EnemyScript : Entity
         }
     }
 
+    public void UpdateAllSkillCooldowns()
+    {
+        foreach (SkillData skill in skillList)
+        {
+            skill.ProgressCooldown();
+        }
+    }
+
     public override void Death()
     {
         isDead = true;

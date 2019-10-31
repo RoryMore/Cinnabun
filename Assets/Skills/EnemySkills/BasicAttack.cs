@@ -41,7 +41,7 @@ public class BasicAttack : SkillData
 
 
 
-        DrawRangeIndicator(zoneStart, SkillShape.RADIAL, range, 90.0f);
+        DrawRangeIndicator(zoneStart, SkillShape.RADIAL, range, angleWidth);
 
         rangeIndicator.DrawCastTimeIndicator(zoneStart, angleWidth, 0.0f, range, drawPercent);
 
