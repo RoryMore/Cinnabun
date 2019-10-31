@@ -41,6 +41,7 @@ public class Player : Entity
     [Header("Inventory")]
     [SerializeField]
     GameObject inventory;
+    bool inventoryBeginShit = false;
 
     // Start is called before the first frame update
     void Start()
@@ -66,6 +67,11 @@ public class Player : Entity
     // Update is called once per frame
     void Update()
     {
+        if (!inventoryBeginShit)
+        {
+            inventoryBeginShit = true;
+            inventory.SetActive(false);
+        }
         UpdateSkillCooldowns();
         UpdateAllConditions();
         UpdateAnimator();
