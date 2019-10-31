@@ -786,6 +786,11 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 831392528}
+    - target: {fileID: 7330141679716592775, guid: e9657db93e051a34aaff4380ca64400e,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 831392528}
     - target: {fileID: 7330141679716592774, guid: e9657db93e051a34aaff4380ca64400e,
         type: 3}
       propertyPath: m_Name
@@ -802,11 +807,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: bdd8d8ed837c3ce4ca68d3a1c7eb1349,
         type: 2}
-    - target: {fileID: 7330141679716592775, guid: e9657db93e051a34aaff4380ca64400e,
-        type: 3}
-      propertyPath: inventory
-      value: 
-      objectReference: {fileID: 831392528}
     - target: {fileID: 7330141679716592774, guid: e9657db93e051a34aaff4380ca64400e,
         type: 3}
       propertyPath: m_Name
