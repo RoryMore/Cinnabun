@@ -37,6 +37,7 @@ public class SoundManager : MonoBehaviour
     float musicProgress;
 
     PauseAbility pauseAbility;
+    EnemyManager enemyManager;
 
     public int random;
     bool randomNumber = true;
@@ -60,13 +61,14 @@ public class SoundManager : MonoBehaviour
     void Start()
     {
         pauseAbility = FindObjectOfType<PauseAbility>();
+        enemyManager = FindObjectOfType<EnemyManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
- 
 
+        CheckInBattle();
         checkState();
         test();
 
@@ -186,6 +188,19 @@ public class SoundManager : MonoBehaviour
         if (state != MusicState.IDLE)
         {
             playIdleMusic = true;
+        }
+    }
+
+    void CheckInBattle()
+    {
+        if (enemyManager.inBattle == true)
+        {
+            inBattle = true;
+        }
+
+        if (enemyManager.inBattle == false)
+        {
+            inBattle = false;
         }
     }
 

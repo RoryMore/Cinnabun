@@ -8,6 +8,8 @@ public class EnemyManager : MonoBehaviour
     public List<Encounter> encounters;
     public float maxEncounterDistance;
 
+    public bool inBattle;
+
     /*Each group of enemies is handled by their own personal "Encounter" manager. The enemy manager handles the
     Global functions of managing the encounters themselves, disabling them and enabling them as required*/
    
@@ -42,6 +44,7 @@ public class EnemyManager : MonoBehaviour
                 if (encounter.gameObject.activeInHierarchy == true)
                 {
                     encounter.gameObject.SetActive(false);
+                    inBattle = false;
                 }
             }
             else
@@ -49,6 +52,7 @@ public class EnemyManager : MonoBehaviour
                 if (encounter.gameObject.activeInHierarchy == false)
                 {
                     encounter.gameObject.SetActive(true);
+                    inBattle = true;
                     player.GetComponent<Player>().SetCurrentEncounter(encounter);
                 }
 
