@@ -142,14 +142,7 @@ public class Entity : MonoBehaviour
         {
             foreach (Condition condition in currentConditions)
             {
-                if (condition.conditionType == ConditionType.DELAYEDBLAST)
-                {
-                    //Do the thing!
-                    //Wait for player input of kaboom
-                    //If have condition, detonate and remove condition
 
-
-                }
 
                 //At moment of adding condition
                 //timeLeft = condition.duration;
