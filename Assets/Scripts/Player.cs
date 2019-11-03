@@ -76,6 +76,19 @@ public class Player : Entity
         UpdateAllConditions();
         UpdateAnimator();
 
+        // DEATH TESTING
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            if (isDead)
+            {
+                isDead = false;
+            }
+            else
+            {
+                Death();
+            }
+        }
+
         //if () // Check if player is dead
         if (!isDead)
         {
@@ -378,7 +391,15 @@ public class Player : Entity
     {
         isDead = true;
         animator.SetBool("isDead", isDead);
-        Debug.Log("Game Over! Player is dead!");
+        navAgent.destination = transform.position;
+    }
+
+    public void Revive()
+    {
+        isDead = false;
+        currentHP = maxHP;
+        animator.SetBool("isDead", isDead);
+        navAgent.destination = transform.position;
     }
 
     void RotateWeapons()
