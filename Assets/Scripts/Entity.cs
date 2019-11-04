@@ -63,8 +63,6 @@ public class Entity : MonoBehaviour
     public bool cannotBeTeleported;
 
     [Header("Rewind Point")]
-
-    //public RewindPoint rewindPoint;
     public List<RewindPoint> rewindPoints;
 
     [Header("Encounter")]
@@ -73,6 +71,11 @@ public class Entity : MonoBehaviour
     [Header("Damaged VFX")]
     [SerializeField]
     GameObject explosionParticles;
+
+    // Variables needed for enemies to function efficiently without additional list
+    [HideInInspector] public Vector3 destination;
+    [HideInInspector] public SkillData chosenSkill;
+
 
     // Start is called before the first frame update
     void Start()

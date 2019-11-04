@@ -11,7 +11,7 @@ public class BasicAttack : SkillData
 
     Entity target = null;
     
-    public int damage;
+    
 
     public override void TargetSkill(Transform zoneStart, List<Entity> entityList)
     {
@@ -68,7 +68,9 @@ public class BasicAttack : SkillData
             {
                 if (testedEntity != caster)
                 {
-                    testedEntity.TakeDamage(damage);
+                    
+                    //caster.currentHP += baseDamage; //Debug line for stopping the enemy from killing themsevles
+                    testedEntity.TakeDamage(baseDamage);
                 }
                 
             }

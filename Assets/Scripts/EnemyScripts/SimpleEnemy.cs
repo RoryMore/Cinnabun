@@ -10,9 +10,12 @@ public class SimpleEnemy : EnemyScript
    
     Transform target;
     Entity player; //All intents and purposes, same as 
-    SkillData chosenSkill; //For deciding AI behavior
     bool isAttacking = false;
 
+    bool destinationReached;
+
+    public List<EnemyScript> enemyForces;
+    
 
 
 
@@ -32,9 +35,10 @@ public class SimpleEnemy : EnemyScript
         //Initialise junk skill to be replaced by choose function
         chosenSkill = new SkillData();
         chosenSkill.baseDamage = 0;
-        chosenSkill.range = 0;
+        chosenSkill.range = 1;
 
         chosenSkill.currentlyCasting = false;
+        destinationReached = false;
 
         //Personal Variables
         enemyCooldown = 6.0f;
@@ -58,18 +62,21 @@ public class SimpleEnemy : EnemyScript
     }
 
 
+
     void Update()
     {
         
         if (!isDead)
         {
             Turn();
+
             UpdateAllSkillCooldowns();
             UpdateAllConditions();
 
             //Choose what attack it want's to make this turn
-
             Decide();
+
+            bool plzwork = CheckAttackers();
 
             if (chosenSkill.currentlyCasting == false)
             {
@@ -78,69 +85,71 @@ public class SimpleEnemy : EnemyScript
 
             Attack(chosenSkill);
             
-            
-
-
-
-
-
-
-
-
-
-
         }
         
+
+    }
+
+    public Vector3 ChooseDestination(SkillData skill)
+    {
+        //Pick a random point near the player well within range
+        float x = Random.Range(player.transform.position.x - (skill.range * 0.5f), player.transform.position.x + (skill.range * 0.5f));
+        float z = Random.Range(player.transform.position.z - (skill.range * 0.5f), player.transform.position.z + (skill.range * 0.5f));
+
+        
+
+
+        //Otherwise all good, move on!
+        return destination = new Vector3(x, 0, z);
 
     }
 
 
     public void Movement(SkillData chosenSkill)
     {
+        
+
         if (Vector3.Distance(myEncounter.gameObject.transform.position, target.transform.position) > myEncounter.enemyManager.maxEncounterDistance * 0.5)
         {
-            //Return home
-            nav.SetDestination(myEncounter.gameObject.transform.position);
+
+                //Return home
+                nav.SetDestination(myEncounter.gameObject.transform.position);
+
         }
 
-        if (myEncounter.initiativeList.Count != 0)
-        {
-            foreach (Entity entity in myEncounter.initiativeList)
-            {
-                if (entity != this)
-                {
-                    if (chosenSkill.CheckInRange(transform.position, entity.transform.position))
-                    {
-                        //If all prior conditions have been met, they are within potential range of the 
-
-                        
-                        
-                        
-                        
-                    }
-                }
-            }
-        }  
+        
 
         else if (!isDead)
         {
             nav.SetDestination(target.transform.position);
+            //nav.SetDestination(destination);
 
+           
             //Later this should set to the range of the technique it chooses! For now, It is not important
 
-            if (Vector3.Distance(transform.position, player.gameObject.transform.position) < skillList[0].range)
+            if (Vector3.Distance(transform.position, player.gameObject.transform.position) < skillList[0].range* 0.5)
             {
+
+
                 nav.SetDestination(transform.position);
                 
                 FaceTarget(player.transform);
                 anim.SetBool("isWalking", false);
 
+               
+
+
+
             }
             else
             {
+                //nav.SetDestination(destination);
                 nav.SetDestination(player.transform.position);
                 anim.SetBool("isWalking", true);
+
+
                 
+
 
             }
         }
@@ -149,6 +158,7 @@ public class SimpleEnemy : EnemyScript
         {
             nav.enabled = false;
             anim.SetBool("isWalking", false);
+
         }
 
     }
@@ -158,8 +168,6 @@ public class SimpleEnemy : EnemyScript
     {
         if(enemyCooldown <= 0)
         {
-            chosenSkill.baseDamage = 0;
-            chosenSkill.range = 0;
 
             //Choose how each enemy decides to take its actions
             //Later I would also want the skill cooldowns to come into effect
@@ -175,8 +183,10 @@ public class SimpleEnemy : EnemyScript
                     //Check if we are in range...
                     if (checkedSkill.CheckInRange(transform.position, target.position))
                     {
+                        //int choice = (int)Random.Range(0.0f, skillList.Count);
+
                         //Check if damage of prior skill is greater than base damange
-                        if (chosenSkill.baseDamage < checkedSkill.baseDamage)
+                        if (chosenSkill.baseDamage <= checkedSkill.baseDamage)
                         {
                             chosenSkill = checkedSkill;
 
@@ -190,7 +200,6 @@ public class SimpleEnemy : EnemyScript
                 }
             }
         }
-        
     }
 
     
@@ -201,11 +210,49 @@ public class SimpleEnemy : EnemyScript
         if (attack.currentlyCasting == true)
         {
             attack.TargetSkill(transform, myEncounter.playerInclusiveInitiativeList);
+           
             
         }
     }
 
-    
+    public bool CheckAttackers()
+    {
+
+        // Check all enemies
+        foreach (Entity enemy in myEncounter.initiativeList)
+        {
+            //If they are attacking... 
+            if (enemy.chosenSkill.currentlyCasting == true)
+            {
+               //If it isn't us...
+                if (enemy != this)
+                {
+                    //If we are in range
+                    if (enemy.chosenSkill.CheckInRange(enemy.transform.position, transform.position))
+                    {
+                        //Get out of dodge!
+                        return true;
+                    }
+
+                }
+
+            }
+
+        }
+
+        return false;
+    }
+
+    public void Evade()
+    {
+        //
+        if (CheckAttackers())
+        {
+
+        }
+        
+    }
+
 
     public override void TakeDamage(int amount)
     {

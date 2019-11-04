@@ -33,7 +33,7 @@ public class EnemyScript : Entity
 
     public EnemyManager enemyManager;
     public Encounter myEncounter;
-    
+
 
     public void Turn()
     {
