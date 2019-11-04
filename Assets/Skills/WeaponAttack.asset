@@ -14,17 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 0
   cooldown: 2
-  timeBeenOnCooldown: 2.0012228
+  timeBeenOnCooldown: 2
   windUp: 1
   timeSpentOnWindUp: 0
   shape: 1
   angleWidth: 35
-  skill: 0
+  skill: 3
   baseDamage: 0
   damageType: 0
   rangeIndicator: {fileID: 0}
   indicatorMaterial: {fileID: 2100000, guid: 3c6c47126b1480347ac2f55825168a69, type: 2}
   currentlyCasting: 0
+  caster: {fileID: 0}
   usedWeapon: 2
   unarmedRange: 2
   swordRange: 6
