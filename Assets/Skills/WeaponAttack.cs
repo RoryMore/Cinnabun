@@ -31,7 +31,7 @@ public class WeaponAttack : SkillData
     public float lineWidth;
 
     Entity entityTarget = null;
-    Entity caster = null;
+    //Entity caster = null;
 
     bool attackAreaChosen = false;
 

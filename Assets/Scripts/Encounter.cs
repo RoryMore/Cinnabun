@@ -7,7 +7,9 @@ public class Encounter : MonoBehaviour
 
     public Entity enemy1;
 
-    public List<Entity> initiativeList;
+    public List<Entity> masterInitiativeList; //Unchanging list of encounter made at its initilization
+    public List<Entity> initiativeList; //List that updates and changes as enemies die. Used for enemy manager, not for skills
+    public List<Entity> playerInclusiveInitiativeList; //Same as master but includes player for skill use, for enemy skills
     public List<Entity> healList;
 
     public List<GameObject> spawnPoints;
@@ -16,21 +18,16 @@ public class Encounter : MonoBehaviour
 
     public bool cleared = false;
 
-    
+    // Inventory to add item to
+    [Header("Temporary Inventory stuff")]
+    public Item itemReward;
+    [SerializeField]
+    InventoryBase inventory;
 
 
     // Start is called before the first frame update
     void Start()
     {
-
-        
-
-
-    }
-
-    void Awake()
-    {
-
         //Spawn enemies
         foreach (GameObject location in spawnPoints)
         {
@@ -38,15 +35,32 @@ public class Encounter : MonoBehaviour
             if (location.name.Contains("Enemy1"))
             {
                 initiativeList.Add(Instantiate(enemy1, location.transform));
+                
             }
             else if (location.name.Contains("Enemy2"))
             {
-                
+
             }
             else if (location.name.Contains("Enemy3"))
             {
-                
+
             }
+        }
+
+        masterInitiativeList.AddRange(initiativeList);
+
+        //Set up player inclusive
+        playerInclusiveInitiativeList.AddRange(masterInitiativeList);
+        playerInclusiveInitiativeList.Add(GameObject.Find("Player").GetComponent<Entity>());
+
+        
+    }
+
+    void Awake()
+    {
+        if (inventory != null)
+        {
+            Debug.Log("Inventory set properly");
         }
     }
 
@@ -86,6 +100,12 @@ public class Encounter : MonoBehaviour
     {
         //Give the player an item to use
         Debug.Log("Player has obtained an Item!... but not really");
+
+        if (inventory != null)
+        {
+            Debug.Log("Item given to player for real");
+            inventory.AddItem(itemReward);
+        }
     }
 
 

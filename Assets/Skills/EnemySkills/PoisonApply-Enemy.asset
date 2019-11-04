@@ -9,19 +9,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf210544db5280c449cbdae504831d6d, type: 3}
-  m_Name: ExampleSkill1
+  m_Script: {fileID: 11500000, guid: 8d86a24f12299674e8970832147bf16d, type: 3}
+  m_Name: PoisonApply-Enemy
   m_EditorClassIdentifier: 
-  range: 10
-  cooldown: 3
-  timeBeenOnCooldown: 3.001539
+  range: 8
+  cooldown: 8
+  timeBeenOnCooldown: 10
   windUp: 1
   timeSpentOnWindUp: 0
   shape: 0
-  angleWidth: 35
-  skill: 0
-  baseDamage: 0
+  angleWidth: 360
+  skill: 3
+  baseDamage: 1
   damageType: 0
   rangeIndicator: {fileID: 0}
   indicatorMaterial: {fileID: 2100000, guid: 3c6c47126b1480347ac2f55825168a69, type: 2}
   currentlyCasting: 0
+  caster: {fileID: 0}
+  damageTickRate: 2.75
+  duration: 6
+  damageOverTimeCondition: 2
+  effectivePercent: 0.85
+  enemyCaster: 1

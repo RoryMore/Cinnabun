@@ -22,7 +22,8 @@ public class SkillData : ScriptableObject
     {
         TELEPORT,
         DELAYEDBLAST,
-        REWIND
+        REWIND,
+        NotAppliccable
     }
 
     [Tooltip("The maximum distance the skill can be used at from the casters position")]
@@ -61,6 +62,10 @@ public class SkillData : ScriptableObject
     [HideInInspector]
     public bool currentlyCasting = false;
 
+    // The entity that casts this skill
+    [HideInInspector]
+    public Entity caster = null;
+
     public virtual void Initialise()
     {
         rangeIndicator = new RangeIndicator();
@@ -77,6 +82,8 @@ public class SkillData : ScriptableObject
         rangeIndicator = new RangeIndicator();
         rangeIndicator.Init(shape, angleWidth);
         rangeIndicator.indicatorMaterial = indicatorMaterial;
+
+        caster = ownCaster;
 
         timeBeenOnCooldown = cooldown;
         timeSpentOnWindUp = 0.0f;

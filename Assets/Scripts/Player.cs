@@ -25,6 +25,23 @@ public class Player : Entity
     [Header("Navigation")]
     public float turningSpeed;
     NavMeshAgent navAgent = null;
+    float baseMovementSpeed;
+
+    [Header("Animation")]
+    public Animator animator;
+
+    [Header("Skill VFX")]
+    [SerializeField]
+    GameObject teleportCastParticles;
+    [SerializeField]
+    GameObject rewindCastParticles;
+    [SerializeField]
+    GameObject delayedBlastCastParticles;
+
+    [Header("Inventory")]
+    [SerializeField]
+    GameObject inventory;
+    bool inventoryBeginShit = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +53,7 @@ public class Player : Entity
         
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.speed = movementSpeed;
+        baseMovementSpeed = movementSpeed;
         playerState = PlayerState.FREE;
     }
 
@@ -49,8 +67,28 @@ public class Player : Entity
     // Update is called once per frame
     void Update()
     {
+        if (!inventoryBeginShit)
+        {
+            inventoryBeginShit = true;
+            inventory.SetActive(false);
+        }
         UpdateSkillCooldowns();
         UpdateAllConditions();
+        UpdateAnimator();
+
+        // DEATH TESTING
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            if (isDead)
+            {
+                isDead = false;
+            }
+            else
+            {
+                Death();
+            }
+        }
+
         //if () // Check if player is dead
         if (!isDead)
         {
@@ -63,7 +101,22 @@ public class Player : Entity
                         if (!pauseMenu.isPaused)
                         {
                             RotateWeapons();
-                            Move();
+                            if (!inventory.activeSelf)
+                            {
+                                Move();
+                            }
+
+                            if (Input.GetKeyDown(KeyCode.I))
+                            {
+                                if (!inventory.activeSelf)
+                                {
+                                    inventory.SetActive(true);
+                                }
+                                else
+                                {
+                                    inventory.SetActive(false);
+                                }
+                            }
                         }
                     }
                     else
@@ -85,27 +138,89 @@ public class Player : Entity
                     
                     navAgent.speed = 0.0f;
                     navAgent.angularSpeed = 0.0f;
+
+                    AnimatorClipInfo[] animInfo = animator.GetCurrentAnimatorClipInfo(0);
+                    AnimationClip currentClip = animInfo[0].clip;
+                    float animSpeed = currentClip.length;
+
                     //TargetSkill();
                     switch (selectedSkill.skill)
                     {
                         // Special skills that need different transform
                         case SkillData.SkillList.DELAYEDBLAST:
-                            selectedSkill.TargetSkill(transform, currentEncounter.initiativeList);
+                            selectedSkill.TargetSkill(transform, currentEncounter.masterInitiativeList);
+
+                            if (selectedSkill.currentlyCasting)
+                            {
+                                if (!delayedBlastCastParticles.activeSelf)
+                                {
+                                    delayedBlastCastParticles.SetActive(true);
+                                }
+                                animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
+                                animator.SetBool("skillCast", true);
+                            }
+                            break;
+
+                        case SkillData.SkillList.REWIND:
+                            selectedSkill.TargetSkill(transform);
+
+                            if (selectedSkill.currentlyCasting)
+                            {
+                                if (!rewindCastParticles.activeSelf)
+                                {
+                                    rewindCastParticles.SetActive(true);
+                                }
+                                animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
+                                animator.SetBool("skillCast", true);
+                            }
+                            break;
+
+                        case SkillData.SkillList.TELEPORT:
+                            selectedSkill.TargetSkill(transform);
+
+                            if (selectedSkill.currentlyCasting)
+                            {
+                                if (!teleportCastParticles.activeSelf)
+                                {
+                                    teleportCastParticles.SetActive(true);
+                                }
+                                animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
+                                animator.SetBool("skillCast", true);
+                            }
                             break;
 
                         default:
                             if (selectedSkill == weaponAttack)
                             {
                                 // Need a current entity list to put into function parameter
-                                selectedSkill.TargetSkill(transform, currentEncounter.initiativeList);
+                                selectedSkill.TargetSkill(transform, currentEncounter.masterInitiativeList);
+
+                                if (selectedSkill.currentlyCasting)
+                                {
+                                    // We are currently casting a skill
+                                    // Animate attack animation here
+                                    
+                                    animator.SetFloat("weaponAttackPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
+                                    animator.SetBool("weaponAttack", true);
+                                }
                             }
                             else
                             {
                                 selectedSkill.TargetSkill(transform);
+
+                                if (selectedSkill.currentlyCasting)
+                                {
+                                    // We are currently casting a skill
+                                    // Animate cast animation here
+
+                                    animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
+                                    animator.SetBool("skillCast", true);
+                                }
                             }
                             
                             break;
                     }
+
                     // skill has ended and been fully cast
                     if (selectedSkill.timeBeenOnCooldown == 0.0f && !selectedSkill.currentlyCasting)
                     {
@@ -113,6 +228,15 @@ public class Player : Entity
                         pause.actionsLeft--;
                         selectedSkill = null;
                         playerState = PlayerState.FREE;
+
+                        // Reset animator variables
+                        animator.SetBool("weaponAttack", false);
+                        animator.SetBool("skillCast", false);
+
+                        // Deactivate any active cast particles
+                        delayedBlastCastParticles.SetActive(false);
+                        rewindCastParticles.SetActive(false);
+                        teleportCastParticles.SetActive(false);
                     }
 
                     if (Input.GetMouseButtonDown(1))
@@ -126,6 +250,12 @@ public class Player : Entity
                     break;
             }
         }
+    }
+
+    public override void TakeDamage(int amount)
+    {
+        animator.SetTrigger("gotHit");
+        base.TakeDamage(amount);
     }
 
     void UpdateSkillCooldowns()
@@ -260,7 +390,16 @@ public class Player : Entity
     public override void Death()
     {
         isDead = true;
-        Debug.Log("Game Over! Player is dead!");
+        animator.SetBool("isDead", isDead);
+        navAgent.destination = transform.position;
+    }
+
+    public void Revive()
+    {
+        isDead = false;
+        currentHP = maxHP;
+        animator.SetBool("isDead", isDead);
+        navAgent.destination = transform.position;
     }
 
     void RotateWeapons()
@@ -293,5 +432,29 @@ public class Player : Entity
             }
             
         }
+    }
+
+    void UpdateAnimator()
+    {
+        if (navAgent.velocity.magnitude > 0.01f)
+        {
+            animator.SetBool("moving", true);
+        }
+        else
+        {
+            animator.SetBool("moving", false);
+        }
+        animator.SetFloat("movementPlaybackMultiplier", navAgent.velocity.magnitude / baseMovementSpeed);
+
+        // This is a method to grab clip info to play with animation properties based on current clip
+        //AnimatorClipInfo[] animInfo = animator.GetCurrentAnimatorClipInfo(0);
+        //AnimationClip currentClip = animInfo[0].clip;
+        //Debug.Log(currentClip.name);
+    }
+
+    void ResetAnimationVariables()
+    {
+        animator.SetBool("weaponAttack", false);
+        animator.SetBool("skillCast", false);
     }
 }

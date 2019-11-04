@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PlayerUpperBodyMask
+  m_Mask: 01000000010000000100000000000000000000000100000001000000010000000100000000000000000000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: base_cinnabun3:Group4171
+    m_Weight: 1
+  - m_Path: Cinnabun
+    m_Weight: 1
+  - m_Path: CinnabunLPlatform
+    m_Weight: 1
+  - m_Path: CinnabunPelvis
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunLThigh
+    m_Weight: 0
+  - m_Path: CinnabunPelvis/CinnabunLThigh/CinnabunLCalf
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunLThigh/CinnabunLCalf/CinnabunLFoot
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunRThigh
+    m_Weight: 0
+  - m_Path: CinnabunPelvis/CinnabunRThigh/CinnabunRCalf
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunRThigh/CinnabunRCalf/CinnabunRFoot
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit11
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit11/CinnabunLDigit12
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit11/CinnabunLDigit12/CinnabunLDigit13
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit21
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit21/CinnabunLDigit22
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit21/CinnabunLDigit22/CinnabunLDigit23
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit31
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit31/CinnabunLDigit32
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit31/CinnabunLDigit32/CinnabunLDigit33
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit41
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit41/CinnabunLDigit42
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit41/CinnabunLDigit42/CinnabunLDigit43
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit51
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit51/CinnabunLDigit52
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit51/CinnabunLDigit52/CinnabunLDigit53
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunNeck1
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunNeck1/CinnabunNeck2
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunNeck1/CinnabunNeck2/CinnabunHead
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit11
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit11/CinnabunRDigit12
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit11/CinnabunRDigit12/CinnabunRDigit13
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit21
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit21/CinnabunRDigit22
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit21/CinnabunRDigit22/CinnabunRDigit23
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit31
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit31/CinnabunRDigit32
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit31/CinnabunRDigit32/CinnabunRDigit33
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit41
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit41/CinnabunRDigit42
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit41/CinnabunRDigit42/CinnabunRDigit43
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit51
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit51/CinnabunRDigit52
+    m_Weight: 1
+  - m_Path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit51/CinnabunRDigit52/CinnabunRDigit53
+    m_Weight: 1
+  - m_Path: CinnabunRPlatform
+    m_Weight: 1
