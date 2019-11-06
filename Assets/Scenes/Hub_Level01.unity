@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2459,7 +2459,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: d5275d2c1b6929f48a7243c33a4f9433,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -35.2
+      value: -33.48
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d5275d2c1b6929f48a7243c33a4f9433,
         type: 3}
@@ -2676,11 +2676,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1887190996}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: a371b988e76e5914c87830e72bb97615,
-        type: 3}
-      propertyPath: m_Name
-      value: cinnabun_greybox
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a371b988e76e5914c87830e72bb97615,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2735,6 +2730,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: a371b988e76e5914c87830e72bb97615,
+        type: 3}
+      propertyPath: m_Name
+      value: cinnabun_greybox
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a371b988e76e5914c87830e72bb97615, type: 3}
@@ -2791,7 +2791,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: a8e110fe55a8ba34786ef3b53c03376b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 50.546394
+      value: 45.93
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a8e110fe55a8ba34786ef3b53c03376b,
         type: 3}
@@ -2801,7 +2801,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: a8e110fe55a8ba34786ef3b53c03376b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 139.94011
+      value: 140.01
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a8e110fe55a8ba34786ef3b53c03376b,
         type: 3}
@@ -3243,11 +3243,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1887190996}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: a371b988e76e5914c87830e72bb97615,
-        type: 3}
-      propertyPath: m_Name
-      value: cinnabun_greybox (1)
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a371b988e76e5914c87830e72bb97615,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3302,6 +3297,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: a371b988e76e5914c87830e72bb97615,
+        type: 3}
+      propertyPath: m_Name
+      value: cinnabun_greybox (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a371b988e76e5914c87830e72bb97615, type: 3}
