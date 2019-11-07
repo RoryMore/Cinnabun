@@ -29,7 +29,11 @@ public class SimpleEnemy : EnemyScript
         nav = GetComponent<NavMeshAgent>();
 
 
+        //Initialise junk skill to be replaced by choose function
         chosenSkill = new SkillData();
+        chosenSkill.baseDamage = 0;
+        chosenSkill.range = 0;
+
         chosenSkill.currentlyCasting = false;
 
         //Personal Variables
@@ -63,17 +67,17 @@ public class SimpleEnemy : EnemyScript
             UpdateAllSkillCooldowns();
             UpdateAllConditions();
 
+            //Choose what attack it want's to make this turn
+
+            Decide();
+
             if (chosenSkill.currentlyCasting == false)
             {
-                Movement();
+                Movement(chosenSkill);
             }
+
+            Attack(chosenSkill);
             
-            
-            if (enemyCooldown <= 0)
-            {
-                Decide();
-                Attack(chosenSkill);
-            }
             
 
 
@@ -91,13 +95,33 @@ public class SimpleEnemy : EnemyScript
     }
 
 
-    public void Movement()
+    public void Movement(SkillData chosenSkill)
     {
         if (Vector3.Distance(myEncounter.gameObject.transform.position, target.transform.position) > myEncounter.enemyManager.maxEncounterDistance * 0.5)
         {
             //Return home
             nav.SetDestination(myEncounter.gameObject.transform.position);
         }
+
+        if (myEncounter.initiativeList.Count != 0)
+        {
+            foreach (Entity entity in myEncounter.initiativeList)
+            {
+                if (entity != this)
+                {
+                    if (chosenSkill.CheckInRange(transform.position, entity.transform.position))
+                    {
+                        //If all prior conditions have been met, they are within potential range of the 
+
+                        
+                        
+                        
+                        
+                    }
+                }
+            }
+        }  
+
         else if (!isDead)
         {
             nav.SetDestination(target.transform.position);
@@ -132,47 +156,51 @@ public class SimpleEnemy : EnemyScript
 
     public void Decide()
     {
-        
-        chosenSkill.baseDamage = 0;
-        chosenSkill.range = 0;
-
-        //Choose how each enemy decides to take its actions
-        //Later I would also want the skill cooldowns to come into effect
-
-        //Step 1: If the turn is ready, begin the cycle
-
-        //For each skill...
-        foreach (SkillData checkedSkill in skillList)
+        if(enemyCooldown <= 0)
         {
-            //Check if the cooldown is complete...
-            if (checkedSkill.timeBeenOnCooldown >= checkedSkill.cooldown)
-            {
-                //Check if we are in range...
-                if (checkedSkill.CheckInRange(transform.position, target.position))
-                {
-                    //Check if damage of prior skill is greater than base damange
-                    if (chosenSkill.baseDamage < checkedSkill.baseDamage)
-                    {
-                        chosenSkill = checkedSkill;
+            chosenSkill.baseDamage = 0;
+            chosenSkill.range = 0;
 
-                        //Reset the enemy turn
-                        enemyCooldown = 6;
-                        chosenSkill.currentlyCasting = true;
-                        anim.SetTrigger("attacking");
-                       
+            //Choose how each enemy decides to take its actions
+            //Later I would also want the skill cooldowns to come into effect
+
+            //Step 1: If the turn is ready, begin the cycle
+
+            //For each skill...
+            foreach (SkillData checkedSkill in skillList)
+            {
+                //Check if the cooldown is complete...
+                if (checkedSkill.timeBeenOnCooldown >= checkedSkill.cooldown)
+                {
+                    //Check if we are in range...
+                    if (checkedSkill.CheckInRange(transform.position, target.position))
+                    {
+                        //Check if damage of prior skill is greater than base damange
+                        if (chosenSkill.baseDamage < checkedSkill.baseDamage)
+                        {
+                            chosenSkill = checkedSkill;
+
+                            //Reset the enemy turn
+                            enemyCooldown = 6;
+                            chosenSkill.currentlyCasting = true;
+                            anim.SetTrigger("attacking");
+
+                        }
                     }
                 }
             }
         }
+        
     }
 
     
 
     public void Attack(SkillData attack)
     {
-        if (skillList[0].currentlyCasting == true)
+        
+        if (attack.currentlyCasting == true)
         {
-            skillList[0].TargetSkill(transform, myEncounter.playerInclusiveInitiativeList);
+            attack.TargetSkill(transform, myEncounter.playerInclusiveInitiativeList);
             
         }
     }

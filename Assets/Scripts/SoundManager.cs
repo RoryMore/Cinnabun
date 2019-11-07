@@ -67,8 +67,8 @@ public class SoundManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
- 
 
+        CheckInBattle();
         checkState();
         test();
 
@@ -191,17 +191,17 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    void CheckIfInBattle()
+    void CheckInBattle()
     {
-        if (enemyManager.isInBattle == true)
+        if (enemyManager.inBattle == true)
         {
             inBattle = true;
         }
-        else if (enemyManager.isInBattle == true)
+
+        if (enemyManager.inBattle == false)
         {
             inBattle = false;
         }
-
     }
 
     void getRandomNumber()
