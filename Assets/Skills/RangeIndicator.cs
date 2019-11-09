@@ -123,6 +123,17 @@ public class RangeIndicator : MonoBehaviour
         Vector3 posNextMin = Vector3.zero;
         Vector3 posNextMax = Vector3.zero;
 
+        Vector3 zonePositionProjected = zoneStart.position;
+        zonePositionProjected.y += 10.0f;
+        if (Physics.Raycast(zonePositionProjected, -Vector3.up, out RaycastHit hit, Mathf.Infinity))
+        {
+            zonePositionProjected.y = hit.point.y;
+        }
+        else
+        {
+            zonePositionProjected.y -= 10.0f;
+        }
+
         Vector3[] vertices = new Vector3[4 * quality];
         int[] triangles = new int[3 * 2 * quality];
 
@@ -149,11 +160,17 @@ public class RangeIndicator : MonoBehaviour
                     Vector3 sphereNext = new Vector3(Mathf.Sin(Mathf.Deg2Rad * (angleNext)), 0,
                                                      Mathf.Cos(Mathf.Deg2Rad * (angleNext)));
 
-                    posCurrentMin = zoneStart.position + sphereCurrent * minRange;
-                    posCurrentMax = zoneStart.position + sphereCurrent * maxRange;
+                    //posCurrentMin = zoneStart.position + sphereCurrent * minRange;
+                    //posCurrentMax = zoneStart.position + sphereCurrent * maxRange;
 
-                    posNextMin = zoneStart.position + sphereNext * minRange;
-                    posNextMax = zoneStart.position + sphereNext * maxRange;
+                    //posNextMin = zoneStart.position + sphereNext * minRange;
+                    //posNextMax = zoneStart.position + sphereNext * maxRange;
+
+                    posCurrentMin = zonePositionProjected + sphereCurrent * minRange;
+                    posCurrentMax = zonePositionProjected + sphereCurrent * maxRange;
+
+                    posNextMin = zonePositionProjected + sphereNext * minRange;
+                    posNextMax = zonePositionProjected + sphereNext * maxRange;
 
                     int a = 4 * i;
                     int b = 4 * i + 1;

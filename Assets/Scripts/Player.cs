@@ -274,6 +274,7 @@ public class Player : Entity
     {
         if (Input.GetMouseButton(0))
         {
+            
             navAgent.speed = movementSpeed;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -283,6 +284,8 @@ public class Player : Entity
                 //if (hit.collider.tag.Contains("Finish"))
                 //{
                     navAgent.SetDestination(hit.point);
+
+                Debug.Log("Move Player");
                 //}
             }
 
