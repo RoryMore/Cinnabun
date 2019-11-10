@@ -145,7 +145,8 @@ public class SoundManager : MonoBehaviour
                 }
             case MusicState.MAINMENU:
                 {
-                    MuteAllAudio();
+                   // MuteAllAudio();
+					//mainMenuMusic.Play();
                     mainMenuMusic.volume = 0.7f;
                     break;
                 }
@@ -232,7 +233,7 @@ public class SoundManager : MonoBehaviour
     {
         //battleMusic.volume = 0.0f;
        // slowMotionMusic.volume = 0.0f;
-        mainMenuMusic.Stop();
+        mainMenuMusic.volume = 0.0f;
         //millionaire.volume = 0.0f;
 
 
