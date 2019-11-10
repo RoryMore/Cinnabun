@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 059f6bcc50c845540a7039bccdc67d1b, type: 3}
-  m_Name: TestItem
+  m_Name: OtherTest
   m_EditorClassIdentifier: 
   itemType: 0
   armourType: 0
   weaponType: 0
   equipmentSlot: 6
-  applyRandomStats: 1
-  strength: 6
-  agility: 2
-  constitution: 4
-  intellect: 6
-  physicalArmour: 8
-  magicalArmour: 8
+  applyRandomStats: 0
+  strength: 14
+  agility: 34
+  constitution: 5
+  intellect: 2
+  physicalArmour: 36
+  magicalArmour: 0
   inventorySprite: {fileID: 21300000, guid: 3613a410bbe250548a2f3399935eb781, type: 3}
-  equippedSprite: {fileID: 0}
-  inventorySpaceX: 1
-  inventorySpaceY: 1
+  equippedSprite: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  inventorySpaceX: 2
+  inventorySpaceY: 2
   itemName: 
