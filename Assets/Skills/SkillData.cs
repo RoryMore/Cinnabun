@@ -29,6 +29,11 @@ public class SkillData : ScriptableObject
     [Tooltip("The maximum distance the skill can be used at from the casters position")]
     public float range;
 
+    [Tooltip("How high above the casting transform the skill will check if it will hit a target on the Y axis. A value of zero will mean the targets position Y value has to be equivelant to the Y value of the Indicator/caster Transform to be damaged")]
+    public float positiveRangeHeight;
+    [Tooltip("How low below the casting transform the skill will check if it will hit a target on the Y axis. A value of zero will mean the targets position Y value has to be equivelant to the Y value of the Indicator/caster Transform to be damaged")]
+    public float negativeRangeHeight;
+
     [Tooltip("The time (in seconds) that needs to pass before the player is able to cast this skill again")]
     public float cooldown;
     [HideInInspector]
@@ -99,44 +104,60 @@ public class SkillData : ScriptableObject
 
     public bool CheckLineSkillHit(Vector3 hitCheckPosition)
     {
-        // This checks if the x & z values are within the bounds of the rectangular mesh -> Returns true if hit, false if not
-        // Can add additional checks for y component of position if necessary to add to make height checks relevant
-        Vector3 meshYPosition = new Vector3(hitCheckPosition.x, rangeIndicator.mesh.bounds.center.y, hitCheckPosition.z);
-        if (rangeIndicator.mesh.bounds.Contains(meshYPosition))
+        // Check if our target is within the height limits of our skill range
+        if (hitCheckPosition.y <= rangeIndicator.mesh.bounds.center.y + positiveRangeHeight)
         {
-            return true;
+            if (hitCheckPosition.y >= rangeIndicator.mesh.bounds.center.y - negativeRangeHeight)
+            {
+                // This checks if the x & z values are within the bounds of the rectangular mesh -> Returns true if hit, false if not
+                // Can add additional checks for y component of position if necessary to add to make height checks relevant
+                Vector3 meshYPosition = new Vector3(hitCheckPosition.x, rangeIndicator.mesh.bounds.center.y, hitCheckPosition.z);
+                if (rangeIndicator.mesh.bounds.Contains(meshYPosition))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     public bool CheckRadialSkillHit(Vector3 hitCheckPosition, Transform zoneStart)
     {
-        // Based on zoneStart (where the radial skill area is starting from with a given rotation) and the position we are checking
-        // Returns whether hitCheckPosition is within the arc area of the radial skill
-        // Note: zoneStart is equivelent to the zoneStart parameter used for the radial skill indicator
-        float forwardAngle = 90 - Mathf.Rad2Deg * Mathf.Atan2(zoneStart.forward.z, zoneStart.forward.x);
-
-        float positionAngle = Vector3.Angle(hitCheckPosition - zoneStart.position, zoneStart.forward);
-        float distance = Vector3.Distance(hitCheckPosition, zoneStart.position);
-
-        if (positionAngle <= angleWidth)
+        // Check if our target is within the height limits of our skill range
+        if (hitCheckPosition.y <= zoneStart.position.y + positiveRangeHeight)
         {
-            if (distance <= range)
+            if (hitCheckPosition.y >= zoneStart.position.y - negativeRangeHeight)
             {
-                return true;
-            }
-            else
-            {
-                return false;
+                // Based on zoneStart (where the radial skill area is starting from with a given rotation) and the position we are checking
+                // Returns whether hitCheckPosition is within the arc area of the radial skill
+                // Note: zoneStart is equivelent to the zoneStart parameter used for the radial skill indicator
+                float forwardAngle = 90 - Mathf.Rad2Deg * Mathf.Atan2(zoneStart.forward.z, zoneStart.forward.x);
+
+                float positionAngle = Vector3.Angle(hitCheckPosition - zoneStart.position, zoneStart.forward);
+                float distance = Vector3.Distance(hitCheckPosition, zoneStart.position);
+
+                if (positionAngle <= angleWidth)
+                {
+                    if (distance <= range)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     public void DrawRangeIndicator(Transform zoneStart, SkillShape shape)
