@@ -7,15 +7,73 @@ public class Entity : MonoBehaviour
     
     public struct Condition
     {
-
+        public int damage;  // If this condition deals damage, this is how much damage is dealt each time damage is dealt
+        public float damageTickRate; // The rate at which this condition will deal its damage
         public float duration; //The duration of the condition
         public ConditionType conditionType; //Name of condition
+        public float effectivePercent; // If this condition uses any percent value in any way
 
+        public float timePassed;
+        public bool begun;
+
+        public Condition(float _duration, ConditionType _conditionType)
+        {
+            damage = 0;
+            damageTickRate = 0;
+            duration = _duration;
+            conditionType = _conditionType;
+            timePassed = 0;
+            begun = false;
+            effectivePercent = 1.0f;
+        }
+
+        public Condition(float _duration, ConditionType _conditionType, int _damage, float _damageTickRate)
+        {
+            damage = _damage;
+            damageTickRate = _damageTickRate;
+            duration = _duration;
+            conditionType = _conditionType;
+            timePassed = 0;
+            begun = false;
+            effectivePercent = 1.0f;
+        }
+
+        public Condition(float _duration, ConditionType _conditionType, float _effectivePercent, int _damage, float _damageTickRate)
+        {
+            damage = _damage;
+            damageTickRate = _damageTickRate;
+            duration = _duration;
+            conditionType = _conditionType;
+            timePassed = 0;
+            begun = false;
+            effectivePercent = _effectivePercent;
+        }
+
+        public void ReduceDuration(float reducedBy)
+        {
+            duration -= reducedBy;
+
+            timePassed += reducedBy;
+        }
+
+        public void ResetTimePassed()
+        {
+            timePassed = 0.0f;
+        }
+
+        public void BeginStart()
+        {
+            begun = true;
+        }
     }
 
     public enum ConditionType
     {
         DELAYEDBLAST,
+        [Tooltip("Deals damage over time based on damage and tickrate")]
+        BURN,
+        [Tooltip("Deals damage over time based on damage and tickrate, and also applies a slow multiplying movementSpeed by effective percent")]
+        POISON
     }
 
     public struct RewindPoint
@@ -50,7 +108,7 @@ public class Entity : MonoBehaviour
     [Header("Derived Stats")]
     public int maxHP;
     public int currentHP;
-    public int movementSpeed;
+    public float movementSpeed;
     public int dodgeChance;
     public int physDamagePotential;
     public int magDamagePotential;
@@ -76,6 +134,9 @@ public class Entity : MonoBehaviour
     [HideInInspector] public Vector3 destination;
     [HideInInspector] public SkillData chosenSkill;
 
+
+    // Data for original values
+    float originalMovementSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -143,9 +204,68 @@ public class Entity : MonoBehaviour
     {
         if (currentConditions.Count != 0)
         {
+            int conditionIndex = 0;
             foreach (Condition condition in currentConditions)
             {
+                if (condition.conditionType == ConditionType.DELAYEDBLAST)
+                {
+                    //Do the thing!
+                    //Wait for player input of kaboom
+                    //If have condition, detonate and remove condition
 
+                }
+                else if (condition.conditionType == ConditionType.BURN)
+                {
+                    // Does this condition still have time to continue being active?
+                    if (condition.duration > 0)
+                    {
+                        // Reduce the condition time
+                        condition.ReduceDuration(Time.deltaTime);
+
+                        // After every second deal burn damage
+                        if (condition.timePassed >= condition.damageTickRate)
+                        {
+                            TakeDamage(condition.damage);
+
+                            // Reset the timePassed value
+                            condition.ResetTimePassed();
+                        }
+                    }
+                    else
+                    {
+                        // This condition has timed out
+                        // Remove it
+                        currentConditions.RemoveAt(conditionIndex);
+                    }
+                }
+                else if (condition.conditionType == ConditionType.POISON)
+                {
+                    if (!condition.begun)
+                    {
+                        condition.BeginStart();
+                        originalMovementSpeed = movementSpeed;
+
+                        movementSpeed = movementSpeed * condition.effectivePercent;
+                    }
+                    if (condition.duration > 0)
+                    {
+                        condition.ReduceDuration(Time.deltaTime);
+
+                        if (condition.timePassed >= condition.damageTickRate)
+                        {
+                            TakeDamage(condition.damage);
+                            condition.ResetTimePassed();
+                        }
+                    }
+                    else
+                    {
+                        movementSpeed = originalMovementSpeed;
+
+                        // This condition has timed out
+                        // Remove it
+                        currentConditions.RemoveAt(conditionIndex);
+                    }
+                }
 
                 //At moment of adding condition
                 //timeLeft = condition.duration;
@@ -155,6 +275,8 @@ public class Entity : MonoBehaviour
                 //{
                 //remove condition
                 // }
+
+                conditionIndex++;
             }
         }
 

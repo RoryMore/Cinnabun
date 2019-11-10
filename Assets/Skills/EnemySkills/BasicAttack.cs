@@ -15,21 +15,27 @@ public class BasicAttack : SkillData
 
     public override void TargetSkill(Transform zoneStart, List<Entity> entityList)
     {
-        //This.. may not work!
-        target = GameObject.FindWithTag("Player").GetComponent<Entity>();
+        if (target == null)
+        {
+            //This.. may not work!
+            target = GameObject.FindWithTag("Player").GetComponent<Entity>();
 
-        //Init
-        //rangeIndicator.Init(SkillShape.RADIAL, 90.0f);
+            //Init
+            //rangeIndicator.Init(SkillShape.RADIAL, 90.0f);
 
-        //Face target
-        zoneStart.LookAt(target.transform);
-        //DrawRangeIndicator(zoneStart, shape, range, 90.0f);
+            //Face target
+            zoneStart.LookAt(target.transform);
+        }
+        else
+        {
+            //DrawRangeIndicator(zoneStart, shape, range, 90.0f);
 
-        //Select?
-        //SelectTargetRay(zoneStart, ref target, true);
+            //Select?
+            //SelectTargetRay(zoneStart, ref target, true);
 
 
-        CastSkill(zoneStart, entityList); 
+            CastSkill(zoneStart, entityList);
+        }
 
     }
 
