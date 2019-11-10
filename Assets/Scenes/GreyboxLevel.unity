@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -245,16 +245,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Inventory&CharacterPanel
       objectReference: {fileID: 0}
-    - target: {fileID: 4839440884872734023, guid: 7ea92f33321f8d6488f0488f53c3793c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4839440884872734023, guid: 7ea92f33321f8d6488f0488f53c3793c,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     - target: {fileID: 4839440884872734020, guid: 7ea92f33321f8d6488f0488f53c3793c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -365,16 +355,6 @@ PrefabInstance:
       propertyPath: characterEntity
       value: 
       objectReference: {fileID: 612049432}
-    - target: {fileID: 4839440885505804092, guid: 7ea92f33321f8d6488f0488f53c3793c,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4839440884446768149, guid: 7ea92f33321f8d6488f0488f53c3793c,
-        type: 3}
-      propertyPath: m_TagString
-      value: Inventory
-      objectReference: {fileID: 0}
     - target: {fileID: 4839440886077623492, guid: 7ea92f33321f8d6488f0488f53c3793c,
         type: 3}
       propertyPath: targetObject
@@ -948,16 +928,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 573186263889115928, guid: e05b9b4aa2049d744a89feed09027f67,
-        type: 3}
-      propertyPath: m_UiScaleMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 573186263889115928, guid: e05b9b4aa2049d744a89feed09027f67,
-        type: 3}
-      propertyPath: m_MatchWidthOrHeight
-      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e05b9b4aa2049d744a89feed09027f67, type: 3}
