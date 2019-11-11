@@ -368,39 +368,39 @@ PrefabInstance:
       propertyPath: state
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 269856513684845056, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 269856513684845056, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6413221892157739107, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6413221892157739107, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9030375006425835809, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9030375006425835809, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4577219032212093766, guid: b715985195ec5a14a8289d3661420dd6,
         type: 3}
       propertyPath: m_PlayOnAwake
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 269856513684845056, guid: b715985195ec5a14a8289d3661420dd6,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 269856513684845056, guid: b715985195ec5a14a8289d3661420dd6,
-        type: 3}
-      propertyPath: Loop
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6413221892157739107, guid: b715985195ec5a14a8289d3661420dd6,
-        type: 3}
-      propertyPath: Loop
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6413221892157739107, guid: b715985195ec5a14a8289d3661420dd6,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9030375006425835809, guid: b715985195ec5a14a8289d3661420dd6,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9030375006425835809, guid: b715985195ec5a14a8289d3661420dd6,
-        type: 3}
-      propertyPath: Loop
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -615,5 +615,10 @@ PrefabInstance:
       propertyPath: m_MatchWidthOrHeight
       value: 0.622
       objectReference: {fileID: 0}
+    - target: {fileID: 5898564490116766096, guid: 5aa7741751ae2294b97a45fbe7b1e2cc,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: a892322cead685e4f963da4d8f4efc0f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa7741751ae2294b97a45fbe7b1e2cc, type: 3}
