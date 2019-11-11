@@ -230,17 +230,28 @@ public class WeaponAttack : SkillData
         {
             case UsedWeaponType.Unarmed:
                 entityTarget.TakeDamage(baseUnarmedDamage);
+
+                SoundManager.meleeSwing.Play();
                 break;
 
             case UsedWeaponType.Sword:
-                foreach (Entity testedEntity in entityList)
                 {
-                    if (CheckRadialSkillHit(testedEntity.transform.position, zoneStart))
+                    bool weaponhit = false;
+                    foreach (Entity testedEntity in entityList)
                     {
-                        testedEntity.TakeDamage(baseSwordDamage);
+                        if (CheckRadialSkillHit(testedEntity.transform.position, zoneStart))
+                        {
+                            weaponhit = true;
+                            testedEntity.TakeDamage(baseSwordDamage);
+                        }
                     }
+
+                    if (weaponhit)
+                    {
+                        SoundManager.meleeSwing.Play();
+                    }
+                    break;
                 }
-                break;
 
             case UsedWeaponType.Staff:
                 foreach (Entity testedEntity in entityList)
