@@ -11,13 +11,12 @@ GameObject:
   - component: {fileID: 7959641430258891506}
   - component: {fileID: 1381854163735871684}
   - component: {fileID: 4616713402940980285}
-  - component: {fileID: 7992153743509351610}
   m_Layer: 0
   m_Name: pink_tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7959641430258891506
 Transform:
@@ -26,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6353746115133098209}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 93.21438, y: 45.120796, z: 93.654}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
@@ -59,10 +58,10 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3609144008815432100, guid: 2c33616720990e848b8064b42d030249, type: 3}
-  - {fileID: 383520081286223751, guid: 2c33616720990e848b8064b42d030249, type: 3}
-  - {fileID: 6208379481318093615, guid: 2c33616720990e848b8064b42d030249, type: 3}
-  - {fileID: 4957337976664095293, guid: 2c33616720990e848b8064b42d030249, type: 3}
+  - {fileID: 2100000, guid: 303cf03bcb546d9469e1624d8f7bf0cd, type: 2}
+  - {fileID: 2100000, guid: e75a65a80751230468016911893bdc34, type: 2}
+  - {fileID: 2100000, guid: 158e870b594100f489c82eaf46224a90, type: 2}
+  - {fileID: 2100000, guid: 3cb2290888b8b384bbe08be0ff5d1b7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,19 +82,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!208 &7992153743509351610
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6353746115133098209}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 160.95, y: 778.398, z: 160.6}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 37.9, y: 778.398, z: 50.8}
-  m_TimeToStationary: 0.5

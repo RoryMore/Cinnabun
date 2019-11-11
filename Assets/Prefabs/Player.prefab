@@ -54,11 +54,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rewind: 0
   isDead: 0
-  level: 1
+  level: 10
   experience: 0
   xpToNextLevel: 0
   strength: 1
-  agility: 7
+  agility: 5
   constitution: 5
   intellect: 3
   physicalArmour: 4
@@ -81,8 +81,8 @@ MonoBehaviour:
   playerState: 0
   weaponAttack: {fileID: 11400000, guid: 44635c99ebe8d984d8e2bfafea26be99, type: 2}
   skillList:
-  - {fileID: 11400000, guid: a4f27904e37148a42800f7a0c414d406, type: 2}
   - {fileID: 11400000, guid: 094b4579d21e94d4b97eb9708a32ef6e, type: 2}
+  - {fileID: 11400000, guid: a4f27904e37148a42800f7a0c414d406, type: 2}
   - {fileID: 11400000, guid: c024a6ac81891f543b52d28ae2c8dbfc, type: 2}
   selectedSkill: {fileID: 0}
   turningSpeed: 360
@@ -607,7 +607,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 7bd24918c0a05fc4ca5918a422d54328, type: 2}
+      objectReference: {fileID: 2100000, guid: 6dbaf59c23eae264688fed9d12c4eeae, type: 2}
     - target: {fileID: -3672442044372864366, guid: b8386f44c9c520f499d5f3fe9a54c229,
         type: 3}
       propertyPath: m_Layer
@@ -975,6 +975,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 819698099673919358}
     m_Modifications:
+    - target: {fileID: 7700564394331202654, guid: f5340fb42c7d4fe40b9441f3daf7b826,
+        type: 3}
+      propertyPath: m_Name
+      value: TeleportVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700564394331202654, guid: f5340fb42c7d4fe40b9441f3daf7b826,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7700564394331202641, guid: f5340fb42c7d4fe40b9441f3daf7b826,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1029,16 +1039,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7700564394331202654, guid: f5340fb42c7d4fe40b9441f3daf7b826,
-        type: 3}
-      propertyPath: m_Name
-      value: TeleportVFX
-      objectReference: {fileID: 0}
-    - target: {fileID: 7700564394331202654, guid: f5340fb42c7d4fe40b9441f3daf7b826,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7700564394152348726, guid: f5340fb42c7d4fe40b9441f3daf7b826,
         type: 3}

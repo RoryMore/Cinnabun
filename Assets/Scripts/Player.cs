@@ -261,22 +261,25 @@ public class Player : Entity
                             
                             break;
                     }
-                    // skill has ended and been fully cast
-                    if (selectedSkill.timeBeenOnCooldown == 0.0f && !selectedSkill.currentlyCasting)
+                    if (selectedSkill != null)
                     {
-                        navAgent.angularSpeed = turningSpeed;
-                        pause.actionsLeft--;
-                        selectedSkill = null;
-                        playerState = PlayerState.FREE;
+                        // skill has ended and been fully cast
+                        if (selectedSkill.timeBeenOnCooldown == 0.0f && !selectedSkill.currentlyCasting)
+                        {
+                            navAgent.angularSpeed = turningSpeed;
+                            pause.actionsLeft--;
+                            selectedSkill = null;
+                            playerState = PlayerState.FREE;
 
-                        // Reset animator variables
-                        animator.SetBool("weaponAttack", false);
-                        animator.SetBool("skillCast", false);
+                            // Reset animator variables
+                            animator.SetBool("weaponAttack", false);
+                            animator.SetBool("skillCast", false);
 
-                        // Deactivate any active cast particles
-                        delayedBlastCastParticles.SetActive(false);
-                        rewindCastParticles.SetActive(false);
-                        teleportCastParticles.SetActive(false);
+                            // Deactivate any active cast particles
+                            delayedBlastCastParticles.SetActive(false);
+                            rewindCastParticles.SetActive(false);
+                            teleportCastParticles.SetActive(false);
+                        }
                     }
 
                     if (Input.GetMouseButtonDown(1))

@@ -11,13 +11,12 @@ GameObject:
   - component: {fileID: 8198910644498900114}
   - component: {fileID: 906181704526962340}
   - component: {fileID: 6894991370440827485}
-  - component: {fileID: 3107189924606150793}
   m_Layer: 0
   m_Name: orange_tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8198910644498900114
 Transform:
@@ -26,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5157527650126812801}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 112.17449, y: 45.777187, z: 97.58472}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
@@ -59,10 +58,10 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 557877209196129369, guid: 31a5905da849a01488922d8081b39187, type: 3}
-  - {fileID: -8301464611532536492, guid: 31a5905da849a01488922d8081b39187, type: 3}
-  - {fileID: 7903833564910900493, guid: 31a5905da849a01488922d8081b39187, type: 3}
-  - {fileID: -1085874944220207412, guid: 31a5905da849a01488922d8081b39187, type: 3}
+  - {fileID: 2100000, guid: 806e2063f2d34ce4fb9724cac92b1d37, type: 2}
+  - {fileID: 2100000, guid: 9d380c675e96dbf4599f55ac54b15439, type: 2}
+  - {fileID: 2100000, guid: 8ab884b172d8bd94e960737f34409722, type: 2}
+  - {fileID: 2100000, guid: 3cb2290888b8b384bbe08be0ff5d1b7e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,19 +82,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!208 &3107189924606150793
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5157527650126812801}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 90.6, y: 549.95703, z: 86.75}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 22.17, y: 471.415, z: -8.2}
-  m_TimeToStationary: 0.5
