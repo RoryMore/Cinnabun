@@ -72,19 +72,14 @@ public class BasicAttack : SkillData
         {
             if (CheckRadialSkillHit(testedEntity.transform.position, zoneStart))
             {
+                //Doesn't work right
                 if (testedEntity != caster)
                 {
-                    
                     //caster.currentHP += baseDamage; //Debug line for stopping the enemy from killing themsevles
                     testedEntity.TakeDamage(baseDamage);
                 }
-                
             }
         }
-
         target = null;
-        
-
     }
-
 }
