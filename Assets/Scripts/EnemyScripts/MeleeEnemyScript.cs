@@ -1,141 +1,141 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using UnityEngine.AI;
+﻿//using system.collections;
+//using system.collections.generic;
+//using unityengine;
+//using unityengine.ai;
 
-//public class MeleeEnemyScript : EnemyScript
+//public class meleeenemyscript : enemyscript
 //{
 
-//    public float meleeAttackRange;
-//    public int meleeDamage;
+//    public float meleeattackrange;
+//    public int meleedamage;
 
-//    PlayerAttack ourAttack;
-//    bool isAttacking = false;
+//    playerattack ourattack;
+//    bool isattacking = false;
 
-//    void Awake()
+//    void awake()
 //    {
-//        anim = GetComponent<Animator>();
-//        //enemyAudio = GetComponent<AudioSource>();
-//        hitParticles = GetComponent<ParticleSystem>();
+//        anim = getcomponent<animator>();
+//        //enemyaudio = getcomponent<audiosource>();
+//        hitparticles = getcomponent<particlesystem>();
 
-//        nav = GetComponent<NavMeshAgent>();
-
-
-//        player = GameObject.Find("Player").GetComponent<PlayerScript>();
-
-//        turnManger = GameObject.Find("TurnManager").GetComponent<turnManageScript>();
-//        enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
-
-//        enemyCooldown = 6.0f;
-//        //enemyCooldown = 2.0f + Random.Range(1.0f, 4.0f);
-//        initiativeSpeed = 1.5f;
-//        currentHealth = startingHealth;
+//        nav = getcomponent<navmeshagent>();
 
 
-//        ourAttack = GetComponent<PlayerAttack>();
+//        player = gameobject.find("player").getcomponent<playerscript>();
+
+//        turnmanger = gameobject.find("turnmanager").getcomponent<turnmanagescript>();
+//        enemymanager = gameobject.find("enemymanager").getcomponent<enemymanager>();
+
+//        enemycooldown = 6.0f;
+//        //enemycooldown = 2.0f + random.range(1.0f, 4.0f);
+//        initiativespeed = 1.5f;
+//        currenthealth = startinghealth;
+
+
+//        ourattack = getcomponent<playerattack>();
 
 //    }
 
 
-//    void Update()
+//    void update()
 //    {
-//        if (isDead != true)
+//        if (isdead != true)
 //        {
-//            if (turnManger.state == turnManageScript.BattleState.BATTLE || turnManger.state == turnManageScript.BattleState.ACTION)
+//            if (turnmanger.state == turnmanagescript.battlestate.battle || turnmanger.state == turnmanagescript.battlestate.action)
 //            {
-//                Movement();
-//                MeleeAttack();
-//                Turn();
+//                movement();
+//                meleeattack();
+//                turn();
 //            }
-//            if (Input.GetKeyDown("g") == true)
+//            if (input.getkeydown("g") == true)
 //            {
 
-//                TakeDamage(10, transform.position);
+//                takedamage(10, transform.position);
 //            }
 //        }
 
 //    }
 
 
-//    public void Movement()
+//    public void movement()
 //    {
-//        if (currentHealth > 0 && player.currentHealth > 0)
+//        if (currenthealth > 0 && player.currenthealth > 0)
 //        {
 
-//            //If we're close enough to smack, stop moving
-//            if (Vector3.Distance(transform.position, player.gameObject.transform.position) < meleeAttackRange)
+//            //if we're close enough to smack, stop moving
+//            if (vector3.distance(transform.position, player.gameobject.transform.position) < meleeattackrange)
 //            {
-//                nav.SetDestination(transform.position);
-//                //transform.LookAt(player.transform);
-//                FaceTarget(player.transform);
-//                anim.SetBool("isWalking", false);
+//                nav.setdestination(transform.position);
+//                //transform.lookat(player.transform);
+//                facetarget(player.transform);
+//                anim.setbool("iswalking", false);
 
 //            }
 //            else
 //            {
-//                //GameObject.Find("Player")
-//                nav.SetDestination(player.transform.position);
-//                anim.SetBool("isWalking", true);
+//                //gameobject.find("player")
+//                nav.setdestination(player.transform.position);
+//                anim.setbool("iswalking", true);
 
 //            }
-//            //Assuming we arent, get closer
+//            //assuming we arent, get closer
 //        }
 //        else
 //        {
 //            nav.enabled = false;
-//            anim.SetBool("isWalking", false);
+//            anim.setbool("iswalking", false);
 //        }
 //    }
 
-//    //TEMPORARY FUNCTION FOR WHEN JASMINE FINISHES HER TURN COUNTER
-//    public void Turn()
+//    //temporary function for when jasmine finishes her turn counter
+//    public void turn()
 //    {
-//        enemyCooldown -= 1f * Time.deltaTime;
-//        //Debug.Log("Enemy Cooldown Counter: " + enemyCooldown);
+//        enemycooldown -= 1f * time.deltatime;
+//        //debug.log("enemy cooldown counter: " + enemycooldown);
 
 //    }
 
-//    public void MeleeAttack()
+//    public void meleeattack()
 //    {
 
-//        float distance = Vector3.Distance(transform.position, player.transform.position);
+//        float distance = vector3.distance(transform.position, player.transform.position);
 
-//        //We are ready to make our attack, and we are in range. ATTACK!
-//        if (distance <= meleeAttackRange && enemyCooldown <= 0.0f)
+//        //we are ready to make our attack, and we are in range. attack!
+//        if (distance <= meleeattackrange && enemycooldown <= 0.0f)
 //        {
-            
+
 //        }
-//        if (isAttacking == true)
+//        if (isattacking == true)
 //        {
-//            anim.SetBool("isAttacking", true);
-//            timeSpentDoingAction += Time.fixedDeltaTime;
+//            anim.setbool("isattacking", true);
+//            timespentdoingaction += time.fixeddeltatime;
 
-//            ourAttack.DrawCastTimeRangeIndicator(timeSpentDoingAction);
+//            ourattack.drawcasttimerangeindicator(timespentdoingaction);
 
-//            if (timeSpentDoingAction >= ourAttack.actionSpeed)
+//            if (timespentdoingaction >= ourattack.actionspeed)
 //            {
-//                if (ourAttack.ShouldEnemyInPositionBeDamaged(player.transform.position) == true)
+//                if (ourattack.shouldenemyinpositionbedamaged(player.transform.position) == true)
 //                {
-//                    player.TakeDamage(meleeDamage);
+//                    player.takedamage(meleedamage);
 //                }
 
-//                //Play Animation
-//                enemyCooldown = 6.0f;
-//                timeSpentDoingAction = 0.0f;
-//                anim.SetBool("isAttacking", false);
-//                //anim.SetBool("isAttacking", false);
+//                //play animation
+//                enemycooldown = 6.0f;
+//                timespentdoingaction = 0.0f;
+//                anim.setbool("isattacking", false);
+//                //anim.setbool("isattacking", false);
 //            }
 //        }
-//        //Debug.Log("ATTACK!");
-//        //If its the melee enemy turn BUT we are out of range, we go into defence stance!
-//        else if (meleeAttackRange <= distance && enemyCooldown <= 0.0f)
+//        //debug.log("attack!");
+//        //if its the melee enemy turn but we are out of range, we go into defence stance!
+//        else if (meleeattackrange <= distance && enemycooldown <= 0.0f)
 //        {
-//            HoldTurn();
-//            //Debug.Log("She's too far!");
+//            holdturn();
+//            //debug.log("she's too far!");
 //        }
-//        else if (meleeAttackRange <= distance && 0.0f <= enemyCooldown)
+//        else if (meleeattackrange <= distance && 0.0f <= enemycooldown)
 //        {
-//            //Debug.Log("");
+//            //debug.log("");
 //        }
 //    }
 
