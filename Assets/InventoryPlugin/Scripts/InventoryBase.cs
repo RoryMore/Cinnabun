@@ -15,6 +15,8 @@ public class InventoryBase : MonoBehaviour
     GameObject[,] inventorySlotsObj;
     InventorySlot[,] inventorySlots;
 
+    [HideInInspector] public List<InventoryItem> playerOwnedItems;
+
     [Header("Border")]
     public float backgroundBorderWidth;
 
@@ -38,6 +40,8 @@ public class InventoryBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerOwnedItems = new List<InventoryItem>();
+
         baseRect = GetComponent<RectTransform>();
         inventorySlotsObj = new GameObject[inventorySlotsWide, inventorySlotsHigh];
         inventorySlots = new InventorySlot[inventorySlotsWide, inventorySlotsHigh];
@@ -175,6 +179,9 @@ public class InventoryBase : MonoBehaviour
                                             slot.storedItem = newItem.item;
                                         }
                                         itemAdded = true;
+
+                                        playerOwnedItems.Add(newItem);
+
                                         return itemAdded;
                                     }
                                 }
@@ -289,6 +296,9 @@ public class InventoryBase : MonoBehaviour
                                     slot.storedItem = newItem.item;
                                 }
                                 itemAdded = true;
+
+                                playerOwnedItems.Add(newItem);
+
                                 return itemAdded;
                             }
                         }
