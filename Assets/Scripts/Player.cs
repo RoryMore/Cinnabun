@@ -400,7 +400,7 @@ public class Player : Entity
         }
     }
 
-    void SelectSkill(int skillAtIndex)
+    public void SelectSkill(int skillAtIndex)
     {
         // Are we allowed to access this index
         if (skillAtIndex-1 < skillList.Count)
