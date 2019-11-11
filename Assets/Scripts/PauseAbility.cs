@@ -106,6 +106,21 @@ public class PauseAbility : MonoBehaviour
             }
         }
     }
+    public void ButtonPaused()
+    {
+        if (states == GameStates.PLAY)
+        {
+            states = GameStates.TIMESTOP;
+        }
+    }
+
+   public void ButtonPlay()
+    {
+        states = GameStates.PLAY;
+        clearAllList();
+        calculateTimeStop();
+        takeingTurn = false;
+    }
 
     void checkTime()
     {
