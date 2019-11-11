@@ -1257,5 +1257,34 @@ PrefabInstance:
       propertyPath: focusTransform
       value: 
       objectReference: {fileID: 1986139780}
-    m_RemovedComponents: []
+    - target: {fileID: 833493291182683032, guid: 87b95cf1317c118469b7a06b7ebc79d3,
+        type: 3}
+      propertyPath: minDistance
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 833493291182683032, guid: 87b95cf1317c118469b7a06b7ebc79d3,
+        type: 3}
+      propertyPath: maxDistance
+      value: 29.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 833493291182683032, guid: 87b95cf1317c118469b7a06b7ebc79d3,
+        type: 3}
+      propertyPath: targetDistance
+      value: 17.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 833493291182683032, guid: 87b95cf1317c118469b7a06b7ebc79d3,
+        type: 3}
+      propertyPath: yAngle
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 1156159923, guid: 87b95cf1317c118469b7a06b7ebc79d3, type: 3}
+      propertyPath: priority
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1156159923, guid: 87b95cf1317c118469b7a06b7ebc79d3, type: 3}
+      propertyPath: isGlobal
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1156159923, guid: 87b95cf1317c118469b7a06b7ebc79d3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 87b95cf1317c118469b7a06b7ebc79d3, type: 3}
