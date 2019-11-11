@@ -25,7 +25,7 @@ public class SoundManager : MonoBehaviour
 
     [Header("Sound Effects")]
     [SerializeField]
-    //AudioSource meeleSwing;
+    AudioSource meeleSwing;
     [HideInInspector] public static AudioSource meleeSwing;
 
     [SerializeField]

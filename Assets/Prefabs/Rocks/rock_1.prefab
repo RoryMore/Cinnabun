@@ -15,8 +15,8 @@ GameObject:
   m_Name: rock_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2296327452936337995
 Transform:
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 8926938600039247557}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 107.3, y: 44.799, z: 110.78}
-  m_LocalScale: {x: 0.053306907, y: 0.053306907, z: 0.053306907}
+  m_LocalScale: {x: 0.09110986, y: 0.09110986, z: 0.09110989}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
