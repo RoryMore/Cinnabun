@@ -484,4 +484,10 @@ public class Player : Entity
         animator.SetBool("weaponAttack", false);
         animator.SetBool("skillCast", false);
     }
+
+    public void SelectWeaponAttack()
+    {
+        selectedSkill = weaponAttack;
+        playerState = PlayerState.DOINGSKILL;
+    }
 }
