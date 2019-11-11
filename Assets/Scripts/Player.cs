@@ -148,16 +148,35 @@ public class Player : Entity
                     {
                         // Special skills that need different transform
                         case SkillData.SkillList.DELAYEDBLAST:
-                            selectedSkill.TargetSkill(transform, currentEncounter.masterInitiativeList);
-
-                            if (selectedSkill.currentlyCasting)
+                            if (currentEncounter != null)
                             {
-                                if (!delayedBlastCastParticles.activeSelf)
+                                selectedSkill.TargetSkill(transform, currentEncounter.masterInitiativeList);
+
+                                if (selectedSkill.currentlyCasting)
                                 {
-                                    delayedBlastCastParticles.SetActive(true);
+                                    if (!delayedBlastCastParticles.activeSelf)
+                                    {
+                                        delayedBlastCastParticles.SetActive(true);
+                                    }
+                                    animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
+                                    animator.SetBool("skillCast", true);
                                 }
-                                animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
-                                animator.SetBool("skillCast", true);
+                            }
+                            else
+                            {
+                                navAgent.angularSpeed = turningSpeed;
+
+                                selectedSkill = null;
+                                playerState = PlayerState.FREE;
+
+                                // Reset animator variables
+                                animator.SetBool("weaponAttack", false);
+                                animator.SetBool("skillCast", false);
+
+                                // Deactivate any active cast particles
+                                delayedBlastCastParticles.SetActive(false);
+                                rewindCastParticles.SetActive(false);
+                                teleportCastParticles.SetActive(false);
                             }
                             break;
 
@@ -192,16 +211,35 @@ public class Player : Entity
                         default:
                             if (selectedSkill == weaponAttack)
                             {
-                                // Need a current entity list to put into function parameter
-                                selectedSkill.TargetSkill(transform, currentEncounter.masterInitiativeList);
-
-                                if (selectedSkill.currentlyCasting)
+                                if (currentEncounter != null)
                                 {
-                                    // We are currently casting a skill
-                                    // Animate attack animation here
-                                    
-                                    animator.SetFloat("weaponAttackPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
-                                    animator.SetBool("weaponAttack", true);
+                                    // Need a current entity list to put into function parameter
+                                    selectedSkill.TargetSkill(transform, currentEncounter.masterInitiativeList);
+
+                                    if (selectedSkill.currentlyCasting)
+                                    {
+                                        // We are currently casting a skill
+                                        // Animate attack animation here
+
+                                        animator.SetFloat("weaponAttackPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
+                                        animator.SetBool("weaponAttack", true);
+                                    }
+                                }
+                                else
+                                {
+                                    navAgent.angularSpeed = turningSpeed;
+
+                                    selectedSkill = null;
+                                    playerState = PlayerState.FREE;
+
+                                    // Reset animator variables
+                                    animator.SetBool("weaponAttack", false);
+                                    animator.SetBool("skillCast", false);
+
+                                    // Deactivate any active cast particles
+                                    delayedBlastCastParticles.SetActive(false);
+                                    rewindCastParticles.SetActive(false);
+                                    teleportCastParticles.SetActive(false);
                                 }
                             }
                             else
@@ -220,7 +258,6 @@ public class Player : Entity
                             
                             break;
                     }
-
                     // skill has ended and been fully cast
                     if (selectedSkill.timeBeenOnCooldown == 0.0f && !selectedSkill.currentlyCasting)
                     {
@@ -274,6 +311,7 @@ public class Player : Entity
     {
         if (Input.GetMouseButton(0))
         {
+            
             navAgent.speed = movementSpeed;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -283,6 +321,8 @@ public class Player : Entity
                 //if (hit.collider.tag.Contains("Finish"))
                 //{
                     navAgent.SetDestination(hit.point);
+
+                Debug.Log("Move Player");
                 //}
             }
 

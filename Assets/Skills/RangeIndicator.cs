@@ -45,7 +45,7 @@ public class RangeIndicator : MonoBehaviour
         switch (shape)
         {
             case IndicatorShape.RADIAL:
-                quality = Mathf.RoundToInt(angle * 0.5f);
+                quality = Mathf.RoundToInt(angle * 2.0f);
 
                 mesh = new Mesh();
                 mesh.vertices = new Vector3[4 * quality];
@@ -123,6 +123,9 @@ public class RangeIndicator : MonoBehaviour
         Vector3 posNextMin = Vector3.zero;
         Vector3 posNextMax = Vector3.zero;
 
+        Vector3 zonePositionProjected = zoneStart.position;
+        zonePositionProjected.y += 10.0f;
+
         Vector3[] vertices = new Vector3[4 * quality];
         int[] triangles = new int[3 * 2 * quality];
 
@@ -152,8 +155,16 @@ public class RangeIndicator : MonoBehaviour
                     posCurrentMin = zoneStart.position + sphereCurrent * minRange;
                     posCurrentMax = zoneStart.position + sphereCurrent * maxRange;
 
+                    // When making further vertices, add more positions here such as zoneStart.position + sphereCurrent * (maxRange * 0.9)
+
                     posNextMin = zoneStart.position + sphereNext * minRange;
                     posNextMax = zoneStart.position + sphereNext * maxRange;
+
+                    //posCurrentMin = zonePositionProjected + sphereCurrent * minRange;
+                    //posCurrentMax = zonePositionProjected + sphereCurrent * maxRange;
+
+                    //posNextMin = zonePositionProjected + sphereNext * minRange;
+                    //posNextMax = zonePositionProjected + sphereNext * maxRange;
 
                     int a = 4 * i;
                     int b = 4 * i + 1;
@@ -179,6 +190,36 @@ public class RangeIndicator : MonoBehaviour
                 //{
                 //uv[i] = new Vector2(vertices[i].x, vertices[i].z);
                 //}
+
+                // PROJECTION OF VERTICES ONTO SURFACE
+                float mostRecentProjectedHeight = Mathf.NegativeInfinity;
+                for (int i = 0; i < vertices.Length; i++)
+                {
+                    // Basic projection onto the surface below the actual vertice point
+                    // To make this better, there need to be more vertices : a lattice able to draw circles, for better looking projection going up and down surfaces
+                    // Extend the vertices and triangles array so I can turn each circle segment into a segment built up of slanted square pieces
+
+                    zonePositionProjected = vertices[i];
+                    zonePositionProjected.y += 50.0f;
+                    if (Physics.Raycast(zonePositionProjected, -Vector3.up, out RaycastHit hit, 55.0f))
+                    {
+                        vertices[i].y = hit.point.y + 0.05f;
+                        mostRecentProjectedHeight = hit.point.y + 0.05f;
+                    }
+                    // Possible to do a second raycast upwards if the previous cast failed to check if there is a projectable surface above the point
+                    // Need to use a layerMask for proper projection. We don't want to project ontop of everything, just the main surface
+                    else
+                    {
+                        if (mostRecentProjectedHeight != Mathf.NegativeInfinity)
+                        {
+                            zonePositionProjected.y = mostRecentProjectedHeight;
+                        }
+                        else
+                        {
+                            zonePositionProjected.y -= 50.0f;
+                        }
+                    }
+                }
 
                 //mesh.uv = uv;
                 mesh.vertices = vertices;
