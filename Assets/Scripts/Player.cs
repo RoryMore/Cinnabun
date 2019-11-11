@@ -5,6 +5,10 @@ using UnityEngine.AI;
 
 public class Player : Entity
 {
+    [Header("Movement Raycasting Settings")]
+    public LayerMask groundLayerMask;
+    public float moveRaycastDistance;
+
     public enum PlayerState
     {
         FREE,
@@ -315,7 +319,7 @@ public class Player : Entity
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 200.0f))
+            if (Physics.Raycast(ray, out RaycastHit hit, moveRaycastDistance, groundLayerMask))
             {
                 //if (hit.collider.tag.Contains("Finish"))
                 //{

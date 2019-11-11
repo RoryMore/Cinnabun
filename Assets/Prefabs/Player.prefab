@@ -74,6 +74,10 @@ MonoBehaviour:
   magDamageReduction: 0
   cannotBeTeleported: 0
   explosionParticles: {fileID: 4131665851672515049}
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  moveRaycastDistance: 60
   playerState: 0
   weaponAttack: {fileID: 11400000, guid: 44635c99ebe8d984d8e2bfafea26be99, type: 2}
   skillList:
