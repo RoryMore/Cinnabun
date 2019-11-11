@@ -101,7 +101,6 @@ public class Player : Entity
                     {
                         if (!pauseMenu.isPaused)
                         {
-                            RotateWeapons();
                             if (!inventory.activeSelf)
                             {
                                 Move();
@@ -122,7 +121,6 @@ public class Player : Entity
                     }
                     else
                     {
-                        RotateWeapons();
                         Move();
                     }
 
@@ -448,35 +446,11 @@ public class Player : Entity
         navAgent.destination = transform.position;
     }
 
-    void RotateWeapons()
+    public void ChangeWeapon(WeaponAttack.UsedWeaponType newUsedWeaponType)
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (weaponAttack != null)
         {
-            switch (weaponAttack.usedWeapon)
-            {
-                case WeaponAttack.UsedWeaponType.Unarmed:
-                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Sword);
-                    Debug.Log("Cinnabun starts using her Sword");
-                    break;
-
-                case WeaponAttack.UsedWeaponType.Sword:
-                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Staff);
-                    Debug.Log("Cinnabun put away her Sword, and starts using her Staff");
-                    break;
-
-                case WeaponAttack.UsedWeaponType.Staff:
-                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Bow);
-                    Debug.Log("Cinnabun put away her Staff, and starts using her Bow");
-                    break;
-
-                case WeaponAttack.UsedWeaponType.Bow:
-                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Unarmed);
-                    Debug.Log("Cinnabun put away her Bow, and starts fighting mano e mano");
-                    break;
-                default:
-                    break;
-            }
-            
+            weaponAttack.WeaponChange(newUsedWeaponType);
         }
     }
 

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: WeaponAttack
   m_EditorClassIdentifier: 
   range: 0
+  positiveRangeHeight: 0
+  negativeRangeHeight: 0
   cooldown: 2
   timeBeenOnCooldown: 2
   windUp: 1
@@ -26,7 +28,7 @@ MonoBehaviour:
   indicatorMaterial: {fileID: 2100000, guid: 3c6c47126b1480347ac2f55825168a69, type: 2}
   currentlyCasting: 0
   caster: {fileID: 0}
-  usedWeapon: 2
+  usedWeapon: 1
   unarmedRange: 2
   swordRange: 6
   staffRange: 10
