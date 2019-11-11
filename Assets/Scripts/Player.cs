@@ -5,6 +5,10 @@ using UnityEngine.AI;
 
 public class Player : Entity
 {
+    [Header("Movement Raycasting Settings")]
+    public LayerMask groundLayerMask;
+    public float moveRaycastDistance;
+
     public enum PlayerState
     {
         FREE,
@@ -54,6 +58,7 @@ public class Player : Entity
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.speed = movementSpeed;
         baseMovementSpeed = movementSpeed;
+
         playerState = PlayerState.FREE;
     }
 
@@ -100,7 +105,6 @@ public class Player : Entity
                     {
                         if (!pauseMenu.isPaused)
                         {
-                            RotateWeapons();
                             if (!inventory.activeSelf)
                             {
                                 Move();
@@ -121,7 +125,6 @@ public class Player : Entity
                     }
                     else
                     {
-                        RotateWeapons();
                         Move();
                     }
 
@@ -258,22 +261,25 @@ public class Player : Entity
                             
                             break;
                     }
-                    // skill has ended and been fully cast
-                    if (selectedSkill.timeBeenOnCooldown == 0.0f && !selectedSkill.currentlyCasting)
+                    if (selectedSkill != null)
                     {
-                        navAgent.angularSpeed = turningSpeed;
-                        pause.actionsLeft--;
-                        selectedSkill = null;
-                        playerState = PlayerState.FREE;
+                        // skill has ended and been fully cast
+                        if (selectedSkill.timeBeenOnCooldown == 0.0f && !selectedSkill.currentlyCasting)
+                        {
+                            navAgent.angularSpeed = turningSpeed;
+                            pause.actionsLeft--;
+                            selectedSkill = null;
+                            playerState = PlayerState.FREE;
 
-                        // Reset animator variables
-                        animator.SetBool("weaponAttack", false);
-                        animator.SetBool("skillCast", false);
+                            // Reset animator variables
+                            animator.SetBool("weaponAttack", false);
+                            animator.SetBool("skillCast", false);
 
-                        // Deactivate any active cast particles
-                        delayedBlastCastParticles.SetActive(false);
-                        rewindCastParticles.SetActive(false);
-                        teleportCastParticles.SetActive(false);
+                            // Deactivate any active cast particles
+                            delayedBlastCastParticles.SetActive(false);
+                            rewindCastParticles.SetActive(false);
+                            teleportCastParticles.SetActive(false);
+                        }
                     }
 
                     if (Input.GetMouseButtonDown(1))
@@ -316,11 +322,11 @@ public class Player : Entity
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 200.0f))
+            if (Physics.Raycast(ray, out RaycastHit hit, moveRaycastDistance, groundLayerMask))
             {
                 //if (hit.collider.tag.Contains("Finish"))
                 //{
-                    navAgent.SetDestination(hit.point);
+                navAgent.SetDestination(hit.point);
 
                 Debug.Log("Move Player");
                 //}
@@ -432,45 +438,26 @@ public class Player : Entity
         isDead = true;
         animator.SetBool("isDead", isDead);
         navAgent.destination = transform.position;
+
+        if (inventory.activeSelf)
+        {
+            inventory.SetActive(false);
+        }
     }
 
     public void Revive()
     {
-        isDead = false;
         currentHP = maxHP;
+        isDead = false;
         animator.SetBool("isDead", isDead);
         navAgent.destination = transform.position;
     }
 
-    void RotateWeapons()
+    public void ChangeWeapon(WeaponAttack.UsedWeaponType newUsedWeaponType)
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (weaponAttack != null)
         {
-            switch (weaponAttack.usedWeapon)
-            {
-                case WeaponAttack.UsedWeaponType.Unarmed:
-                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Sword);
-                    Debug.Log("Cinnabun starts using her Sword");
-                    break;
-
-                case WeaponAttack.UsedWeaponType.Sword:
-                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Staff);
-                    Debug.Log("Cinnabun put away her Sword, and starts using her Staff");
-                    break;
-
-                case WeaponAttack.UsedWeaponType.Staff:
-                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Bow);
-                    Debug.Log("Cinnabun put away her Staff, and starts using her Bow");
-                    break;
-
-                case WeaponAttack.UsedWeaponType.Bow:
-                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Unarmed);
-                    Debug.Log("Cinnabun put away her Bow, and starts fighting mano e mano");
-                    break;
-                default:
-                    break;
-            }
-            
+            weaponAttack.WeaponChange(newUsedWeaponType);
         }
     }
 
@@ -484,7 +471,7 @@ public class Player : Entity
         {
             animator.SetBool("moving", false);
         }
-        animator.SetFloat("movementPlaybackMultiplier", navAgent.velocity.magnitude / baseMovementSpeed);
+        animator.SetFloat("movementPlaybackMultiplier", navAgent.velocity.magnitude / movementSpeed);
 
         // This is a method to grab clip info to play with animation properties based on current clip
         //AnimatorClipInfo[] animInfo = animator.GetCurrentAnimatorClipInfo(0);

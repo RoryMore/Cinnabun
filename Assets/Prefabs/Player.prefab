@@ -54,11 +54,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rewind: 0
   isDead: 0
-  level: 1
+  level: 10
   experience: 0
   xpToNextLevel: 0
   strength: 1
-  agility: 2
+  agility: 5
   constitution: 5
   intellect: 3
   physicalArmour: 4
@@ -74,11 +74,15 @@ MonoBehaviour:
   magDamageReduction: 0
   cannotBeTeleported: 0
   explosionParticles: {fileID: 4131665851672515049}
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  moveRaycastDistance: 60
   playerState: 0
   weaponAttack: {fileID: 11400000, guid: 44635c99ebe8d984d8e2bfafea26be99, type: 2}
   skillList:
-  - {fileID: 11400000, guid: a4f27904e37148a42800f7a0c414d406, type: 2}
   - {fileID: 11400000, guid: 094b4579d21e94d4b97eb9708a32ef6e, type: 2}
+  - {fileID: 11400000, guid: a4f27904e37148a42800f7a0c414d406, type: 2}
   - {fileID: 11400000, guid: c024a6ac81891f543b52d28ae2c8dbfc, type: 2}
   selectedSkill: {fileID: 0}
   turningSpeed: 360
@@ -98,7 +102,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 5
-  m_Acceleration: 8
+  m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 360
   m_StoppingDistance: 0
@@ -135,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6db97f6a5e9b7448b39348c644bddfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryBase: {fileID: 0}
 --- !u!95 &3607039017854726899
 Animator:
   serializedVersion: 3
@@ -220,6 +225,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ExplosionVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 4476699896159036690, guid: 8fe25790019bce94fafc2f51deccc8ba,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4476699897119217017, guid: 8fe25790019bce94fafc2f51deccc8ba,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fe25790019bce94fafc2f51deccc8ba, type: 3}
@@ -392,6 +407,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: AbilityVFX
       objectReference: {fileID: 0}
+    - target: {fileID: 4701741208040376177, guid: 3e32f42f2c01c0e45bf7fad207bf0926,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4701741208093628177, guid: 3e32f42f2c01c0e45bf7fad207bf0926,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4701741208991885211, guid: 3e32f42f2c01c0e45bf7fad207bf0926,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4701741207662429654, guid: 3e32f42f2c01c0e45bf7fad207bf0926,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4701741208093628178, guid: 3e32f42f2c01c0e45bf7fad207bf0926,
         type: 3}
       propertyPath: prewarm
@@ -553,11 +588,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: -4741095801184704543, guid: b8386f44c9c520f499d5f3fe9a54c229,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4643266659981845162, guid: b8386f44c9c520f499d5f3fe9a54c229,
         type: 3}
       propertyPath: m_Layer
@@ -573,6 +603,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -431380090088551076, guid: b8386f44c9c520f499d5f3fe9a54c229,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6dbaf59c23eae264688fed9d12c4eeae, type: 2}
     - target: {fileID: -3672442044372864366, guid: b8386f44c9c520f499d5f3fe9a54c229,
         type: 3}
       propertyPath: m_Layer
@@ -899,6 +934,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: RewindVFX
       objectReference: {fileID: 0}
+    - target: {fileID: 4395340449751248975, guid: 33dee0683c183bb498925dee28357ea5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4395340449470239671, guid: 33dee0683c183bb498925dee28357ea5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4395340448937496000, guid: 33dee0683c183bb498925dee28357ea5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4395340448907020913, guid: 33dee0683c183bb498925dee28357ea5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33dee0683c183bb498925dee28357ea5, type: 3}
 --- !u!1 &8599359530676669933 stripped
@@ -924,6 +979,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TeleportVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700564394331202654, guid: f5340fb42c7d4fe40b9441f3daf7b826,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7700564394331202641, guid: f5340fb42c7d4fe40b9441f3daf7b826,
         type: 3}
@@ -979,6 +1039,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700564394152348726, guid: f5340fb42c7d4fe40b9441f3daf7b826,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700564394467529815, guid: f5340fb42c7d4fe40b9441f3daf7b826,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700564393415484126, guid: f5340fb42c7d4fe40b9441f3daf7b826,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7700564394467529768, guid: f5340fb42c7d4fe40b9441f3daf7b826,
         type: 3}

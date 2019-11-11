@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 6531685087493917210}
   - component: {fileID: 6531685087493917211}
   - component: {fileID: 6531685087493917209}
+  - component: {fileID: 765802047}
   m_Layer: 0
   m_Name: CharacterPanel Camera
   m_TagString: Untagged
@@ -336,7 +337,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 768
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: cffcaadede663a844b708bfea92b4c12, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: ee8e786221bc03a428089c7bf238e3d2, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -359,11 +360,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetObject: {fileID: 0}
-  targetDistance: 2
+  targetDistance: 2.25
   yAngle: 15.8
-  heightOffset: 0.9
+  heightOffset: 0.55
   xAngleOffset: 180
   buttonSens: 74
+--- !u!114 &765802047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6531685087493917205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 0
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_RendererOverrideOption: 1
+  m_RendererData: {fileID: 0}
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &6531685087552776364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1019,6 +1049,7 @@ GameObject:
   - component: {fileID: 6531685088381716701}
   - component: {fileID: 6531685088381716702}
   - component: {fileID: 6531685088381716700}
+  - component: {fileID: 936799351}
   m_Layer: 5
   m_Name: Character Render Surface
   m_TagString: Untagged
@@ -1073,7 +1104,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: cffcaadede663a844b708bfea92b4c12, type: 2}
+  m_Texture: {fileID: 8400000, guid: ee8e786221bc03a428089c7bf238e3d2, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1101,6 +1132,19 @@ MonoBehaviour:
   equipmentSlotsObj: []
   equipmentSlots: []
   invBase: {fileID: 6531685089125968590}
+--- !u!114 &936799351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6531685088381716696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d75c1d85e16662547b5df9924b196fc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderTexture: {fileID: 8400000, guid: ee8e786221bc03a428089c7bf238e3d2, type: 2}
 --- !u!1 &6531685088553635451
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,7 +1371,7 @@ GameObject:
   - component: {fileID: 6531685088627733416}
   - component: {fileID: 6531685088627733417}
   - component: {fileID: 6531685088627733422}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: CharacterBackPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1343,7 +1387,7 @@ Transform:
   m_GameObject: {fileID: 6531685088627733419}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1, z: 0.75}
   m_Children: []
   m_Father: {fileID: 6531685087493917210}
   m_RootOrder: 0
@@ -1699,7 +1743,7 @@ GameObject:
   - component: {fileID: 6531685089125968590}
   m_Layer: 5
   m_Name: InventoryBase
-  m_TagString: Untagged
+  m_TagString: Inventory
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1776,6 +1820,7 @@ MonoBehaviour:
   slotHeight: 20
   inventorySlotsWide: 10
   inventorySlotsHigh: 8
+  playerOwnedItems: []
   backgroundBorderWidth: 5
   isItemOnMouse: 0
   mouseItemControl: {fileID: 0}
@@ -2020,11 +2065,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6531685088574593733}
     m_Modifications:
-    - target: {fileID: 8518148428427532018, guid: 3030f92d0508f844ab0a223ce260ba6f,
-        type: 3}
-      propertyPath: m_Name
-      value: MouseInventoryItem
-      objectReference: {fileID: 0}
     - target: {fileID: 8518148428427532019, guid: 3030f92d0508f844ab0a223ce260ba6f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2129,6 +2169,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518148428427532018, guid: 3030f92d0508f844ab0a223ce260ba6f,
+        type: 3}
+      propertyPath: m_Name
+      value: MouseInventoryItem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3030f92d0508f844ab0a223ce260ba6f, type: 3}

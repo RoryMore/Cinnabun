@@ -61,6 +61,7 @@ public class MouseItemControl : MonoBehaviour
 
                         // Put item on our mouse
                         mouseItem.gameObject.SetActive(true);
+
                         mouseItem.SetItem(checkedResult);
 
                         // Item was equipped - unequipping now
@@ -83,6 +84,7 @@ public class MouseItemControl : MonoBehaviour
                             }
                         }
 
+                        invBase.playerOwnedItems.Remove(checkedResult);
                         Destroy(checkedResult.gameObject);
                     }
                 }
@@ -135,42 +137,6 @@ public class MouseItemControl : MonoBehaviour
                             mouseItem.ClearItem();
                             mouseItem.gameObject.SetActive(false);
                         }
-
-                        //for (int i = 0; i < equipPanelControl.equipmentSlots.Length-1; i++)
-                        //{
-                            
-                        //    if (mouseItem.item.equipmentSlot == equipPanelControl.equipmentSlots[i].equipmentSlot)
-                        //    {
-                        //        // Equip the item into this slot if this slot isn't used
-                        //        if (!equipPanelControl.equipmentSlots[i].isUsed)
-                        //        {
-                        //            incrementsWithoutUsableSlot--;
-
-                        //            InventoryItem equippedItem = Instantiate(invBase.itemIcon).GetComponent<InventoryItem>();
-
-                        //            Vector3 equipInterfacePos = equipPanelControl.equipmentSlots[i].gameObject.transform.position;
-                        //            equipInterfacePos.x += (EquipmentSlot.width * 0.1f);
-                        //            equipInterfacePos.y -= (EquipmentSlot.height * 0.1f);
-
-                        //            equippedItem.Initialise(equipPanelControl.equipmentSlots[i].gameObject, 
-                        //                equippedItem.item,
-                        //                equipInterfacePos, 
-                        //                Vector3.one);
-
-                        //            equippedItem.SetItem(mouseItem, true);
-                        //            equippedItem.isEquipped = true;
-                        //            equippedItem.usedEquipSlot = equipPanelControl.equipmentSlots[i];
-
-                        //            CharacterPanelStatControl.OnItemEquip(equippedItem.item);
-
-                        //            equipPanelControl.equipmentSlots[i].isUsed = true;
-                        //            equipPanelControl.equipmentSlots[i].equippedItem = equippedItem.item;
-
-                                    
-                        //            break;
-                        //        }
-                        //    }
-                        //}
                     }
                 }
                 // Checking if the number of increments done in the list equals the list size
