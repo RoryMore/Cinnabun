@@ -559,6 +559,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1701733582}
+    - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: agility
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: turningSpeed
+      value: 360
+      objectReference: {fileID: 0}
     - target: {fileID: 819698099673919358, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -614,11 +629,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
+    - target: {fileID: 819698099673919329, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
-      propertyPath: inventory
-      value: 
-      objectReference: {fileID: 1701733582}
+      propertyPath: m_AngularSpeed
+      value: 360
+      objectReference: {fileID: 0}
     - target: {fileID: 8400652880884936493, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
       propertyPath: inventoryBase
