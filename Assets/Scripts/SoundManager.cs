@@ -25,7 +25,7 @@ public class SoundManager : MonoBehaviour
 
     [Header("Sound Effects")]
     [SerializeField]
-    AudioSource meeleSwing;
+    //AudioSource meeleSwing;
     [HideInInspector] public static AudioSource meleeSwing;
 
    // public AudioSource millionaire;
@@ -69,7 +69,7 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         // Setting static sound effect variables to inspector set data
-        meleeSwing = meeleSwing;
+       // meleeSwing = meeleSwing;
     }
 
     // Update is called once per frame
@@ -202,15 +202,22 @@ public class SoundManager : MonoBehaviour
 
     void CheckInBattle()
     {
-        if (enemyManager.inBattle == true)
-        {
-            inBattle = true;
-        }
+		if (enemyManager != null)
+		{
+			if (enemyManager.inBattle == true)
+			{
+				inBattle = true;
+			}
 
-        if (enemyManager.inBattle == false)
-        {
-            inBattle = false;
-        }
+			if (enemyManager.inBattle == false)
+			{
+				inBattle = false;
+			}
+		}
+		else
+		{
+			inBattle = false;
+		}
     }
 
     void getRandomNumber()

@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -609,16 +609,16 @@ PrefabInstance:
       propertyPath: characterEntity
       value: 
       objectReference: {fileID: 612049432}
-    - target: {fileID: 4839440886077623492, guid: 7ea92f33321f8d6488f0488f53c3793c,
-        type: 3}
-      propertyPath: targetObject
-      value: 
-      objectReference: {fileID: 612049431}
     - target: {fileID: 4839440885505804092, guid: 7ea92f33321f8d6488f0488f53c3793c,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4839440886077623492, guid: 7ea92f33321f8d6488f0488f53c3793c,
+        type: 3}
+      propertyPath: targetObject
+      value: 
+      objectReference: {fileID: 612049431}
     - target: {fileID: 4839440885505804032, guid: 7ea92f33321f8d6488f0488f53c3793c,
         type: 3}
       propertyPath: m_IsActive
@@ -1193,6 +1193,7 @@ MonoBehaviour:
   slotHeight: 0
   inventorySlotsWide: 0
   inventorySlotsHigh: 0
+  playerOwnedItems: []
   backgroundBorderWidth: 0
   isItemOnMouse: 0
   mouseItemControl: {fileID: 0}
@@ -1820,6 +1821,36 @@ PrefabInstance:
         type: 3}
       propertyPath: state
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 269856513684845056, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 269856513684845056, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6413221892157739107, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6413221892157739107, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9030375006425835809, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9030375006425835809, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: Loop
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b715985195ec5a14a8289d3661420dd6, type: 3}
@@ -2475,27 +2506,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7330141679716592775, guid: e9657db93e051a34aaff4380ca64400e,
-        type: 3}
-      propertyPath: enemyManager
-      value: 
-      objectReference: {fileID: 2100692310}
-    - target: {fileID: 7330141679716592775, guid: e9657db93e051a34aaff4380ca64400e,
-        type: 3}
-      propertyPath: itemReward
-      value: 
-      objectReference: {fileID: 11400000, guid: bdd8d8ed837c3ce4ca68d3a1c7eb1349,
-        type: 2}
-    - target: {fileID: 7330141679716592775, guid: e9657db93e051a34aaff4380ca64400e,
-        type: 3}
-      propertyPath: inventory
-      value: 
-      objectReference: {fileID: 831392528}
-    - target: {fileID: 7330141679716592775, guid: e9657db93e051a34aaff4380ca64400e,
-        type: 3}
-      propertyPath: inventory
-      value: 
-      objectReference: {fileID: 831392528}
     - target: {fileID: 7330141679716592774, guid: e9657db93e051a34aaff4380ca64400e,
         type: 3}
       propertyPath: m_Name
@@ -2517,6 +2527,27 @@ PrefabInstance:
       propertyPath: m_Name
       value: Encounter
       objectReference: {fileID: 0}
+    - target: {fileID: 7330141679716592775, guid: e9657db93e051a34aaff4380ca64400e,
+        type: 3}
+      propertyPath: enemyManager
+      value: 
+      objectReference: {fileID: 2100692310}
+    - target: {fileID: 7330141679716592775, guid: e9657db93e051a34aaff4380ca64400e,
+        type: 3}
+      propertyPath: itemReward
+      value: 
+      objectReference: {fileID: 11400000, guid: bdd8d8ed837c3ce4ca68d3a1c7eb1349,
+        type: 2}
+    - target: {fileID: 7330141679716592775, guid: e9657db93e051a34aaff4380ca64400e,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 831392528}
+    - target: {fileID: 7330141679716592775, guid: e9657db93e051a34aaff4380ca64400e,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 831392528}
     - target: {fileID: 7330141679716592772, guid: e9657db93e051a34aaff4380ca64400e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2688,6 +2719,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7169829053648171809, guid: ad4f0e7e9a260aa4b8a9cd61ae95e8d0,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemyManager
+      objectReference: {fileID: 0}
     - target: {fileID: 7169829053648171811, guid: ad4f0e7e9a260aa4b8a9cd61ae95e8d0,
         type: 3}
       propertyPath: encounters.Array.data[0]
@@ -2702,11 +2738,6 @@ PrefabInstance:
         type: 3}
       propertyPath: maxEncounterDistance
       value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7169829053648171809, guid: ad4f0e7e9a260aa4b8a9cd61ae95e8d0,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemyManager
       objectReference: {fileID: 0}
     - target: {fileID: 7169829053648171810, guid: ad4f0e7e9a260aa4b8a9cd61ae95e8d0,
         type: 3}
