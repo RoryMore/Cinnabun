@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class SimpleEnemy : EnemyScript
 {
 
-    
    
     Transform target;
     Entity player; //All intents and purposes, same as 
@@ -83,7 +82,7 @@ public class SimpleEnemy : EnemyScript
             UpdateAllConditions();
 
             //Choose what attack it want's to make this turn
-            Decide();
+            //Decide();
 
             bool plzwork = CheckAttackers();
 
@@ -135,20 +134,23 @@ public class SimpleEnemy : EnemyScript
             nav.SetDestination(target.transform.position);
             //nav.SetDestination(destination);
 
-           
+
             //Later this should set to the range of the technique it chooses! For now, It is not important
 
-            if (Vector3.Distance(transform.position, player.gameObject.transform.position) < skillList[0].range* 0.5)
+            if (Vector3.Distance(transform.position, player.gameObject.transform.position) < skillList[0].range * 0.5)
             {
 
 
                 nav.SetDestination(transform.position);
-                
+
                 FaceTarget(player.transform);
                 anim.SetBool("isWalking", false);
 
-               
 
+                if (enemyCooldown <= 0)
+                {
+                    VertSliceAttack();
+                }
 
 
             }
