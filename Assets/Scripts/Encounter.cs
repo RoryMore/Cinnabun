@@ -12,6 +12,8 @@ public class Encounter : MonoBehaviour
     public List<Entity> playerInclusiveInitiativeList; //Same as master but includes player for skill use, for enemy skills
     public List<Entity> healList;
 
+    public List<EnemyScript> enemies;
+
     public List<GameObject> spawnPoints;
 
     public EnemyManager enemyManager;

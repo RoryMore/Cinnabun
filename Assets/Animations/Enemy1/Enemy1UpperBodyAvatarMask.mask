@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Enemy1UpperBodyAvatarMask
+  m_Mask: 00000000010000000100000000000000000000000000000000000000000000000000000000000000000000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: LargeEnemy_01
+    m_Weight: 1
+  - m_Path: LargeEnemy_01LPlatform
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01LThigh
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01LThigh/LargeEnemy_01LCalf
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01LThigh/LargeEnemy_01LCalf/LargeEnemy_01LFoot
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01RThigh
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01RThigh/LargeEnemy_01RCalf
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01RThigh/LargeEnemy_01RCalf/LargeEnemy_01RFoot
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1/LargeEnemy_01Spine2
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1/LargeEnemy_01Spine2/LargeEnemy_01Spine3
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1/LargeEnemy_01Spine2/LargeEnemy_01Spine3/LargeEnemy_01Spine4
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1/LargeEnemy_01Spine2/LargeEnemy_01Spine3/LargeEnemy_01Spine4/LargeEnemy_01Ribcage
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1/LargeEnemy_01Spine2/LargeEnemy_01Spine3/LargeEnemy_01Spine4/LargeEnemy_01Ribcage/LargeEnemy_01LCollarbone
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1/LargeEnemy_01Spine2/LargeEnemy_01Spine3/LargeEnemy_01Spine4/LargeEnemy_01Ribcage/LargeEnemy_01LCollarbone/LargeEnemy_01LUpperarm
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1/LargeEnemy_01Spine2/LargeEnemy_01Spine3/LargeEnemy_01Spine4/LargeEnemy_01Ribcage/LargeEnemy_01LCollarbone/LargeEnemy_01LUpperarm/LargeEnemy_01LForearm
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1/LargeEnemy_01Spine2/LargeEnemy_01Spine3/LargeEnemy_01Spine4/LargeEnemy_01Ribcage/LargeEnemy_01LCollarbone/LargeEnemy_01LUpperarm/LargeEnemy_01LForearm/LargeEnemy_01LPalm
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1/LargeEnemy_01Spine2/LargeEnemy_01Spine3/LargeEnemy_01Spine4/LargeEnemy_01Ribcage/LargeEnemy_01Neck1
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1/LargeEnemy_01Spine2/LargeEnemy_01Spine3/LargeEnemy_01Spine4/LargeEnemy_01Ribcage/LargeEnemy_01Neck1/LargeEnemy_01Neck2
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1/LargeEnemy_01Spine2/LargeEnemy_01Spine3/LargeEnemy_01Spine4/LargeEnemy_01Ribcage/LargeEnemy_01Neck1/LargeEnemy_01Neck2/LargeEnemy_01Head
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1/LargeEnemy_01Spine2/LargeEnemy_01Spine3/LargeEnemy_01Spine4/LargeEnemy_01Ribcage/LargeEnemy_01RCollarbone
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1/LargeEnemy_01Spine2/LargeEnemy_01Spine3/LargeEnemy_01Spine4/LargeEnemy_01Ribcage/LargeEnemy_01RCollarbone/LargeEnemy_01RUpperarm
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1/LargeEnemy_01Spine2/LargeEnemy_01Spine3/LargeEnemy_01Spine4/LargeEnemy_01Ribcage/LargeEnemy_01RCollarbone/LargeEnemy_01RUpperarm/LargeEnemy_01RForearm
+    m_Weight: 1
+  - m_Path: LargeEnemy_01Pelvis/LargeEnemy_01Spine1/LargeEnemy_01Spine2/LargeEnemy_01Spine3/LargeEnemy_01Spine4/LargeEnemy_01Ribcage/LargeEnemy_01RCollarbone/LargeEnemy_01RUpperarm/LargeEnemy_01RForearm/LargeEnemy_01RPalm
+    m_Weight: 1
+  - m_Path: LargeEnemy_01RPlatform
+    m_Weight: 1
+  - m_Path: LargeMonster_Simone01
+    m_Weight: 1
