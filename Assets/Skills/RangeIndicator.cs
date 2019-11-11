@@ -201,7 +201,8 @@ public class RangeIndicator : MonoBehaviour
 
                     zonePositionProjected = vertices[i];
                     zonePositionProjected.y += 50.0f;
-                    if (Physics.Raycast(zonePositionProjected, -Vector3.up, out RaycastHit hit, 55.0f))
+                    LayerMask projectedLayer = LayerMask.NameToLayer("Ground");
+                    if (Physics.Raycast(zonePositionProjected, -Vector3.up, out RaycastHit hit, 55.0f, projectedLayer))
                     {
                         vertices[i].y = hit.point.y + 0.05f;
                         mostRecentProjectedHeight = hit.point.y + 0.05f;
