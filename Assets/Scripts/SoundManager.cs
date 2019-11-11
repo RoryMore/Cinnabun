@@ -24,7 +24,9 @@ public class SoundManager : MonoBehaviour
     public AudioSource idleMusic3;
 
     [Header("Sound Effects")]
-    public AudioSource meeleSwing;
+    [SerializeField]
+    AudioSource meeleSwing;
+    [HideInInspector] public static AudioSource meleeSwing;
 
    // public AudioSource millionaire;
 
@@ -62,6 +64,12 @@ public class SoundManager : MonoBehaviour
     {
         pauseAbility = FindObjectOfType<PauseAbility>();
         enemyManager = FindObjectOfType<EnemyManager>();
+    }
+
+    private void Awake()
+    {
+        // Setting static sound effect variables to inspector set data
+        meleeSwing = meeleSwing;
     }
 
     // Update is called once per frame
