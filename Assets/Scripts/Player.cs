@@ -5,6 +5,10 @@ using UnityEngine.AI;
 
 public class Player : Entity
 {
+    [Header("Movement Raycasting Settings")]
+    public LayerMask groundLayerMask;
+    public float moveRaycastDistance;
+
     public enum PlayerState
     {
         FREE,
@@ -257,22 +261,25 @@ public class Player : Entity
                             
                             break;
                     }
-                    // skill has ended and been fully cast
-                    if (selectedSkill.timeBeenOnCooldown == 0.0f && !selectedSkill.currentlyCasting)
+                    if (selectedSkill != null)
                     {
-                        navAgent.angularSpeed = turningSpeed;
-                        pause.actionsLeft--;
-                        selectedSkill = null;
-                        playerState = PlayerState.FREE;
+                        // skill has ended and been fully cast
+                        if (selectedSkill.timeBeenOnCooldown == 0.0f && !selectedSkill.currentlyCasting)
+                        {
+                            navAgent.angularSpeed = turningSpeed;
+                            pause.actionsLeft--;
+                            selectedSkill = null;
+                            playerState = PlayerState.FREE;
 
-                        // Reset animator variables
-                        animator.SetBool("weaponAttack", false);
-                        animator.SetBool("skillCast", false);
+                            // Reset animator variables
+                            animator.SetBool("weaponAttack", false);
+                            animator.SetBool("skillCast", false);
 
-                        // Deactivate any active cast particles
-                        delayedBlastCastParticles.SetActive(false);
-                        rewindCastParticles.SetActive(false);
-                        teleportCastParticles.SetActive(false);
+                            // Deactivate any active cast particles
+                            delayedBlastCastParticles.SetActive(false);
+                            rewindCastParticles.SetActive(false);
+                            teleportCastParticles.SetActive(false);
+                        }
                     }
 
                     if (Input.GetMouseButtonDown(1))
@@ -315,7 +322,7 @@ public class Player : Entity
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 200.0f))
+            if (Physics.Raycast(ray, out RaycastHit hit, moveRaycastDistance, groundLayerMask))
             {
                 //if (hit.collider.tag.Contains("Finish"))
                 //{
