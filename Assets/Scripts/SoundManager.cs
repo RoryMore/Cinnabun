@@ -28,6 +28,13 @@ public class SoundManager : MonoBehaviour
     //AudioSource meeleSwing;
     [HideInInspector] public static AudioSource meleeSwing;
 
+    [SerializeField]
+    AudioSource footStepLeft;
+    public static AudioSource leftFootstep;
+    [SerializeField]
+    AudioSource footstepRight;
+    public static AudioSource rightFootstep;
+
    // public AudioSource millionaire;
 
     private AudioSource currentAmbient;
@@ -69,7 +76,10 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         // Setting static sound effect variables to inspector set data
-       // meleeSwing = meeleSwing;
+        meleeSwing = meeleSwing;
+
+        leftFootstep = footStepLeft;
+        rightFootstep = footstepRight;
     }
 
     // Update is called once per frame
