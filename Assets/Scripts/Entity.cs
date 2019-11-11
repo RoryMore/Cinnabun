@@ -72,7 +72,7 @@ public class Entity : MonoBehaviour
         DELAYEDBLAST,
         [Tooltip("Deals damage over time based on damage and tickrate")]
         BURN,
-        [Tooltip("Deals damage over time based on damage and tickrate, and also applies a slow multiplying movementSpeed by effective percent")]
+         [Tooltip("Deals damage over time based on damage and tickrate, and also applies a slow multiplying movementSpeed by effective percent")]
         POISON
     }
 
@@ -131,8 +131,11 @@ public class Entity : MonoBehaviour
     GameObject explosionParticles;
 
     // Variables needed for enemies to function efficiently without additional list
-    [HideInInspector] public Vector3 destination;
-    [HideInInspector] public SkillData chosenSkill;
+    [HideInInspector]
+    public Vector3 destination;
+
+    [HideInInspector]
+    public SkillData chosenSkill;
 
 
     // Data for original values
@@ -285,7 +288,7 @@ public class Entity : MonoBehaviour
 
     void CalculateMaxHP()
     {
-        maxHP = (6 + constitution) * level;
+        maxHP = ((5 + constitution) * level) * 10;
         currentHP = maxHP;
     }
 

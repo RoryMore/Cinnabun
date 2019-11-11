@@ -21,6 +21,7 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.Find("Player");
         foreach (Encounter encounter in encounters)
         {
             encounter.enemyManager = this;
