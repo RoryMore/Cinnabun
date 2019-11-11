@@ -23,7 +23,7 @@ public class Player : Entity
     public List<SkillData> skillList;
     [HideInInspector] public SkillData selectedSkill = null;
 
-    PauseAbility pause = null;
+    public PauseAbility pause = null;
     PauseMenuUI pauseMenu = null;
 
     [Header("Navigation")]
