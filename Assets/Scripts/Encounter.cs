@@ -34,7 +34,7 @@ public class Encounter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        cleared = false;
         
 
         //Spawn enemies
@@ -76,7 +76,7 @@ public class Encounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        KillCode();
+        //KillCode();
 
         if (initiativeList.Count == 0)
         {
