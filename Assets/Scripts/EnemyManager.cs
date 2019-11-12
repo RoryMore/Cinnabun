@@ -55,7 +55,7 @@ public class EnemyManager : MonoBehaviour
                 {
                     encounter.gameObject.SetActive(true);
                     inBattle = true;
-                    player.GetComponent<Player>().SetCurrentEncounter(encounter);
+                    Entity.SetCurrentEncounter(encounter);
                 }
 
             }
