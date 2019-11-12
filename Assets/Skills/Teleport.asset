@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: Teleport
   m_EditorClassIdentifier: 
   range: 20
+  positiveRangeHeight: 0
+  negativeRangeHeight: 0
   cooldown: 3
-  timeBeenOnCooldown: 3.002474
+  timeBeenOnCooldown: 3
   windUp: 2
   timeSpentOnWindUp: 0
   shape: 0
   angleWidth: 360
   skill: 0
-  baseDamage: 5
+  baseDamage: 10
   damageType: 0
   rangeIndicator: {fileID: 0}
   indicatorMaterial: {fileID: 2100000, guid: 3c6c47126b1480347ac2f55825168a69, type: 2}
