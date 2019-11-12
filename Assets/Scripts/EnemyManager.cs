@@ -7,6 +7,9 @@ public class EnemyManager : MonoBehaviour
     public GameObject player;
     public List<Encounter> encounters;
     public float maxEncounterDistance;
+
+    public bool weWon;
+
     public bool isInBattle;
 
     public bool inBattle;
@@ -21,6 +24,8 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        weWon = false;
+
         player = GameObject.Find("Player");
         foreach (Encounter encounter in encounters)
         {
@@ -41,7 +46,7 @@ public class EnemyManager : MonoBehaviour
         foreach (Encounter encounter in encounters)
         {
             float encounterDistance = Vector3.Distance(encounter.gameObject.transform.position, player.transform.position);
-            if (encounterDistance > maxEncounterDistance) //Magic number, it really only needs to be the distance that covers the maximum zoo
+            if (encounterDistance > maxEncounterDistance * 2) //Magic number, it really only needs to be the distance that covers the maximum zoo
             {
                 if (encounter.gameObject.activeInHierarchy == true)
                 {
@@ -49,6 +54,12 @@ public class EnemyManager : MonoBehaviour
                     inBattle = false;
                 }
             }
+
+            else if (encounterDistance > maxEncounterDistance * 2)
+            {
+
+            }
+
             else
             {
                 if (encounter.gameObject.activeInHierarchy == false)
@@ -77,6 +88,7 @@ public class EnemyManager : MonoBehaviour
         {
             //You Won!
             Debug.Log("You win!");
+            weWon = true;
         }
 
     }
