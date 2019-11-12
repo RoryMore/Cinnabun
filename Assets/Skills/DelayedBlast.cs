@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/DelayedBlast", order = 1)]
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Skills/DelayedBlast", order = 1)]
 
 public class DelayedBlast : SkillData
 {

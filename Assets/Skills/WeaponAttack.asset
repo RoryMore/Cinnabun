@@ -19,7 +19,7 @@ MonoBehaviour:
   timeBeenOnCooldown: 2
   windUp: 1
   timeSpentOnWindUp: 0
-  shape: 1
+  shape: 0
   angleWidth: 35
   skill: 3
   baseDamage: 0
@@ -34,7 +34,7 @@ MonoBehaviour:
   staffRange: 10
   bowRange: 10
   baseUnarmedDamage: 1
-  baseSwordDamage: 2
+  baseSwordDamage: 25
   baseStaffDamage: 2
   baseBowDamage: 4
   lineWidth: 2

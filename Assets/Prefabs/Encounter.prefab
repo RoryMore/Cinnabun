@@ -152,6 +152,11 @@ MonoBehaviour:
   enemyManager: {fileID: 0}
   cleared: 0
   itemReward: {fileID: 0}
+  items:
+  - {fileID: 11400000, guid: 1c120b402120d63458665ea30b67d31d, type: 2}
+  - {fileID: 11400000, guid: 44aa8a5ab488de04f9efc061557c9bdc, type: 2}
+  - {fileID: 11400000, guid: a1b10dc5a2b9a664f8b4db44a518b9bb, type: 2}
+  - {fileID: 11400000, guid: db1539a6cbfc6034fa54af4752d4063b, type: 2}
   inventory: {fileID: 0}
 --- !u!1 &7330141679965958564
 GameObject:

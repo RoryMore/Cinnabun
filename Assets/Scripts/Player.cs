@@ -28,7 +28,6 @@ public class Player : Entity
 
     [Header("Navigation")]
     public float turningSpeed;
-    NavMeshAgent navAgent = null;
     float baseMovementSpeed;
 
     [Header("Animation")]
@@ -55,8 +54,8 @@ public class Player : Entity
         InitialiseAll();
         currentHP = maxHP;
         
-        navAgent = GetComponent<NavMeshAgent>();
-        navAgent.speed = movementSpeed;
+        nav = GetComponent<NavMeshAgent>();
+        nav.speed = movementSpeed;
         baseMovementSpeed = movementSpeed;
 
         playerState = PlayerState.FREE;
@@ -80,19 +79,6 @@ public class Player : Entity
         UpdateSkillCooldowns();
         UpdateAllConditions();
         UpdateAnimator();
-
-        // DEATH TESTING
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            if (isDead)
-            {
-                isDead = false;
-            }
-            else
-            {
-                Death();
-            }
-        }
 
         //if () // Check if player is dead
         if (!isDead)
@@ -137,10 +123,10 @@ public class Player : Entity
                     break;
 
                 case PlayerState.DOINGSKILL: // Player has selected a skill. Choose where to cast
-                                                // Make the player stop moving
-                    
-                    navAgent.speed = 0.0f;
-                    navAgent.angularSpeed = 0.0f;
+                                             // Make the player stop moving
+
+                    nav.speed = 0.0f;
+                    nav.angularSpeed = 0.0f;
 
                     AnimatorClipInfo[] animInfo = animator.GetCurrentAnimatorClipInfo(0);
                     AnimationClip currentClip = animInfo[0].clip;
@@ -167,7 +153,7 @@ public class Player : Entity
                             }
                             else
                             {
-                                navAgent.angularSpeed = turningSpeed;
+                                nav.angularSpeed = turningSpeed;
 
                                 selectedSkill = null;
                                 playerState = PlayerState.FREE;
@@ -230,7 +216,7 @@ public class Player : Entity
                                 }
                                 else
                                 {
-                                    navAgent.angularSpeed = turningSpeed;
+                                    nav.angularSpeed = turningSpeed;
 
                                     selectedSkill = null;
                                     playerState = PlayerState.FREE;
@@ -266,7 +252,7 @@ public class Player : Entity
                         // skill has ended and been fully cast
                         if (selectedSkill.timeBeenOnCooldown == 0.0f && !selectedSkill.currentlyCasting)
                         {
-                            navAgent.angularSpeed = turningSpeed;
+                            nav.angularSpeed = turningSpeed;
                             pause.actionsLeft--;
                             selectedSkill = null;
                             playerState = PlayerState.FREE;
@@ -317,8 +303,8 @@ public class Player : Entity
     {
         if (Input.GetMouseButton(0))
         {
-            
-            navAgent.speed = movementSpeed;
+
+            nav.speed = movementSpeed;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -326,7 +312,7 @@ public class Player : Entity
             {
                 //if (hit.collider.tag.Contains("Finish"))
                 //{
-                navAgent.SetDestination(hit.point);
+                nav.SetDestination(hit.point);
 
                 Debug.Log("Move Player");
                 //}
@@ -429,7 +415,7 @@ public class Player : Entity
     {
         selectedSkill = null;
         playerState = PlayerState.FREE;
-        navAgent.angularSpeed = turningSpeed;
+        nav.angularSpeed = turningSpeed;
     }
 
     //OVERLOADS
@@ -437,7 +423,7 @@ public class Player : Entity
     {
         isDead = true;
         animator.SetBool("isDead", isDead);
-        navAgent.destination = transform.position;
+        nav.destination = transform.position;
 
         if (inventory.activeSelf)
         {
@@ -450,7 +436,7 @@ public class Player : Entity
         currentHP = maxHP;
         isDead = false;
         animator.SetBool("isDead", isDead);
-        navAgent.destination = transform.position;
+        nav.destination = transform.position;
     }
 
     public void ChangeWeapon(WeaponAttack.UsedWeaponType newUsedWeaponType)
@@ -463,7 +449,7 @@ public class Player : Entity
 
     void UpdateAnimator()
     {
-        if (navAgent.velocity.magnitude > 0.01f)
+        if (nav.velocity.magnitude > 0.01f)
         {
             animator.SetBool("moving", true);
         }
@@ -471,7 +457,7 @@ public class Player : Entity
         {
             animator.SetBool("moving", false);
         }
-        animator.SetFloat("movementPlaybackMultiplier", navAgent.velocity.magnitude / movementSpeed);
+        animator.SetFloat("movementPlaybackMultiplier", nav.velocity.magnitude / movementSpeed);
 
         // This is a method to grab clip info to play with animation properties based on current clip
         //AnimatorClipInfo[] animInfo = animator.GetCurrentAnimatorClipInfo(0);

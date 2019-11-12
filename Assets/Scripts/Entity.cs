@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Entity : MonoBehaviour
 {
@@ -136,6 +137,9 @@ public class Entity : MonoBehaviour
 
     [HideInInspector]
     public SkillData chosenSkill;
+
+    [HideInInspector]
+    public NavMeshAgent nav;
 
 
     // Data for original values
@@ -379,7 +383,12 @@ public class Entity : MonoBehaviour
         RewindPoint point = new RewindPoint();
         point = rewindPoints[0];
         Debug.Log(point.locationRewind);
-        transform.position = point.locationRewind;
+
+        if (nav != null)
+        {
+            nav.Warp(point.locationRewind);
+        }
+        //transform.position = point.locationRewind;
         currentHP = point.currentHealthRewind;
         isDead = point.isDeadRewind;
         currentConditions = point.currentConditionsRewind;

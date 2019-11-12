@@ -28,7 +28,7 @@ public class EnemyScript : Entity
     public Animator anim;
     //AudioSource enemyAudio;
     public ParticleSystem hitParticles;
-    public NavMeshAgent nav;
+    
     public List<SkillData> skillList;
 
     public EnemyManager enemyManager;
