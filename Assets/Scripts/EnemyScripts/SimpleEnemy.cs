@@ -82,9 +82,13 @@ public class SimpleEnemy : EnemyScript
 
     void Update()
     {
+
+
         
         if (!isDead)
         {
+            
+
             Turn();
 
             UpdateAllSkillCooldowns();
@@ -93,7 +97,7 @@ public class SimpleEnemy : EnemyScript
             //Choose what attack it want's to make this turn
             //Decide();
 
-            bool plzwork = CheckAttackers();
+            //bool plzwork = CheckAttackers();
 
             if (chosenSkill.currentlyCasting == false)
             {

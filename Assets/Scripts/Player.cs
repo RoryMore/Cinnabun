@@ -80,19 +80,6 @@ public class Player : Entity
         UpdateAllConditions();
         UpdateAnimator();
 
-        // DEATH TESTING
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            if (isDead)
-            {
-                isDead = false;
-            }
-            else
-            {
-                Death();
-            }
-        }
-
         //if () // Check if player is dead
         if (!isDead)
         {
