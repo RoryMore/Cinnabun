@@ -19,7 +19,7 @@ MonoBehaviour:
   timeBeenOnCooldown: 2
   windUp: 1
   timeSpentOnWindUp: 0
-  shape: 1
+  shape: 0
   angleWidth: 35
   skill: 3
   baseDamage: 0

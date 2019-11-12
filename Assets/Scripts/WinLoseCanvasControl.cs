@@ -156,6 +156,6 @@ public class WinLoseCanvasControl : MonoBehaviour
     {
         gameLost = player.isDead;
         // Set gameWon based on enemyManager bool
-        
+        gameWon = enemyManager.weWon;
     }
 }

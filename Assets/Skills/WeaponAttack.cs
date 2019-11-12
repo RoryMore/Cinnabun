@@ -10,7 +10,8 @@ public class WeaponAttack : SkillData
         Unarmed,
         Sword,
         Staff,
-        Bow
+        Bow,
+        NotInitialised
     }
     public UsedWeaponType usedWeapon;
     UsedWeaponType oldWeapon;
@@ -38,13 +39,12 @@ public class WeaponAttack : SkillData
     public override void Initialise(Entity ownCaster)
     {
         base.Initialise();
-        oldWeapon = usedWeapon;
+        oldWeapon = UsedWeaponType.NotInitialised;
         caster = ownCaster;
     }
 
     public override void TargetSkill(Transform zoneStart, List<Entity> entityList)
     {
-        
         switch (usedWeapon)
         {
             case UsedWeaponType.Unarmed:
@@ -62,7 +62,7 @@ public class WeaponAttack : SkillData
                         zoneStart.LookAt(lookAt);
                     }
 
-                    DrawRangeIndicator(zoneStart, shape, unarmedRange, 360.0f);
+                    DrawRangeIndicator(zoneStart, SkillShape.RADIAL, unarmedRange, 360.0f);
 
                     // Select who we're punching
                     SelectTargetRay(zoneStart, ref entityTarget, true);
@@ -96,7 +96,7 @@ public class WeaponAttack : SkillData
                         zoneStart.LookAt(lookAt);
                     }
 
-                    DrawRangeIndicator(zoneStart, shape, swordRange, angleWidth);
+                    DrawRangeIndicator(zoneStart, SkillShape.RADIAL, swordRange, angleWidth);
 
                     if (Input.GetMouseButtonDown(0))
                     {
@@ -124,7 +124,7 @@ public class WeaponAttack : SkillData
                         zoneStart.LookAt(lookAt);
                     }
 
-                    DrawRangeIndicator(zoneStart, shape, staffRange, lineWidth);
+                    DrawRangeIndicator(zoneStart, SkillShape.LINE, staffRange, lineWidth);
 
                     if (Input.GetMouseButtonDown(0))
                     {
@@ -152,7 +152,7 @@ public class WeaponAttack : SkillData
                         zoneStart.LookAt(lookAt);
                     }
 
-                    DrawRangeIndicator(zoneStart, shape, bowRange, 360.0f);
+                    DrawRangeIndicator(zoneStart, SkillShape.RADIAL, bowRange, 360.0f);
 
                     SelectTargetRay(zoneStart, ref entityTarget, true);
                 }
