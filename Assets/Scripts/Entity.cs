@@ -383,7 +383,12 @@ public class Entity : MonoBehaviour
         RewindPoint point = new RewindPoint();
         point = rewindPoints[0];
         Debug.Log(point.locationRewind);
-        transform.position = point.locationRewind;
+
+        if (nav != null)
+        {
+            nav.Warp(point.locationRewind);
+        }
+        //transform.position = point.locationRewind;
         currentHP = point.currentHealthRewind;
         isDead = point.isDeadRewind;
         currentConditions = point.currentConditionsRewind;
