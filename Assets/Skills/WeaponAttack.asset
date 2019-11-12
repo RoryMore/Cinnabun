@@ -34,7 +34,7 @@ MonoBehaviour:
   staffRange: 10
   bowRange: 10
   baseUnarmedDamage: 1
-  baseSwordDamage: 2
+  baseSwordDamage: 25
   baseStaffDamage: 2
   baseBowDamage: 4
   lineWidth: 2

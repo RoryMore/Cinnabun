@@ -62,7 +62,8 @@ public class RespawnControl : MonoBehaviour
                     inventoryBase.playerOwnedItems.Clear();
                 }
 
-                player.transform.position = respawnPoint.position;
+                //player.transform.position = respawnPoint.position;
+                player.nav.Warp(respawnPoint.position);
                 player.Revive();
                 itemsCleared = false;
             }
