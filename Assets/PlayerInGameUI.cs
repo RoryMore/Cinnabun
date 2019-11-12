@@ -18,11 +18,15 @@ public class PlayerInGameUI : MonoBehaviour
     public Button DelayedBlastButton;
 
     public Button TeleportBackground;
-    public Button TeleportButton;
+    public Image TeleportButton;
+
+    public Image Health;
+    public Image TurnCounter;
     // Start is called before the first frame update
     void Start()
     {
         pauseAbility = FindObjectOfType<PauseAbility>();
+        player = FindObjectOfType<Player>();
     }
 
     // Update is called once per frame
@@ -39,7 +43,8 @@ public class PlayerInGameUI : MonoBehaviour
             PlayButton.gameObject.SetActive(false);
         }
 
-     
+        UpdateHealth();
+        UpdateTurnCounter();
     }
 
     public void OnPaused()
@@ -50,5 +55,17 @@ public class PlayerInGameUI : MonoBehaviour
     public void OnPlay()
     {
         pauseAbility.ButtonPlay();
+    }
+
+    void UpdateHealth()
+    {
+        Health.fillAmount = (float)player.currentHP/(float)player.maxHP ;
+    }
+
+    void UpdateTurnCounter()
+    {
+         TurnCounter.fillAmount = 1.0f - ( (float)pauseAbility.timeStopCoolDown / 4.0f);
+
+
     }
 }
