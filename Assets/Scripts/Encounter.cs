@@ -6,6 +6,8 @@ public class Encounter : MonoBehaviour
 {
 
     public Entity enemy1;
+    public Entity enemy2;
+
 
     public List<Entity> masterInitiativeList; //Unchanging list of encounter made at its initilization
     public List<Entity> initiativeList; //List that updates and changes as enemies die. Used for enemy manager, not for skills
@@ -41,7 +43,7 @@ public class Encounter : MonoBehaviour
             }
             else if (location.name.Contains("Enemy2"))
             {
-
+                initiativeList.Add(Instantiate(enemy2, location.transform));
             }
             else if (location.name.Contains("Enemy3"))
             {

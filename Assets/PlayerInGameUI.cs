@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerInGameUI : MonoBehaviour
 {
     PauseAbility pauseAbility;
+    Player player;
 
     public Button PauseButton;
     public Button PlayButton;
@@ -37,6 +38,8 @@ public class PlayerInGameUI : MonoBehaviour
             PauseButton.gameObject.SetActive(true);
             PlayButton.gameObject.SetActive(false);
         }
+
+     
     }
 
     public void OnPaused()

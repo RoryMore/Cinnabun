@@ -23,7 +23,7 @@ public class Player : Entity
     public List<SkillData> skillList;
     [HideInInspector] public SkillData selectedSkill = null;
 
-    PauseAbility pause = null;
+    public PauseAbility pause = null;
     PauseMenuUI pauseMenu = null;
 
     [Header("Navigation")]
@@ -400,7 +400,7 @@ public class Player : Entity
         }
     }
 
-    void SelectSkill(int skillAtIndex)
+    public void SelectSkill(int skillAtIndex)
     {
         // Are we allowed to access this index
         if (skillAtIndex-1 < skillList.Count)
@@ -483,5 +483,11 @@ public class Player : Entity
     {
         animator.SetBool("weaponAttack", false);
         animator.SetBool("skillCast", false);
+    }
+
+    public void SelectWeaponAttack()
+    {
+        selectedSkill = weaponAttack;
+        playerState = PlayerState.DOINGSKILL;
     }
 }
