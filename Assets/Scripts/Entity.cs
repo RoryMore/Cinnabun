@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Entity : MonoBehaviour
 {
@@ -136,6 +137,9 @@ public class Entity : MonoBehaviour
 
     [HideInInspector]
     public SkillData chosenSkill;
+
+    [HideInInspector]
+    public NavMeshAgent nav;
 
 
     // Data for original values
