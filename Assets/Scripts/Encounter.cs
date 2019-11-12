@@ -88,6 +88,8 @@ public class Encounter : MonoBehaviour
         cleared = true;
         enemyManager.CheckVictory();
         GiveItem();
+        //enemyManager.player.GetComponent<Entity>().currentHP += 25;
+        
     }
 
     public void EnemyGotHurt(Entity enemy)
