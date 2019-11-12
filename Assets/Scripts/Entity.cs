@@ -357,7 +357,7 @@ public class Entity : MonoBehaviour
         return currentEncounter;
     }
 
-    public void SetCurrentEncounter(Encounter encounter)
+    public static void SetCurrentEncounter(Encounter encounter)
     {
         currentEncounter = encounter;
     }
