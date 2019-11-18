@@ -106,6 +106,21 @@ public class PauseAbility : MonoBehaviour
             }
         }
     }
+    public void ButtonPaused()
+    {
+        if (states == GameStates.PLAY)
+        {
+            states = GameStates.TIMESTOP;
+        }
+    }
+
+   public void ButtonPlay()
+    {
+        states = GameStates.PLAY;
+        clearAllList();
+        calculateTimeStop();
+        takeingTurn = false;
+    }
 
     void checkTime()
     {
@@ -189,9 +204,12 @@ public class PauseAbility : MonoBehaviour
 
         // For our current encounter (other entities are irrelevant)
         // Clear the rewind points
-        foreach (Entity checkedEntity in Entity.currentEncounter.initiativeList)
+        if (Entity.currentEncounter != null)
         {
-            checkedEntity.ClearList();
+            foreach (Entity checkedEntity in Entity.currentEncounter.initiativeList)
+            {
+                checkedEntity.ClearList();
+            }
         }
         // Player isn't held in encounter
         // Clear player rewindpoints

@@ -5,6 +5,10 @@ using UnityEngine.AI;
 
 public class Player : Entity
 {
+    [Header("Movement Raycasting Settings")]
+    public LayerMask groundLayerMask;
+    public float moveRaycastDistance;
+
     public enum PlayerState
     {
         FREE,
@@ -19,12 +23,11 @@ public class Player : Entity
     public List<SkillData> skillList;
     [HideInInspector] public SkillData selectedSkill = null;
 
-    PauseAbility pause = null;
+    public PauseAbility pause = null;
     PauseMenuUI pauseMenu = null;
 
     [Header("Navigation")]
     public float turningSpeed;
-    NavMeshAgent navAgent = null;
     float baseMovementSpeed;
 
     [Header("Animation")]
@@ -51,9 +54,10 @@ public class Player : Entity
         InitialiseAll();
         currentHP = maxHP;
         
-        navAgent = GetComponent<NavMeshAgent>();
-        navAgent.speed = movementSpeed;
+        nav = GetComponent<NavMeshAgent>();
+        nav.speed = movementSpeed;
         baseMovementSpeed = movementSpeed;
+
         playerState = PlayerState.FREE;
     }
 
@@ -76,19 +80,6 @@ public class Player : Entity
         UpdateAllConditions();
         UpdateAnimator();
 
-        // DEATH TESTING
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            if (isDead)
-            {
-                isDead = false;
-            }
-            else
-            {
-                Death();
-            }
-        }
-
         //if () // Check if player is dead
         if (!isDead)
         {
@@ -100,7 +91,6 @@ public class Player : Entity
                     {
                         if (!pauseMenu.isPaused)
                         {
-                            RotateWeapons();
                             if (!inventory.activeSelf)
                             {
                                 Move();
@@ -121,7 +111,6 @@ public class Player : Entity
                     }
                     else
                     {
-                        RotateWeapons();
                         Move();
                     }
 
@@ -134,10 +123,10 @@ public class Player : Entity
                     break;
 
                 case PlayerState.DOINGSKILL: // Player has selected a skill. Choose where to cast
-                                                // Make the player stop moving
-                    
-                    navAgent.speed = 0.0f;
-                    navAgent.angularSpeed = 0.0f;
+                                             // Make the player stop moving
+
+                    nav.speed = 0.0f;
+                    nav.angularSpeed = 0.0f;
 
                     AnimatorClipInfo[] animInfo = animator.GetCurrentAnimatorClipInfo(0);
                     AnimationClip currentClip = animInfo[0].clip;
@@ -148,16 +137,35 @@ public class Player : Entity
                     {
                         // Special skills that need different transform
                         case SkillData.SkillList.DELAYEDBLAST:
-                            selectedSkill.TargetSkill(transform, currentEncounter.masterInitiativeList);
-
-                            if (selectedSkill.currentlyCasting)
+                            if (currentEncounter != null)
                             {
-                                if (!delayedBlastCastParticles.activeSelf)
+                                selectedSkill.TargetSkill(transform, currentEncounter.masterInitiativeList);
+
+                                if (selectedSkill.currentlyCasting)
                                 {
-                                    delayedBlastCastParticles.SetActive(true);
+                                    if (!delayedBlastCastParticles.activeSelf)
+                                    {
+                                        delayedBlastCastParticles.SetActive(true);
+                                    }
+                                    animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
+                                    animator.SetBool("skillCast", true);
                                 }
-                                animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
-                                animator.SetBool("skillCast", true);
+                            }
+                            else
+                            {
+                                nav.angularSpeed = turningSpeed;
+
+                                selectedSkill = null;
+                                playerState = PlayerState.FREE;
+
+                                // Reset animator variables
+                                animator.SetBool("weaponAttack", false);
+                                animator.SetBool("skillCast", false);
+
+                                // Deactivate any active cast particles
+                                delayedBlastCastParticles.SetActive(false);
+                                rewindCastParticles.SetActive(false);
+                                teleportCastParticles.SetActive(false);
                             }
                             break;
 
@@ -192,16 +200,35 @@ public class Player : Entity
                         default:
                             if (selectedSkill == weaponAttack)
                             {
-                                // Need a current entity list to put into function parameter
-                                selectedSkill.TargetSkill(transform, currentEncounter.masterInitiativeList);
-
-                                if (selectedSkill.currentlyCasting)
+                                if (currentEncounter != null)
                                 {
-                                    // We are currently casting a skill
-                                    // Animate attack animation here
-                                    
-                                    animator.SetFloat("weaponAttackPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
-                                    animator.SetBool("weaponAttack", true);
+                                    // Need a current entity list to put into function parameter
+                                    selectedSkill.TargetSkill(transform, currentEncounter.masterInitiativeList);
+
+                                    if (selectedSkill.currentlyCasting)
+                                    {
+                                        // We are currently casting a skill
+                                        // Animate attack animation here
+
+                                        animator.SetFloat("weaponAttackPlaybackMultiplier", (animSpeed / selectedSkill.windUp));
+                                        animator.SetBool("weaponAttack", true);
+                                    }
+                                }
+                                else
+                                {
+                                    nav.angularSpeed = turningSpeed;
+
+                                    selectedSkill = null;
+                                    playerState = PlayerState.FREE;
+
+                                    // Reset animator variables
+                                    animator.SetBool("weaponAttack", false);
+                                    animator.SetBool("skillCast", false);
+
+                                    // Deactivate any active cast particles
+                                    delayedBlastCastParticles.SetActive(false);
+                                    rewindCastParticles.SetActive(false);
+                                    teleportCastParticles.SetActive(false);
                                 }
                             }
                             else
@@ -220,23 +247,25 @@ public class Player : Entity
                             
                             break;
                     }
-
-                    // skill has ended and been fully cast
-                    if (selectedSkill.timeBeenOnCooldown == 0.0f && !selectedSkill.currentlyCasting)
+                    if (selectedSkill != null)
                     {
-                        navAgent.angularSpeed = turningSpeed;
-                        pause.actionsLeft--;
-                        selectedSkill = null;
-                        playerState = PlayerState.FREE;
+                        // skill has ended and been fully cast
+                        if (selectedSkill.timeBeenOnCooldown == 0.0f && !selectedSkill.currentlyCasting)
+                        {
+                            nav.angularSpeed = turningSpeed;
+                            pause.actionsLeft--;
+                            selectedSkill = null;
+                            playerState = PlayerState.FREE;
 
-                        // Reset animator variables
-                        animator.SetBool("weaponAttack", false);
-                        animator.SetBool("skillCast", false);
+                            // Reset animator variables
+                            animator.SetBool("weaponAttack", false);
+                            animator.SetBool("skillCast", false);
 
-                        // Deactivate any active cast particles
-                        delayedBlastCastParticles.SetActive(false);
-                        rewindCastParticles.SetActive(false);
-                        teleportCastParticles.SetActive(false);
+                            // Deactivate any active cast particles
+                            delayedBlastCastParticles.SetActive(false);
+                            rewindCastParticles.SetActive(false);
+                            teleportCastParticles.SetActive(false);
+                        }
                     }
 
                     if (Input.GetMouseButtonDown(1))
@@ -274,15 +303,18 @@ public class Player : Entity
     {
         if (Input.GetMouseButton(0))
         {
-            navAgent.speed = movementSpeed;
+
+            nav.speed = movementSpeed;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 200.0f))
+            if (Physics.Raycast(ray, out RaycastHit hit, moveRaycastDistance, groundLayerMask))
             {
                 //if (hit.collider.tag.Contains("Finish"))
                 //{
-                    navAgent.SetDestination(hit.point);
+                nav.SetDestination(hit.point);
+
+                Debug.Log("Move Player");
                 //}
             }
 
@@ -354,7 +386,7 @@ public class Player : Entity
         }
     }
 
-    void SelectSkill(int skillAtIndex)
+    public void SelectSkill(int skillAtIndex)
     {
         // Are we allowed to access this index
         if (skillAtIndex-1 < skillList.Count)
@@ -383,7 +415,7 @@ public class Player : Entity
     {
         selectedSkill = null;
         playerState = PlayerState.FREE;
-        navAgent.angularSpeed = turningSpeed;
+        nav.angularSpeed = turningSpeed;
     }
 
     //OVERLOADS
@@ -391,52 +423,33 @@ public class Player : Entity
     {
         isDead = true;
         animator.SetBool("isDead", isDead);
-        navAgent.destination = transform.position;
+        nav.destination = transform.position;
+
+        if (inventory.activeSelf)
+        {
+            inventory.SetActive(false);
+        }
     }
 
     public void Revive()
     {
-        isDead = false;
         currentHP = maxHP;
+        isDead = false;
         animator.SetBool("isDead", isDead);
-        navAgent.destination = transform.position;
+        nav.destination = transform.position;
     }
 
-    void RotateWeapons()
+    public void ChangeWeapon(WeaponAttack.UsedWeaponType newUsedWeaponType)
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (weaponAttack != null)
         {
-            switch (weaponAttack.usedWeapon)
-            {
-                case WeaponAttack.UsedWeaponType.Unarmed:
-                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Sword);
-                    Debug.Log("Cinnabun starts using her Sword");
-                    break;
-
-                case WeaponAttack.UsedWeaponType.Sword:
-                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Staff);
-                    Debug.Log("Cinnabun put away her Sword, and starts using her Staff");
-                    break;
-
-                case WeaponAttack.UsedWeaponType.Staff:
-                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Bow);
-                    Debug.Log("Cinnabun put away her Staff, and starts using her Bow");
-                    break;
-
-                case WeaponAttack.UsedWeaponType.Bow:
-                    weaponAttack.WeaponChange(WeaponAttack.UsedWeaponType.Unarmed);
-                    Debug.Log("Cinnabun put away her Bow, and starts fighting mano e mano");
-                    break;
-                default:
-                    break;
-            }
-            
+            weaponAttack.WeaponChange(newUsedWeaponType);
         }
     }
 
     void UpdateAnimator()
     {
-        if (navAgent.velocity.magnitude > 0.01f)
+        if (nav.velocity.magnitude > 0.01f)
         {
             animator.SetBool("moving", true);
         }
@@ -444,7 +457,7 @@ public class Player : Entity
         {
             animator.SetBool("moving", false);
         }
-        animator.SetFloat("movementPlaybackMultiplier", navAgent.velocity.magnitude / baseMovementSpeed);
+        animator.SetFloat("movementPlaybackMultiplier", nav.velocity.magnitude / movementSpeed);
 
         // This is a method to grab clip info to play with animation properties based on current clip
         //AnimatorClipInfo[] animInfo = animator.GetCurrentAnimatorClipInfo(0);
@@ -456,5 +469,11 @@ public class Player : Entity
     {
         animator.SetBool("weaponAttack", false);
         animator.SetBool("skillCast", false);
+    }
+
+    public void SelectWeaponAttack()
+    {
+        selectedSkill = weaponAttack;
+        playerState = PlayerState.DOINGSKILL;
     }
 }

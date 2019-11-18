@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Entity : MonoBehaviour
 {
@@ -72,7 +73,7 @@ public class Entity : MonoBehaviour
         DELAYEDBLAST,
         [Tooltip("Deals damage over time based on damage and tickrate")]
         BURN,
-        [Tooltip("Deals damage over time based on damage and tickrate, and also applies a slow multiplying movementSpeed by effective percent")]
+         [Tooltip("Deals damage over time based on damage and tickrate, and also applies a slow multiplying movementSpeed by effective percent")]
         POISON
     }
 
@@ -121,8 +122,6 @@ public class Entity : MonoBehaviour
     public bool cannotBeTeleported;
 
     [Header("Rewind Point")]
-
-    //public RewindPoint rewindPoint;
     public List<RewindPoint> rewindPoints;
 
     [Header("Encounter")]
@@ -131,6 +130,17 @@ public class Entity : MonoBehaviour
     [Header("Damaged VFX")]
     [SerializeField]
     GameObject explosionParticles;
+
+    // Variables needed for enemies to function efficiently without additional list
+    [HideInInspector]
+    public Vector3 destination;
+
+    [HideInInspector]
+    public SkillData chosenSkill;
+
+    [HideInInspector]
+    public NavMeshAgent nav;
+
 
     // Data for original values
     float originalMovementSpeed;
@@ -282,7 +292,7 @@ public class Entity : MonoBehaviour
 
     void CalculateMaxHP()
     {
-        maxHP = (6 + constitution) * level;
+        maxHP = ((5 + constitution) * level) * 10;
         currentHP = maxHP;
     }
 
@@ -351,7 +361,7 @@ public class Entity : MonoBehaviour
         return currentEncounter;
     }
 
-    public void SetCurrentEncounter(Encounter encounter)
+    public static void SetCurrentEncounter(Encounter encounter)
     {
         currentEncounter = encounter;
     }
@@ -373,7 +383,12 @@ public class Entity : MonoBehaviour
         RewindPoint point = new RewindPoint();
         point = rewindPoints[0];
         Debug.Log(point.locationRewind);
-        transform.position = point.locationRewind;
+
+        if (nav != null)
+        {
+            nav.Warp(point.locationRewind);
+        }
+        //transform.position = point.locationRewind;
         currentHP = point.currentHealthRewind;
         isDead = point.isDeadRewind;
         currentConditions = point.currentConditionsRewind;

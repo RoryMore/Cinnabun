@@ -6,11 +6,15 @@ public class Encounter : MonoBehaviour
 {
 
     public Entity enemy1;
+    public Entity enemy2;
+
 
     public List<Entity> masterInitiativeList; //Unchanging list of encounter made at its initilization
     public List<Entity> initiativeList; //List that updates and changes as enemies die. Used for enemy manager, not for skills
     public List<Entity> playerInclusiveInitiativeList; //Same as master but includes player for skill use, for enemy skills
     public List<Entity> healList;
+
+    public List<EnemyScript> enemies;
 
     public List<GameObject> spawnPoints;
 
@@ -20,7 +24,9 @@ public class Encounter : MonoBehaviour
 
     // Inventory to add item to
     [Header("Temporary Inventory stuff")]
-    public Item itemReward;
+    
+    public List<Item> items;
+
     [SerializeField]
     InventoryBase inventory;
 
@@ -28,6 +34,9 @@ public class Encounter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        
+
         //Spawn enemies
         foreach (GameObject location in spawnPoints)
         {
@@ -39,7 +48,7 @@ public class Encounter : MonoBehaviour
             }
             else if (location.name.Contains("Enemy2"))
             {
-
+                initiativeList.Add(Instantiate(enemy2, location.transform));
             }
             else if (location.name.Contains("Enemy3"))
             {
@@ -52,12 +61,12 @@ public class Encounter : MonoBehaviour
         //Set up player inclusive
         playerInclusiveInitiativeList.AddRange(masterInitiativeList);
         playerInclusiveInitiativeList.Add(GameObject.Find("Player").GetComponent<Entity>());
-
-        
     }
 
     void Awake()
     {
+        //inventory = FindObjectOfType<InventoryBase>();
+
         if (inventory != null)
         {
             Debug.Log("Inventory set properly");
@@ -67,6 +76,8 @@ public class Encounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        KillCode();
+
         if (initiativeList.Count == 0)
         {
             if (!cleared)
@@ -84,6 +95,8 @@ public class Encounter : MonoBehaviour
         cleared = true;
         enemyManager.CheckVictory();
         GiveItem();
+        //enemyManager.player.GetComponent<Entity>().currentHP += 25;
+        
     }
 
     public void EnemyGotHurt(Entity enemy)
@@ -104,7 +117,26 @@ public class Encounter : MonoBehaviour
         if (inventory != null)
         {
             Debug.Log("Item given to player for real");
-            inventory.AddItem(itemReward);
+            int choice = (int)Random.Range(0, 4);
+            {
+                inventory.AddItem(items[choice]);
+            }
+            
+        }
+    }
+
+    public void KillCode()
+    {
+        if (Input.GetKeyDown("k"))
+        {
+            if (isActiveAndEnabled)
+            {
+                foreach (Entity enemy in initiativeList)
+                {
+                    enemy.TakeDamage(enemy.maxHP);
+                }
+            }
+
         }
     }
 

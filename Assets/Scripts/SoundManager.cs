@@ -24,7 +24,16 @@ public class SoundManager : MonoBehaviour
     public AudioSource idleMusic3;
 
     [Header("Sound Effects")]
-    public AudioSource meeleSwing;
+    [SerializeField]
+    AudioSource meeleSwing;
+    [HideInInspector] public static AudioSource meleeSwing;
+
+    [SerializeField]
+    AudioSource footStepLeft;
+    public static AudioSource leftFootstep;
+    [SerializeField]
+    AudioSource footstepRight;
+    public static AudioSource rightFootstep;
 
    // public AudioSource millionaire;
 
@@ -62,6 +71,15 @@ public class SoundManager : MonoBehaviour
     {
         pauseAbility = FindObjectOfType<PauseAbility>();
         enemyManager = FindObjectOfType<EnemyManager>();
+    }
+
+    private void Awake()
+    {
+        // Setting static sound effect variables to inspector set data
+       // meleeSwing = meeleSwing;
+
+        leftFootstep = footStepLeft;
+        rightFootstep = footstepRight;
     }
 
     // Update is called once per frame
@@ -145,7 +163,8 @@ public class SoundManager : MonoBehaviour
                 }
             case MusicState.MAINMENU:
                 {
-                    MuteAllAudio();
+                   // MuteAllAudio();
+					//mainMenuMusic.Play();
                     mainMenuMusic.volume = 0.7f;
                     break;
                 }
@@ -193,15 +212,22 @@ public class SoundManager : MonoBehaviour
 
     void CheckInBattle()
     {
-        if (enemyManager.inBattle == true)
-        {
-            inBattle = true;
-        }
+		if (enemyManager != null)
+		{
+			if (enemyManager.inBattle == true)
+			{
+				inBattle = true;
+			}
 
-        if (enemyManager.inBattle == false)
-        {
-            inBattle = false;
-        }
+			if (enemyManager.inBattle == false)
+			{
+				inBattle = false;
+			}
+		}
+		else
+		{
+			inBattle = false;
+		}
     }
 
     void getRandomNumber()
@@ -232,7 +258,7 @@ public class SoundManager : MonoBehaviour
     {
         //battleMusic.volume = 0.0f;
        // slowMotionMusic.volume = 0.0f;
-        mainMenuMusic.Stop();
+        mainMenuMusic.volume = 0.0f;
         //millionaire.volume = 0.0f;
 
 

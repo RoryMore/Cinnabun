@@ -1,12 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RespawnControl : MonoBehaviour
 {
     Player player;
     Transform respawnPoint;
-    
+
+    public InventoryBase inventoryBase;
+
+    bool itemsCleared = false;
+
+    WinLoseCanvasControl winLoseCanvas;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +24,7 @@ public class RespawnControl : MonoBehaviour
     {
         player = GetComponent<Player>();
         respawnPoint = GameObject.FindGameObjectWithTag("MainRespawn").transform;
+        winLoseCanvas = FindObjectOfType<WinLoseCanvasControl>();
     }
 
     // Update is called once per frame
@@ -24,17 +32,49 @@ public class RespawnControl : MonoBehaviour
     {
         if (player.isDead)
         {
-            FadeUI.FadeIn();
 
-            if (FadeUI.fadeInComplete)
+            if (winLoseCanvas.loseAlphaFull)
             {
-                player.transform.position = respawnPoint.position;
+                if (!itemsCleared)
+                {
+                    itemsCleared = true;
+
+                    foreach (InventoryItem item in inventoryBase.playerOwnedItems)
+                    {
+                        if (item.isMouseItem)
+                        {
+                            continue;
+                        }
+                        if (item.isEquipped)
+                        {
+                            CharacterPanelStatControl.OnItemRemove(item.item);
+
+                            item.usedEquipSlot.equippedItem = null;
+                            item.usedEquipSlot.isUsed = false;
+                        }
+                        foreach (InventorySlot slot in item.slotsUsed)
+                        {
+                            slot.isUsed = false;
+                            slot.storedItem = null;
+                        }
+                        Destroy(item.gameObject);
+                    }
+                    inventoryBase.playerOwnedItems.Clear();
+                }
+
+                //player.transform.position = respawnPoint.position;
+                player.nav.Warp(respawnPoint.position);
                 player.Revive();
+                itemsCleared = false;
             }
         }
         else
         {
-            FadeUI.FadeOut();
+            if (winLoseCanvas.gameWon)
+            {
+                string currentScene = SceneManager.GetActiveScene().name;
+                SceneManager.LoadSceneAsync(currentScene);
+            }
         }
     }
 }
