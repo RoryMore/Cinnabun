@@ -54,6 +54,8 @@ public class SimpleEnemy : EnemyScript
         enemyCooldown = Random.Range(5.5f, 6.5f);//6.0f;
         initiativeSpeed = 1.5f;
 
+        currentHP = maxHP / 2;
+
 
         //OLD AWAKE
 
@@ -82,9 +84,13 @@ public class SimpleEnemy : EnemyScript
 
     void Update()
     {
+
+
         
         if (!isDead)
         {
+            
+
             Turn();
 
             UpdateAllSkillCooldowns();
@@ -93,7 +99,7 @@ public class SimpleEnemy : EnemyScript
             //Choose what attack it want's to make this turn
             //Decide();
 
-            bool plzwork = CheckAttackers();
+            //bool plzwork = CheckAttackers();
 
             if (chosenSkill.currentlyCasting == false)
             {

@@ -32,11 +32,6 @@ public class InventoryBase : MonoBehaviour
 
     RectTransform baseRect;
 
-    // ITEMS FOR TEST SPAWNING
-    [Header("TESTING")]
-    public Item item1;
-    public Item item2;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -58,14 +53,6 @@ public class InventoryBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            AddItem(item1);
-        }
-        else if (Input.GetKeyDown(KeyCode.K))
-        {
-            AddItem(item2);
-        }
     }
 
     void CreateSlots()
