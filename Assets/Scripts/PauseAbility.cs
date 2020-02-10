@@ -108,7 +108,10 @@ public class PauseAbility : MonoBehaviour
     }
     public void ButtonPaused()
     {
-        states = GameStates.TIMESTOP;
+        if (states == GameStates.PLAY)
+        {
+            states = GameStates.TIMESTOP;
+        }
     }
 
    public void ButtonPlay()

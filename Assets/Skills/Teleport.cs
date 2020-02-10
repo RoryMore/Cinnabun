@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Teleport", order = 1)]
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Skills/Teleport", order = 1)]
 
 public class Teleport : SkillData
 {

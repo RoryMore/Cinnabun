@@ -12,8 +12,11 @@ public class SimpleEnemy : EnemyScript
     bool isAttacking = false;
 
     bool destinationReached;
+    bool isRanged;
 
     public List<EnemyScript> enemyForces;
+
+    PauseAbility pauseAbility;
 
     //VERT SLICE USE ONLY
     EnemyAttack attack; 
@@ -51,20 +54,28 @@ public class SimpleEnemy : EnemyScript
         enemyCooldown = Random.Range(5.5f, 6.5f);//6.0f;
         initiativeSpeed = 1.5f;
 
+        currentHP = maxHP / 2;
+
+
+        //OLD AWAKE
+
+        target = GameObject.Find("Player").transform;
+
+        player = target.GetComponent<Entity>();
+
+        pauseAbility = GameObject.Find("PauseMenuUI").GetComponent<PauseAbility>();
+
+
+        foreach (SkillData checkedSkill in skillList)
+        {
+            checkedSkill.Initialise();
+        }
 
     }
 
     void Awake()
     {
 
-        target = GameObject.Find("Player").transform;
-        
-        player = target.GetComponent<Entity>();
-
-        foreach (SkillData checkedSkill in skillList)
-        {
-            checkedSkill.Initialise();
-        }
         
 
     }
@@ -73,9 +84,13 @@ public class SimpleEnemy : EnemyScript
 
     void Update()
     {
+
+
         
         if (!isDead)
         {
+            
+
             Turn();
 
             UpdateAllSkillCooldowns();
@@ -84,7 +99,7 @@ public class SimpleEnemy : EnemyScript
             //Choose what attack it want's to make this turn
             //Decide();
 
-            bool plzwork = CheckAttackers();
+            //bool plzwork = CheckAttackers();
 
             if (chosenSkill.currentlyCasting == false)
             {
@@ -117,60 +132,74 @@ public class SimpleEnemy : EnemyScript
 
     public void Movement(SkillData chosenSkill)
     {
-        
-
-        if (Vector3.Distance(myEncounter.gameObject.transform.position, target.transform.position) > myEncounter.enemyManager.maxEncounterDistance * 0.5)
+        if (isAttacking != true)
         {
+
+            float distance = Vector3.Distance(myEncounter.gameObject.transform.position, target.transform.position);
+
+            if (isRanged = true || currentHP <= maxHP * 0.25f)
+            {
+                if (distance < attack.range * 0.5f)
+                {
+                    anim.SetBool("isWalking", true);
+                    nav.SetDestination(Vector3.MoveTowards(transform.position, player.transform.position, -nav.speed));
+
+                }
+            }
+
+            if (distance > myEncounter.enemyManager.maxEncounterDistance * 0.5)
+            {
 
                 //Return home
                 nav.SetDestination(myEncounter.gameObject.transform.position);
 
-        }
-
-        
-
-        else if (!isDead)
-        {
-            nav.SetDestination(target.transform.position);
-            //nav.SetDestination(destination);
-
-
-            //Later this should set to the range of the technique it chooses! For now, It is not important
-
-            if (Vector3.Distance(transform.position, player.gameObject.transform.position) < skillList[0].range * 0.5)
-            {
-
-
-                nav.SetDestination(transform.position);
-
-                FaceTarget(player.transform);
-                anim.SetBool("isWalking", false);
-
-
-                if (enemyCooldown <= 0)
-                {
-                    VertSliceAttack();
-                }
-
-
             }
+
+
+            else if (!isDead)
+            {
+                nav.SetDestination(target.transform.position);
+                //nav.SetDestination(destination);
+
+
+                //Later this should set to the range of the technique it chooses! For now, It is not important
+
+                if (Vector3.Distance(transform.position, player.gameObject.transform.position) < skillList[0].range * 0.5)
+                {
+
+
+                    nav.SetDestination(transform.position);
+
+                    FaceTarget(player.transform);
+                    anim.SetBool("isWalking", false);
+
+
+                    if (enemyCooldown <= 0)
+                    {
+                        VertSliceAttack();
+                    }
+
+
+                }
+                else
+                {
+                    //nav.SetDestination(destination);
+                    nav.SetDestination(player.transform.position);
+                    anim.SetBool("isWalking", true);
+
+
+
+
+
+                }
+            }
+
             else
             {
-                //nav.SetDestination(destination);
-                nav.SetDestination(player.transform.position);
-                anim.SetBool("isWalking", true);
-
-
-                
-
+                nav.enabled = false;
+                anim.SetBool("isWalking", false);
 
             }
-        }
-
-        else
-        {
-            nav.enabled = false;
-            anim.SetBool("isWalking", false);
 
         }
 
@@ -193,23 +222,23 @@ public class SimpleEnemy : EnemyScript
                 //Check if the cooldown is complete...
                 if (checkedSkill.timeBeenOnCooldown >= checkedSkill.cooldown)
                 {
-                  //Check if we are in range...
-                  if (checkedSkill.CheckInRange(transform.position, target.position))
-                  {
-                      //int choice = (int)Random.Range(0.0f, skillList.Count);
-
-                      //Check if damage of prior skill is greater than base damange
-                      if (chosenSkill.baseDamage <= checkedSkill.baseDamage)
-                      {
-                          chosenSkill = checkedSkill;
-
-                          //Reset the enemy turn
-                          enemyCooldown = 6;
-                          chosenSkill.currentlyCasting = true;
-                          anim.SetTrigger("attacking");
-
-                      }
-                  }
+                    //Check if we are in range...
+                    if (checkedSkill.CheckInRange(transform.position, target.position))
+                    {
+                        //int choice = (int)Random.Range(0.0f, skillList.Count);
+                    
+                        //Check if damage of prior skill is greater than base damange
+                        if (chosenSkill.baseDamage <= checkedSkill.baseDamage)
+                        {
+                            chosenSkill = checkedSkill;
+                    
+                            //Reset the enemy turn
+                            enemyCooldown = 6;
+                            chosenSkill.currentlyCasting = true;
+                            anim.SetTrigger("attacking");
+                    
+                        }
+                    }
                 }
             }
         }
@@ -288,18 +317,22 @@ public class SimpleEnemy : EnemyScript
     public void VertSliceAttack()
     {
 
-
             float distance = Vector3.Distance(transform.position, player.transform.position);
 
             //we are ready to make our attack, and we are in range. attack!
             if (distance <= attack.range && enemyCooldown <= 0.0f)
             {
                 isAttacking = true;
+                nav.enabled = false;
             }
             if (isAttacking == true)
             {
                 anim.SetTrigger("attacking");
+
+            if (pauseAbility.states != PauseAbility.GameStates.TIMESTOP)
+            {
                 timeSpentDoingAction += Time.fixedDeltaTime;
+            }
 
                 attack.DrawCastTimeRangeIndicator(timeSpentDoingAction);//drawcasttimerangeindicator(timespentdoingaction);
 
@@ -314,6 +347,7 @@ public class SimpleEnemy : EnemyScript
                     enemyCooldown = 6.0f;
                     timeSpentDoingAction = 0.0f;
                     anim.SetTrigger("attacking");
+                    nav.enabled = true;
                     isAttacking = false;
 
                 }
@@ -329,6 +363,9 @@ public class SimpleEnemy : EnemyScript
             {
                 //debug.log("");
             }
+       
+
+            
         
     }
 

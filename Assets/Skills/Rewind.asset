@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Rewind
   m_EditorClassIdentifier: 
   range: 50
-  cooldown: 1
-  timeBeenOnCooldown: 0.004257279
+  positiveRangeHeight: 0
+  negativeRangeHeight: 0
+  cooldown: 5
+  timeBeenOnCooldown: 0.019436099
   windUp: 1
   timeSpentOnWindUp: 0
   shape: 0
@@ -25,3 +27,4 @@ MonoBehaviour:
   rangeIndicator: {fileID: 0}
   indicatorMaterial: {fileID: 2100000, guid: 3c6c47126b1480347ac2f55825168a69, type: 2}
   currentlyCasting: 0
+  caster: {fileID: 0}

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Rewind", order = 1)]
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Skills/Rewind", order = 1)]
 
 
 public class Rewind : SkillData

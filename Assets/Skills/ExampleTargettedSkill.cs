@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/ExampleTargettedSkill", order = 1)]
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Skills/ExampleTargettedSkill", order = 1)]
 public class ExampleTargettedSkill : SkillData
 {
     Entity entityTarget1 = null;
