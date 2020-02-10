@@ -231,7 +231,7 @@ public class WeaponAttack : SkillData
             case UsedWeaponType.Unarmed:
                 entityTarget.TakeDamage(baseUnarmedDamage);
 
-                SoundManager.meleeSwing.Play();
+                //SoundManager.meleeSwing.Play();
                 break;
 
             case UsedWeaponType.Sword:
@@ -248,8 +248,9 @@ public class WeaponAttack : SkillData
 
                     if (weaponhit)
                     {
-                        SoundManager.meleeSwing.Play();
+                        SoundManager.meleeSwing.Play(0);
                     }
+                    SoundManager.meleeSwing.Play(0);
                     break;
                 }
 

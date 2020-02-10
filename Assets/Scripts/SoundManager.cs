@@ -24,6 +24,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource idleMusic3;
 
     [Header("Sound Effects")]
+    //public AudioSource meeleeSwing;
     [SerializeField]
     AudioSource meeleSwing;
     [HideInInspector] public static AudioSource meleeSwing;
@@ -49,6 +50,7 @@ public class SoundManager : MonoBehaviour
     EnemyManager enemyManager;
 
     public int random;
+    public int randomIdle;
     bool randomNumber = true;
     bool playBattleMusic = true;
     bool playIdleMusic = true;
@@ -76,7 +78,7 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         // Setting static sound effect variables to inspector set data
-        meleeSwing = meleeSwing;
+        meleeSwing = meeleSwing;
 
         leftFootstep = footStepLeft;
         rightFootstep = footstepRight;
@@ -109,22 +111,24 @@ public class SoundManager : MonoBehaviour
                     //battleAmbient.volume = Mathf.Lerp(battleAmbient.volume, 0.1f, Time.deltaTime / 0.5f);
                     if (playBattleMusic == true)
                     {
+                        //meeleeSwing.Play();
                         MuteAllAudio();
 
                         if (random == 0)
                         {
-                            battleMusic1.Play();
+                             battleMusic1.Play();
+                            
                           
                         }
                         else if (random == 1)
                         {
-                            battleMusic2.Play();
+                           battleMusic2.Play();
                           
                         }
                         if (random == 2)
                         {
-                            battleMusic3.Play();
-                           
+                           battleMusic3.Play();
+                          
                         }
                     }
                    // millionaire.volume = 0.0f;
@@ -147,11 +151,28 @@ public class SoundManager : MonoBehaviour
                 }
             case MusicState.IDLE:
                 {
+                    getRandomNumber();
+
                     if (playIdleMusic == true)
                     {
                         MuteAllAudio();
+                        if (random == 0)
+                        {
+                            //idleMusic1.volume
+                            idleMusic1.Play();
 
-                        idleMusic3.Play();
+
+                        }
+                        else if (random == 1)
+                        {
+                            idleMusic2.Play();
+
+                        }
+                        if (random == 2)
+                        {
+                            idleMusic3.Play();
+
+                        }
                         // battleAmbient.volume = Mathf.Lerp(battleAmbient.volume, 1.7f, Time.deltaTime / 0.2f);
                         // battleMusic.pitch = Mathf.Lerp(battleMusic.pitch, 0.8f, Time.deltaTime / 0.05f);
                         //battleMusic.volume = Mathf.Lerp(battleMusic.volume, 0.3f, Time.deltaTime / 0.1f);
