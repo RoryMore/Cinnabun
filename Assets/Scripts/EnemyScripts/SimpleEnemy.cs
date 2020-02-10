@@ -54,6 +54,8 @@ public class SimpleEnemy : EnemyScript
         enemyCooldown = Random.Range(5.5f, 6.5f);//6.0f;
         initiativeSpeed = 1.5f;
 
+        currentHP = maxHP / 2;
+
 
         //OLD AWAKE
 
