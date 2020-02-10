@@ -476,4 +476,9 @@ public class Player : Entity
         selectedSkill = weaponAttack;
         playerState = PlayerState.DOINGSKILL;
     }
+
+    void OnDrawGizmos()
+    {
+        
+    }
 }
