@@ -250,7 +250,7 @@ public class WeaponAttack : SkillData
                     {
                         SoundManager.meleeSwing.Play(0);
                     }
-                    SoundManager.meleeSwing.Play(0);
+                    //SoundManager.meleeSwing.Play(0);
                     break;
                 }
 

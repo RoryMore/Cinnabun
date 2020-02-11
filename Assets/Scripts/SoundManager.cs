@@ -90,7 +90,6 @@ public class SoundManager : MonoBehaviour
 
         CheckInBattle();
         checkState();
-        test();
 
         switch (state)
         {

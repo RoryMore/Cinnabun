@@ -128,10 +128,10 @@ public class SkillData : ScriptableObject
     public bool CheckRadialSkillHit(Vector3 hitCheckPosition, Transform zoneStart)
     {
         // Check if our target is within the height limits of our skill range
-        if (hitCheckPosition.y <= zoneStart.position.y + positiveRangeHeight)
-        {
-            if (hitCheckPosition.y >= zoneStart.position.y - negativeRangeHeight)
-            {
+        //if (hitCheckPosition.y <= zoneStart.position.y + positiveRangeHeight)
+        //{
+            //if (hitCheckPosition.y >= zoneStart.position.y - negativeRangeHeight)
+            //{
                 // Based on zoneStart (where the radial skill area is starting from with a given rotation) and the position we are checking
                 // Returns whether hitCheckPosition is within the arc area of the radial skill
                 // Note: zoneStart is equivelent to the zoneStart parameter used for the radial skill indicator
@@ -156,9 +156,9 @@ public class SkillData : ScriptableObject
                 {
                     return false;
                 }
-            }
-        }
-        return false;
+            //}
+        //}
+        //return false;
     }
 
     public void DrawRangeIndicator(Transform zoneStart, SkillShape shape)
