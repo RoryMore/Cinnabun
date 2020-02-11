@@ -479,6 +479,7 @@ public class Player : Entity
 
     void OnDrawGizmos()
     {
-        
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.forward * 2.0f);
     }
 }

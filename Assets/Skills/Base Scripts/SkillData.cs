@@ -135,14 +135,15 @@ public class SkillData : ScriptableObject
                 // Based on zoneStart (where the radial skill area is starting from with a given rotation) and the position we are checking
                 // Returns whether hitCheckPosition is within the arc area of the radial skill
                 // Note: zoneStart is equivelent to the zoneStart parameter used for the radial skill indicator
-                float forwardAngle = 90 - Mathf.Rad2Deg * Mathf.Atan2(zoneStart.forward.z, zoneStart.forward.x);
+                //float forwardAngle = 90 - Mathf.Rad2Deg * Mathf.Atan2(zoneStart.forward.z, zoneStart.forward.x);
 
                 float positionAngle = Vector3.Angle(hitCheckPosition - zoneStart.position, zoneStart.forward);
                 float distance = Vector3.Distance(hitCheckPosition, zoneStart.position);
+                float distance2d = Vector2.Distance(new Vector2(hitCheckPosition.x, hitCheckPosition.z), new Vector2(zoneStart.position.x, zoneStart.position.z));
 
                 if (positionAngle <= angleWidth)
                 {
-                    if (distance <= range)
+                    if (distance2d <= range)
                     {
                         return true;
                     }
