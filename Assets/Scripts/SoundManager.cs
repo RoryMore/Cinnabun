@@ -227,6 +227,7 @@ public class SoundManager : MonoBehaviour
 
         if (state != MusicState.IDLE)
         {
+            randomNumber = true;
             playIdleMusic = true;
         }
     }
@@ -262,18 +263,6 @@ public class SoundManager : MonoBehaviour
         randomNumber = false;
     }
 
-    void test()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            inBattle = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            inBattle = true;
-        }
-    }
 
     void MuteAllAudio()
     {
