@@ -140,7 +140,7 @@ public class SkillData : ScriptableObject
                 float positionAngle = Vector3.Angle(hitCheckPosition - zoneStart.position, zoneStart.forward);
                 float distance = Vector3.Distance(hitCheckPosition, zoneStart.position);
                 float distance2d = Vector2.Distance(new Vector2(hitCheckPosition.x, hitCheckPosition.z), new Vector2(zoneStart.position.x, zoneStart.position.z));
-
+                Debug.Log("PositionAngle = " + positionAngle);
                 if (positionAngle <= angleWidth)
                 {
                     if (distance2d <= range)
