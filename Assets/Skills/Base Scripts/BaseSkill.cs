@@ -58,6 +58,9 @@ public class BaseSkill : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Must be used in inherited skills Update method
+    /// </summary>
     protected void SkillDeltaUpdate()   // THIS FUNCTION SHOULD BE CALLED ONCE IN EACH OF THIS CLASS' CHILDS UPDATE
     {
         UpdateCastTime();
@@ -188,4 +191,85 @@ public class BaseSkill : MonoBehaviour
 
         return (area == pointA1 + pointA2 + pointA3 + PointA4);
     }
+
+    bool CheckInRange(Vector3 castPosition, Vector3 targetPosition)
+    {
+        // If the targets position is within the range of the skill,
+        // Return true
+        if (Vector3.Distance(castPosition, targetPosition) <= skillData.range)
+        {
+            return true;
+        }
+        // Targets position from caster position is out of skill range
+        return false;
+    }
+
+    protected void SelectTargetRay(Transform zoneStart, ref Entity entityToSet, bool checkInRange = false)
+    {
+        if (entityToSet == null)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (Physics.Raycast(ray, out RaycastHit hit, 400))
+                {
+                    Debug.Log("Skill is raycasting");
+                    if (checkInRange)
+                    {
+                        if (CheckInRange(zoneStart.position, hit.point))
+                        {
+                            Debug.Log("Entity reference set for skill");
+                            entityToSet = hit.collider.gameObject.GetComponent<Entity>();
+                        }
+                    }
+                    else
+                    {
+                        entityToSet = hit.collider.gameObject.GetComponent<Entity>();
+                    }
+                }
+            }
+        }
+    }
+
+    protected bool SelectTargetRay(Transform zoneStart, ref Vector3 pointToSet, bool checkInRange = false)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (Physics.Raycast(ray, out RaycastHit hit, 400))
+            {
+                if (checkInRange)
+                {
+                    if (CheckInRange(zoneStart.position, hit.point))
+                    {
+                        Debug.Log("Position reference set for skill");
+                        pointToSet = hit.point;
+                        return true;
+                    }
+                }
+                else
+                {
+                    pointToSet = hit.point;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    protected virtual void CastSkill(Transform zoneStart) { }
+
+    protected virtual void CastSkill(Transform zoneStart, List<Entity> entityList) { }
+
+    protected virtual void ActivateSkill() { }
+
+    protected virtual void ActivateSkill(Transform zoneStart, List<Entity> entityList) { }
+
+    protected virtual void ActivateSkill(List<Entity> entityList) { }
+
+    public virtual void TargetSkill(Transform zoneStart) { }
+
+    public virtual void TargetSkill(Transform zoneStart, List<Entity> entityList) { }
 }

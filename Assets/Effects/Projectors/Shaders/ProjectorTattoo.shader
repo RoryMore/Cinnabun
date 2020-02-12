@@ -62,6 +62,7 @@
 					{
 						tex = float4(0, 0, 0, 0);
 					}
+					// 'Shadow' creeps up objects infinitely. Add a cap to this, essentially reverse falloff
 
 					half4 res = lerp(half4(0, 0, 0, 1), tex, texF.a);
 

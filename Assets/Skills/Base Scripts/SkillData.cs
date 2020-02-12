@@ -173,7 +173,7 @@ public class SkillData : ScriptableObject
         rangeIndicator.DrawIndicator(zoneStart, angle, 0.0f, maxRange);
     }
 
-    public bool CheckInRange(Vector3 castPosition, Vector3 targetPosition)
+    public bool CheckInRange(Vector3 castPosition, Vector3 targetPosition)  // HANDLED IN NEW BASE SKILL
     {
         // If the targets position is within the range of the skill,
         // Return true
@@ -185,6 +185,7 @@ public class SkillData : ScriptableObject
         return false;
     }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     protected virtual void SelectTargetRay(Transform zoneStart, ref Entity entityToSet, bool checkInRange = false)
     {
         if (entityToSet == null)
@@ -213,6 +214,7 @@ public class SkillData : ScriptableObject
         }
     }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     protected bool SelectTargetRay(Transform zoneStart, ref Vector3 pointToSet, bool checkInRange = false)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -240,17 +242,24 @@ public class SkillData : ScriptableObject
         return false;
     }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     protected virtual void CastSkill(Transform zoneStart) { }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     protected virtual void CastSkill(Transform zoneStart, List<Entity> entityList) { }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     protected virtual void ActivateSkill() { }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     protected virtual void ActivateSkill(Transform zoneStart, List<Entity> entityList) { }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     protected virtual void ActivateSkill(List<Entity> entityList) { }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     public virtual void TargetSkill(Transform zoneStart) { }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     public virtual void TargetSkill(Transform zoneStart, List<Entity> entityList) { }
 }
