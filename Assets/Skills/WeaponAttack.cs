@@ -52,6 +52,7 @@ public class WeaponAttack : SkillData
                 {
                     rangeIndicator.Init(SkillShape.RADIAL, 360.0f);
                     oldWeapon = usedWeapon;
+                    range = unarmedRange;
                 }
                 if (entityTarget == null)
                 {
@@ -86,6 +87,7 @@ public class WeaponAttack : SkillData
                 {
                     rangeIndicator.Init(SkillShape.RADIAL, angleWidth);
                     oldWeapon = usedWeapon;
+                    range = swordRange;
                 }
                 if (!attackAreaChosen)
                 {
@@ -114,6 +116,7 @@ public class WeaponAttack : SkillData
                 {
                     rangeIndicator.Init(SkillShape.LINE, lineWidth);
                     oldWeapon = usedWeapon;
+                    range = staffRange;
                 }
                 if (!attackAreaChosen)
                 {
@@ -142,6 +145,7 @@ public class WeaponAttack : SkillData
                 {
                     rangeIndicator.Init(SkillShape.RADIAL, 360.0f);
                     oldWeapon = usedWeapon;
+                    range = bowRange;
                 }
                 if (entityTarget == null)
                 {
@@ -216,8 +220,9 @@ public class WeaponAttack : SkillData
         // When the skill can be activated
         if (timeSpentOnWindUp >= windUp)
         {
-            currentlyCasting = false;
+            
             ActivateSkill(zoneStart, entityList);
+            currentlyCasting = false;
             timeSpentOnWindUp = 0.0f;
         }
     }
