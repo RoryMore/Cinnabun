@@ -366,6 +366,8 @@ public class Entity : MonoBehaviour
         currentEncounter = encounter;
     }
 
+    //Rewind Features and Functions
+
     public void RecordRewind()
     {
         RewindPoint temp;
@@ -403,6 +405,8 @@ public class Entity : MonoBehaviour
         Debug.Log("List clear!");
         rewindPoints.Clear();
     }
+
+    //End of Rewind Features
 
     public void ParticleExplosion()
     {

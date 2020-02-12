@@ -5,8 +5,17 @@ using UnityEngine.AI;
 
 public class SimpleEnemy : EnemyScript
 {
+    // TODO:
+    // Audio Cues when attacking and hit.
+    // partics 
+    // Frensel Shader
 
-   
+    // Confirm Behaviour Logic
+
+
+
+    
+
     Transform target;
     Entity player; //All intents and purposes, same as 
     bool isAttacking = false;
@@ -35,7 +44,7 @@ public class SimpleEnemy : EnemyScript
 
 
         nav = GetComponent<NavMeshAgent>();
-
+       
         //VERT ONLY CONTENT
         attack = GetComponent<EnemyAttack>();
         coneRangeIndicator = GetComponent<ConeRangeIndicator>();
@@ -46,6 +55,7 @@ public class SimpleEnemy : EnemyScript
         chosenSkill = new SkillData();
         chosenSkill.baseDamage = 0;
         chosenSkill.range = 1;
+
 
         chosenSkill.currentlyCasting = false;
         destinationReached = false;
@@ -142,6 +152,7 @@ public class SimpleEnemy : EnemyScript
                 if (distance < attack.range * 0.5f)
                 {
                     anim.SetBool("isWalking", true);
+                    //Footstep noises
                     nav.SetDestination(Vector3.MoveTowards(transform.position, player.transform.position, -nav.speed));
 
                 }
@@ -186,7 +197,7 @@ public class SimpleEnemy : EnemyScript
                     //nav.SetDestination(destination);
                     nav.SetDestination(player.transform.position);
                     anim.SetBool("isWalking", true);
-
+                    //Footstep noises
 
 
 
@@ -223,12 +234,12 @@ public class SimpleEnemy : EnemyScript
                 if (checkedSkill.timeBeenOnCooldown >= checkedSkill.cooldown)
                 {
                     //Check if we are in range...
-                    if (checkedSkill.CheckInRange(transform.position, target.position))
+                    if (checkedSkill.CheckInRange(transform.position, target.position))//NIK___removed
                     {
                         //int choice = (int)Random.Range(0.0f, skillList.Count);
                     
                         //Check if damage of prior skill is greater than base damange
-                        if (chosenSkill.baseDamage <= checkedSkill.baseDamage)
+                        if (chosenSkill.baseDamage <= checkedSkill.baseDamage)//NIK___changed to effectively
                         {
                             chosenSkill = checkedSkill;
                     
@@ -302,12 +313,14 @@ public class SimpleEnemy : EnemyScript
     {
         base.TakeDamage(amount);
         anim.SetTrigger("getHit");
+        //Play "Hit" noise
     }
 
     public override void Death()
     {
         base.Death();
         anim.SetBool("isDead", true);
+        //Play "Death" noise
     }
 
 
@@ -334,7 +347,7 @@ public class SimpleEnemy : EnemyScript
                 timeSpentDoingAction += Time.fixedDeltaTime;
             }
 
-                attack.DrawCastTimeRangeIndicator(timeSpentDoingAction);//drawcasttimerangeindicator(timespentdoingaction);
+                attack.DrawCastTimeRangeIndicator(timeSpentDoingAction); //drawcasttimerangeindicator(timespentdoingaction);
 
                 if (timeSpentDoingAction >= attack.actionSpeed)
                 {
@@ -349,6 +362,7 @@ public class SimpleEnemy : EnemyScript
                     anim.SetTrigger("attacking");
                     nav.enabled = true;
                     isAttacking = false;
+                    //Play "Attack" noise
 
                 }
             }
@@ -369,7 +383,7 @@ public class SimpleEnemy : EnemyScript
         
     }
 
-
+    
 
 }
 
