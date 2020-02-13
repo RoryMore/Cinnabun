@@ -1653,6 +1653,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 303211820}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &489009117 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 9030375006425835809, guid: b715985195ec5a14a8289d3661420dd6,
+    type: 3}
+  m_PrefabInstance: {fileID: 804627692}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &489009118 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6413221892157739107, guid: b715985195ec5a14a8289d3661420dd6,
+    type: 3}
+  m_PrefabInstance: {fileID: 804627692}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &489009119 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 269856513684845056, guid: b715985195ec5a14a8289d3661420dd6,
+    type: 3}
+  m_PrefabInstance: {fileID: 804627692}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &493147256 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2497680817235624546, guid: 54a525bc6b3014a4098cf3b0dc079891,
@@ -2227,6 +2245,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4577219032212093784, guid: b715985195ec5a14a8289d3661420dd6,
         type: 3}
+      propertyPath: IdleMusic.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4577219032212093784, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
       propertyPath: state
       value: 0
       objectReference: {fileID: 0}
@@ -2255,6 +2278,21 @@ PrefabInstance:
       propertyPath: BattleMusic.Array.data[2]
       value: 
       objectReference: {fileID: 1874776873}
+    - target: {fileID: 4577219032212093784, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: IdleMusic.Array.data[0]
+      value: 
+      objectReference: {fileID: 489009119}
+    - target: {fileID: 4577219032212093784, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: IdleMusic.Array.data[1]
+      value: 
+      objectReference: {fileID: 489009118}
+    - target: {fileID: 4577219032212093784, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: IdleMusic.Array.data[2]
+      value: 
+      objectReference: {fileID: 489009117}
     - target: {fileID: 4577219032212093785, guid: b715985195ec5a14a8289d3661420dd6,
         type: 3}
       propertyPath: m_LocalPosition.x
