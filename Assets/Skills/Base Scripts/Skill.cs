@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Skill : BaseSkill
 {
-
+    
     protected override void Initialise()
     {
         base.Initialise();

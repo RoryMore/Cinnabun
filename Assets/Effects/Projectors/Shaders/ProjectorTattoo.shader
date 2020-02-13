@@ -3,6 +3,9 @@
 		_ShadowTex("Cookie", 2D) = "white" {}
 		// Added Falloff tex
 		_FalloffTex("FallOff", 2D) = "white" {}
+		_FillTex("CookieFill", 2D) = "white" {}
+		_Progress("Progress", Range(0.0,1.0)) = 0.0
+		_SkillType("SkillType", Int) = 0
 	}
 
 		Subshader{
@@ -37,10 +40,15 @@
 				sampler2D _ShadowTex;
 				// Added _FalloffTex;
 				sampler2D _FalloffTex;
+				sampler2D _FillTex;
 				float4x4 unity_Projector;
 				// Added unity_ProjectorClip
 				float4x4 unity_ProjectorClip;
 				float4 _Color;
+				float _Progress;
+				int _SkillType;
+
+				const float pi = 3.141592653589793238462;
 
 				v2f vert(appdata_tan v)
 				{
@@ -56,6 +64,8 @@
 				{
 					half4 tex = tex2Dproj(_ShadowTex, i.uv);
 					half4 texF = tex2Dproj(_FalloffTex, i.uvFalloff);
+					half4 texPF = tex2Dproj(_FillTex, i.uv);
+
 					tex.a = 1 - tex.a;
 					//tex.a = 1 - texF.a;
 					if (i.uv.w < 0)
@@ -64,8 +74,42 @@
 					}
 					// 'Shadow' creeps up objects infinitely. Add a cap to this, essentially reverse falloff
 
-					half4 res = lerp(half4(0, 0, 0, 1), tex, texF.a);
+					if (_SkillType == 1)
+					{
+						//=== LINEAR FILL FROM i.uv.y=0 TO i.uv.y=1 =====================
+						// Calculate Texture Fill Offset
+						texPF.a *= i.uv.y < _Progress;
 
+						if (texPF.a == 1)
+						{
+							tex.rgb = texPF.rgb;
+						}
+						// -------------
+						// ============================================================
+					}
+					else if (_SkillType == 2)
+					{
+						//=== CIRCULAR FILL FROM INSIDE TO OUT METHOD ========
+						// Find distance between i.uv point and 0.5 (centre of image/tex)
+						float2 uvPoint;
+						uvPoint.x = i.uv.x;
+						uvPoint.y = i.uv.y;
+						float2 centre;
+						centre.x = 0.5f;
+						centre.y = 0.5f;
+
+						// If distance is less than or equal to _Progress/radius, set tex.rgb to texPF.rgb
+						float d = distance(uvPoint, centre);
+						if (d < _Progress)
+						{
+							tex.rgb = texPF.rgb;
+						}
+						//====================================================
+					}
+
+					half4 res = lerp(half4(0, 0, 0, 1), tex, texF.a);
+					
+					//res = (res - (texPF * 0.5));
 					
 					//return tex;
 					return res;
