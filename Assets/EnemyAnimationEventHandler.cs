@@ -18,7 +18,7 @@ public class EnemyAnimationEventHandler : MonoBehaviour
     {
         
     }
-    void Enemy1Step()
+    void EnemyStep()
     {
         soundManager.EnemyStepSound();
        
