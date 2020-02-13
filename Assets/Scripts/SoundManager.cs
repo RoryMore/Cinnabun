@@ -111,10 +111,25 @@ public class SoundManager : MonoBehaviour
                     {
                         //MuteAllAudio();
                         BattleMusicVolumeUp();
-                        Timeholder = Time.realtimeSinceStartup;
-                        timer = 2;
+                        //Timeholder = Time.realtimeSinceStartup;
+                        timer = 5;
+                        songs = 0;
 
-                        BattleMusic[Random.Range(0, BattleMusic.Length)].Play();
+
+                        for (int i = 0; i < BattleMusic.Length; i++)
+                        {
+                            if (BattleMusic[i].isPlaying)
+                            {
+                                songs++;
+
+                            }
+                        }
+
+                        if (songs == 0)
+                        {
+                            BattleMusic[Random.Range(0, BattleMusic.Length)].Play();
+                        }
+                        
                                 
                     }
 
@@ -122,7 +137,7 @@ public class SoundManager : MonoBehaviour
 
                     for (int i = 0; i < BattleMusic.Length; i++)
                     {
-                        if (!IdleMusic[i].isPlaying)
+                        if (!BattleMusic[i].isPlaying)
                         {
                             songs++;
 
@@ -152,7 +167,7 @@ public class SoundManager : MonoBehaviour
 
                     if (inBattle == false)
                     {
-                        MuteBattle();
+                         MuteBattle();
                     }
 
                     break;
@@ -164,11 +179,25 @@ public class SoundManager : MonoBehaviour
                     if (playIdleMusic == true)
                     {
                         // MuteAllAudio();
-                        timer = 2;
-                        Timeholder = Time.realtimeSinceStartup;
+                        timer = 5;
+                        songs = 0;
+                        //Timeholder = Time.realtimeSinceStartup;
                         IdleMusicVolumeUp();
 
-                        IdleMusic[Random.Range(0, IdleMusic.Length)].Play();
+                        for (int i = 0; i < IdleMusic.Length; i++)
+                        {
+                            if (IdleMusic[i].isPlaying)
+                            {
+                                songs++;
+
+                            }
+                        }
+
+                        if (songs == 0)
+                        {
+
+                            IdleMusic[Random.Range(0, IdleMusic.Length)].Play();
+                        }
                     }
 
                     songs = 0;
@@ -217,7 +246,7 @@ public class SoundManager : MonoBehaviour
     {
         for (int i = 0; i < BattleMusic.Length; i++)
         {
-            BattleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, 0.2f, Time.deltaTime / 0.3f);
+            BattleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, 0.2f, Time.unscaledDeltaTime / 0.2f);
         }
     }
 
@@ -225,7 +254,7 @@ public class SoundManager : MonoBehaviour
     {
         for (int i = 0; i < IdleMusic.Length; i++)
         {
-            IdleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, 0.2f, Time.deltaTime / 0.3f);
+            IdleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, 0.2f, Time.unscaledDeltaTime / 0.2f);
         }
     }
 
@@ -233,7 +262,7 @@ public class SoundManager : MonoBehaviour
     {
         for (int i = 0; i < BattleMusic.Length; i++)
         {
-            BattleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, setVolume, Time.deltaTime / 0.8f); 
+            BattleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, setVolume, Time.unscaledDeltaTime / 2f); 
         }
     }
 
@@ -241,7 +270,7 @@ public class SoundManager : MonoBehaviour
     {
         for (int i = 0; i < IdleMusic.Length; i++)
         {
-            IdleMusic[i].volume = Mathf.Lerp(IdleMusic[i].volume, setVolume, Time.deltaTime / 0.3f); 
+            IdleMusic[i].volume = Mathf.Lerp(IdleMusic[i].volume, setVolume, Time.unscaledDeltaTime / 2f); 
         }
     }
 
@@ -249,7 +278,7 @@ public class SoundManager : MonoBehaviour
     {
         for (int i = 0; i < BattleMusic.Length; i++)
         {
-            BattleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, 0.0f, Time.fixedDeltaTime / 0.3f);
+            BattleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, 0.0f, Time.unscaledDeltaTime / 1f);
         }
     }
 
@@ -257,7 +286,7 @@ public class SoundManager : MonoBehaviour
     {
         for (int i = 0; i < IdleMusic.Length; i++)
         {
-            IdleMusic[i].volume = Mathf.Lerp(IdleMusic[i].volume, 0.0f, Time.fixedDeltaTime / 0.3f);
+            IdleMusic[i].volume = Mathf.Lerp(IdleMusic[i].volume, 0.0f, Time.unscaledDeltaTime / 1f);
         }
     }
 
@@ -326,10 +355,10 @@ public class SoundManager : MonoBehaviour
 
         if (timer > -1)
         {
-            float timeNow = Time.realtimeSinceStartup;
+           
 
-            timeNow -= Timeholder;
-            timer -= timeNow;
+         
+            timer -= Time.unscaledDeltaTime;
             if (timer < 0)
             {
                 if (state == MusicState.IDLE)
