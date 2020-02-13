@@ -5,7 +5,7 @@
 		_FalloffTex("FallOff", 2D) = "white" {}
 		_FillTex("CookieFill", 2D) = "white" {}
 		_Progress("Progress", Range(0.0,1.0)) = 0.0
-		_SkillType("SkillType", Int) = 0
+		_SkillType("SkillType", Int) = 0	// 1 = LINEAR "BASE2END" | 2 = CIRCULAR "IN2OUT"
 	}
 
 		Subshader{
@@ -74,47 +74,48 @@
 					}
 					// 'Shadow' creeps up objects infinitely. Add a cap to this, essentially reverse falloff
 
+					//=== CIRCULAR FILL FROM INSIDE TO OUT METHOD ========
+					float2 uvPoint;
+					uvPoint.x = i.uv.x;
+					uvPoint.y = i.uv.y;
+					float2 centre;
+
 					if (_SkillType == 1)
 					{
-						//=== LINEAR FILL FROM i.uv.y=0 TO i.uv.y=1 =====================
-						// Calculate Texture Fill Offset
-						texPF.a *= i.uv.y < _Progress;
-
-						if (texPF.a == 1)
-						{
-							tex.rgb = texPF.rgb;
-						}
-						// -------------
-						// ============================================================
+						// Centre is set to be at the end of the image, where the unit should be casting from
+						centre.x = 0.5f;
+						centre.y = 0.0f;
 					}
 					else if (_SkillType == 2)
 					{
-						//=== CIRCULAR FILL FROM INSIDE TO OUT METHOD ========
-						// Find distance between i.uv point and 0.5 (centre of image/tex)
-						float2 uvPoint;
-						uvPoint.x = i.uv.x;
-						uvPoint.y = i.uv.y;
-						float2 centre;
+						// Centre is set to be in the middle of the image so the fill expands outward
 						centre.x = 0.5f;
 						centre.y = 0.5f;
-
-						// If distance is less than or equal to _Progress/radius, set tex.rgb to texPF.rgb
-						float d = distance(uvPoint, centre);
-						if (d < _Progress)
-						{
-							tex.rgb = texPF.rgb;
-						}
-						//====================================================
+					}
+					// If distance is less than or equal to _Progress/radius, set tex.rgb to texPF.rgb
+					float d = distance(uvPoint, centre);
+					if (d < _Progress)
+					{
+						tex.rgb = texPF.rgb;
 					}
 
 					half4 res = lerp(half4(0, 0, 0, 1), tex, texF.a);
-					
-					//res = (res - (texPF * 0.5));
-					
-					//return tex;
+
 					return res;
 				}
 				ENDCG
 			}
+
 	}
+
 }
+//=== LINEAR FILL FROM i.uv.y=0 TO i.uv.y=1 =====================
+						// Calculate Texture Fill Offset
+						//texPF.a *= i.uv.y < _Progress;
+
+						//if (texPF.a == 1)
+						//{
+							//tex.rgb = texPF.rgb;
+						//}
+						// -------------
+						// ============================================================

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BaseSkill : MonoBehaviour
 {
+    [SerializeField]
+    protected Projector projector;
+    Material material;
+
     public SkillData skillData;
 
     [HideInInspector]
@@ -13,7 +17,7 @@ public class BaseSkill : MonoBehaviour
     [HideInInspector]
     public bool currentlyCasting = false;
 
-    [Header("SET CASTER SELF TO PARENT OBJECT. E.G: Player object is set to this on the players skills")]
+    [Tooltip("SET CASTER SELF TO PARENT OBJECT. \nE.G: Player object is set to this on the players skills")]
     public Entity casterSelf;
 
     // Start is called before the first frame update
@@ -30,6 +34,9 @@ public class BaseSkill : MonoBehaviour
             timeSpentOnWindUp = 0.0f;
             currentlyCasting = false;
         }
+        material = new Material(Shader.Find("Projector/Tattoo"));
+
+        projector.material = material;
     }
 
     // Update is called once per frame
@@ -41,10 +48,12 @@ public class BaseSkill : MonoBehaviour
     void UpdateCastTime()
     {
         // If we are currently casting
-        if (currentlyCasting)
+        if (skillData.currentlyCasting)
         {
             // Increment the delta value for time spent casting ability
             timeSpentOnWindUp += Time.deltaTime;
+
+            projector.material.SetFloat("_Progress", (skillData.timeSpentOnWindUp / skillData.windUp));
         }
     }
 
@@ -73,30 +82,31 @@ public class BaseSkill : MonoBehaviour
     /// <param name="hitCheckPosition">Given Vector3 to check if it's within bounds</param>
     /// <param name="minLength"></param>
     /// <param name="maxLength"></param>
-    /// <param name="width"></param>
+    /// <param name="farWidth"></param>
     /// <returns>Returns TRUE if given Vector3 is within bounds and can can be damaged</returns>
-    protected bool CheckLineSkillHit(Vector3 hitCheckPosition, float minLength, float maxLength, float width)
+    protected bool CheckLineSkillHit(Vector3 hitCheckPosition, float minLength, float maxLength, float nearWidth, float farWidth)
     {
         float angleLookAt = GetForwardAngle(casterSelf.transform);
 
-        float halfWidth = width * 0.5f;
+        float halfFarWidth = farWidth * 0.5f;
+        float halfNearWidth = nearWidth * 0.5f;
         float effectiveLength = maxLength - minLength;
 
         Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
 
         posCurrentMin = casterSelf.transform.position;
-        posCurrentMin.z -= halfWidth;
+        posCurrentMin.z -= halfNearWidth;
 
         posCurrentMax = casterSelf.transform.position;
-        posCurrentMax.z -= halfWidth;
+        posCurrentMax.z -= halfFarWidth;
 
         posCurrentMax.x += effectiveLength;
 
         posNextMin = casterSelf.transform.position;
-        posNextMin.z += halfWidth;
+        posNextMin.z += halfNearWidth;
 
         posNextMax = casterSelf.transform.position;
-        posNextMax.z += halfWidth;
+        posNextMax.z += halfFarWidth;
 
         posNextMax.x += effectiveLength;
 
@@ -272,4 +282,59 @@ public class BaseSkill : MonoBehaviour
     public virtual void TargetSkill(Transform zoneStart) { }
 
     public virtual void TargetSkill(Transform zoneStart, List<Entity> entityList) { }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+
+        float farWidth = 4.0f;
+        float nearWidth = 2.0f;
+        float maxLength = 6.0f;
+        float minLength = 0.0f;
+
+        float angleLookAt = GetForwardAngle(casterSelf.transform);
+
+        float halfFarWidth = farWidth * 0.5f;
+        float halfNearWidth = nearWidth * 0.5f;
+        float effectiveLength = maxLength - minLength;
+
+        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
+
+        posCurrentMin = casterSelf.transform.position;
+        posCurrentMin.z -= halfNearWidth;
+
+        posCurrentMax = casterSelf.transform.position;
+        posCurrentMax.z -= halfFarWidth;
+
+        posCurrentMax.x += effectiveLength;
+
+        posNextMin = casterSelf.transform.position;
+        posNextMin.z += halfNearWidth;
+
+        posNextMax = casterSelf.transform.position;
+        posNextMax.z += halfFarWidth;
+
+        posNextMax.x += effectiveLength;
+
+        Vector3[] hitCheckBounds = new Vector3[4];
+
+        hitCheckBounds[0] = posCurrentMin;
+        hitCheckBounds[1] = posCurrentMax;
+        hitCheckBounds[2] = posNextMax;
+        hitCheckBounds[3] = posNextMin;
+
+        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
+
+        for (int i = 0; i < hitCheckBounds.Length; i++)
+        {
+            hitCheckBounds[i] -= casterSelf.transform.position;
+            hitCheckBounds[i] = qAngle * hitCheckBounds[i];
+            hitCheckBounds[i] += casterSelf.transform.position;
+        }
+
+        Gizmos.DrawLine(hitCheckBounds[0], hitCheckBounds[1]);
+        Gizmos.DrawLine(hitCheckBounds[1], hitCheckBounds[2]);
+        Gizmos.DrawLine(hitCheckBounds[2], hitCheckBounds[3]);
+        Gizmos.DrawLine(hitCheckBounds[3], hitCheckBounds[0]);
+    }
 }

@@ -40,11 +40,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FalloffTex:
-        m_Texture: {fileID: 2800000, guid: d036f7aa0d6cecf4792cb9466d45b877, type: 3}
+        m_Texture: {fileID: 2800000, guid: 02b617ebd76896343ab82ffbd007ad50, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FillTex:
-        m_Texture: {fileID: 2800000, guid: 1df24de319f6a5543beb0559d129cc54, type: 3}
+        m_Texture: {fileID: 2800000, guid: a892322cead685e4f963da4d8f4efc0f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -64,7 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadowTex:
-        m_Texture: {fileID: 2800000, guid: 4f5d76dd2231dc44ca5ec8c6860df902, type: 3}
+        m_Texture: {fileID: 2800000, guid: 288685841b67e764d9a398b0b276f02c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -82,7 +82,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Power: 1
-    - _Progress: 0
+    - _Progress: 0.9951176
     - _ProgressY: 0
     - _SkillType: 1
     - _SmoothnessTextureChannel: 0
