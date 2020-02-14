@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Skills/DelayedBlast", order = 1)]
+//[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Skills/DelayedBlast", order = 1)]
 
 public class DelayedBlast : SkillData
 {
@@ -26,7 +26,7 @@ public class DelayedBlast : SkillData
 
             // We are drawing the range indicator here so the player knows if what they are clicking is in range
             // If being in range is relevant
-            DrawRangeIndicator(zoneStart, shape);
+            //DrawRangeIndicator(zoneStart, shape);
 
             // Select our entity target
             SelectTargetRay(zoneStart, ref entityTarget1, true);
@@ -46,10 +46,10 @@ public class DelayedBlast : SkillData
     {
         currentlyCasting = true;
 
-        DrawRangeIndicator(zoneStart, shape);
+        //DrawRangeIndicator(zoneStart, shape);
 
         float drawPercent = (timeSpentOnWindUp / windUp);
-        rangeIndicator.DrawCastTimeIndicator(zoneStart, angleWidth, 0.0f, range, drawPercent);
+        rangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, maxRange, drawPercent);
 
         // Increment the time spent winding up the skill
         timeSpentOnWindUp += Time.deltaTime;
@@ -103,7 +103,7 @@ public class DelayedBlast : SkillData
                             //}
                             if (Vector3.Distance(enemy.transform.position, entityTarget1.transform.position) < explosionRadius)
                             {
-                                enemy.TakeDamage(baseDamage);
+                                enemy.TakeDamage(baseMagnitude);
 
                                 // Call function that activates explosion particles
                                 enemy.ParticleExplosion();

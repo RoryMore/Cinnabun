@@ -12,25 +12,31 @@ public class SkillData : ScriptableObject
         MAGICAL
     }
 
-    public enum SkillShape  // Used to specify what hit detection will be used
-    {
-        RADIAL,
-        LINE
-    }
+    
 
     public enum SkillList
     {
         TELEPORT,
         DELAYEDBLAST,
         REWIND,
-        NotAppliccable
+        WEAPONATTACK
     }
 
-    [Tooltip("The maximum distance the skill can be used at from the casters position")]
-    public float range;
+    [Header("Ranges")]
+    [Tooltip("The maximum distance the skill can be used at from the casters position. \nFor skills that want a constant radius sized indicator that is moveable, maxRange can be used as the radius of circle indicator")]
+    public float maxRange;
+    [Tooltip("The minimum distance the skill can have an effect from the casters position. \nFor skills that want a constant radius sized indicator that is moveable, minRange can be used as the maximum distance the skill can be cast from the caster")]
+    public float minRange;
+    [Tooltip("The width of a rectangular shaped skill at the maxRange")]
+    public float farWidth;
+    [Tooltip("The width of a rectangular shaped skill at the minRange")]
+    public float nearWidth;
 
     [Tooltip("The maximum height difference allowed between units that makes it possible to be hit or not")]
     public float verticalRange;
+
+    [Tooltip("The Width a line Skill will have, or the Angle a Radial skill will use")]
+    public float angle;
 
     [Tooltip("The time (in seconds) that needs to pass before the player is able to cast this skill again")]
     public float cooldown;
@@ -42,22 +48,19 @@ public class SkillData : ScriptableObject
     [HideInInspector]
     public float timeSpentOnWindUp = 0; // REMOVE FOR CHANGE - IS IN NEW BASE SKILL
 
-    [Tooltip("The 'shape' that this skill will be.\n Radial: Uses Angle and Range values to determine the area from a point it will affect.\n Line: Uses Width and Range values to determine the area from a point it will affect.")]
-    public SkillShape shape;    // TENTATIVELY KEPT - TO KNOW WHAT SORT OF HIT DETECTION WE REQUIRE FOR CHECKING HITS
-
-    [Tooltip("The Width a line Skill will have, or the Angle a Radial skill will use")]
-    public float angleWidth;    // TENTATIVELY KEPT - EASY USE HERE (DATA DRIVEN DESIGN)
-                                // POSSIBLY GOING TO BE REMOVED AND EACH SKILL SHOULD SPECIFY WHAT LENGTHS/WIDTHS/ANGLES THEY REQIURE
+    
 
     [Tooltip("Which skill this actually is")]
     public SkillList skill; // TENTATIVELY KEPT - USEFUL FOR KNOWING WHICH SKILL IS BEING CAST
 
+    
+
     [Header("Damage Variables")]
-    [Tooltip("The base amount before any additional calculations for how much damage this skill may deal")]
-    public int baseDamage;
+    [Tooltip("The base amount before any additional calculations for how much damage/heal/etc. this skill may deal")]
+    public int baseMagnitude;
 
     [Tooltip("Whether this skill deals Physical or Magical damage")]
-    public DamageType damageType;
+    public DamageType damageType;   
 
     [Header("Indicator")]
     public RangeIndicator rangeIndicator = null;    // REMOVE FOR CHANGE - INDICATORS ARE PROJECTORS
@@ -70,22 +73,24 @@ public class SkillData : ScriptableObject
     [HideInInspector]
     public Entity caster = null;    // REMOVE FOR CHANGE - ADD TO SKILL SCRIPTS THAT REQUIRE IT
 
+    // NEW BASE SKILL HAS ITS OWN INITIALISE
     public virtual void Initialise()
     {
-        rangeIndicator = new RangeIndicator();
-        rangeIndicator.Init(shape, angleWidth);
-        rangeIndicator.indicatorMaterial = indicatorMaterial;
+        //rangeIndicator = new RangeIndicator();
+        //rangeIndicator.Init(shape, angle);
+        //rangeIndicator.indicatorMaterial = indicatorMaterial;
 
         timeBeenOnCooldown = cooldown;
         timeSpentOnWindUp = 0.0f;
     }
 
+    // NEW BASE SKILL HAS ITS OWN INITIALISE
     // This virtual method is only used by the players WeaponAttack skill to make sure they can't punch themselves
     public virtual void Initialise(Entity ownCaster)
     {
-        rangeIndicator = new RangeIndicator();
-        rangeIndicator.Init(shape, angleWidth);
-        rangeIndicator.indicatorMaterial = indicatorMaterial;
+        //rangeIndicator = new RangeIndicator();
+        //rangeIndicator.Init(shape, angle);
+        //rangeIndicator.indicatorMaterial = indicatorMaterial;
 
         caster = ownCaster;
 
@@ -130,9 +135,9 @@ public class SkillData : ScriptableObject
         float distance = Vector3.Distance(hitCheckPosition, zoneStart.position);
         //Debug.Log("Target distance: " + distance);
         //Debug.Log("PositionAngle = " + positionAngle);
-        if (positionAngle <= angleWidth)
+        if (positionAngle <= angle)
         {
-            if (distance <= range)
+            if (distance <= maxRange)
             {
                 Debug.Log("Radial Skill Hit!");
                 return true;
@@ -150,9 +155,9 @@ public class SkillData : ScriptableObject
         }
     }
 
-    public void DrawRangeIndicator(Transform zoneStart, SkillShape shape)
+    /*public void DrawRangeIndicator(Transform zoneStart, SkillShape shape)
     {
-        rangeIndicator.DrawIndicator(zoneStart, angleWidth, 0.0f, range);
+        rangeIndicator.DrawIndicator(zoneStart, angle, 0.0f, maxRange);
         //switch (shape)
         //{
         //    case SkillShape.LINE:
@@ -171,13 +176,13 @@ public class SkillData : ScriptableObject
     protected void DrawRangeIndicator(Transform zoneStart, SkillShape shape, float maxRange, float angle)
     {
         rangeIndicator.DrawIndicator(zoneStart, angle, 0.0f, maxRange);
-    }
+    }*/
 
     public bool CheckInRange(Vector3 castPosition, Vector3 targetPosition)  // HANDLED IN NEW BASE SKILL
     {
         // If the targets position is within the range of the skill,
         // Return true
-        if (Vector3.Distance(castPosition, targetPosition) <= range)
+        if (Vector3.Distance(castPosition, targetPosition) <= maxRange)
         {
             return true;
         }

@@ -5,7 +5,7 @@
 		_FalloffTex("FallOff", 2D) = "white" {}
 		_FillTex("CookieFill", 2D) = "white" {}
 		_Progress("Progress", Range(0.0,1.0)) = 0.0
-		_SkillType("SkillType", Int) = 0	// 1 = LINEAR "BASE2END" | 2 = CIRCULAR "IN2OUT"
+		_SkillType("SkillType", Int) = 0	// 0 = LINEAR "BASE2END" | 1 = CIRCULAR "IN2OUT"
 	}
 
 		Subshader{
@@ -72,7 +72,6 @@
 					{
 						tex = float4(0, 0, 0, 0);
 					}
-					// 'Shadow' creeps up objects infinitely. Add a cap to this, essentially reverse falloff
 
 					//=== CIRCULAR FILL FROM INSIDE TO OUT METHOD ========
 					float2 uvPoint;
@@ -80,13 +79,13 @@
 					uvPoint.y = i.uv.y;
 					float2 centre;
 
-					if (_SkillType == 1)
+					if (_SkillType == 0)
 					{
 						// Centre is set to be at the end of the image, where the unit should be casting from
 						centre.x = 0.5f;
 						centre.y = 0.0f;
 					}
-					else if (_SkillType == 2)
+					else if (_SkillType == 1)
 					{
 						// Centre is set to be in the middle of the image so the fill expands outward
 						centre.x = 0.5f;
@@ -94,7 +93,7 @@
 					}
 					// If distance is less than or equal to _Progress/radius, set tex.rgb to texPF.rgb
 					float d = distance(uvPoint, centre);
-					if (d < _Progress)
+					if (d <= _Progress)
 					{
 						tex.rgb = texPF.rgb;
 					}

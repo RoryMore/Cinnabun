@@ -4,27 +4,62 @@ using UnityEngine;
 
 public class BaseSkill : MonoBehaviour
 {
+    public enum SkillState
+    {
+        INACTIVE,
+        TARGETTING,
+        CASTING,
+        DOAFFECT
+    }
+
+    public enum SkillShape  // Used to specify what hit detection will be used
+    {
+        RADIAL,
+        RECTANGULAR
+    }
+
+    public enum CastFillType    // Used to specify the Projector Indicator fill type
+    {
+        LINEAR,
+        CIRCULAR
+    }
+
+    public enum IndicatorMoveType
+    {
+        ALWAYSNEARCASTER,
+        MOVEABLE
+    }
+
     [SerializeField]
     protected Projector projector;
     Material material;
 
     public SkillData skillData;
 
+    public SkillState skillState;
+
+    [Tooltip("The 'shape' that this skill will be.\n Radial: Uses Angle and Range values to determine the area from a point it will affect.\n Rectangular: Uses Width and Range values to determine the area from a point it will affect.")]
+    public SkillShape shape;    // TENTATIVELY KEPT - TO KNOW WHAT SORT OF HIT DETECTION WE REQUIRE FOR CHECKING HITS
+
+    [Tooltip("How the skill progress is indicated on the projector")]
+    public CastFillType fillType;
+
+    [Tooltip("Indicator Moveability for this skill. \nMOVEABLE: For skills that wants the indicator to follow a targeted position for example. \nALWAYSNEARCASTER: Will always stay at the caster and rotate where the caster is facing. Circular Fill type won't use rotation, Linear fill type will rotate where the player is looking")]
+    public IndicatorMoveType moveType;
+
     [HideInInspector]
     public float timeBeenOnCooldown = 10.0f;
-    [HideInInspector]
-    public float timeSpentOnWindUp = 0;
+    [SerializeField]
+    protected float timeSpentOnWindUp = 0;
     [HideInInspector]
     public bool currentlyCasting = false;
 
+    [HideInInspector]
+    public bool isAllowedToCast = true;
+    protected bool skillTriggered = false;
+
     [Tooltip("SET CASTER SELF TO PARENT OBJECT. \nE.G: Player object is set to this on the players skills")]
     public Entity casterSelf;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     protected virtual void Initialise()
     {
@@ -35,35 +70,107 @@ public class BaseSkill : MonoBehaviour
             currentlyCasting = false;
         }
         material = new Material(Shader.Find("Projector/Tattoo"));
-
         projector.material = material;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    void UpdateCastTime()
-    {
-        // If we are currently casting
-        if (skillData.currentlyCasting)
+        switch (fillType)
         {
-            // Increment the delta value for time spent casting ability
-            timeSpentOnWindUp += Time.deltaTime;
+            case CastFillType.LINEAR:
+                {
+                    projector.material.SetInt("_SkillType", 0);
+                    break;
+                }
 
-            projector.material.SetFloat("_Progress", (skillData.timeSpentOnWindUp / skillData.windUp));
+            case CastFillType.CIRCULAR:
+                {
+                    projector.material.SetInt("_SkillType", 1);
+                    break;
+                }
+
+            default:
+                {
+                    Debug.LogError("Skill 'fillType' not set?");
+                    break;
+                }
+        }
+        skillTriggered = false;
+        skillState = SkillState.INACTIVE;
+    }
+
+    protected void SetFillType(CastFillType castFillType)
+    {
+        fillType = castFillType;
+        switch(fillType)
+        {
+            case CastFillType.LINEAR:
+                {
+                    projector.material.SetInt("_SkillType", 0);
+                    break;
+                }
+
+            case CastFillType.CIRCULAR:
+                {
+                    projector.material.SetInt("_SkillType", 1);
+                    break;
+                }
         }
     }
 
+    protected void SetProjectorMoveType(IndicatorMoveType indicatorMoveType)
+    {
+        moveType = indicatorMoveType;
+    }
+
+    protected void EnableProjector()
+    {
+        if (!projector.enabled)
+        {
+            projector.enabled = true;
+        }
+    }
+
+    protected void DisableProjector()
+    {
+        if (projector.enabled)
+        {
+            projector.enabled = false;
+        }
+    }
+
+    protected void UpdateCastTime()
+    {
+        switch(skillState)
+        {
+            case SkillState.CASTING:
+                {
+                    // Increment the delta value for time spent casting ability
+                    timeSpentOnWindUp += Time.deltaTime;
+                    //Debug.Log("Cast time for Windup being calculated and passed to shader");
+                    //Debug.Log(timeSpentOnWindUp / skillData.windUp);
+                    
+                    break;
+                }
+        }
+        if (projector.enabled)
+        {
+            projector.material.SetFloat("_Progress", (timeSpentOnWindUp / skillData.windUp));
+        }
+    }
+
+    /// <summary>
+    /// Must be used in inherited skills Update method
+    /// </summary>
     void UpdateCooldownTime()
     {
         // If the time this skill has been on cooldown is less than the cooldown time
         if (timeBeenOnCooldown < skillData.cooldown)
         {
+            isAllowedToCast = false;
             // Increment timeBeenOnCooldown
             timeBeenOnCooldown += Time.deltaTime;
+        }
+        else
+        {
+            isAllowedToCast = true;
         }
     }
 
@@ -90,25 +197,25 @@ public class BaseSkill : MonoBehaviour
 
         float halfFarWidth = farWidth * 0.5f;
         float halfNearWidth = nearWidth * 0.5f;
-        float effectiveLength = maxLength - minLength;
 
         Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
 
         posCurrentMin = casterSelf.transform.position;
+        posCurrentMin.x += minLength;
         posCurrentMin.z -= halfNearWidth;
 
         posCurrentMax = casterSelf.transform.position;
+        posCurrentMax.x += maxLength;
         posCurrentMax.z -= halfFarWidth;
 
-        posCurrentMax.x += effectiveLength;
-
         posNextMin = casterSelf.transform.position;
+        posNextMin.x += minLength;
         posNextMin.z += halfNearWidth;
 
         posNextMax = casterSelf.transform.position;
         posNextMax.z += halfFarWidth;
 
-        posNextMax.x += effectiveLength;
+        posNextMax.x += maxLength;
 
         Vector3[]  hitCheckBounds = new Vector3[4];
 
@@ -147,20 +254,20 @@ public class BaseSkill : MonoBehaviour
         //return false;
     }
 
-    protected bool CheckRadialSkillHit(Vector3 hitCheckPosition, Transform zoneStart)
+    protected bool CheckRadialSkillHit(Vector3 hitCheckPosition)
     {
         // Based on zoneStart (where the radial skill area is starting from with a given rotation) and the position we are checking
         // Returns whether hitCheckPosition is within the arc area of the radial skill
         // Note: zoneStart is equivelent to the zoneStart parameter used for the radial skill indicator
         //float forwardAngle = 90 - Mathf.Rad2Deg * Mathf.Atan2(zoneStart.forward.z, zoneStart.forward.x);
         //Debug.Log("ForwardAngle = " + forwardAngle);
-        float positionAngle = Vector3.Angle(hitCheckPosition - zoneStart.position, zoneStart.forward);
-        float distance = Vector3.Distance(hitCheckPosition, zoneStart.position);
+        float positionAngle = Vector3.Angle(hitCheckPosition - casterSelf.transform.position, casterSelf.transform.forward);
+        float distance = Vector3.Distance(hitCheckPosition, casterSelf.transform.position);
         //Debug.Log("Target distance: " + distance);
         //Debug.Log("PositionAngle = " + positionAngle);
-        if (positionAngle <= skillData.angleWidth)
+        if (positionAngle <= skillData.angle)
         {
-            if (distance <= skillData.range)
+            if (distance <= skillData.maxRange)
             {
                 //Debug.Log("Radial Skill Hit!");
                 return true;
@@ -206,7 +313,7 @@ public class BaseSkill : MonoBehaviour
     {
         // If the targets position is within the range of the skill,
         // Return true
-        if (Vector3.Distance(castPosition, targetPosition) <= skillData.range)
+        if (Vector3.Distance(castPosition, targetPosition) <= skillData.maxRange)
         {
             return true;
         }
@@ -214,7 +321,7 @@ public class BaseSkill : MonoBehaviour
         return false;
     }
 
-    protected void SelectTargetRay(Transform zoneStart, ref Entity entityToSet, bool checkInRange = false)
+    protected void SelectTargetRay(ref Entity entityToSet, bool checkInRange = false)
     {
         if (entityToSet == null)
         {
@@ -227,7 +334,7 @@ public class BaseSkill : MonoBehaviour
                     Debug.Log("Skill is raycasting");
                     if (checkInRange)
                     {
-                        if (CheckInRange(zoneStart.position, hit.point))
+                        if (CheckInRange(casterSelf.transform.position, hit.point))
                         {
                             Debug.Log("Entity reference set for skill");
                             entityToSet = hit.collider.gameObject.GetComponent<Entity>();
@@ -241,8 +348,7 @@ public class BaseSkill : MonoBehaviour
             }
         }
     }
-
-    protected bool SelectTargetRay(Transform zoneStart, ref Vector3 pointToSet, bool checkInRange = false)
+    protected bool SelectTargetRay(ref Vector3 pointToSet, bool checkInRange = false)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -252,7 +358,7 @@ public class BaseSkill : MonoBehaviour
             {
                 if (checkInRange)
                 {
-                    if (CheckInRange(zoneStart.position, hit.point))
+                    if (CheckInRange(casterSelf.transform.position, hit.point))
                     {
                         Debug.Log("Position reference set for skill");
                         pointToSet = hit.point;
@@ -269,52 +375,51 @@ public class BaseSkill : MonoBehaviour
         return false;
     }
 
-    protected virtual void CastSkill(Transform zoneStart) { }
-
-    protected virtual void CastSkill(Transform zoneStart, List<Entity> entityList) { }
+    protected virtual void CastSkill() { }
+    protected virtual void CastSkill(List<Entity> entityList) { }
 
     protected virtual void ActivateSkill() { }
-
-    protected virtual void ActivateSkill(Transform zoneStart, List<Entity> entityList) { }
-
     protected virtual void ActivateSkill(List<Entity> entityList) { }
 
-    public virtual void TargetSkill(Transform zoneStart) { }
+    protected virtual void TargetSkill() { }
+    protected virtual void TargetSkill(List<Entity> entityList) { }
 
-    public virtual void TargetSkill(Transform zoneStart, List<Entity> entityList) { }
+    public virtual void TriggerSkill() { }
+    public virtual void TriggerSkill(List<Entity> entityList) { }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
 
-        float farWidth = 4.0f;
-        float nearWidth = 2.0f;
-        float maxLength = 6.0f;
-        float minLength = 0.0f;
+        float farWidth = skillData.farWidth;
+        float nearWidth = skillData.nearWidth;
+        float maxLength = skillData.maxRange;
+        float minLength = skillData.minRange;
 
         float angleLookAt = GetForwardAngle(casterSelf.transform);
 
         float halfFarWidth = farWidth * 0.5f;
         float halfNearWidth = nearWidth * 0.5f;
-        float effectiveLength = maxLength - minLength;
 
         Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
 
         posCurrentMin = casterSelf.transform.position;
+        posCurrentMin.x += minLength;
         posCurrentMin.z -= halfNearWidth;
 
         posCurrentMax = casterSelf.transform.position;
         posCurrentMax.z -= halfFarWidth;
 
-        posCurrentMax.x += effectiveLength;
+        posCurrentMax.x += maxLength;
 
         posNextMin = casterSelf.transform.position;
+        posNextMin.x += minLength;
         posNextMin.z += halfNearWidth;
 
         posNextMax = casterSelf.transform.position;
         posNextMax.z += halfFarWidth;
 
-        posNextMax.x += effectiveLength;
+        posNextMax.x += maxLength;
 
         Vector3[] hitCheckBounds = new Vector3[4];
 

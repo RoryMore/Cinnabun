@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Skills/WeaponAttack", order = 1)]
-public class WeaponAttack : SkillData
+public class WeaponAttack : BaseSkill
 {
     public enum UsedWeaponType
     {
@@ -23,57 +22,101 @@ public class WeaponAttack : SkillData
     public float bowRange;
 
     [Header("Overwritten Damage Values for Weapons")]
-    public int baseUnarmedDamage;
-    public int baseSwordDamage;
-    public int baseStaffDamage;
-    public int baseBowDamage;
+    public int unarmedDamageMultiplier;
+    public int swordDamageMultiplier;
+    public int staffDamageMultiplier;
+    public int bowDamageMultiplier;
 
     [Tooltip("The width the line indicator will use. \nAngleWidth will be what is used for sword")]
-    public float lineWidth;
+    //public float lineWidth;
 
     Entity entityTarget = null;
     //Entity caster = null;
 
     bool attackAreaChosen = false;
 
-    public override void Initialise(Entity ownCaster)
+    protected override void Initialise()
     {
         base.Initialise();
         oldWeapon = UsedWeaponType.NotInitialised;
-        caster = ownCaster;
     }
 
-    public override void TargetSkill(Transform zoneStart, List<Entity> entityList)
+    private void Update()
     {
+        SkillDeltaUpdate();
+    }
+
+    public override void TriggerSkill(List<Entity> entityList)
+    {
+        base.TriggerSkill(entityList);
+        switch (skillState)
+        {
+            case SkillState.INACTIVE:
+                {
+                    if (isAllowedToCast)
+                    {
+                        skillState = SkillState.TARGETTING;
+                    }
+                    break;
+                }
+
+            case SkillState.TARGETTING:
+                {
+                    //Debug.Log("Skill being Targetted");
+                    TargetSkill(entityList);
+                    break;
+                }
+
+            case SkillState.CASTING:
+                {
+                    //Debug.Log("Skill being cast!");
+                    //UpdateCastTime();
+                    CastSkill(entityList);
+                    break;
+                }
+
+            case SkillState.DOAFFECT:
+                {
+                    //Debug.Log("Skill Effect Activated");
+                    ActivateSkill(entityList);
+                    break;
+                }
+        }
+    }
+
+    protected override void TargetSkill(List<Entity> entityList)
+    {
+        
         switch (usedWeapon)
         {
             case UsedWeaponType.Unarmed:
                 if (oldWeapon != usedWeapon)
                 {
-                    rangeIndicator.Init(SkillShape.RADIAL, 360.0f);
                     oldWeapon = usedWeapon;
-                    range = unarmedRange;
+                    skillData.maxRange = unarmedRange;
+                    SetFillType(CastFillType.CIRCULAR);
                 }
                 if (entityTarget == null)
                 {
+                    EnableProjector();
+
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
                     {
-                        Vector3 lookAt = new Vector3(hit.point.x, zoneStart.position.y, hit.point.z);
-                        zoneStart.LookAt(lookAt);
+                        Vector3 lookAt = new Vector3(hit.point.x, casterSelf.transform.position.y, hit.point.z);
+                        casterSelf.transform.LookAt(lookAt);
                     }
 
-                    DrawRangeIndicator(zoneStart, SkillShape.RADIAL, unarmedRange, 360.0f);
-
                     // Select who we're punching
-                    SelectTargetRay(zoneStart, ref entityTarget, true);
+                    SelectTargetRay(ref entityTarget, true);
                 }
                 else if (entityTarget != null)
                 {
                     // We are not hitting ourselves
-                    if (entityTarget != caster)
+                    if (entityTarget != casterSelf)
                     {
-                        CastSkill(zoneStart, entityList);
+                        skillState = SkillState.CASTING;
+                        //CastSkill(entityList);
                     }
                     else // Woops we tried to punch ourselves
                     {
@@ -85,20 +128,23 @@ public class WeaponAttack : SkillData
             case UsedWeaponType.Sword:
                 if (oldWeapon != usedWeapon)
                 {
-                    rangeIndicator.Init(SkillShape.RADIAL, angleWidth);
+                    //rangeIndicator.Init(SkillShape.RADIAL, angle);
                     oldWeapon = usedWeapon;
-                    range = swordRange;
+                    skillData.maxRange = swordRange;
+                    SetFillType(CastFillType.LINEAR);
                 }
                 if (!attackAreaChosen)
                 {
+                    EnableProjector();
+
                     Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
                     if (Physics.Raycast(ray2, out RaycastHit hit2, Mathf.Infinity))
                     {
-                        Vector3 lookAt = new Vector3(hit2.point.x, zoneStart.position.y, hit2.point.z);
-                        zoneStart.LookAt(lookAt);
+                        Vector3 lookAt = new Vector3(hit2.point.x, casterSelf.transform.position.y, hit2.point.z);
+                        casterSelf.transform.LookAt(lookAt);
                     }
 
-                    DrawRangeIndicator(zoneStart, SkillShape.RADIAL, swordRange, angleWidth);
+                    //DrawRangeIndicator(zoneStart, SkillShape.RADIAL, swordRange, angle);
 
                     if (Input.GetMouseButtonDown(0))
                     {
@@ -107,27 +153,31 @@ public class WeaponAttack : SkillData
                 }
                 else
                 {
-                    CastSkill(zoneStart, entityList);
+                    skillState = SkillState.CASTING;
+                    //CastSkill(entityList);
                 }
                 break;
 
             case UsedWeaponType.Staff:
                 if (oldWeapon != usedWeapon)
                 {
-                    rangeIndicator.Init(SkillShape.LINE, lineWidth);
+                    //rangeIndicator.Init(SkillShape.RECTANGULAR, lineWidth);
                     oldWeapon = usedWeapon;
-                    range = staffRange;
+                    skillData.maxRange = staffRange;
+                    SetFillType(CastFillType.LINEAR);
                 }
                 if (!attackAreaChosen)
                 {
+                    EnableProjector();
+
                     Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
                     if (Physics.Raycast(ray2, out RaycastHit hit2, Mathf.Infinity))
                     {
-                        Vector3 lookAt = new Vector3(hit2.point.x, zoneStart.position.y, hit2.point.z);
-                        zoneStart.LookAt(lookAt);
+                        Vector3 lookAt = new Vector3(hit2.point.x, casterSelf.transform.position.y, hit2.point.z);
+                        casterSelf.transform.LookAt(lookAt);
                     }
 
-                    DrawRangeIndicator(zoneStart, SkillShape.LINE, staffRange, lineWidth);
+                    //DrawRangeIndicator(zoneStart, SkillShape.RECTANGULAR, staffRange, lineWidth);
 
                     if (Input.GetMouseButtonDown(0))
                     {
@@ -136,36 +186,41 @@ public class WeaponAttack : SkillData
                 }
                 else
                 {
-                    CastSkill(zoneStart, entityList);
+                    skillState = SkillState.CASTING;
+                    //CastSkill(entityList);
                 }
                 break;
 
             case UsedWeaponType.Bow:
                 if (oldWeapon != usedWeapon)
                 {
-                    rangeIndicator.Init(SkillShape.RADIAL, 360.0f);
+                    //rangeIndicator.Init(SkillShape.RADIAL, 360.0f);
                     oldWeapon = usedWeapon;
-                    range = bowRange;
+                    skillData.maxRange = bowRange;
+                    SetFillType(CastFillType.CIRCULAR);
                 }
                 if (entityTarget == null)
                 {
+                    EnableProjector();
+
                     Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
                     if (Physics.Raycast(ray2, out RaycastHit hit2, Mathf.Infinity))
                     {
-                        Vector3 lookAt = new Vector3(hit2.point.x, zoneStart.position.y, hit2.point.z);
-                        zoneStart.LookAt(lookAt);
+                        Vector3 lookAt = new Vector3(hit2.point.x, casterSelf.transform.position.y, hit2.point.z);
+                        casterSelf.transform.LookAt(lookAt);
                     }
 
-                    DrawRangeIndicator(zoneStart, SkillShape.RADIAL, bowRange, 360.0f);
+                    //DrawRangeIndicator(zoneStart, SkillShape.RADIAL, bowRange, 360.0f);
 
-                    SelectTargetRay(zoneStart, ref entityTarget, true);
+                    SelectTargetRay(ref entityTarget, true);
                 }
                 else
                 {
                     // Did we accidentally try shoot ourselves
-                    if (entityTarget != caster)
+                    if (entityTarget != casterSelf)
                     {
-                        CastSkill(zoneStart, entityList);
+                        skillState = SkillState.CASTING;
+                        //CastSkill(entityList);
                     }
                     else
                     {
@@ -179,62 +234,60 @@ public class WeaponAttack : SkillData
         }
     }
 
-    protected override void CastSkill(Transform zoneStart, List<Entity> entityList)
+    protected override void CastSkill(List<Entity> entityList)
     {
         currentlyCasting = true;
 
-        float drawPercent = (timeSpentOnWindUp / windUp);
+        //float drawPercent = (timeSpentOnWindUp / skillData.windUp);
 
         switch (usedWeapon)
         {
             case UsedWeaponType.Unarmed:
-                DrawRangeIndicator(zoneStart, SkillShape.RADIAL, unarmedRange, 360.0f);
+                //DrawRangeIndicator(zoneStart, SkillShape.RADIAL, unarmedRange, 360.0f);
 
-                rangeIndicator.DrawCastTimeIndicator(zoneStart, 360.0f, 0.0f, unarmedRange, drawPercent);
+                //rangeIndicator.DrawCastTimeIndicator(zoneStart, 360.0f, 0.0f, unarmedRange, drawPercent);
                 break;
 
             case UsedWeaponType.Sword:
-                DrawRangeIndicator(zoneStart, SkillShape.RADIAL, swordRange, angleWidth);
+                //DrawRangeIndicator(zoneStart, SkillShape.RADIAL, swordRange, angle);
 
-                rangeIndicator.DrawCastTimeIndicator(zoneStart, angleWidth, 0.0f, swordRange, drawPercent);
+                //rangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, swordRange, drawPercent);
                 break;
 
             case UsedWeaponType.Staff:
-                DrawRangeIndicator(zoneStart, SkillShape.LINE, staffRange, lineWidth);
+                //DrawRangeIndicator(zoneStart, SkillShape.RECTANGULAR, staffRange, lineWidth);
 
-                rangeIndicator.DrawCastTimeIndicator(zoneStart, lineWidth, 0.0f, staffRange, drawPercent);
+                //rangeIndicator.DrawCastTimeIndicator(zoneStart, lineWidth, 0.0f, staffRange, drawPercent);
                 break;
 
             case UsedWeaponType.Bow:
-                DrawRangeIndicator(zoneStart, SkillShape.RADIAL, bowRange, 360.0f);
+                //DrawRangeIndicator(zoneStart, SkillShape.RADIAL, bowRange, 360.0f);
 
-                rangeIndicator.DrawCastTimeIndicator(zoneStart, 360.0f, 0.0f, bowRange, drawPercent);
+                //rangeIndicator.DrawCastTimeIndicator(zoneStart, 360.0f, 0.0f, bowRange, drawPercent);
                 break;
             default:
                 break;
         }
 
-        // Increment the time spent winding up the skill
-        timeSpentOnWindUp += Time.deltaTime;
-
         // When the skill can be activated
-        if (timeSpentOnWindUp >= windUp)
+        if (timeSpentOnWindUp >= skillData.windUp)
         {
-            
-            ActivateSkill(zoneStart, entityList);
+            skillState = SkillState.DOAFFECT;
+            //ActivateSkill(entityList);
             currentlyCasting = false;
-            timeSpentOnWindUp = 0.0f;
+            //timeSpentOnWindUp = 0.0f;
+            DisableProjector();
         }
     }
 
-    protected override void ActivateSkill(Transform zoneStart, List<Entity> entityList)
+    protected override void ActivateSkill(List<Entity> entityList)
     {
         timeBeenOnCooldown = 0.0f;
 
         switch (usedWeapon)
         {
             case UsedWeaponType.Unarmed:
-                entityTarget.TakeDamage(baseUnarmedDamage);
+                entityTarget.TakeDamage(skillData.baseMagnitude * unarmedDamageMultiplier);
 
                 SoundManager.meleeSwing.Play();
                 break;
@@ -244,10 +297,10 @@ public class WeaponAttack : SkillData
                     bool weaponhit = false;
                     foreach (Entity testedEntity in entityList)
                     {
-                        if (CheckRadialSkillHit(testedEntity.transform.position, zoneStart))
+                        if (CheckRadialSkillHit(testedEntity.transform.position))
                         {
                             weaponhit = true;
-                            testedEntity.TakeDamage(baseSwordDamage);
+                            testedEntity.TakeDamage(swordDamageMultiplier);
                         }
                     }
 
@@ -261,15 +314,15 @@ public class WeaponAttack : SkillData
             case UsedWeaponType.Staff:
                 foreach (Entity testedEntity in entityList)
                 {
-                    if (CheckLineSkillHit(testedEntity.transform.position))
+                    if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                     {
-                        testedEntity.TakeDamage(baseStaffDamage);
+                        testedEntity.TakeDamage(staffDamageMultiplier);
                     }
                 }
                 break;
 
             case UsedWeaponType.Bow:
-                entityTarget.TakeDamage(baseBowDamage);
+                entityTarget.TakeDamage(bowDamageMultiplier);
                 break;
             default:
                 break;
@@ -277,6 +330,8 @@ public class WeaponAttack : SkillData
 
         entityTarget = null;
         attackAreaChosen = false;
+        timeSpentOnWindUp = 0.0f;
+        skillState = SkillState.INACTIVE;
     }
 
     // Needs to be called if they start using a new weapon
@@ -286,11 +341,11 @@ public class WeaponAttack : SkillData
 
         if (usedWeapon == UsedWeaponType.Staff)
         {
-            damageType = DamageType.MAGICAL;
+            skillData.damageType = SkillData.DamageType.MAGICAL;
         }
         else
         {
-            damageType = DamageType.PHYSICAL;
+            skillData.damageType = SkillData.DamageType.PHYSICAL;
         }
     }
 }
