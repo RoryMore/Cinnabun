@@ -8,8 +8,9 @@ public class SimpleEnemy : EnemyScript
 
    
     Transform target;
-    Entity player; //All intents and purposes, same as 
+    Player player; //All intents and purposes, same as target but target is just the transform
     bool isAttacking = false;
+    bool isEvading = false;
 
     bool destinationReached;
     bool isRanged;
@@ -50,6 +51,8 @@ public class SimpleEnemy : EnemyScript
         chosenSkill.currentlyCasting = false;
         destinationReached = false;
 
+        skillList.Add(chosenSkill);
+
         //Personal Variables
         enemyCooldown = Random.Range(5.5f, 6.5f);//6.0f;
         initiativeSpeed = 1.5f;
@@ -61,7 +64,7 @@ public class SimpleEnemy : EnemyScript
 
         target = GameObject.Find("Player").transform;
 
-        player = target.GetComponent<Entity>();
+        player = target.GetComponent<Player>();
 
         pauseAbility = GameObject.Find("PauseMenuUI").GetComponent<PauseAbility>();
 
@@ -84,29 +87,29 @@ public class SimpleEnemy : EnemyScript
 
     void Update()
     {
-
-
-        
+        //If we arent Dead...
         if (!isDead)
         {
             
-
+            // Update turn cooldown
             Turn();
 
+            //Update all cooldowns and conditons
             UpdateAllSkillCooldowns();
             UpdateAllConditions();
 
             //Choose what attack it want's to make this turn
-            //Decide();
+            Decide();
 
-            //bool plzwork = CheckAttackers();
+            bool isInRangeOfFriendlyAttack = CheckAttackers();
 
+            //So long as we aren't attacking, move!
             if (chosenSkill.currentlyCasting == false)
             {
                 Movement(chosenSkill);
             }
 
-
+            // TEMPORARY FUNCTION! TO BE REPLACED WITH DECIDE + ATTACK
             VertSliceAttack();
             //Attack(chosenSkill);
             
@@ -132,76 +135,118 @@ public class SimpleEnemy : EnemyScript
 
     public void Movement(SkillData chosenSkill)
     {
-        if (isAttacking != true)
+        // REQUIREMENTS 
+        // When the enemy is not attacking, approach the player until they are within range of their attack
+        // If the enemy health is low
+
+        // If dead, stop moving towards the player
+
+        if (!isDead)
         {
-
-            float distance = Vector3.Distance(myEncounter.gameObject.transform.position, target.transform.position);
-
-            if (isRanged = true || currentHP <= maxHP * 0.25f)
+            if (!isAttacking)
             {
-                if (distance < attack.range * 0.5f)
+
+                //Fetch distance betweeen self and the player
+                float distance = Vector3.Distance(this.gameObject.transform.position, target.transform.position);
+
+                //If the player is using an attack and we're close to death, retreat!
+                if (player.playerState == Player.PlayerState.DOINGSKILL && currentHP <= maxHP * 0.25f)
                 {
-                    anim.SetBool("isWalking", true);
                     nav.SetDestination(Vector3.MoveTowards(transform.position, player.transform.position, -nav.speed));
-
                 }
-            }
 
-            if (distance > myEncounter.enemyManager.maxEncounterDistance * 0.5)
-            {
-
-                //Return home
-                nav.SetDestination(myEncounter.gameObject.transform.position);
-
-            }
-
-
-            else if (!isDead)
-            {
-                nav.SetDestination(target.transform.position);
-                //nav.SetDestination(destination);
-
-
-                //Later this should set to the range of the technique it chooses! For now, It is not important
-
-                if (Vector3.Distance(transform.position, player.gameObject.transform.position) < skillList[0].range * 0.5)
+                //If we are well within attack range, stop moving towards player
+                else if (distance < attack.range * 0.5f)
                 {
-
-
-                    nav.SetDestination(transform.position);
-
-                    FaceTarget(player.transform);
                     anim.SetBool("isWalking", false);
-
-
-                    if (enemyCooldown <= 0)
-                    {
-                        VertSliceAttack();
-                    }
-
-
+                    nav.enabled = false;
                 }
+                //If we are outside of range, walk towards player
                 else
                 {
-                    //nav.SetDestination(destination);
-                    nav.SetDestination(player.transform.position);
                     anim.SetBool("isWalking", true);
-
-
-
-
+                    nav.enabled = true;
+                    nav.SetDestination(Vector3.MoveTowards(transform.position, player.transform.position, nav.speed));
 
                 }
-            }
-
-            else
-            {
-                nav.enabled = false;
-                anim.SetBool("isWalking", false);
+                
 
             }
-
         }
+
+
+        //if (isAttacking != true)
+        //{
+
+        //    float distance = Vector3.Distance(myEncounter.gameObject.transform.position, target.transform.position);
+
+        //    if (isRanged = true || currentHP <= maxHP * 0.25f)
+        //    {
+        //        if (distance < attack.range * 0.5f)
+        //        {
+        //            anim.SetBool("isWalking", true);
+        //            nav.SetDestination(Vector3.MoveTowards(transform.position, player.transform.position, -nav.speed));
+
+        //        }
+        //    }
+
+        //    if (distance > myEncounter.enemyManager.maxEncounterDistance * 0.5)
+        //    {
+
+        //        //Return home
+        //        anim.SetBool("isWalking", true);
+        //        nav.SetDestination(myEncounter.gameObject.transform.position);
+
+
+        //    }
+
+
+        //    else if (!isDead)
+        //    {
+        //        nav.SetDestination(target.transform.position);
+        //        //nav.SetDestination(destination);
+
+
+        //        //Later this should set to the range of the technique it chooses! For now, It is not important
+
+        //        if (Vector3.Distance(transform.position, player.gameObject.transform.position) < skillList[0].range * 0.5)
+        //        {
+
+
+        //            nav.SetDestination(transform.position);
+
+        //            FaceTarget(player.transform);
+        //            anim.SetBool("isWalking", false);
+
+
+        //            if (enemyCooldown <= 0)
+        //            {
+        //                VertSliceAttack();
+        //            }
+
+
+        //        }
+        //        else
+        //        {
+        //            //nav.SetDestination(destination);
+        //            nav.SetDestination(player.transform.position);
+        //            anim.SetBool("isWalking", true);
+
+
+
+
+
+        //        }
+        //    }
+
+        //    else
+        //    {
+        //        nav.enabled = false;
+        //        anim.SetBool("isWalking", false);
+
+        //    }
+
+        //}
 
     }
 
@@ -259,7 +304,7 @@ public class SimpleEnemy : EnemyScript
 
  
 
-    public bool CheckAttackers()
+    public Entity CheckAttackers()
     {
 
         // Check all enemies
@@ -275,24 +320,34 @@ public class SimpleEnemy : EnemyScript
                     if (enemy.chosenSkill.CheckInRange(enemy.transform.position, transform.position))
                     {
                         //Get out of dodge!
-                        return true;
+                        return enemy;
                     }
+
 
                 }
 
+
             }
+
 
         }
 
-        return false;
+        return null;
+
     }
 
     public void Evade()
     {
-        //
-        if (CheckAttackers())
+        
+        if (CheckAttackers() != null)
         {
+            isEvading = true;
+            nav.SetDestination(Vector3.MoveTowards(transform.position, CheckAttackers().transform.position, -nav.speed));
+        }
 
+        else
+        {
+            isEvading = false;
         }
         
     }
