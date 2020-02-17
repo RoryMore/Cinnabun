@@ -45,8 +45,8 @@ public class SimpleEnemy : EnemyScript
 
         //Initialise junk skill to be replaced by choose function
         chosenSkill = new SkillData();
-        chosenSkill.baseDamage = 0;
-        chosenSkill.range = 1;
+        chosenSkill.baseMagnitude = 0;
+        chosenSkill.maxRange = 1;
 
         chosenSkill.currentlyCasting = false;
         destinationReached = false;
@@ -121,8 +121,8 @@ public class SimpleEnemy : EnemyScript
     public Vector3 ChooseDestination(SkillData skill)
     {
         //Pick a random point near the player well within range
-        float x = Random.Range(player.transform.position.x - (skill.range * 0.5f), player.transform.position.x + (skill.range * 0.5f));
-        float z = Random.Range(player.transform.position.z - (skill.range * 0.5f), player.transform.position.z + (skill.range * 0.5f));
+        float x = Random.Range(player.transform.position.x - (skill.maxRange * 0.5f), player.transform.position.x + (skill.maxRange * 0.5f));
+        float z = Random.Range(player.transform.position.z - (skill.maxRange * 0.5f), player.transform.position.z + (skill.maxRange * 0.5f));
 
         
 
@@ -274,7 +274,7 @@ public class SimpleEnemy : EnemyScript
                         //int choice = (int)Random.Range(0.0f, skillList.Count);
                     
                         //Check if damage of prior skill is greater than base damange
-                        if (chosenSkill.baseDamage <= checkedSkill.baseDamage)
+                        if (chosenSkill.baseMagnitude <= checkedSkill.baseMagnitude)
                         {
                             chosenSkill = checkedSkill;
                     

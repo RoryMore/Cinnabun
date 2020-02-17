@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TestIndicator
+  m_Name: SkillIndicatorMat
   m_Shader: {fileID: 4800000, guid: 6c0ebaf96dde83b47b160e8681317335, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -40,7 +40,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FalloffTex:
-        m_Texture: {fileID: 2800000, guid: d036f7aa0d6cecf4792cb9466d45b877, type: 3}
+        m_Texture: {fileID: 2800000, guid: 02b617ebd76896343ab82ffbd007ad50, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FillTex:
+        m_Texture: {fileID: 2800000, guid: d40a27d208708ce4ca00ce4f95a6f253, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -60,7 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadowTex:
-        m_Texture: {fileID: 2800000, guid: 2c9c4711f476de04589a10e6b0f527cb, type: 3}
+        m_Texture: {fileID: 2800000, guid: 288685841b67e764d9a398b0b276f02c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -78,6 +82,9 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Power: 1
+    - _Progress: 1.002913
+    - _ProgressY: 0
+    - _SkillType: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
