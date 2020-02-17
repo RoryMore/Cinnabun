@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_Cinnabun
-  m_Shader: {fileID: 4800000, guid: ca3ac4baca182554fbdd4525970be2c8, type: 3}
+  m_Shader: {fileID: 4800000, guid: 4ad56825363863f4d8417e5f5b6a32fe, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0

@@ -37,7 +37,12 @@ public class Encounter : MonoBehaviour
     void Start()
     {
         cleared = false;
+    }
+
+    public void SpawnEnemies()
+    {
         
+
 
         //Spawn enemies
         foreach (GameObject location in spawnPoints)
@@ -46,7 +51,7 @@ public class Encounter : MonoBehaviour
             if (location.name.Contains("Enemy1"))
             {
                 initiativeList.Add(Instantiate(enemy1, location.transform));
-                
+
             }
             else if (location.name.Contains("Enemy2"))
             {
@@ -95,6 +100,7 @@ public class Encounter : MonoBehaviour
     {
         //The encounter has been defeated!
         cleared = true;
+        enemyManager.WaveActive = false;
         enemyManager.CheckVictory();
         GiveItem();
         //enemyManager.player.GetComponent<Entity>().currentHP += 25;

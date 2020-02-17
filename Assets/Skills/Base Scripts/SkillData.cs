@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/SkillData", order = 1)]
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/SkillData", order = 1)]
 public class SkillData : ScriptableObject
 {
     public enum DamageType
@@ -12,81 +12,85 @@ public class SkillData : ScriptableObject
         MAGICAL
     }
 
-    public enum SkillShape
-    {
-        RADIAL,
-        LINE
-    }
+    
 
-    public enum SkillList  // Go through different Skills with team - discuss. Only small amounts of discussion on skills have been had. Think about Skill tree as well. How many skills we'll have, what "category" they are, if they're all unlocked through the skill tree, or if they're unlocked by doing something in the world or killing something specific
+    public enum SkillList
     {
         TELEPORT,
         DELAYEDBLAST,
         REWIND,
-        NotAppliccable
+        WEAPONATTACK
     }
 
-    [Tooltip("The maximum distance the skill can be used at from the casters position")]
-    public float range;
+    [Header("Ranges")]
+    [Tooltip("The maximum distance the skill can be used at from the casters position. \nFor skills that want a constant radius sized indicator that is moveable, maxRange can be used as the radius of circle indicator")]
+    public float maxRange;
+    [Tooltip("The minimum distance the skill can have an effect from the casters position. \nFor skills that want a constant radius sized indicator that is moveable, minRange can be used as the maximum distance the skill can be cast from the caster")]
+    public float minRange;
+    [Tooltip("The width of a rectangular shaped skill at the maxRange")]
+    public float farWidth;
+    [Tooltip("The width of a rectangular shaped skill at the minRange")]
+    public float nearWidth;
 
-    [Tooltip("How high above the casting transform the skill will check if it will hit a target on the Y axis. A value of zero will mean the targets position Y value has to be equivelant to the Y value of the Indicator/caster Transform to be damaged")]
-    public float positiveRangeHeight;
-    [Tooltip("How low below the casting transform the skill will check if it will hit a target on the Y axis. A value of zero will mean the targets position Y value has to be equivelant to the Y value of the Indicator/caster Transform to be damaged")]
-    public float negativeRangeHeight;
+    [Tooltip("The maximum height difference allowed between units that makes it possible to be hit or not")]
+    public float verticalRange;
+
+    [Tooltip("The Width a line Skill will have, or the Angle a Radial skill will use")]
+    public float angle;
 
     [Tooltip("The time (in seconds) that needs to pass before the player is able to cast this skill again")]
     public float cooldown;
     [HideInInspector]
-    public float timeBeenOnCooldown = 10.0f;
+    public float timeBeenOnCooldown = 10.0f;    // REMOVE FOR CHANGE - IS IN NEW BASE SKILL
 
     [Tooltip("The time (in seconds) it will take to cast the skill before it does any effect")]
     public float windUp;
     [HideInInspector]
-    public float timeSpentOnWindUp = 0;
+    public float timeSpentOnWindUp = 0; // REMOVE FOR CHANGE - IS IN NEW BASE SKILL
 
-    [Tooltip("The 'shape' that this skill will be.\n Radial: Uses Angle and Range values to determine the area from a point it will affect.\n Line: Uses Width and Range values to determine the area from a point it will affect.")]
-    public SkillShape shape;
-
-    [Tooltip("The Width a line Skill will have, or the Angle a Radial skill will use")]
-    public float angleWidth;
+    
 
     [Tooltip("Which skill this actually is")]
-    public SkillList skill;
+    public SkillList skill; // TENTATIVELY KEPT - USEFUL FOR KNOWING WHICH SKILL IS BEING CAST
+
+    
 
     [Header("Damage Variables")]
-    [Tooltip("The base amount before any additional calculations for how much damage this skill may deal")]
-    public int baseDamage;
+    [Tooltip("The base amount before any additional calculations for how much damage/heal/etc. this skill may deal")]
+    public int baseMagnitude;
 
     [Tooltip("Whether this skill deals Physical or Magical damage")]
-    public DamageType damageType;
+    public DamageType damageType;   
 
     [Header("Indicator")]
-    public RangeIndicator rangeIndicator = null;
-    public Material indicatorMaterial;
+    public RangeIndicator rangeIndicator = null;    // REMOVE FOR CHANGE - INDICATORS ARE PROJECTORS
+    public Material indicatorMaterial;              // REMOVE FOR CHANGE
 
     [HideInInspector]
-    public bool currentlyCasting = false;
+    public bool currentlyCasting = false;   // REMOVE FOR CHANGE - IS IN NEW BASE SKILL
 
     // The entity that casts this skill
     [HideInInspector]
-    public Entity caster = null;
+    public Entity caster = null;    // REMOVE FOR CHANGE - ADD TO SKILL SCRIPTS THAT REQUIRE IT
 
+    // NEW BASE SKILL HAS ITS OWN INITIALISE
     public virtual void Initialise()
     {
-        rangeIndicator = new RangeIndicator();
-        rangeIndicator.Init(shape, angleWidth);
-        rangeIndicator.indicatorMaterial = indicatorMaterial;
+        //rangeIndicator = new RangeIndicator();
+        //rangeIndicator.Init(shape, angle);
+        //rangeIndicator.indicatorMaterial = indicatorMaterial;
 
         timeBeenOnCooldown = cooldown;
         timeSpentOnWindUp = 0.0f;
     }
 
+    // NEW BASE SKILL HAS ITS OWN INITIALISE
     // This virtual method is only used by the players WeaponAttack skill to make sure they can't punch themselves
     public virtual void Initialise(Entity ownCaster)
     {
-        rangeIndicator = new RangeIndicator();
-        rangeIndicator.Init(shape, angleWidth);
-        rangeIndicator.indicatorMaterial = indicatorMaterial;
+        //rangeIndicator = new RangeIndicator();
+        //rangeIndicator.Init(shape, angle);
+        //rangeIndicator.indicatorMaterial = indicatorMaterial;
 
         caster = ownCaster;
 
@@ -94,7 +98,7 @@ public class SkillData : ScriptableObject
         timeSpentOnWindUp = 0.0f;
     }
 
-    public void ProgressCooldown()
+    public void ProgressCooldown()  // Handled in new base skill Update
     {
         if (timeBeenOnCooldown < cooldown)
         {
@@ -102,67 +106,58 @@ public class SkillData : ScriptableObject
         }
     }
 
+    // FUNCTION MOVED AND REWORKED IN BASE SKILL
     public bool CheckLineSkillHit(Vector3 hitCheckPosition)
     {
-        // Check if our target is within the height limits of our skill range
-        if (hitCheckPosition.y <= rangeIndicator.mesh.bounds.center.y + positiveRangeHeight)
+
+        // This checks if the x & z values are within the bounds of the rectangular mesh -> Returns true if hit, false if not
+        // Can add additional checks for y component of position if necessary to add to make height checks relevant
+        Vector3 meshYPosition = new Vector3(hitCheckPosition.x, rangeIndicator.mesh.bounds.center.y, hitCheckPosition.z);
+        if (rangeIndicator.mesh.bounds.Contains(meshYPosition))
         {
-            if (hitCheckPosition.y >= rangeIndicator.mesh.bounds.center.y - negativeRangeHeight)
-            {
-                // This checks if the x & z values are within the bounds of the rectangular mesh -> Returns true if hit, false if not
-                // Can add additional checks for y component of position if necessary to add to make height checks relevant
-                Vector3 meshYPosition = new Vector3(hitCheckPosition.x, rangeIndicator.mesh.bounds.center.y, hitCheckPosition.z);
-                if (rangeIndicator.mesh.bounds.Contains(meshYPosition))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
+            return true;
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
 
+    // FUNCTION MOVED TO NEW BASE SKILL
     public bool CheckRadialSkillHit(Vector3 hitCheckPosition, Transform zoneStart)
     {
-        // Check if our target is within the height limits of our skill range
-        if (hitCheckPosition.y <= zoneStart.position.y + positiveRangeHeight)
+        // Based on zoneStart (where the radial skill area is starting from with a given rotation) and the position we are checking
+        // Returns whether hitCheckPosition is within the arc area of the radial skill
+        // Note: zoneStart is equivelent to the zoneStart parameter used for the radial skill indicator
+        //float forwardAngle = 90 - Mathf.Rad2Deg * Mathf.Atan2(zoneStart.forward.z, zoneStart.forward.x);
+        //Debug.Log("ForwardAngle = " + forwardAngle);
+        float positionAngle = Vector3.Angle(hitCheckPosition - zoneStart.position, zoneStart.forward);
+        float distance = Vector3.Distance(hitCheckPosition, zoneStart.position);
+        //Debug.Log("Target distance: " + distance);
+        //Debug.Log("PositionAngle = " + positionAngle);
+        if (positionAngle <= angle)
         {
-            if (hitCheckPosition.y >= zoneStart.position.y - negativeRangeHeight)
+            if (distance <= maxRange)
             {
-                // Based on zoneStart (where the radial skill area is starting from with a given rotation) and the position we are checking
-                // Returns whether hitCheckPosition is within the arc area of the radial skill
-                // Note: zoneStart is equivelent to the zoneStart parameter used for the radial skill indicator
-                float forwardAngle = 90 - Mathf.Rad2Deg * Mathf.Atan2(zoneStart.forward.z, zoneStart.forward.x);
-
-                float positionAngle = Vector3.Angle(hitCheckPosition - zoneStart.position, zoneStart.forward);
-                float distance = Vector3.Distance(hitCheckPosition, zoneStart.position);
-
-                if (positionAngle <= angleWidth)
-                {
-                    if (distance <= range)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return false;
-                }
+                Debug.Log("Radial Skill Hit!");
+                return true;
+            }
+            else
+            {
+                Debug.Log("Radial Skill out of range from target");
+                return false;
             }
         }
-        return false;
+        else
+        {
+            Debug.Log("Radial Skill target not within specified angle");
+            return false;
+        }
     }
 
-    public void DrawRangeIndicator(Transform zoneStart, SkillShape shape)
+    /*public void DrawRangeIndicator(Transform zoneStart, SkillShape shape)
     {
-        rangeIndicator.DrawIndicator(zoneStart, angleWidth, 0.0f, range);
+        rangeIndicator.DrawIndicator(zoneStart, angle, 0.0f, maxRange);
         //switch (shape)
         //{
         //    case SkillShape.LINE:
@@ -181,13 +176,13 @@ public class SkillData : ScriptableObject
     protected void DrawRangeIndicator(Transform zoneStart, SkillShape shape, float maxRange, float angle)
     {
         rangeIndicator.DrawIndicator(zoneStart, angle, 0.0f, maxRange);
-    }
+    }*/
 
-    public bool CheckInRange(Vector3 castPosition, Vector3 targetPosition)
+    public bool CheckInRange(Vector3 castPosition, Vector3 targetPosition)  // HANDLED IN NEW BASE SKILL
     {
         // If the targets position is within the range of the skill,
         // Return true
-        if (Vector3.Distance(castPosition, targetPosition) <= range)
+        if (Vector3.Distance(castPosition, targetPosition) <= maxRange)
         {
             return true;
         }
@@ -195,6 +190,7 @@ public class SkillData : ScriptableObject
         return false;
     }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     protected virtual void SelectTargetRay(Transform zoneStart, ref Entity entityToSet, bool checkInRange = false)
     {
         if (entityToSet == null)
@@ -223,6 +219,7 @@ public class SkillData : ScriptableObject
         }
     }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     protected bool SelectTargetRay(Transform zoneStart, ref Vector3 pointToSet, bool checkInRange = false)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -250,17 +247,24 @@ public class SkillData : ScriptableObject
         return false;
     }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     protected virtual void CastSkill(Transform zoneStart) { }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     protected virtual void CastSkill(Transform zoneStart, List<Entity> entityList) { }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     protected virtual void ActivateSkill() { }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     protected virtual void ActivateSkill(Transform zoneStart, List<Entity> entityList) { }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     protected virtual void ActivateSkill(List<Entity> entityList) { }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     public virtual void TargetSkill(Transform zoneStart) { }
 
+    // HANDLED/MOVED TO NEW BASE SKILL
     public virtual void TargetSkill(Transform zoneStart, List<Entity> entityList) { }
 }

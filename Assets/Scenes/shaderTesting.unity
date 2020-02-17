@@ -419,7 +419,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 924d7e96b52a3c249a0db1c896b8d7d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Attack: {fileID: 6791567859514073530, guid: a24eb8c98f91efb448f00f559492cf24, type: 3}
+  Attack:
+  - {fileID: 6791567859514073530, guid: a24eb8c98f91efb448f00f559492cf24, type: 3}
+  - {fileID: 6791567859514073530, guid: a24eb8c98f91efb448f00f559492cf24, type: 3}
+  - {fileID: 6791567859514073530, guid: a24eb8c98f91efb448f00f559492cf24, type: 3}
 --- !u!4 &575451907
 Transform:
   m_ObjectHideFlags: 0
