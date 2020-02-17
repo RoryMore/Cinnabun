@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aa2f84433c95054380841023bd4f2da, type: 3}
   m_Name: Rewind
   m_EditorClassIdentifier: 
-  range: 50
-  positiveRangeHeight: 0
-  negativeRangeHeight: 0
+  maxRange: 50
+  minRange: 0
+  farWidth: 0
+  nearWidth: 0
+  verticalRange: 0
+  angle: 0
   cooldown: 5
   timeBeenOnCooldown: 0.019436099
   windUp: 1
   timeSpentOnWindUp: 0
-  shape: 0
-  angleWidth: 360
   skill: 2
-  baseDamage: 0
+  baseMagnitude: 0
   damageType: 0
   rangeIndicator: {fileID: 0}
   indicatorMaterial: {fileID: 2100000, guid: 3c6c47126b1480347ac2f55825168a69, type: 2}

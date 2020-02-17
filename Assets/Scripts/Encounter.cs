@@ -14,6 +14,8 @@ public class Encounter : MonoBehaviour
     public List<Entity> playerInclusiveInitiativeList; //Same as master but includes player for skill use, for enemy skills
     public List<Entity> healList;
 
+    //NIK___List of skill which each enemy is going to use
+
     public List<EnemyScript> enemies;
 
     public List<GameObject> spawnPoints;
@@ -35,7 +37,12 @@ public class Encounter : MonoBehaviour
     void Start()
     {
         cleared = false;
+    }
+
+    public void SpawnEnemies()
+    {
         
+
 
         //Spawn enemies
         foreach (GameObject location in spawnPoints)
@@ -44,7 +51,7 @@ public class Encounter : MonoBehaviour
             if (location.name.Contains("Enemy1"))
             {
                 initiativeList.Add(Instantiate(enemy1, location.transform));
-                
+
             }
             else if (location.name.Contains("Enemy2"))
             {
@@ -76,7 +83,7 @@ public class Encounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //KillCode();
+        KillCode();
 
         if (initiativeList.Count == 0)
         {
@@ -93,6 +100,7 @@ public class Encounter : MonoBehaviour
     {
         //The encounter has been defeated!
         cleared = true;
+        enemyManager.WaveActive = false;
         enemyManager.CheckVictory();
         GiveItem();
         //enemyManager.player.GetComponent<Entity>().currentHP += 25;

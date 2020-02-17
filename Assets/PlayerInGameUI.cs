@@ -57,28 +57,29 @@ public class PlayerInGameUI : MonoBehaviour
 
         }
 
-        foreach (SkillData skill in player.skillList)
+        foreach (BaseSkill skill in player.skillList)
         {
-            if (skill.timeBeenOnCooldown < skill.cooldown)
+            //if (skill.timeBeenOnCooldown < skill.cooldown)
+            if (!skill.isAllowedToCast)
             {
-                switch (skill.skill)
+                switch (skill.skillData.skill)
                 {
                     case SkillData.SkillList.DELAYEDBLAST:
                         {
                             DelayedBlastButton.gameObject.SetActive(true);
-                            DelayedBlastButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.cooldown);
+                            DelayedBlastButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.skillData.cooldown);
                             break;
                         }
                     case SkillData.SkillList.REWIND:
                         {
                             RewindButton.gameObject.SetActive(true);
-                            RewindButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.cooldown);
+                            RewindButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.skillData.cooldown);
                             break;
                         }
                     case SkillData.SkillList.TELEPORT:
                         {
                             TeleportButton.gameObject.SetActive(true);
-                            TeleportButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.cooldown);
+                            TeleportButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.skillData.cooldown);
                             break;
                         }
                     default:
@@ -87,7 +88,7 @@ public class PlayerInGameUI : MonoBehaviour
             }
             else
             {
-                switch (skill.skill)
+                switch (skill.skillData.skill)
                 {
                     case SkillData.SkillList.DELAYEDBLAST:
                         {
@@ -112,10 +113,11 @@ public class PlayerInGameUI : MonoBehaviour
             
         }
 
-        if (player.weaponAttack.timeBeenOnCooldown < player.weaponAttack.cooldown)
+        //if (player.weaponAttack.timeBeenOnCooldown < player.weaponAttack.skillData.cooldown)
+        if (!player.weaponAttack.isAllowedToCast)
         {
             MeleeAttack.gameObject.SetActive(true);
-            MeleeAttack.fillAmount = 1.0f - (player.weaponAttack.timeBeenOnCooldown / player.weaponAttack.cooldown);
+            MeleeAttack.fillAmount = 1.0f - (player.weaponAttack.timeBeenOnCooldown / player.weaponAttack.skillData.cooldown);
         }
         else
         {

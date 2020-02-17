@@ -29,7 +29,7 @@ public class RangeIndicator : MonoBehaviour
 
     Player player;
 
-    public void Init(SkillData.SkillShape skillShape, float angle = 0)
+    public void Init(BaseSkill.SkillShape skillShape, float angle = 0)
     {
         player = FindObjectOfType<Player>();
         if (player != null)
@@ -38,11 +38,11 @@ public class RangeIndicator : MonoBehaviour
         }
         switch (skillShape)
         {
-            case SkillData.SkillShape.RADIAL:
+            case BaseSkill.SkillShape.RADIAL:
                 shape = IndicatorShape.RADIAL;
                 break;
 
-            case SkillData.SkillShape.LINE:
+            case BaseSkill.SkillShape.RECTANGULAR:
                 shape = IndicatorShape.RECTANGULAR;
                 break;
             default:
