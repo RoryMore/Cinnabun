@@ -54,8 +54,8 @@ MonoBehaviour:
   currentlyCasting: 0
   isAllowedToCast: 1
   casterSelf: {fileID: 0}
-  mainCookie: {fileID: 21300000, guid: 288685841b67e764d9a398b0b276f02c, type: 3}
-  fillCookie: {fileID: 21300000, guid: d40a27d208708ce4ca00ce4f95a6f253, type: 3}
+  mainCookie: {fileID: 21300000, guid: 14643146a3b1130488e64610d90b0996, type: 3}
+  fillCookie: {fileID: 21300000, guid: 42b6de6bc0caab8479e801a943d0f819, type: 3}
 --- !u!114 &6045951291823921618
 MonoBehaviour:
   m_ObjectHideFlags: 0
