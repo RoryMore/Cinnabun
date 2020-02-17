@@ -21,8 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Water_MAT
-  m_Shader: {fileID: -6465566751694194690, guid: 3f05bf7cba0339443971aed362d8501a,
-    type: 3}
+  m_Shader: {fileID: 4800000, guid: ca3ac4baca182554fbdd4525970be2c8, type: 3}
   m_ShaderKeywords: _TERRAIN_INSTANCED_PERPIXEL_NORMAL
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -54,6 +53,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ILMTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -105,6 +108,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SSSTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Splat0:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -129,6 +136,7 @@ Material:
     - Vector1_E5D58D93: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _DarkenInnerLineColor: 0.2
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnableHeightBlend: 0
@@ -145,7 +153,9 @@ Material:
     - _Mode: 0
     - _NumLayersCount: 1
     - _OcclusionStrength: 1
+    - _Outline: 0.0035
     - _Parallax: 0.02
+    - _ShadowContrast: 1
     - _Smoothness0: 0.5
     - _Smoothness1: 0.5
     - _Smoothness2: 0.5
@@ -161,3 +171,5 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _LightDirection: {r: 0, g: 0, b: 1, a: 1}
+    - _OutlineColor: {r: 0, g: 0.08619998, b: 0.37249997, a: 1}
