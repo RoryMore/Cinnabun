@@ -290,7 +290,7 @@ public class WeaponAttack : BaseSkill
             case UsedWeaponType.Unarmed:
                 entityTarget.TakeDamage(skillData.baseMagnitude * unarmedDamageMultiplier);
 
-                SoundManager.meleeSwing.Play();
+                //SoundManager.meleeSwing.Play();
                 break;
 
             case UsedWeaponType.Sword:
@@ -307,8 +307,9 @@ public class WeaponAttack : BaseSkill
 
                     if (weaponhit)
                     {
-                        SoundManager.meleeSwing.Play();
+                        SoundManager.meleeSwing.Play(0);
                     }
+                    //SoundManager.meleeSwing.Play(0);
                     break;
                 }
 
