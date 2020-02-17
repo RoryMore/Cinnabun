@@ -1521,7 +1521,7 @@ PrefabInstance:
     - target: {fileID: 5986327890210922169, guid: 6b6b2af61b4a85b47a66cbd93ba70863,
         type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5986327890210922169, guid: 6b6b2af61b4a85b47a66cbd93ba70863,
         type: 3}
@@ -2175,12 +2175,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 676391818}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &750665766 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 9308aaa0e4f81954684189cc388be004,
-    type: 3}
-  m_PrefabInstance: {fileID: 145764166}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &774630621
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2335,6 +2329,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4577219032212093784, guid: b715985195ec5a14a8289d3661420dd6,
         type: 3}
+      propertyPath: enemyFootsteps.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4577219032212093784, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
       propertyPath: state
       value: 0
       objectReference: {fileID: 0}
@@ -2378,6 +2377,16 @@ PrefabInstance:
       propertyPath: IdleMusic.Array.data[2]
       value: 
       objectReference: {fileID: 489009117}
+    - target: {fileID: 4577219032212093784, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: enemyFootAudioSource
+      value: 
+      objectReference: {fileID: 1008312302}
+    - target: {fileID: 4577219032212093784, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: enemyFootsteps.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 48bb3f5354c76a242bfc35e6d5a12d57, type: 3}
     - target: {fileID: 4577219032212093785, guid: b715985195ec5a14a8289d3661420dd6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3624,11 +3633,11 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1747353389}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1018375222 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4131665851672515049, guid: 768628249c4c2f647b7f7962b17fc210,
+--- !u!82 &1008312302 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4577219032212093787, guid: b715985195ec5a14a8289d3661420dd6,
     type: 3}
-  m_PrefabInstance: {fileID: 1062068215}
+  m_PrefabInstance: {fileID: 804627692}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1036134708
 PrefabInstance:
@@ -5218,12 +5227,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7021797207025235825, guid: b23cfc5bfedf22f45a41fb9563e54ab8,
     type: 3}
   m_PrefabInstance: {fileID: 420853487}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1594765011 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 9308aaa0e4f81954684189cc388be004,
-    type: 3}
-  m_PrefabInstance: {fileID: 2122042808}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1606593882 stripped
 MonoBehaviour:
@@ -7460,7 +7463,7 @@ Transform:
   - {fileID: 1431134411}
   - {fileID: 1640789207}
   - {fileID: 777394306}
-  - {fileID: 750665766}
+  - {fileID: 161395358}
   - {fileID: 619884819}
   - {fileID: 945291040}
   - {fileID: 1769219732}
@@ -7476,7 +7479,7 @@ Transform:
   - {fileID: 601136943}
   - {fileID: 1935257135}
   - {fileID: 1965023283}
-  - {fileID: 1594765011}
+  - {fileID: 1269776317}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
