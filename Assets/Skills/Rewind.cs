@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Skills/Rewind", order = 1)]
+//[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Skills/Rewind", order = 1)]
 
 
 public class Rewind : SkillData
@@ -23,7 +23,7 @@ public class Rewind : SkillData
                 zoneStart.LookAt(lookAt);
             }
 
-            DrawRangeIndicator(zoneStart, shape);
+            //DrawRangeIndicator(zoneStart, shape);
             SelectTargetRay(zoneStart, ref entity);
 
         }
@@ -36,10 +36,10 @@ public class Rewind : SkillData
     protected override void CastSkill(Transform zoneStart)
     {
         currentlyCasting = true;
-        DrawRangeIndicator(zoneStart, shape);
+        //DrawRangeIndicator(zoneStart, shape);
 
         float drawPercent = (timeSpentOnWindUp / windUp);
-        rangeIndicator.DrawCastTimeIndicator(zoneStart, angleWidth, 0.0f, range, drawPercent);
+        rangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, maxRange, drawPercent);
 
         // Increment the time spent winding up the skill
         timeSpentOnWindUp += Time.deltaTime;

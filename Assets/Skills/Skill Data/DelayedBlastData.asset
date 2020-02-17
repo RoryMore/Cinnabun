@@ -9,22 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 698ab66c30f238f42ac5a4dae2326323, type: 3}
-  m_Name: Teleport
+  m_Script: {fileID: 11500000, guid: 3110f89451f743848910c598af7ff19f, type: 3}
+  m_Name: DelayedBlastData
   m_EditorClassIdentifier: 
-  range: 10
-  positiveRangeHeight: 0
-  negativeRangeHeight: 0
-  cooldown: 3
-  timeBeenOnCooldown: 3
-  windUp: 2
+  maxRange: 15
+  minRange: 0
+  farWidth: 0
+  nearWidth: 0
+  verticalRange: 0
+  angle: 0
+  cooldown: 2
+  timeBeenOnCooldown: 10
+  windUp: 3
   timeSpentOnWindUp: 0
-  shape: 0
-  angleWidth: 360
-  skill: 0
-  baseDamage: 10
-  damageType: 0
+  skill: 1
+  baseMagnitude: 30
+  damageType: 1
   rangeIndicator: {fileID: 0}
-  indicatorMaterial: {fileID: 2100000, guid: 3c6c47126b1480347ac2f55825168a69, type: 2}
+  indicatorMaterial: {fileID: 0}
   currentlyCasting: 0
   caster: {fileID: 0}

@@ -47,9 +47,9 @@ public class BasicAttack : SkillData
 
 
 
-        DrawRangeIndicator(zoneStart, SkillShape.RADIAL, range, angleWidth);
+        //DrawRangeIndicator(zoneStart, SkillShape.RADIAL, maxRange, angle);
 
-        rangeIndicator.DrawCastTimeIndicator(zoneStart, angleWidth, 0.0f, range, drawPercent);
+        rangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, maxRange, drawPercent);
 
 
 
@@ -76,7 +76,7 @@ public class BasicAttack : SkillData
                 if (testedEntity != caster)
                 {
                     //caster.currentHP += baseDamage; //Debug line for stopping the enemy from killing themsevles
-                    testedEntity.TakeDamage(baseDamage);
+                    testedEntity.TakeDamage(baseMagnitude);
                 }
             }
         }

@@ -76,7 +76,7 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         // Setting static sound effect variables to inspector set data
-        meleeSwing = meleeSwing;
+        meleeSwing = meeleSwing;
 
         leftFootstep = footStepLeft;
         rightFootstep = footstepRight;
