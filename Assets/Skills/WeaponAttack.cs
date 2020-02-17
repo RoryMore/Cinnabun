@@ -298,6 +298,11 @@ public class WeaponAttack : BaseSkill
                     bool weaponhit = false;
                     foreach (Entity testedEntity in entityList)
                     {
+                        //if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
+                        //{
+                        //    weaponhit = true;
+                        //    testedEntity.TakeDamage(skillData.baseMagnitude * swordDamageMultiplier);
+                        //}
                         if (CheckRadialSkillHit(testedEntity.transform.position))
                         {
                             weaponhit = true;
