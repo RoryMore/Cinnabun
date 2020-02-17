@@ -99,9 +99,9 @@ public class SimpleEnemy : EnemyScript
             UpdateAllConditions();
 
             //Choose what attack it want's to make this turn
-            Decide();
+            //Decide();
 
-            bool isInRangeOfFriendlyAttack = CheckAttackers();
+            //bool isInRangeOfFriendlyAttack = CheckAttackers();
 
             //So long as we aren't attacking, move!
             if (chosenSkill.currentlyCasting == false)
@@ -143,15 +143,16 @@ public class SimpleEnemy : EnemyScript
 
         if (!isDead)
         {
+            //Fetch distance betweeen self and the player
+            float distance = Vector3.Distance(this.gameObject.transform.position, target.transform.position);
+
             if (!isAttacking)
             {
-
-                //Fetch distance betweeen self and the player
-                float distance = Vector3.Distance(this.gameObject.transform.position, target.transform.position);
 
                 //If the player is using an attack and we're close to death, retreat!
                 if (player.playerState == Player.PlayerState.DOINGSKILL && currentHP <= maxHP * 0.25f)
                 {
+                    nav.enabled = true;
                     nav.SetDestination(Vector3.MoveTowards(transform.position, player.transform.position, -nav.speed));
                 }
 
@@ -291,16 +292,16 @@ public class SimpleEnemy : EnemyScript
 
     
 
-    //public void Attack(SkillData attack)
-    //{
-        
-    //    if (attack.currentlyCasting == true)
-    //    {
-    //        attack.TargetSkill(transform, myEncounter.playerInclusiveInitiativeList);
-           
-            
-    //    }
-    //}
+    public void Attack(SkillData attack)
+    {
+      
+        if (attack.currentlyCasting == true)
+        {
+            attack.TargetSkill(transform, myEncounter.playerInclusiveInitiativeList);
+         
+          
+        }
+    }
 
  
 
