@@ -1521,7 +1521,7 @@ PrefabInstance:
     - target: {fileID: 5986327890210922169, guid: 6b6b2af61b4a85b47a66cbd93ba70863,
         type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5986327890210922169, guid: 6b6b2af61b4a85b47a66cbd93ba70863,
         type: 3}
@@ -2174,12 +2174,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8198910644498900114, guid: 4f638ac7bc9dc58419258c1c0a5db81e,
     type: 3}
   m_PrefabInstance: {fileID: 676391818}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &750665766 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 9308aaa0e4f81954684189cc388be004,
-    type: 3}
-  m_PrefabInstance: {fileID: 145764166}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &774630621
 PrefabInstance:
@@ -7418,7 +7412,7 @@ Transform:
   - {fileID: 1431134411}
   - {fileID: 1640789207}
   - {fileID: 777394306}
-  - {fileID: 750665766}
+  - {fileID: 161395358}
   - {fileID: 619884819}
   - {fileID: 945291040}
   - {fileID: 1769219732}
