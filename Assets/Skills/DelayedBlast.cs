@@ -11,6 +11,11 @@ public class DelayedBlast : BaseSkill
 
     public float explosionRadius;
 
+    private void Start()
+    {
+        Initialise();
+    }
+
     protected override void Initialise()
     {
         base.Initialise();
@@ -64,7 +69,7 @@ public class DelayedBlast : BaseSkill
         // Entity is not set; therefore we need to wait until the user has set the entity
         if (entityTarget1 == null)
         {
-            ResetIndicatorImages();
+            //ResetIndicatorImages();
             EnableProjector();
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -95,7 +100,7 @@ public class DelayedBlast : BaseSkill
 
     protected override void CastSkill()
     {
-        SetFillType(fillType);
+        //SetFillType(fillType);
 
         currentlyCasting = true;
 

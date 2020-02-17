@@ -21,7 +21,7 @@ public class WeaponAttack : BaseSkill
     public float staffRange;
     public float bowRange;
 
-    [Header("Overwritten Damage Values for Weapons")]
+    [Header("Damage Multiplier Based on Weapon")]
     public int unarmedDamageMultiplier;
     public int swordDamageMultiplier;
     public int staffDamageMultiplier;
@@ -34,6 +34,11 @@ public class WeaponAttack : BaseSkill
     //Entity caster = null;
 
     bool attackAreaChosen = false;
+
+    private void Start()
+    {
+        Initialise();
+    }
 
     protected override void Initialise()
     {
@@ -98,7 +103,7 @@ public class WeaponAttack : BaseSkill
                 }
                 if (entityTarget == null)
                 {
-                    ResetIndicatorImages();
+                    //ResetIndicatorImages();
                     EnableProjector();
 
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -136,7 +141,7 @@ public class WeaponAttack : BaseSkill
                 }
                 if (!attackAreaChosen)
                 {
-                    ResetIndicatorImages();
+                    //ResetIndicatorImages();
                     EnableProjector();
 
                     Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -170,7 +175,7 @@ public class WeaponAttack : BaseSkill
                 }
                 if (!attackAreaChosen)
                 {
-                    ResetIndicatorImages();
+                    //ResetIndicatorImages();
                     EnableProjector();
 
                     Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -204,7 +209,7 @@ public class WeaponAttack : BaseSkill
                 }
                 if (entityTarget == null)
                 {
-                    ResetIndicatorImages();
+                    //ResetIndicatorImages();
                     EnableProjector();
 
                     Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -296,7 +301,7 @@ public class WeaponAttack : BaseSkill
                         if (CheckRadialSkillHit(testedEntity.transform.position))
                         {
                             weaponhit = true;
-                            testedEntity.TakeDamage(swordDamageMultiplier);
+                            testedEntity.TakeDamage(skillData.baseMagnitude * swordDamageMultiplier);
                         }
                     }
 
@@ -312,13 +317,13 @@ public class WeaponAttack : BaseSkill
                 {
                     if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                     {
-                        testedEntity.TakeDamage(staffDamageMultiplier);
+                        testedEntity.TakeDamage(skillData.baseMagnitude * staffDamageMultiplier);
                     }
                 }
                 break;
 
             case UsedWeaponType.Bow:
-                entityTarget.TakeDamage(bowDamageMultiplier);
+                entityTarget.TakeDamage(skillData.baseMagnitude * bowDamageMultiplier);
                 break;
             default:
                 break;

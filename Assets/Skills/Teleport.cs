@@ -10,6 +10,11 @@ public class Teleport : BaseSkill
     Vector3 teleportLocation;
     bool destination1Set = false;
 
+    private void Start()
+    {
+        Initialise();
+    }
+
     protected override void Initialise()
     {
         base.Initialise();
@@ -63,7 +68,7 @@ public class Teleport : BaseSkill
         //If no data has yet been specified
         if (entityTarget1 == null)
         {
-            ResetIndicatorImages();
+            //ResetIndicatorImages();
             EnableProjector();
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -98,7 +103,7 @@ public class Teleport : BaseSkill
 
     protected override void CastSkill()
     {
-        SetFillType(fillType);
+        //SetFillType(fillType);
 
         currentlyCasting = true;
         //DrawRangeIndicator(zoneStart, shape);

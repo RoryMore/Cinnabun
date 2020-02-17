@@ -64,7 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ShadowTex:
-        m_Texture: {fileID: 2800000, guid: 720297794a6dade45bdd067a834d121c, type: 3}
+        m_Texture: {fileID: 2800000, guid: 288685841b67e764d9a398b0b276f02c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -82,9 +82,9 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Power: 1
-    - _Progress: 0.5003407
+    - _Progress: 1.002913
     - _ProgressY: 0
-    - _SkillType: 1
+    - _SkillType: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
