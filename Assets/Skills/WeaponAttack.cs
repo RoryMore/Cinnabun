@@ -94,10 +94,11 @@ public class WeaponAttack : BaseSkill
                 {
                     oldWeapon = usedWeapon;
                     skillData.maxRange = unarmedRange;
-                    SetFillType(CastFillType.CIRCULAR);
+                    
                 }
                 if (entityTarget == null)
                 {
+                    ResetIndicatorImages();
                     EnableProjector();
 
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -131,10 +132,11 @@ public class WeaponAttack : BaseSkill
                     //rangeIndicator.Init(SkillShape.RADIAL, angle);
                     oldWeapon = usedWeapon;
                     skillData.maxRange = swordRange;
-                    SetFillType(CastFillType.LINEAR);
+                    
                 }
                 if (!attackAreaChosen)
                 {
+                    ResetIndicatorImages();
                     EnableProjector();
 
                     Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -164,10 +166,11 @@ public class WeaponAttack : BaseSkill
                     //rangeIndicator.Init(SkillShape.RECTANGULAR, lineWidth);
                     oldWeapon = usedWeapon;
                     skillData.maxRange = staffRange;
-                    SetFillType(CastFillType.LINEAR);
+                    
                 }
                 if (!attackAreaChosen)
                 {
+                    ResetIndicatorImages();
                     EnableProjector();
 
                     Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -197,10 +200,11 @@ public class WeaponAttack : BaseSkill
                     //rangeIndicator.Init(SkillShape.RADIAL, 360.0f);
                     oldWeapon = usedWeapon;
                     skillData.maxRange = bowRange;
-                    SetFillType(CastFillType.CIRCULAR);
+                    
                 }
                 if (entityTarget == null)
                 {
+                    ResetIndicatorImages();
                     EnableProjector();
 
                     Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -243,27 +247,19 @@ public class WeaponAttack : BaseSkill
         switch (usedWeapon)
         {
             case UsedWeaponType.Unarmed:
-                //DrawRangeIndicator(zoneStart, SkillShape.RADIAL, unarmedRange, 360.0f);
-
-                //rangeIndicator.DrawCastTimeIndicator(zoneStart, 360.0f, 0.0f, unarmedRange, drawPercent);
+                SetFillType(CastFillType.CIRCULAR);
                 break;
 
             case UsedWeaponType.Sword:
-                //DrawRangeIndicator(zoneStart, SkillShape.RADIAL, swordRange, angle);
-
-                //rangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, swordRange, drawPercent);
+                SetFillType(CastFillType.LINEAR);
                 break;
 
             case UsedWeaponType.Staff:
-                //DrawRangeIndicator(zoneStart, SkillShape.RECTANGULAR, staffRange, lineWidth);
-
-                //rangeIndicator.DrawCastTimeIndicator(zoneStart, lineWidth, 0.0f, staffRange, drawPercent);
+                SetFillType(CastFillType.LINEAR);
                 break;
 
             case UsedWeaponType.Bow:
-                //DrawRangeIndicator(zoneStart, SkillShape.RADIAL, bowRange, 360.0f);
-
-                //rangeIndicator.DrawCastTimeIndicator(zoneStart, 360.0f, 0.0f, bowRange, drawPercent);
+                SetFillType(CastFillType.CIRCULAR);
                 break;
             default:
                 break;

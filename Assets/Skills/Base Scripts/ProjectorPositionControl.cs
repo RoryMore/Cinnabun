@@ -25,8 +25,23 @@ public class ProjectorPositionControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        distanceFromCaster = skill.skillData.maxRange* 0.5f ;
-        projector.orthographicSize = distanceFromCaster;
+        switch (skill.fillType)
+        {
+            case BaseSkill.CastFillType.LINEAR:
+                {
+                    distanceFromCaster = skill.skillData.maxRange * 0.5f;
+                    projector.orthographicSize = distanceFromCaster;
+                    break;
+                }
+
+            case BaseSkill.CastFillType.CIRCULAR:
+                {
+                    distanceFromCaster = skill.skillData.maxRange;
+                    projector.orthographicSize = distanceFromCaster;
+                    break;
+                }
+        }
+        
     }
 
     // Update is called once per frame
@@ -35,8 +50,22 @@ public class ProjectorPositionControl : MonoBehaviour
         // If there are any on-the-fly changes to range. make the necessary changes here
         if ((skill.skillData.maxRange * 0.5f + skill.skillData.minRange) != distanceFromCaster)
         {
-            distanceFromCaster = skill.skillData.maxRange* 0.5f ;
-            projector.orthographicSize = distanceFromCaster;
+            switch (skill.fillType)
+            {
+                case BaseSkill.CastFillType.LINEAR:
+                    {
+                        distanceFromCaster = skill.skillData.maxRange * 0.5f;
+                        projector.orthographicSize = distanceFromCaster;
+                        break;
+                    }
+
+                case BaseSkill.CastFillType.CIRCULAR:
+                    {
+                        distanceFromCaster = skill.skillData.maxRange;
+                        projector.orthographicSize = distanceFromCaster;
+                        break;
+                    }
+            }
         }
 
         switch(skill.moveType)

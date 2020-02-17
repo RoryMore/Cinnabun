@@ -38,11 +38,9 @@
 				};
 
 				sampler2D _ShadowTex;
-				// Added _FalloffTex;
 				sampler2D _FalloffTex;
 				sampler2D _FillTex;
 				float4x4 unity_Projector;
-				// Added unity_ProjectorClip
 				float4x4 unity_ProjectorClip;
 				float4 _Color;
 				float _Progress;

@@ -139,7 +139,7 @@ public class Player : Entity
                         case SkillData.SkillList.DELAYEDBLAST:
                             if (currentEncounter != null)
                             {
-                                selectedSkill.TriggerSkill(currentEncounter.masterInitiativeList);
+                                selectedSkill.TriggerSkill(currentEncounter.playerInclusiveInitiativeList);
 
                                 if (selectedSkill.currentlyCasting)
                                 {
@@ -415,6 +415,7 @@ public class Player : Entity
 
     public void CancelSkillSelection()
     {
+        selectedSkill.DisableProjector();
         selectedSkill = null;
         playerState = PlayerState.FREE;
         nav.angularSpeed = turningSpeed;

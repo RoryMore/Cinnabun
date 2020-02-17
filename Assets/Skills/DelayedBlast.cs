@@ -4,24 +4,74 @@ using UnityEngine;
 
 //[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Skills/DelayedBlast", order = 1)]
 
-public class DelayedBlast : SkillData
+public class DelayedBlast : BaseSkill
 {
     Entity entityTarget1 = null;
     int numOfDelayedBlasts = 0;
 
     public float explosionRadius;
-    
 
-    public override void TargetSkill(Transform zoneStart, List<Entity> entityList)
+    protected override void Initialise()
+    {
+        base.Initialise();
+    }
+
+    private void Update()
+    {
+        SkillDeltaUpdate();
+    }
+
+    public override void TriggerSkill(List<Entity> entityList)
+    {
+        base.TriggerSkill();
+        switch (skillState)
+        {
+            case SkillState.INACTIVE:
+                {
+                    if (isAllowedToCast)
+                    {
+                        skillState = SkillState.TARGETTING;
+                    }
+                    break;
+                }
+
+            case SkillState.TARGETTING:
+                {
+                    //Debug.Log("Skill being Targetted");
+                    TargetSkill();
+                    break;
+                }
+
+            case SkillState.CASTING:
+                {
+                    //Debug.Log("Skill being cast!");
+                    //UpdateCastTime();
+                    CastSkill();
+                    break;
+                }
+
+            case SkillState.DOAFFECT:
+                {
+                    //Debug.Log("Skill Effect Activated");
+                    ActivateSkill(entityList);
+                    break;
+                }
+        }
+    }
+
+    protected override void TargetSkill()
     {
         // Entity is not set; therefore we need to wait until the user has set the entity
         if (entityTarget1 == null)
         {
+            ResetIndicatorImages();
+            EnableProjector();
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 400))
             {
-                Vector3 lookAt = new Vector3(hit.point.x, zoneStart.position.y, hit.point.z);
-                zoneStart.LookAt(lookAt);
+                Vector3 lookAt = new Vector3(hit.point.x, casterSelf.transform.position.y, hit.point.z);
+                casterSelf.transform.LookAt(lookAt);
             }
 
             // We are drawing the range indicator here so the player knows if what they are clicking is in range
@@ -29,7 +79,7 @@ public class DelayedBlast : SkillData
             //DrawRangeIndicator(zoneStart, shape);
 
             // Select our entity target
-            SelectTargetRay(zoneStart, ref entityTarget1, true);
+            SelectTargetRay(ref entityTarget1, true);
             // The true value in the SelectTargetRay function is specifying that we want to also make a check
             // to see if the target is in range
             // We can leave that extra field blank, or false, if we don't want to make that check
@@ -37,29 +87,35 @@ public class DelayedBlast : SkillData
         else if (entityTarget1 != null)
         {
             // Start casting the skill
-            CastSkill(zoneStart, entityList);
+            skillState = SkillState.CASTING;
+            //CastSkill(entityList);
         }
 
     }
 
-    protected override void CastSkill(Transform zoneStart, List<Entity> entityList)
+    protected override void CastSkill()
     {
+        SetFillType(fillType);
+
         currentlyCasting = true;
 
         //DrawRangeIndicator(zoneStart, shape);
 
-        float drawPercent = (timeSpentOnWindUp / windUp);
-        rangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, maxRange, drawPercent);
+        //float drawPercent = (timeSpentOnWindUp / skillData.windUp);
+        //rangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, maxRange, drawPercent);
 
         // Increment the time spent winding up the skill
-        timeSpentOnWindUp += Time.deltaTime;
+        //timeSpentOnWindUp += Time.deltaTime;
 
         // When the skill can be activated
-        if (timeSpentOnWindUp >= windUp)
+        if (timeSpentOnWindUp >= skillData.windUp)
         {
             currentlyCasting = false;
-            ActivateSkill(entityList);
-            timeSpentOnWindUp = 0.0f;
+
+            skillState = SkillState.DOAFFECT;
+            //ActivateSkill(entityList);
+
+            DisableProjector();
         }
     }
 
@@ -67,6 +123,9 @@ public class DelayedBlast : SkillData
     {
         timeBeenOnCooldown = 0.0f;
         numOfDelayedBlasts = 0;
+        timeSpentOnWindUp = 0.0f;
+
+        skillState = SkillState.INACTIVE;
 
         //Assuming the list is empty, give it a delayed blast condition
         if (entityTarget1.ReturnConditions().Count == 0)
@@ -87,26 +146,27 @@ public class DelayedBlast : SkillData
                 if (entityTarget1.currentConditions[i].conditionType == Entity.ConditionType.DELAYEDBLAST)
                 {
                     entityTarget1.currentConditions.Remove(entityTarget1.currentConditions[i]);
-                    //entityTarget1.TakeDamage(baseDamage);
+                    entityTarget1.TakeDamage(skillData.baseMagnitude);
+                    entityTarget1.ParticleExplosion();
 
                     if (entityList != null)
                     {
  
                         //Deal splash damage to enemies
-                        rangeIndicator.DrawIndicator(entityTarget1.transform, 360, 0, explosionRadius);
+                        //rangeIndicator.DrawIndicator(entityTarget1.transform, 360, 0, explosionRadius);
                         foreach (Entity enemy in entityList)
                         {
                             //Make sure we don't deal double damage
-                            //if (enemy == entityTarget1)
-                            //{
-                                //break;
-                            //}
+                            if (enemy == entityTarget1)
+                            {
+                                continue;
+                            }
                             if (Vector3.Distance(enemy.transform.position, entityTarget1.transform.position) < explosionRadius)
                             {
-                                enemy.TakeDamage(baseMagnitude);
+                                enemy.TakeDamage(skillData.baseMagnitude);
 
                                 // Call function that activates explosion particles
-                                enemy.ParticleExplosion();
+                                //enemy.ParticleExplosion();
                             }
                         }
 

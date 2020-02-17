@@ -49,7 +49,7 @@ public class BaseSkill : MonoBehaviour
 
     [HideInInspector]
     public float timeBeenOnCooldown = 10.0f;
-    [SerializeField]
+
     protected float timeSpentOnWindUp = 0;
     [HideInInspector]
     public bool currentlyCasting = false;
@@ -61,6 +61,12 @@ public class BaseSkill : MonoBehaviour
     [Tooltip("SET CASTER SELF TO PARENT OBJECT. \nE.G: Player object is set to this on the players skills")]
     public Entity casterSelf;
 
+    [Header("Indicator Image Settings")]
+    [SerializeField]
+    Sprite mainCookie;
+    [SerializeField]
+    Sprite fillCookie;
+
     protected virtual void Initialise()
     {
         if (skillData != null)
@@ -70,6 +76,10 @@ public class BaseSkill : MonoBehaviour
             currentlyCasting = false;
         }
         material = new Material(Shader.Find("Projector/Tattoo"));
+
+        material.SetTexture("_ShadowTex", mainCookie.texture);
+        material.SetTexture("_FillTex", fillCookie.texture);
+
         projector.material = material;
 
         switch (fillType)
@@ -94,6 +104,12 @@ public class BaseSkill : MonoBehaviour
         }
         skillTriggered = false;
         skillState = SkillState.INACTIVE;
+    }
+
+    protected void ResetIndicatorImages()
+    {
+        projector.material.SetTexture("_ShadowTex", mainCookie.texture);
+        projector.material.SetTexture("_FillTex", fillCookie.texture);
     }
 
     protected void SetFillType(CastFillType castFillType)
@@ -128,7 +144,7 @@ public class BaseSkill : MonoBehaviour
         }
     }
 
-    protected void DisableProjector()
+    public void DisableProjector()
     {
         if (projector.enabled)
         {
@@ -136,7 +152,7 @@ public class BaseSkill : MonoBehaviour
         }
     }
 
-    protected void UpdateCastTime()
+    void UpdateCastTime()
     {
         switch(skillState)
         {
@@ -152,7 +168,22 @@ public class BaseSkill : MonoBehaviour
         }
         if (projector.enabled)
         {
-            projector.material.SetFloat("_Progress", (timeSpentOnWindUp / skillData.windUp));
+            switch(fillType)
+            {
+                case CastFillType.LINEAR:
+                    {
+                        projector.material.SetFloat("_Progress", (timeSpentOnWindUp / skillData.windUp));
+                        break;
+                    }
+
+                case CastFillType.CIRCULAR:
+                    {
+                        // Convert this percentage value to cap at 0.5 rather than 1. Circular fill fills from the centre outward; half as much to fill
+                        projector.material.SetFloat("_Progress", (timeSpentOnWindUp / skillData.windUp) * 0.5f);
+                        break;
+                    }
+            }
+            
         }
     }
 

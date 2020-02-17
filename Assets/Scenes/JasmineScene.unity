@@ -3436,6 +3436,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1747353389}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1018375222 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4131665851672515049, guid: 768628249c4c2f647b7f7962b17fc210,
+    type: 3}
+  m_PrefabInstance: {fileID: 1062068215}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1036134708
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3545,37 +3551,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1759311214, guid: 768628249c4c2f647b7f7962b17fc210, type: 3}
-      propertyPath: unarmedDamageMultiplier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759311214, guid: 768628249c4c2f647b7f7962b17fc210, type: 3}
-      propertyPath: swordDamageMultiplier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759311214, guid: 768628249c4c2f647b7f7962b17fc210, type: 3}
-      propertyPath: staffDamageMultiplier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1759311214, guid: 768628249c4c2f647b7f7962b17fc210, type: 3}
-      propertyPath: bowDamageMultiplier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 40223383970396589, guid: 768628249c4c2f647b7f7962b17fc210,
-        type: 3}
-      propertyPath: skill
-      value: 
-      objectReference: {fileID: 1759311215}
-    - target: {fileID: 105419801254285341, guid: 768628249c4c2f647b7f7962b17fc210,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
-        type: 3}
-      propertyPath: skillList.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
       propertyPath: inventory
@@ -3583,9 +3558,9 @@ PrefabInstance:
       objectReference: {fileID: 1701733582}
     - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
-      propertyPath: weaponAttack
+      propertyPath: explosionParticles
       value: 
-      objectReference: {fileID: 1759311215}
+      objectReference: {fileID: 1018375222}
     - target: {fileID: 819698099673919354, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
       propertyPath: m_Name
@@ -3645,6 +3620,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4131665851672515049, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4131665851672515049, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4131665851793973634, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4131665851793973634, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4131665851793973661, guid: 768628249c4c2f647b7f7962b17fc210,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8400652880884936493, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
@@ -6678,18 +6678,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 153533406}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1759311215 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1759311214, guid: 768628249c4c2f647b7f7962b17fc210,
-    type: 3}
-  m_PrefabInstance: {fileID: 1062068215}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adf3f868b05bd3441a3fa55fb3ee036a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1769219732 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7021797207025235825, guid: b23cfc5bfedf22f45a41fb9563e54ab8,
