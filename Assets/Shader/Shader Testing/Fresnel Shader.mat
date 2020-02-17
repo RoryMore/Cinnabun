@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tutorial_012_Fresnel
+  m_Name: Fresnel Shader
   m_Shader: {fileID: 4800000, guid: 4e35a45d446d6e64398df4ccfd71b4e0, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -32,11 +32,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _FresnelExponent: 1.66
+    - _FresnelExponent: 0.53
     - _Glossiness: 0.5
     - _Metallic: 0
     - _Smoothness: 0
     m_Colors:
     - _Color: {r: 0.754717, g: 0.50907797, b: 0.50907797, a: 1}
     - _Emission: {r: 0, g: 0, b: 0, a: 1}
-    - _FresnelColor: {r: 0.94008595, g: 0.9528302, b: 0, a: 1}
+    - _FresnelColor: {r: 0.9529412, g: 0, b: 0.4169154, a: 1}

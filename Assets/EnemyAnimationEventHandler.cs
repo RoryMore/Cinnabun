@@ -5,7 +5,10 @@ using UnityEngine;
 public class EnemyAnimationEventHandler : MonoBehaviour
 {
     SoundManager soundManager;
-
+    public ParticleSystem[] AttackEffects;
+    public ParticleSystem[] DeathEffect;
+    public ParticleSystem[] HitEffect;
+    public ParticleSystem[] RunEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -20,23 +23,43 @@ public class EnemyAnimationEventHandler : MonoBehaviour
     }
     void EnemyStep()
     {
+        //sound
         soundManager.EnemyStepSound();
-       
+        //partics effect
+        foreach (ParticleSystem item in AttackEffects)
+        {
+            item.Play();
+        }
     }
 
     void EnemyAttack()
     {
         soundManager.EnemyAttackSound();
+
+        foreach (ParticleSystem item in DeathEffect)
+        {
+            item.Play();
+        }
     }
 
     void EnemyHit()
     {
         soundManager.EnemyHitSound();
+
+        foreach (ParticleSystem item in HitEffect)
+        {
+            item.Play();
+        }
     }
 
     void EnemyDeath()
     {
         soundManager.EnemyDeathSound();
+
+        foreach (ParticleSystem item in RunEffect)
+        {
+            item.Play();
+        }
     }
 
     

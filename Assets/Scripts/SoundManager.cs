@@ -335,5 +335,3 @@ public class SoundManager : MonoBehaviour
 
 }
 
-
-//IT WORK,BUT BADLY
