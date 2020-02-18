@@ -7,7 +7,7 @@ public class EnemyManager : MonoBehaviour
     public GameObject player;
     public List<Encounter> encounters;
     public float maxEncounterDistance;
-
+   
     public bool weWon;
 
     public bool isInBattle;
@@ -79,4 +79,46 @@ public class EnemyManager : MonoBehaviour
             weWon = true;
         }
     }
+    public void PlayerDeath()
+    {
+        GameObject[] EnemyList = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject Enemy in EnemyList)
+        {
+            //stop attacking
+            Enemy.GetComponent<SimpleEnemy>();
+            
+        }
+   
+    }
+    public void ResetWave()
+    {
+        
+        foreach (Encounter encounter in encounters)
+        {
+            if (encounter.gameObject.activeSelf)
+            {
+                encounter.ClearInitiativeList();
+            }
+        }
+        
+
+
+        GameObject[] EnemyList = GameObject.FindGameObjectsWithTag("Enemy");
+        //kill all enemys
+        foreach (GameObject Enemy in EnemyList)
+        {
+            Destroy(Enemy);
+        }
+
+
+        //spawn new enemy
+        foreach (Encounter encounter in encounters)
+        {
+            if (encounter.gameObject.activeSelf)
+            {
+                encounter.SpawnEnemies();
+            }
+        }
+    }
+
 }

@@ -19,7 +19,7 @@ public class WinLoseCanvasControl : MonoBehaviour
 
     public bool gameLost;
     public bool gameWon;
-
+    public float delay;
     float winAlpha;
     float loseAlpha;
 
@@ -62,37 +62,64 @@ public class WinLoseCanvasControl : MonoBehaviour
     void Update()
     {
         UpdateWinConditions();
-
-        if (gameWon)
+        if (delay <= 0)
         {
-            if (winAlpha < 2.0f)
+
+
+            if (gameWon)
             {
-                winAlpha += Time.deltaTime;
-
-                if (winAlpha < 1.0f)
+                if (winAlpha < 2.0f)
                 {
-                    Color alphaColour = winText.color;
-                    alphaColour.a = winAlpha;
-                    winText.color = alphaColour;
+                    winAlpha += Time.deltaTime;
 
-                    alphaColour = blackFade.color;
-                    alphaColour.a = winAlpha;
-                    blackFade.color = alphaColour;
+                    if (winAlpha < 1.0f)
+                    {
+                        Color alphaColour = winText.color;
+                        alphaColour.a = winAlpha;
+                        winText.color = alphaColour;
+
+                        alphaColour = blackFade.color;
+                        alphaColour.a = winAlpha;
+                        blackFade.color = alphaColour;
+                    }
+                }
+                else
+                {
+                    winAlphaFull = true;
+                }
+            }
+            else if (gameLost)
+            {
+                if (loseAlpha < 2.0f)
+                {
+                    loseAlpha += Time.deltaTime;
+
+                    if (loseAlpha < 1.0f)
+                    {
+                        Color alphaColour = blackFade.color;
+                        alphaColour.a = loseAlpha;
+                        blackFade.color = alphaColour;
+
+                        alphaColour = loseBGImage.color;
+                        alphaColour.a = loseAlpha;
+                        loseBGImage.color = alphaColour;
+
+                        alphaColour = loseTextImage.color;
+                        alphaColour.a = loseAlpha;
+                        loseTextImage.color = alphaColour;
+                    }
+                }
+                else
+                {
+                    loseAlphaFull = true;
                 }
             }
             else
             {
-                winAlphaFull = true;
-            }
-        }
-        else if (gameLost)
-        {
-            if (loseAlpha < 2.0f)
-            {
-                loseAlpha += Time.deltaTime;
-
-                if (loseAlpha < 1.0f)
+                if (loseAlpha > 0.0f)
                 {
+                    loseAlpha -= Time.deltaTime;
+
                     Color alphaColour = blackFade.color;
                     alphaColour.a = loseAlpha;
                     blackFade.color = alphaColour;
@@ -105,57 +132,50 @@ public class WinLoseCanvasControl : MonoBehaviour
                     alphaColour.a = loseAlpha;
                     loseTextImage.color = alphaColour;
                 }
-            }
-            else
-            {
-                loseAlphaFull = true;
+                else
+                {
+                    loseAlphaFull = false;
+                }
+                if (winAlpha > 0.0f)
+                {
+                    winAlpha -= Time.deltaTime;
+
+                    Color alphaColour = winText.color;
+                    alphaColour.a = winAlpha;
+                    winText.color = alphaColour;
+
+                    alphaColour = blackFade.color;
+                    alphaColour.a = winAlpha;
+                    blackFade.color = alphaColour;
+                }
+                else
+                {
+                    winAlphaFull = false;
+                }
             }
         }
         else
         {
-            if (loseAlpha > 0.0f)
-            {
-                loseAlpha -= Time.deltaTime;
-
-                Color alphaColour = blackFade.color;
-                alphaColour.a = loseAlpha;
-                blackFade.color = alphaColour;
-
-                alphaColour = loseBGImage.color;
-                alphaColour.a = loseAlpha;
-                loseBGImage.color = alphaColour;
-
-                alphaColour = loseTextImage.color;
-                alphaColour.a = loseAlpha;
-                loseTextImage.color = alphaColour;
-            }
-            else
-            {
-                loseAlphaFull = false;
-            }
-            if (winAlpha > 0.0f)
-            {
-                winAlpha -= Time.deltaTime;
-
-                Color alphaColour = winText.color;
-                alphaColour.a = winAlpha;
-                winText.color = alphaColour;
-
-                alphaColour = blackFade.color;
-                alphaColour.a = winAlpha;
-                blackFade.color = alphaColour;
-            }
-            else
-            {
-                winAlphaFull = false;
-            }
+            delay -= Time.deltaTime;
         }
     }
 
     void UpdateWinConditions()
     {
-        gameLost = player.isDead;
+        if ((gameLost != player.isDead) &&(delay <= 0))
+        {
+            gameLost = player.isDead;
+
+            delay = 3;
+        }
+
+        if ((gameWon != enemyManager.weWon) && (delay <= 0))
+        {
+            gameWon = enemyManager.weWon;
+
+            delay = 3;
+        }
         // Set gameWon based on enemyManager bool
-        gameWon = enemyManager.weWon;
+       
     }
 }

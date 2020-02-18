@@ -50,7 +50,7 @@ public class EnemyAnimationEventHandler : MonoBehaviour
     void EnemyHit()
     {
         soundManager.EnemyHitSound();
-
+        //takeDamage
         foreach (ParticleSystem item in HitEffect)
         {
             item.Play();

@@ -197,45 +197,33 @@ public class Entity : MonoBehaviour
 
         if (currentHP <= 0)
         {
-           
+            Debug.Log("here");
             if (gameObject.name == "Player")
             {
-                gameObject.GetComponentInChildren<RespawnControl>().enabled = false;
+                //stop player form doing anything
                 gameObject.GetComponentInChildren<Player>().enabled = false;
-                // gameObject.GetComponentInChildren<Animation>().enabled = false;
-                // gameObject.GetComponentInChildren<PlayerAnimationEventHandler>().enabled = false;
-                gameObject.GetComponentInChildren<NavMeshAgent>().enabled = false;
-               
+               //stop animating
                 gameObject.GetComponentInChildren<Animator>().enabled = false;
-                gameObject.GetComponentInChildren<PlayerAnimationEventHandler>().enabled = false;
+                //stop all enemy for attacting //possable Win animation for enemy
+                GameObject.Find("EnemyManager").GetComponent<EnemyManager>().PlayerDeath();
+                
             }
             else
             {
-
+                //it is a enemy which die
+                gameObject.GetComponentInChildren<Animator>().enabled = false;
+                gameObject.GetComponentInChildren<SimpleEnemy>().enabled = false;
             }
             SetRigidBodyState(false);
             //migth stop rewind
            SetColliderState(true);
-            StartCoroutine("Dead");
-            //
+            Death();
+            
+            
         }
     }
 
-    IEnumerator Dead()
-    {
-        yield return new WaitForSeconds(4);
-        gameObject.GetComponentInChildren<NavMeshAgent>().enabled = true;
-        Death();
-
-        yield return new WaitForSeconds(2);
-
-        //tell enemy to stop
-        gameObject.GetComponentInChildren<RespawnControl>().enabled = true;
-        gameObject.GetComponentInChildren<Player>().enabled = true;
-
-        gameObject.GetComponentInChildren<Animator>().enabled = true;
-        gameObject.GetComponentInChildren<PlayerAnimationEventHandler>().enabled = true;
-    }
+   
    
 
     public virtual void Death()

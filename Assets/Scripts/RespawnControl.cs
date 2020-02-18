@@ -7,7 +7,7 @@ public class RespawnControl : MonoBehaviour
 {
     Player player;
     Transform respawnPoint;
-
+    
     public InventoryBase inventoryBase;
 
     bool itemsCleared = false;
@@ -63,8 +63,8 @@ public class RespawnControl : MonoBehaviour
                 }
 
                 //player.transform.position = respawnPoint.position;
-                player.nav.Warp(respawnPoint.position);
-                player.Revive();
+                StartCoroutine("Dead");
+                
                 itemsCleared = false;
             }
         }
@@ -76,5 +76,21 @@ public class RespawnControl : MonoBehaviour
                 SceneManager.LoadSceneAsync(currentScene);
             }
         }
+    }
+    IEnumerator Dead()
+    {
+        yield return new WaitForSeconds(6);
+       
+       
+        player.nav.Warp(respawnPoint.position);
+        player.Revive();
+
+        //reset Wave
+        GameObject.Find("EnemyManager").GetComponent<EnemyManager>().ResetWave();
+
+        //set player to active agian
+        gameObject.GetComponentInChildren<Player>().enabled = true;
+
+        gameObject.GetComponentInChildren<Animator>().enabled = true; 
     }
 }
