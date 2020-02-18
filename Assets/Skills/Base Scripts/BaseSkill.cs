@@ -413,9 +413,11 @@ public class BaseSkill : MonoBehaviour
     protected virtual void ActivateSkill(List<Entity> entityList) { }
 
     protected virtual void TargetSkill() { }
+    protected virtual void TargetSkill(Entity entity) { }
     protected virtual void TargetSkill(List<Entity> entityList) { }
 
     public virtual void TriggerSkill() { }
+    public virtual void TriggerSkill(Entity entity) { }
     public virtual void TriggerSkill(List<Entity> entityList) { }
 
     private void OnDrawGizmos()
