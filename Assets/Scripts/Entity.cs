@@ -148,8 +148,9 @@ public class Entity : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-
+        //set ragdoll to false
+        SetRigidBodyState(true);
+        SetColliderState(false);
 
         //How you give a condition
         //Condition delayedBlastTest = new Condition();
@@ -196,10 +197,46 @@ public class Entity : MonoBehaviour
 
         if (currentHP <= 0)
         {
-            Death();
+           
+            if (gameObject.name == "Player")
+            {
+                gameObject.GetComponentInChildren<RespawnControl>().enabled = false;
+                gameObject.GetComponentInChildren<Player>().enabled = false;
+                // gameObject.GetComponentInChildren<Animation>().enabled = false;
+                // gameObject.GetComponentInChildren<PlayerAnimationEventHandler>().enabled = false;
+                gameObject.GetComponentInChildren<NavMeshAgent>().enabled = false;
+               
+                gameObject.GetComponentInChildren<Animator>().enabled = false;
+                gameObject.GetComponentInChildren<PlayerAnimationEventHandler>().enabled = false;
+            }
+            else
+            {
+
+            }
+            SetRigidBodyState(false);
+            //migth stop rewind
+           SetColliderState(true);
+            StartCoroutine("Dead");
+            //
         }
     }
 
+    IEnumerator Dead()
+    {
+        yield return new WaitForSeconds(4);
+        gameObject.GetComponentInChildren<NavMeshAgent>().enabled = true;
+        Death();
+
+        yield return new WaitForSeconds(2);
+
+        //tell enemy to stop
+        gameObject.GetComponentInChildren<RespawnControl>().enabled = true;
+        gameObject.GetComponentInChildren<Player>().enabled = true;
+
+        gameObject.GetComponentInChildren<Animator>().enabled = true;
+        gameObject.GetComponentInChildren<PlayerAnimationEventHandler>().enabled = true;
+    }
+   
 
     public virtual void Death()
     {
@@ -398,6 +435,7 @@ public class Entity : MonoBehaviour
        // transform.position = new Vector3(0, 0, 0);
         rewind = false;
 
+       
     }
 
     public void ClearList()
@@ -415,5 +453,23 @@ public class Entity : MonoBehaviour
             explosionParticles.SetActive(false);
             explosionParticles.SetActive(true);
         }
+    }
+    public void SetRigidBodyState(bool currentState)
+    {
+        Rigidbody[] Rigidbody = GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody item in Rigidbody)
+        {
+            item.isKinematic = currentState;
+        }
+       // GetComponent<Rigidbody>().isKinematic = !currentState;
+    }
+    public void SetColliderState(bool currentState)
+    {
+        Collider[] Rigidbody = GetComponentsInChildren<Collider>();
+        foreach (Collider item in Rigidbody)
+        {
+            item.enabled = currentState;
+        }
+        //GetComponent<Collider>().enabled = !currentState;
     }
 }

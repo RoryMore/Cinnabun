@@ -25,10 +25,15 @@ public class EnemyAnimationEventHandler : MonoBehaviour
     {
         //sound
         soundManager.EnemyStepSound();
-        //partics effect
-        foreach (ParticleSystem item in AttackEffects)
+        //play all partics effects which happen 
+        Debug.Log("run effe"+RunEffect.Length);
+        foreach (ParticleSystem item in RunEffect)
         {
-            item.Play();
+            if (!item.IsAlive())
+            {
+                Debug.Log("Play effect");
+                item.Play();
+            }
         }
     }
 
@@ -36,7 +41,7 @@ public class EnemyAnimationEventHandler : MonoBehaviour
     {
         soundManager.EnemyAttackSound();
 
-        foreach (ParticleSystem item in DeathEffect)
+        foreach (ParticleSystem item in AttackEffects)
         {
             item.Play();
         }
@@ -56,7 +61,7 @@ public class EnemyAnimationEventHandler : MonoBehaviour
     {
         soundManager.EnemyDeathSound();
 
-        foreach (ParticleSystem item in RunEffect)
+        foreach (ParticleSystem item in DeathEffect)
         {
             item.Play();
         }
