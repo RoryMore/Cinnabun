@@ -8,6 +8,7 @@ public class Player : Entity
     [Header("Movement Raycasting Settings")]
     public LayerMask groundLayerMask;
     public float moveRaycastDistance;
+    public CameraController cameraShake;
 
     public enum PlayerState
     {
@@ -284,6 +285,7 @@ public class Player : Entity
     public override void TakeDamage(int amount)
     {
         animator.SetTrigger("gotHit");
+        StartCoroutine(cameraShake.cShake(.3f, 1f));
         base.TakeDamage(amount);
     }
 
