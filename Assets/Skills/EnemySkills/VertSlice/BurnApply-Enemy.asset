@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d86a24f12299674e8970832147bf16d, type: 3}
   m_Name: BurnApply-Enemy
   m_EditorClassIdentifier: 
-  range: 5
+  maxRange: 0
+  minRange: 0
+  farWidth: 0
+  nearWidth: 0
+  verticalRange: 0
+  angle: 0
   cooldown: 3
   timeBeenOnCooldown: 10
   windUp: 2
   timeSpentOnWindUp: 0
-  shape: 0
-  angleWidth: 360
   skill: 3
-  baseDamage: 2
+  baseMagnitude: 0
   damageType: 1
   rangeIndicator: {fileID: 0}
   indicatorMaterial: {fileID: 2100000, guid: 3c6c47126b1480347ac2f55825168a69, type: 2}

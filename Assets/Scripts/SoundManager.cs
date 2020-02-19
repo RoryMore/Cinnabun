@@ -435,7 +435,7 @@ public class SoundManager : MonoBehaviour
     {
        
         AudioClip clip = enemyFootsteps[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
-        Debug.Log(clip.name);
+        //Debug.Log(clip.name);
         enemyFootAudioSource.PlayOneShot(clip);
         
     }
@@ -444,7 +444,7 @@ public class SoundManager : MonoBehaviour
     {
 
         AudioClip clip = enemyAttacks[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
-        Debug.Log(clip.name);
+        //Debug.Log(clip.name);
         enemyAttackAudioSource.PlayOneShot(clip);
         
     }
@@ -453,7 +453,7 @@ public class SoundManager : MonoBehaviour
     {
 
         AudioClip clip = enemyHits[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
-        Debug.Log(clip.name);
+        //Debug.Log(clip.name);
         enemyHitAudioSource.PlayOneShot(clip);
         
     }
@@ -462,7 +462,7 @@ public class SoundManager : MonoBehaviour
     {
 
         AudioClip clip = enemyDeath[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
-        Debug.Log(clip.name);
+        //Debug.Log(clip.name);
         enemyDeathAudioSource.PlayOneShot(clip);
         
     }

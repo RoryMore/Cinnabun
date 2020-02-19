@@ -51,11 +51,11 @@ public class BaseSkill : MonoBehaviour
     public float timeBeenOnCooldown = 10.0f;
 
     protected float timeSpentOnWindUp = 0;
-    [HideInInspector]
-    public bool currentlyCasting = false;
+    //[HideInInspector]
+    public bool currentlyCasting;
 
     [HideInInspector]
-    public bool isAllowedToCast = true;
+    public bool isAllowedToCast;
     protected bool skillTriggered = false;
 
     [Tooltip("SET CASTER SELF TO PARENT OBJECT. \nE.G: Player object is set to this on the players skills")]
@@ -413,9 +413,11 @@ public class BaseSkill : MonoBehaviour
     protected virtual void ActivateSkill(List<Entity> entityList) { }
 
     protected virtual void TargetSkill() { }
+    protected virtual void TargetSkill(Entity entity) { }
     protected virtual void TargetSkill(List<Entity> entityList) { }
 
     public virtual void TriggerSkill() { }
+    public virtual void TriggerSkill(Entity entity) { }
     public virtual void TriggerSkill(List<Entity> entityList) { }
 
     private void OnDrawGizmos()

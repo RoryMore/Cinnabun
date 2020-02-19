@@ -44,6 +44,7 @@ public class Encounter : MonoBehaviour
     public void SpawnEnemies()
     {
         //Spawn enemies
+        //WARNING: If more spawn points are open than prefabs to fill them, this function breaks
         foreach (GameObject location in spawnPoints)
         {
 
