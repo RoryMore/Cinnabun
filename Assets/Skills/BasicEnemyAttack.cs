@@ -82,7 +82,7 @@ public class BasicEnemyAttack : BaseSkill
     {
         // For the wind up, any specific functionality needed during casting needs to be done here 
         // Other than that, below is all thats required
-        base.CastSkill();
+        //base.CastSkill();
         currentlyCasting = true;
         if (timeSpentOnWindUp >= skillData.windUp)
         {
@@ -94,7 +94,7 @@ public class BasicEnemyAttack : BaseSkill
         }
     }
 
-    protected override void ActivateSkill()
+    protected override void ActivateSkill(List<Entity> entityList)
     {
         base.ActivateSkill();
         timeBeenOnCooldown = 0.0f;
@@ -102,7 +102,15 @@ public class BasicEnemyAttack : BaseSkill
         skillState = SkillState.INACTIVE;
 
         // Intended effect here. Be it damage or otherwise
-        target.TakeDamage(skillData.baseMagnitude);
+        // This includes checking if target is in range and such
+        foreach (Entity testedEntity in entityList)
+        {
+            if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
+            {
+                testedEntity.TakeDamage(skillData.baseMagnitude);
+            }
+
+        }
 
     }
 }

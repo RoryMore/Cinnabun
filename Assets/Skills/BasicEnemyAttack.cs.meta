@@ -3,7 +3,12 @@ guid: 674781fb8e607874bbddbad1ed306383
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - projector: {instanceID: 0}
+  - skillData: {instanceID: 0}
+  - casterSelf: {instanceID: 0}
+  - mainCookie: {instanceID: 0}
+  - fillCookie: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
