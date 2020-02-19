@@ -203,7 +203,7 @@ public class Player : Entity
                                 if (currentEncounter != null)
                                 {
                                     // Need a current entity list to put into function parameter
-                                    selectedSkill.TriggerSkill(currentEncounter.masterInitiativeList);
+                                    selectedSkill.TriggerSkill(currentEncounter.masterInitiativeList, groundLayerMask);
 
                                     if (selectedSkill.currentlyCasting)
                                     {
