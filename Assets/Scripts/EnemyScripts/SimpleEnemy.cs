@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class SimpleEnemy : EnemyScript
 {
 
-   
+   // [SerializeField] private Transform damageNumbers;
     Transform target;
     Player player; //All intents and purposes, same as target but target is just the transform
     bool isAttacking = false;
@@ -18,11 +18,12 @@ public class SimpleEnemy : EnemyScript
     public List<EnemyScript> enemyForces;
 
     PauseAbility pauseAbility;
-
+    [SerializeField] private Transform damageNumbers;
     //VERT SLICE USE ONLY
     EnemyAttack attack; 
     ConeRangeIndicator coneRangeIndicator;
     RectangleRangeIndicator rectangleRangeIndicator;
+   // DamagePopUp damagePopUp;
     //END OF VERT ONLY CONTENT
 
     public BaseSkill basicAttack;
@@ -262,6 +263,8 @@ public class SimpleEnemy : EnemyScript
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
+        Create(transform.position, amount, false);
+         
         anim.SetTrigger("getHit");
     }
 
@@ -272,6 +275,11 @@ public class SimpleEnemy : EnemyScript
         anim.enabled = false;
     }
 
+    public void Create(Vector3 position, int damageAmount, bool crit)
+    {
+        float x = Random.Range( -0.9f, 0.3f);
+        float y = Random.Range(-0.9f, 0.3f);
+        Vector3 numberVec = new Vector3(x,y+3,0.0f);
 
     public void Attack(BaseSkill basicAttack)
     {
