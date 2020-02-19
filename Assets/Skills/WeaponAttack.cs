@@ -51,7 +51,7 @@ public class WeaponAttack : BaseSkill
         SkillDeltaUpdate();
     }
 
-    public override void TriggerSkill(List<Entity> entityList)
+    public override void TriggerSkill(List<Entity> entityList, LayerMask layerMask)
     {
         base.TriggerSkill(entityList);
         switch (skillState)
@@ -68,7 +68,7 @@ public class WeaponAttack : BaseSkill
             case SkillState.TARGETTING:
                 {
                     //Debug.Log("Skill being Targetted");
-                    TargetSkill(entityList);
+                    TargetSkill(entityList, layerMask);
                     break;
                 }
 
@@ -89,7 +89,7 @@ public class WeaponAttack : BaseSkill
         }
     }
 
-    protected override void TargetSkill(List<Entity> entityList)
+    protected override void TargetSkill(List<Entity> entityList, LayerMask layerMask)
     {
         
         switch (usedWeapon)
@@ -145,7 +145,7 @@ public class WeaponAttack : BaseSkill
                     EnableProjector();
 
                     Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    if (Physics.Raycast(ray2, out RaycastHit hit2, Mathf.Infinity))
+                    if (Physics.Raycast(ray2, out RaycastHit hit2, Mathf.Infinity, layerMask))
                     {
                         Vector3 lookAt = new Vector3(hit2.point.x, casterSelf.transform.position.y, hit2.point.z);
                         casterSelf.transform.LookAt(lookAt);
@@ -179,7 +179,7 @@ public class WeaponAttack : BaseSkill
                     EnableProjector();
 
                     Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    if (Physics.Raycast(ray2, out RaycastHit hit2, Mathf.Infinity))
+                    if (Physics.Raycast(ray2, out RaycastHit hit2, Mathf.Infinity, layerMask))
                     {
                         Vector3 lookAt = new Vector3(hit2.point.x, casterSelf.transform.position.y, hit2.point.z);
                         casterSelf.transform.LookAt(lookAt);
@@ -303,9 +303,10 @@ public class WeaponAttack : BaseSkill
                         //    weaponhit = true;
                         //    testedEntity.TakeDamage(skillData.baseMagnitude * swordDamageMultiplier);
                         //}
-                        if (CheckRadialSkillHit(testedEntity.transform.position))
+                        if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                         {
                             weaponhit = true;
+                            
                             testedEntity.TakeDamage(skillData.baseMagnitude * swordDamageMultiplier);
                         }
                     }
