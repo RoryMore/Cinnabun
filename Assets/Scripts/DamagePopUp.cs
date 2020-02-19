@@ -11,6 +11,9 @@ public class DamagePopUp : MonoBehaviour
     private TextMeshPro textMesh;
     private float disappearTimer;
     private Color textColor;
+    //[SerializeField] private Transform damageNumbers;
+
+
     private void Awake()
     {
         textMesh = transform.GetComponent<TextMeshPro>();
@@ -22,7 +25,7 @@ public class DamagePopUp : MonoBehaviour
         if (!isCrit)
         {
             //Normal hit
-            textMesh.fontSize = 36;
+            textMesh.fontSize = 20;
             textColor = Color.white;
         }
         else
@@ -43,23 +46,23 @@ public class DamagePopUp : MonoBehaviour
     private void Update()
     {
         float moveYSPeed = 2f;
-        transform.position += new Vector3(0, moveYSPeed) * Time.deltaTime;
+        transform.position += new Vector3(0, moveYSPeed) * Time.unscaledDeltaTime;
 
-        if (disappearTimer > DISAPPEAR_TIMER_MAX * 0.5f)
+        if (disappearTimer > DISAPPEAR_TIMER_MAX * 0.9f)
         {
-            float increaseScaleAmount = 1f;
-            transform.localScale += Vector3.one * increaseScaleAmount * Time.deltaTime;
+            float increaseScaleAmount = 3f;
+            transform.localScale += Vector3.one * increaseScaleAmount * Time.unscaledDeltaTime;
         }
         else {
             float decreaseScaleAmount = 1f;
-            transform.localScale -= Vector3.one * decreaseScaleAmount * Time.deltaTime;
+            transform.localScale -= Vector3.one * decreaseScaleAmount * Time.unscaledDeltaTime;
         }
 
-        disappearTimer -= Time.deltaTime;
+        disappearTimer -= Time.unscaledDeltaTime;
         if (disappearTimer < 0)
         {
             float disappearSpeed = 3f;
-            textColor.a -= disappearSpeed * Time.deltaTime;
+            textColor.a -= disappearSpeed * Time.unscaledDeltaTime;
             textMesh.color = textColor;
             if (textColor.a < 0)
             {
@@ -67,4 +70,12 @@ public class DamagePopUp : MonoBehaviour
             }
         }
     }
+
+   /* public void Create(Vector3 position, int damageAmount, bool crit)
+    {
+        Transform damagePopUpTransform = Instantiate(damageNumbers, position, Quaternion.identity);
+
+        DamagePopUp damagePopUp = damagePopUpTransform.GetComponent<DamagePopUp>();
+        damagePopUp.SetUp(damageAmount, crit);
+    }*/
 }

@@ -17,9 +17,9 @@ public class CameraShake : MonoBehaviour
 
     }
 
-    public IEnumerator cShake (float duration, float amount)
+    public IEnumerator cShake (float duration, float amount, Vector3 originalPos)
     {
-        Vector3 originalPos = transform.localPosition;
+        originalPos = transform.localPosition;
         float elapsed = 0.0f;
 
         while (elapsed < duration)
