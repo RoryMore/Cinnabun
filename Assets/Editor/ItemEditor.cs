@@ -100,12 +100,12 @@ public class ItemEditor : Editor
         else
         {
             float statLabelWidth = 95.0f;
-            CreateLabelWithRange("Strength", statLabelWidth, ref itemScript.strengthRange.min, ref itemScript.strengthRange.max);
-            CreateLabelWithRange("Agility", statLabelWidth, ref itemScript.agilityRange.min, ref itemScript.agilityRange.max);
-            CreateLabelWithRange("Constitution", statLabelWidth, ref itemScript.constitutionRange.min, ref itemScript.constitutionRange.max);
-            CreateLabelWithRange("Intellect", statLabelWidth, ref itemScript.intellectRange.min, ref itemScript.intellectRange.max);
-            CreateLabelWithRange("Physical Armour", statLabelWidth, ref itemScript.physicalArmourRange.min, ref itemScript.physicalArmourRange.max);
-            CreateLabelWithRange("Magical Armour", statLabelWidth, ref itemScript.magicalArmourRange.min, ref itemScript.magicalArmourRange.max);
+            CreateLabelWithRange("Strength", statLabelWidth, ref itemScript.strengthRangeMin, ref itemScript.strengthRangeMax);
+            CreateLabelWithRange("Agility", statLabelWidth, ref itemScript.agilityRangeMin, ref itemScript.agilityRangeMax);
+            CreateLabelWithRange("Constitution", statLabelWidth, ref itemScript.constitutionRangeMin, ref itemScript.constitutionRangeMax);
+            CreateLabelWithRange("Intellect", statLabelWidth, ref itemScript.intellectRangeMin, ref itemScript.intellectRangeMax);
+            CreateLabelWithRange("Physical Armour", statLabelWidth, ref itemScript.physicalArmourRangeMin, ref itemScript.physicalArmourRangeMax);
+            CreateLabelWithRange("Magical Armour", statLabelWidth, ref itemScript.magicalArmourRangeMin, ref itemScript.magicalArmourRangeMax);
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Str: " + itemScript.strength, EditorStyles.label, GUILayout.Width(90));

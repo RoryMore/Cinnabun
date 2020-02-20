@@ -73,7 +73,7 @@ public class MouseItemControl : MonoBehaviour
                             mouseItem.isEquipped = true;
                             mouseItem.usedEquipSlot = checkedResult.usedEquipSlot;
                             //checkedResult.usedEquipSlot = null;
-                            CharacterPanelStatControl.OnItemRemove(mouseItem.item);
+                            CharacterPanelStatControl.OnItemRemove(mouseItem.itemStatBlock);
                         }
                         else // Item was in inventory
                         {

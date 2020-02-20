@@ -23,6 +23,18 @@ MonoBehaviour:
   intellect: 2
   physicalArmour: 0
   magicalArmour: 25
+  strengthRangeMin: 0
+  strengthRangeMax: 0
+  agilityRangeMin: 0
+  agilityRangeMax: 0
+  constitutionRangeMin: 0
+  constitutionRangeMax: 0
+  intellectRangeMin: 0
+  intellectRangeMax: 0
+  physicalArmourRangeMin: 0
+  physicalArmourRangeMax: 0
+  magicalArmourRangeMin: 0
+  magicalArmourRangeMax: 0
   inventorySprite: {fileID: 21300000, guid: 3613a410bbe250548a2f3399935eb781, type: 3}
   equippedSprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   inventorySpaceX: 1

@@ -14,6 +14,9 @@ public class InventoryItem : MonoBehaviour
         public int physicalArmour;
         public int magicalArmour;
     }
+
+    public ItemStatBlock itemStatBlock;
+
     // The item this inventoryItem is representing
     public Item item;
 
@@ -44,6 +47,24 @@ public class InventoryItem : MonoBehaviour
         image = GetComponent<Image>();
 
         SetItem(insertedItem);
+        if (insertedItem != null)
+        {
+            itemStatBlock = new ItemStatBlock();
+            Debug.Log("Item stat - Strength: " + itemStatBlock.strength);
+            Debug.Log("Item stat - Agility: " + itemStatBlock.agility);
+            Debug.Log("Item stat - Constitution: " + itemStatBlock.constitution);
+            Debug.Log("Item stat - Intellect: " + itemStatBlock.intellect);
+            Debug.Log("Item stat - Physical Armour: " + itemStatBlock.physicalArmour);
+            Debug.Log("Item stat - Magical Armour: " + itemStatBlock.magicalArmour);
+
+            itemStatBlock = item.GetRandomItemStats();
+            Debug.Log("Item stat - Strength: " + itemStatBlock.strength);
+            Debug.Log("Item stat - Agility: " + itemStatBlock.agility);
+            Debug.Log("Item stat - Constitution: " + itemStatBlock.constitution);
+            Debug.Log("Item stat - Intellect: " + itemStatBlock.intellect);
+            Debug.Log("Item stat - Physical Armour: " + itemStatBlock.physicalArmour);
+            Debug.Log("Item stat - Magical Armour: " + itemStatBlock.magicalArmour);
+        }
 
         rect.position = invPosition;
         rect.localScale = invScale;
@@ -61,6 +82,24 @@ public class InventoryItem : MonoBehaviour
         image = GetComponent<Image>();
 
         SetItem(insertedItem);
+        if (insertedItem != null)
+        {
+            itemStatBlock = new ItemStatBlock();
+            Debug.Log("Item stat - Strength: " + itemStatBlock.strength);
+            Debug.Log("Item stat - Agility: " + itemStatBlock.agility);
+            Debug.Log("Item stat - Constitution: " + itemStatBlock.constitution);
+            Debug.Log("Item stat - Intellect: " + itemStatBlock.intellect);
+            Debug.Log("Item stat - Physical Armour: " + itemStatBlock.physicalArmour);
+            Debug.Log("Item stat - Magical Armour: " + itemStatBlock.magicalArmour);
+
+            itemStatBlock = item.GetRandomItemStats();
+            Debug.Log("Item stat - Strength: " + itemStatBlock.strength);
+            Debug.Log("Item stat - Agility: " + itemStatBlock.agility);
+            Debug.Log("Item stat - Constitution: " + itemStatBlock.constitution);
+            Debug.Log("Item stat - Intellect: " + itemStatBlock.intellect);
+            Debug.Log("Item stat - Physical Armour: " + itemStatBlock.physicalArmour);
+            Debug.Log("Item stat - Magical Armour: " + itemStatBlock.magicalArmour);
+        }
 
         rect.position = invPosition;
         rect.localScale = invScale;

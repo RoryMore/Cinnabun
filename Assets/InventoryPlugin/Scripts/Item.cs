@@ -70,6 +70,19 @@ public class Item : ScriptableObject
     [HideInInspector] public IntRange physicalArmourRange;
     [HideInInspector] public IntRange magicalArmourRange;
 
+    [HideInInspector] public int strengthRangeMin;
+    [HideInInspector] public int strengthRangeMax;
+    [HideInInspector] public int agilityRangeMin;
+    [HideInInspector] public int agilityRangeMax;
+    [HideInInspector] public int constitutionRangeMin;
+    [HideInInspector] public int constitutionRangeMax;
+    [HideInInspector] public int intellectRangeMin;
+    [HideInInspector] public int intellectRangeMax;
+    [HideInInspector] public int physicalArmourRangeMin;
+    [HideInInspector] public int physicalArmourRangeMax;
+    [HideInInspector] public int magicalArmourRangeMin;
+    [HideInInspector] public int magicalArmourRangeMax;
+
     [Header("Image")]
     [HideInInspector] public Sprite inventorySprite;
     [HideInInspector] public Sprite equippedSprite;
@@ -90,11 +103,26 @@ public class Item : ScriptableObject
     // Parameters: ref stat value to chance, minRandomRange value, maxRandomRange value
     public void RandomiseStatValues()
     {
-        strength = Random.Range(strengthRange.min, strengthRange.max);
-        agility = Random.Range(agilityRange.min, agilityRange.max);
-        constitution = Random.Range(constitutionRange.min, constitutionRange.max);
-        intellect = Random.Range(intellectRange.min, intellectRange.max);
-        physicalArmour = Random.Range(physicalArmourRange.min, physicalArmourRange.max);
-        magicalArmour = Random.Range(magicalArmourRange.min, magicalArmourRange.max);
+        strength = Random.Range(strengthRangeMin, strengthRangeMax);
+        agility = Random.Range(agilityRangeMin, agilityRangeMax);
+        constitution = Random.Range(constitutionRangeMin, constitutionRangeMax);
+        intellect = Random.Range(intellectRangeMin, intellectRangeMax);
+        physicalArmour = Random.Range(physicalArmourRangeMin, physicalArmourRangeMax);
+        magicalArmour = Random.Range(magicalArmourRangeMin, magicalArmourRangeMax);
+    }
+
+    public InventoryItem.ItemStatBlock GetRandomItemStats()
+    {
+        InventoryItem.ItemStatBlock itemStatBlock = new InventoryItem.ItemStatBlock
+        {
+            strength = Random.Range(strengthRangeMin, strengthRangeMax),
+            agility = Random.Range(agilityRangeMin, agilityRangeMax),
+            constitution = Random.Range(constitutionRangeMin, constitutionRangeMax),
+            intellect = Random.Range(intellectRangeMin, intellectRangeMax),
+            physicalArmour = Random.Range(physicalArmourRangeMin, physicalArmourRangeMax),
+            magicalArmour = Random.Range(magicalArmourRangeMin, magicalArmourRangeMax)
+        };
+
+        return itemStatBlock;
     }
 }

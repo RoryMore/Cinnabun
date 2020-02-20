@@ -16,13 +16,25 @@ MonoBehaviour:
   armourType: 0
   weaponType: 0
   equipmentSlot: 3
-  applyRandomStats: 0
+  applyRandomStats: 1
   strength: 1
   agility: 3
   constitution: 1
   intellect: 3
   physicalArmour: 0
   magicalArmour: 3
+  strengthRangeMin: 0
+  strengthRangeMax: 8
+  agilityRangeMin: 0
+  agilityRangeMax: 8
+  constitutionRangeMin: 0
+  constitutionRangeMax: 8
+  intellectRangeMin: 0
+  intellectRangeMax: 8
+  physicalArmourRangeMin: 0
+  physicalArmourRangeMax: 8
+  magicalArmourRangeMin: 0
+  magicalArmourRangeMax: 8
   inventorySprite: {fileID: 0}
   equippedSprite: {fileID: 0}
   inventorySpaceX: 2
