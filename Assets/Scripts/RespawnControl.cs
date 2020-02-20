@@ -87,6 +87,7 @@ public class RespawnControl : MonoBehaviour
 
         //reset Wave
         GameObject.Find("EnemyManager").GetComponent<EnemyManager>().ResetWave();
+        //reset
 
         //set player to active agian
         gameObject.GetComponentInChildren<Player>().enabled = true;
