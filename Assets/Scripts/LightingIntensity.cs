@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IntensityOfCycle : MonoBehaviour
+public class LightingIntensity : MonoBehaviour
 {
+    [Tooltip("Intesity of the light per each CurrentTime")] 
     public List<float> inensitys;
     public int currentLight;
-    public float insiyStr;
+    public float IntensityChangingStr;
 
-   public float intensLight=0;
+    //starting Light Intesity
+    [Tooltip("starting Light Intesity")]
+    public float intensLight=0;
 
 
     Light lighting;
@@ -16,34 +19,36 @@ public class IntensityOfCycle : MonoBehaviour
     void Start()
     {
         lighting = GetComponent<Light>();
-        intensLight = lighting.intensity;
+        
     }
 
     // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-
+        
         if (lighting.intensity != inensitys[currentLight])
         {
             //Debug.Log(lighting.intensity < inensitys[currentLight]);
             //Debug.Log();
                 if (lighting.intensity > inensitys[currentLight])
             {
-                intensLight -= 0.01f;
+                intensLight -= IntensityChangingStr;
 
             }
             else
             {
-                intensLight += 0.01f;
+                intensLight += IntensityChangingStr;
 
             }
         }
-        //lighting.intensity = intensLight;
+        lighting.intensity = intensLight;
     }
     public void SetCurrentLight()
     {
-        if (currentLight+1 == inensitys.Count)
+        Debug.Log(inensitys.Count-1);
+        if (currentLight == inensitys.Count-1)
         {
+            Debug.LogError("heer"+ gameObject.name);
             currentLight = 0;
         }
         else
