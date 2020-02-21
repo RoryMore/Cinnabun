@@ -92,6 +92,7 @@ public class EquipmentPanelControl : MonoBehaviour
                 }
             }
         }
+        //invBase.AddItem(invItem);
         return false;
     }
 }

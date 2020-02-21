@@ -94,8 +94,6 @@ public class ItemData : ScriptableObject
 
     [HideInInspector] public string itemName;
 
-    public ItemSpawner.ItemRarity itemRarity;
-
     // TODO: Add a section for Tooltip on mouseover.
 
     // Possible room to add Trait section. List of Traits. Required for Production game

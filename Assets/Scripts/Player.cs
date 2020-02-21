@@ -43,8 +43,8 @@ public class Player : Entity
     GameObject delayedBlastCastParticles;
 
     [Header("Inventory")]
-    [SerializeField]
-    GameObject inventory;
+    //[SerializeField]
+    public GameObject inventory;
     bool inventoryBeginShit = false;
 
     // Start is called before the first frame update

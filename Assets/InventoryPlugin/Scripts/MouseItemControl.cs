@@ -16,11 +16,17 @@ public class MouseItemControl : MonoBehaviour
     PointerEventData pointerEventData;
     EventSystem eventSystem;
 
+    [SerializeField]
+    GameObject itemDrop = null;
+
+    Player player;
+
     // Start is called before the first frame update
     void Start()
     {
         raycaster = inventoryCanvas.GetComponent<GraphicRaycaster>();
         eventSystem = GetComponent<EventSystem>();
+        player = FindObjectOfType<Player>();
     }
 
     private void Awake()
@@ -130,9 +136,16 @@ public class MouseItemControl : MonoBehaviour
                         {
                             equipPanelControl = result.gameObject.GetComponent<EquipmentPanelControl>();
                         }
-
+                        
                         if (equipPanelControl.EquipItem(mouseItem))
                         {
+                            incrementsWithoutUsableSlot--;
+                            mouseItem.ClearItem();
+                            mouseItem.gameObject.SetActive(false);
+                        }
+                        else
+                        {
+                            invBase.AddItem(mouseItem);
                             incrementsWithoutUsableSlot--;
                             mouseItem.ClearItem();
                             mouseItem.gameObject.SetActive(false);
@@ -144,17 +157,25 @@ public class MouseItemControl : MonoBehaviour
                 // We are placing the item back in the slot it was originally in
                 if (incrementsWithoutUsableSlot == mouseRaycastList.Count)
                 {
+                    bool itemDroppedToGround = false;
 
-                    if (invBase.AddItem(mouseItem, mouseItem.slotsUsed[0].slotID))
+                    if (mouseItem.itemData != null)
                     {
-                        Debug.Log("ITEM WAS ADDED FROM MOUSE - OUT OF INVENTORY SLOT BOUNDS");
+                        Vector3 dropLocation = player.transform.position;
+                        dropLocation.x += Random.Range(-2.0f, 2.0f);
+                        dropLocation.z += Random.Range(-2.0f, 2.0f);
 
+                        Item droppedItem = Instantiate(itemDrop, dropLocation, Quaternion.identity).GetComponent<Item>();
+                        droppedItem.Initialise(mouseItem.itemData, mouseItem.itemStatBlock, 30.0f);
+
+                        itemDroppedToGround = true;
                         mouseItem.ClearItem();
                         mouseItem.gameObject.SetActive(false);
                     }
-                    else
+
+                    if (!itemDroppedToGround)
                     {
-                        if (invBase.AddItem(mouseItem))
+                        if (invBase.AddItem(mouseItem, mouseItem.slotsUsed[0].slotID))
                         {
                             Debug.Log("ITEM WAS ADDED FROM MOUSE - OUT OF INVENTORY SLOT BOUNDS");
 
@@ -163,24 +184,33 @@ public class MouseItemControl : MonoBehaviour
                         }
                         else
                         {
-                            
-                            if (mouseItem.isEquipped)
+                            if (invBase.AddItem(mouseItem))
                             {
-                                Debug.Log("MouseItemControl: Re-equipping item. Not enough free inventory space to unequip");
-                                // Re-equip item in its slot.
-                                // Not enough inventory space
-                                equipPanelControl.EquipItem(mouseItem);
+                                Debug.Log("ITEM WAS ADDED FROM MOUSE - OUT OF INVENTORY SLOT BOUNDS");
 
                                 mouseItem.ClearItem();
                                 mouseItem.gameObject.SetActive(false);
                             }
                             else
                             {
-                                Debug.Log("MouseItemControl: Item was out of bounds. Tried adding to own slots, then any slots. This shouldn't be hit");
+
+                                if (mouseItem.isEquipped)
+                                {
+                                    Debug.Log("MouseItemControl: Re-equipping item. Not enough free inventory space to unequip");
+                                    // Re-equip item in its slot.
+                                    // Not enough inventory space
+                                    equipPanelControl.EquipItem(mouseItem);
+
+                                    mouseItem.ClearItem();
+                                    mouseItem.gameObject.SetActive(false);
+                                }
+                                else
+                                {
+                                    Debug.Log("MouseItemControl: Item was out of bounds. Tried adding to own slots, then any slots. This shouldn't be hit");
+                                }
                             }
                         }
                     }
-                    
                 }
             }
         }
