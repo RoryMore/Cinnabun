@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class EquipmentSlot : MonoBehaviour
 {
     [Header("The type of slot this is")]
-    public Item.EquipmentSlot equipmentSlot;
+    public ItemData.EquipmentSlot equipmentSlot;
     [Header("If the slot is currently in use")]
     public bool isUsed;
     [Header("The currently equipped item in this slot")]
-    public Item equippedItem;
+    public ItemData equippedItem;
 
     public static float width;
     public static float height;
@@ -26,7 +26,7 @@ public class EquipmentSlot : MonoBehaviour
         
     }
 
-    public bool Initialise(GameObject parent, RectTransform parentRect, float _width, float _height, float offset, Item.EquipmentSlot equipSlot, InventorySlot.SlotID slotID)
+    public bool Initialise(GameObject parent, RectTransform parentRect, float _width, float _height, float offset, ItemData.EquipmentSlot equipSlot, InventorySlot.SlotID slotID)
     {
         bool shiftedAcross = false;
 
@@ -72,70 +72,70 @@ public class EquipmentSlot : MonoBehaviour
 
         switch (equipmentSlot)
         {
-            case Item.EquipmentSlot.Head:
+            case ItemData.EquipmentSlot.Head:
                 if (EquipPanelSprites.head != null)
                 {
                     image.sprite = EquipPanelSprites.head;
                 }
                 break;
 
-            case Item.EquipmentSlot.Shoulders:
+            case ItemData.EquipmentSlot.Shoulders:
                 if (EquipPanelSprites.shoulders != null)
                 {
                     image.sprite = EquipPanelSprites.shoulders;
                 }
                 break;
 
-            case Item.EquipmentSlot.Chest:
+            case ItemData.EquipmentSlot.Chest:
                 if (EquipPanelSprites.chest != null)
                 {
                     image.sprite = EquipPanelSprites.chest;
                 }
                 break;
 
-            case Item.EquipmentSlot.Legs:
+            case ItemData.EquipmentSlot.Legs:
                 if (EquipPanelSprites.legs != null)
                 {
                     image.sprite = EquipPanelSprites.legs;
                 }
                 break;
 
-            case Item.EquipmentSlot.Feet:
+            case ItemData.EquipmentSlot.Feet:
                 if (EquipPanelSprites.feet != null)
                 {
                     image.sprite = EquipPanelSprites.feet;
                 }
                 break;
 
-            case Item.EquipmentSlot.Hands:
+            case ItemData.EquipmentSlot.Hands:
                 if (EquipPanelSprites.hands != null)
                 {
                     image.sprite = EquipPanelSprites.hands;
                 }
                 break;
 
-            case Item.EquipmentSlot.Weapon:
+            case ItemData.EquipmentSlot.Weapon:
                 if (EquipPanelSprites.weapon != null)
                 {
                     image.sprite = EquipPanelSprites.weapon;
                 }
                 break;
 
-            case Item.EquipmentSlot.Ring1:
+            case ItemData.EquipmentSlot.Ring1:
                 if (EquipPanelSprites.ring1 != null)
                 {
                     image.sprite = EquipPanelSprites.ring1;
                 }
                 break;
 
-            case Item.EquipmentSlot.Ring2:
+            case ItemData.EquipmentSlot.Ring2:
                 if (EquipPanelSprites.ring2 != null)
                 {
                     image.sprite = EquipPanelSprites.ring2;
                 }
                 break;
 
-            case Item.EquipmentSlot.Neck:
+            case ItemData.EquipmentSlot.Neck:
                 if (EquipPanelSprites.neck != null)
                 {
                     image.sprite = EquipPanelSprites.neck;

@@ -18,7 +18,7 @@ public class InventoryItem : MonoBehaviour
     public ItemStatBlock itemStatBlock;
 
     // The item this inventoryItem is representing
-    public Item item;
+    public ItemData itemData;
 
     float width;
     float height;
@@ -47,24 +47,6 @@ public class InventoryItem : MonoBehaviour
         image = GetComponent<Image>();
 
         SetItem(insertedItem);
-        if (insertedItem != null)
-        {
-            itemStatBlock = new ItemStatBlock();
-            Debug.Log("Item stat - Strength: " + itemStatBlock.strength);
-            Debug.Log("Item stat - Agility: " + itemStatBlock.agility);
-            Debug.Log("Item stat - Constitution: " + itemStatBlock.constitution);
-            Debug.Log("Item stat - Intellect: " + itemStatBlock.intellect);
-            Debug.Log("Item stat - Physical Armour: " + itemStatBlock.physicalArmour);
-            Debug.Log("Item stat - Magical Armour: " + itemStatBlock.magicalArmour);
-
-            itemStatBlock = item.GetRandomItemStats();
-            Debug.Log("Item stat - Strength: " + itemStatBlock.strength);
-            Debug.Log("Item stat - Agility: " + itemStatBlock.agility);
-            Debug.Log("Item stat - Constitution: " + itemStatBlock.constitution);
-            Debug.Log("Item stat - Intellect: " + itemStatBlock.intellect);
-            Debug.Log("Item stat - Physical Armour: " + itemStatBlock.physicalArmour);
-            Debug.Log("Item stat - Magical Armour: " + itemStatBlock.magicalArmour);
-        }
 
         rect.position = invPosition;
         rect.localScale = invScale;
@@ -82,28 +64,41 @@ public class InventoryItem : MonoBehaviour
         image = GetComponent<Image>();
 
         SetItem(insertedItem);
-        if (insertedItem != null)
-        {
-            itemStatBlock = new ItemStatBlock();
-            Debug.Log("Item stat - Strength: " + itemStatBlock.strength);
-            Debug.Log("Item stat - Agility: " + itemStatBlock.agility);
-            Debug.Log("Item stat - Constitution: " + itemStatBlock.constitution);
-            Debug.Log("Item stat - Intellect: " + itemStatBlock.intellect);
-            Debug.Log("Item stat - Physical Armour: " + itemStatBlock.physicalArmour);
-            Debug.Log("Item stat - Magical Armour: " + itemStatBlock.magicalArmour);
-
-            itemStatBlock = item.GetRandomItemStats();
-            Debug.Log("Item stat - Strength: " + itemStatBlock.strength);
-            Debug.Log("Item stat - Agility: " + itemStatBlock.agility);
-            Debug.Log("Item stat - Constitution: " + itemStatBlock.constitution);
-            Debug.Log("Item stat - Intellect: " + itemStatBlock.intellect);
-            Debug.Log("Item stat - Physical Armour: " + itemStatBlock.physicalArmour);
-            Debug.Log("Item stat - Magical Armour: " + itemStatBlock.magicalArmour);
-        }
 
         rect.position = invPosition;
         rect.localScale = invScale;
         rect.pivot = invPivot;
+
+        isMouseItem = mouseItem;
+    }
+
+    public void Initialise(GameObject parentObj, InventoryItem insertedItem, Vector3 invPosition, Vector3 invScale, Vector2 invPivot, bool mouseItem = false)
+    {
+        slotsUsed = new List<InventorySlot>();
+        rect = GetComponent<RectTransform>();
+        rect.SetParent(parentObj.transform);
+        image = GetComponent<Image>();
+
+        SetItem(insertedItem);
+
+        rect.position = invPosition;
+        rect.localScale = invScale;
+        rect.pivot = invPivot;
+
+        isMouseItem = mouseItem;
+    }
+
+    public void Initialise(GameObject parentObj, InventoryItem insertedItem, Vector3 invPosition, Vector3 invScale, bool mouseItem = false)
+    {
+        slotsUsed = new List<InventorySlot>();
+        rect = GetComponent<RectTransform>();
+        rect.SetParent(parentObj.transform);
+        image = GetComponent<Image>();
+
+        SetItem(insertedItem);
+
+        rect.position = invPosition;
+        rect.localScale = invScale;
 
         isMouseItem = mouseItem;
     }
@@ -121,14 +116,15 @@ public class InventoryItem : MonoBehaviour
 
     public void SetItem(Item givenItem)
     {
-        item = givenItem;
+        itemData = givenItem.itemData;
+        itemStatBlock = givenItem.itemStatBlock;
 
-        if (item != null)
+        if (itemData != null)
         {
-            image.sprite = item.inventorySprite;
+            image.sprite = itemData.inventorySprite;
 
-            width = InventorySlot.width * item.inventorySpaceX;
-            height = InventorySlot.height * item.inventorySpaceY;
+            width = InventorySlot.width * itemData.inventorySpaceX;
+            height = InventorySlot.height * itemData.inventorySpaceY;
 
             rect.sizeDelta = new Vector2(width, height);
         }
@@ -136,23 +132,28 @@ public class InventoryItem : MonoBehaviour
 
     public void SetItem(InventoryItem givenItem, bool isEquipping = false)
     {
-        item = givenItem.item;
-
-        if (item != null)
+        if (givenItem != null)
         {
+            itemData = givenItem.itemData;
+        }
+
+        if (itemData != null)
+        {
+            itemStatBlock = givenItem.itemStatBlock;
+
             if (isEquipping)
             {
-                image.sprite = item.equippedSprite;
+                image.sprite = itemData.equippedSprite;
 
                 width = EquipmentSlot.width * 0.9f;
                 height = EquipmentSlot.height * 0.9f;
             }
             else
             {
-                image.sprite = item.inventorySprite;
+                image.sprite = itemData.inventorySprite;
 
-                width = InventorySlot.width * item.inventorySpaceX;
-                height = InventorySlot.height * item.inventorySpaceY;
+                width = InventorySlot.width * itemData.inventorySpaceX;
+                height = InventorySlot.height * itemData.inventorySpaceY;
             }
 
             rect.sizeDelta = new Vector2(width, height);
@@ -162,14 +163,14 @@ public class InventoryItem : MonoBehaviour
         }
         else
         {
-            item = null;
+            itemData = null;
             slotsUsed.Clear();
         }
     }
 
     public void ClearItem()
     {
-        item = null;
+        itemData = null;
 
         image.sprite = null;
 

@@ -25,7 +25,7 @@ public class InventoryBase : MonoBehaviour
     [HideInInspector] public bool isItemOnMouse;
     // IDK which type of item class i'll need
     [HideInInspector] public MouseItemControl mouseItemControl;
-    [HideInInspector] public Item itemOnMouse;
+    [HideInInspector] public ItemData itemOnMouse;
 
     [Header("Inventory Icon Spawn")]
     public GameObject itemIcon;
@@ -94,7 +94,7 @@ public class InventoryBase : MonoBehaviour
                     //addToSlots.Add(inventorySlots[i, j]);
 
                     // Check if the whole item can fit in this part of the inventory
-                    for (int itemWidth = 0; itemWidth < itemToAdd.inventorySpaceX; itemWidth++)
+                    for (int itemWidth = 0; itemWidth < itemToAdd.itemData.inventorySpaceX; itemWidth++)
                     {
                         // If we are going out of range of the array, break
                         if (i + itemWidth >= inventorySlotsWide)
@@ -114,7 +114,7 @@ public class InventoryBase : MonoBehaviour
                             break;
                         }
 
-                        for (int itemHeight = 0; itemHeight < itemToAdd.inventorySpaceY; itemHeight++)
+                        for (int itemHeight = 0; itemHeight < itemToAdd.itemData.inventorySpaceY; itemHeight++)
                         {
                             // If we are going out of range of the array, break
                             if (j + itemHeight >= inventorySlotsHigh)
@@ -148,10 +148,10 @@ public class InventoryBase : MonoBehaviour
                             // If we have checked the whole width & height of the item
                             // We can add it to these slots
                             //Debug.Log("itemHeight = " + (itemHeight + 1) + "| itemSpaceY = " + itemToAdd.inventorySpaceY);
-                            if (itemHeight+1 == itemToAdd.inventorySpaceY)
+                            if (itemHeight+1 == itemToAdd.itemData.inventorySpaceY)
                             {
                                 //Debug.Log("itemWidth = " + itemWidth + "| itemSpaceX = " + itemToAdd.inventorySpaceX);
-                                if (itemWidth+1 == itemToAdd.inventorySpaceX)
+                                if (itemWidth+1 == itemToAdd.itemData.inventorySpaceX)
                                 {
                                     if (canItemBeAdded)
                                     {
@@ -163,7 +163,128 @@ public class InventoryBase : MonoBehaviour
                                         foreach (InventorySlot slot in addToSlots)
                                         {
                                             slot.isUsed = true;
-                                            slot.storedItem = newItem.item;
+                                            slot.storedItem = newItem.itemData;
+                                        }
+                                        itemAdded = true;
+
+                                        playerOwnedItems.Add(newItem);
+
+                                        return itemAdded;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (itemAdded)
+                {
+                    break;
+                }
+            }
+            if (itemAdded)
+            {
+                break;
+            }
+        }
+        if (!itemAdded)
+        {
+            addToSlots.Clear();
+            //Debug.Log("Item can't be added");
+        }
+        return itemAdded;
+    }
+
+    /// <summary>
+    /// Used to add an item to the inventory. Returns True if the item was added to the inventory, returns False otherwise.
+    /// </summary>
+    /// <param name="itemToAdd">The item that will be attempted to add to the inventory</param>
+    /// <returns>True if the item was added to the inventory, False otherwise</returns>
+    public bool AddItem(InventoryItem itemToAdd)
+    {
+        bool itemAdded = false;
+        bool canItemBeAdded = true;
+        List<InventorySlot> addToSlots = new List<InventorySlot>();
+        for (int i = 0; i < inventorySlotsWide; i++)
+        {
+            canItemBeAdded = true;
+            for (int j = 0; j < inventorySlotsHigh; j++)
+            {
+                canItemBeAdded = true;
+                if (!inventorySlots[i, j].isUsed)
+                {
+                    //addToSlots.Add(inventorySlots[i, j]);
+
+                    // Check if the whole item can fit in this part of the inventory
+                    for (int itemWidth = 0; itemWidth < itemToAdd.itemData.inventorySpaceX; itemWidth++)
+                    {
+                        // If we are going out of range of the array, break
+                        if (i + itemWidth >= inventorySlotsWide)
+                        {
+                            addToSlots.Clear();
+                            canItemBeAdded = false;
+                            break;
+                        }
+                        else if (itemAdded)
+                        {
+                            addToSlots.Clear();
+                            break;
+                        }
+                        else if (!canItemBeAdded)
+                        {
+                            addToSlots.Clear();
+                            break;
+                        }
+
+                        for (int itemHeight = 0; itemHeight < itemToAdd.itemData.inventorySpaceY; itemHeight++)
+                        {
+                            // If we are going out of range of the array, break
+                            if (j + itemHeight >= inventorySlotsHigh)
+                            {
+                                addToSlots.Clear();
+                                canItemBeAdded = false;
+                                break;
+                            }
+                            else if (itemAdded)
+                            {
+                                addToSlots.Clear();
+                                break;
+                            }
+                            else if (!canItemBeAdded)
+                            {
+                                addToSlots.Clear();
+                                break;
+                            }
+
+                            if (inventorySlots[i + itemWidth, j + itemHeight].isUsed)
+                            {
+                                addToSlots.Clear();
+                                canItemBeAdded = false;
+                                break;
+                            }
+                            else
+                            {
+                                addToSlots.Add(inventorySlots[i + itemWidth, j + itemHeight]);
+                            }
+
+                            // If we have checked the whole width & height of the item
+                            // We can add it to these slots
+                            //Debug.Log("itemHeight = " + (itemHeight + 1) + "| itemSpaceY = " + itemToAdd.inventorySpaceY);
+                            if (itemHeight + 1 == itemToAdd.itemData.inventorySpaceY)
+                            {
+                                //Debug.Log("itemWidth = " + itemWidth + "| itemSpaceX = " + itemToAdd.inventorySpaceX);
+                                if (itemWidth + 1 == itemToAdd.itemData.inventorySpaceX)
+                                {
+                                    if (canItemBeAdded)
+                                    {
+                                        //Debug.Log("Attempting to instantiate new inventory item");
+                                        GameObject newItemObj = Instantiate(itemIcon);
+                                        InventoryItem newItem = newItemObj.GetComponent<InventoryItem>();
+                                        newItem.Initialise(gameObject, itemToAdd, inventorySlots[i, j].transform.position, new Vector3(0.95f, 0.95f), new Vector2(-0.025f, 1.025f));
+                                        newItem.slotsUsed = addToSlots;
+                                        foreach (InventorySlot slot in addToSlots)
+                                        {
+                                            slot.isUsed = true;
+                                            slot.storedItem = newItem.itemData;
                                         }
                                         itemAdded = true;
 
@@ -200,7 +321,7 @@ public class InventoryBase : MonoBehaviour
     /// <param name="itemToAdd">The item that will be attempted to add to the inventory</param>
     /// <param name="atID">The inventory slot ID at which the item will be attempted to be added</param>
     /// <returns>True if the item was added to the inventory, False otherwise</returns>
-    public bool AddItem(Item itemToAdd, InventorySlot.SlotID atID)
+    public bool AddItem(InventoryItem itemToAdd, InventorySlot.SlotID atID)
     {
         bool itemAdded = false;
         bool canItemBeAdded = true;
@@ -211,7 +332,7 @@ public class InventoryBase : MonoBehaviour
             //addToSlots.Add(inventorySlots[atID.x, atID.y]);
 
             // Check if the whole item can fit in this part of the inventory
-            for (int itemWidth = 0; itemWidth < itemToAdd.inventorySpaceX; itemWidth++)
+            for (int itemWidth = 0; itemWidth < itemToAdd.itemData.inventorySpaceX; itemWidth++)
             {
                 // If we are going out of range of the array, break
                 if (atID.x + itemWidth >= inventorySlotsWide)
@@ -231,7 +352,7 @@ public class InventoryBase : MonoBehaviour
                     break;
                 }
 
-                for (int itemHeight = 0; itemHeight < itemToAdd.inventorySpaceY; itemHeight++)
+                for (int itemHeight = 0; itemHeight < itemToAdd.itemData.inventorySpaceY; itemHeight++)
                 {
                     // If we are going out of range of the array, break
                     if (atID.y + itemHeight >= inventorySlotsHigh)
@@ -265,10 +386,10 @@ public class InventoryBase : MonoBehaviour
                     // If we have checked the whole width & height of the item
                     // We can add it to these slots
                     //Debug.Log("itemHeight = " + (itemHeight + 1) + "| itemSpaceY = " + itemToAdd.inventorySpaceY);
-                    if (itemHeight + 1 == itemToAdd.inventorySpaceY)
+                    if (itemHeight + 1 == itemToAdd.itemData.inventorySpaceY)
                     {
                         //Debug.Log("itemWidth = " + itemWidth + "| itemSpaceX = " + itemToAdd.inventorySpaceX);
-                        if (itemWidth + 1 == itemToAdd.inventorySpaceX)
+                        if (itemWidth + 1 == itemToAdd.itemData.inventorySpaceX)
                         {
                             if (canItemBeAdded)
                             {
@@ -280,7 +401,7 @@ public class InventoryBase : MonoBehaviour
                                 foreach (InventorySlot slot in addToSlots)
                                 {
                                     slot.isUsed = true;
-                                    slot.storedItem = newItem.item;
+                                    slot.storedItem = newItem.itemData;
                                 }
                                 itemAdded = true;
 

@@ -27,7 +27,7 @@ public class MouseItemControl : MonoBehaviour
     {
         if (mouseItem != null)
         {
-            mouseItem.Initialise(gameObject, null, transform.position, new Vector3(1.0f, 1.0f), true);
+            mouseItem.Initialise(gameObject, null as InventoryItem, transform.position, new Vector3(1.0f, 1.0f), true);
             mouseItem.gameObject.SetActive(false);
         }
     }
@@ -48,7 +48,7 @@ public class MouseItemControl : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             // If we need to grab an item
-            if (mouseItem.item == null)
+            if (mouseItem.itemData == null)
             {
                 foreach (RaycastResult result in GetNewPointerEventRaycast())
                 {
@@ -92,7 +92,7 @@ public class MouseItemControl : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0)) // We have an item grabbed
         {
-            if (mouseItem.item != null)
+            if (mouseItem.itemData != null)
             {
                 // Check if we are hovering over an inventory slot we can drop the item into
                 List<RaycastResult> mouseRaycastList = GetNewPointerEventRaycast();
@@ -106,7 +106,7 @@ public class MouseItemControl : MonoBehaviour
                         incrementsWithoutUsableSlot--;
                         InventorySlot checkedSlot = result.gameObject.GetComponent<InventorySlot>();
 
-                        if (invBase.AddItem(mouseItem.item, checkedSlot.slotID))
+                        if (invBase.AddItem(mouseItem, checkedSlot.slotID))
                         {
                             Debug.Log("ITEM WAS ADDED FROM MOUSE");
 
@@ -115,7 +115,7 @@ public class MouseItemControl : MonoBehaviour
                         }
                         else // Otherwise put the item back in the inventory slots it was previously in
                         {
-                            invBase.AddItem(mouseItem.item, mouseItem.slotsUsed[0].slotID);
+                            invBase.AddItem(mouseItem, mouseItem.slotsUsed[0].slotID);
 
                             Debug.Log("ITEM WAS ADDED FROM MOUSE");
 
@@ -145,7 +145,7 @@ public class MouseItemControl : MonoBehaviour
                 if (incrementsWithoutUsableSlot == mouseRaycastList.Count)
                 {
 
-                    if (invBase.AddItem(mouseItem.item, mouseItem.slotsUsed[0].slotID))
+                    if (invBase.AddItem(mouseItem, mouseItem.slotsUsed[0].slotID))
                     {
                         Debug.Log("ITEM WAS ADDED FROM MOUSE - OUT OF INVENTORY SLOT BOUNDS");
 
@@ -154,7 +154,7 @@ public class MouseItemControl : MonoBehaviour
                     }
                     else
                     {
-                        if (invBase.AddItem(mouseItem.item))
+                        if (invBase.AddItem(mouseItem))
                         {
                             Debug.Log("ITEM WAS ADDED FROM MOUSE - OUT OF INVENTORY SLOT BOUNDS");
 

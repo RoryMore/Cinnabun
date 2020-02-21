@@ -5,11 +5,11 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 
-[CustomEditor(typeof(Item))]
+[CustomEditor(typeof(ItemData))]
 //[CanEditMultipleObjects]
 public class ItemEditor : Editor
 {
-    Item itemScript;
+    ItemData itemScript;
 
     //struct IntRange
     //{
@@ -50,7 +50,7 @@ public class ItemEditor : Editor
     // Start is called before the first frame update
     private void OnEnable()
     {
-        itemScript = target as Item;
+        itemScript = target as ItemData;
         itemInventoryImage = serializedObject.FindProperty("inventorySprite");
         itemEquippedImage = serializedObject.FindProperty("equippedSprite");
 
@@ -65,21 +65,21 @@ public class ItemEditor : Editor
         EditorGUILayout.LabelField("Types", EditorStyles.boldLabel);
 
         EditorGUILayout.LabelField("Item Type");
-        itemScript.itemType = (Item.ItemType)EditorGUILayout.EnumPopup(itemScript.itemType);
+        itemScript.itemType = (ItemData.ItemType)EditorGUILayout.EnumPopup(itemScript.itemType);
 
-        if (itemScript.itemType == Item.ItemType.Armour)
+        if (itemScript.itemType == ItemData.ItemType.Armour)
         {
             EditorGUILayout.LabelField("Armour Type");
-            itemScript.armourType = (Item.ArmourType)EditorGUILayout.EnumPopup(itemScript.armourType);
+            itemScript.armourType = (ItemData.ArmourType)EditorGUILayout.EnumPopup(itemScript.armourType);
         }
         else
         {
             EditorGUILayout.LabelField("Weapon Type");
-            itemScript.weaponType = (Item.WeaponType)EditorGUILayout.EnumPopup(itemScript.weaponType);
+            itemScript.weaponType = (ItemData.WeaponType)EditorGUILayout.EnumPopup(itemScript.weaponType);
         }
 
         EditorGUILayout.LabelField("Equipment Slot");
-        itemScript.equipmentSlot = (Item.EquipmentSlot)EditorGUILayout.EnumPopup(itemScript.equipmentSlot);
+        itemScript.equipmentSlot = (ItemData.EquipmentSlot)EditorGUILayout.EnumPopup(itemScript.equipmentSlot);
 
         EditorGUILayout.Space();
 
@@ -119,7 +119,7 @@ public class ItemEditor : Editor
             EditorGUILayout.EndHorizontal();
 
             //methodToCall = RandomiseStatValues;
-            CreateButton("Randomise Stat Values", methodToCall = itemScript.RandomiseStatValues);
+            //CreateButton("Randomise Stat Values", methodToCall = itemScript.RandomiseStatValues);
 
             EditorGUILayout.Space();
 

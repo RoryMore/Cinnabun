@@ -129,7 +129,6 @@ public class CharacterPanelStatControl : MonoBehaviour
     {
         int statValue = (int)statCharacterEntity.GetType().GetField(statToChange).GetValue(statCharacterEntity);
         statValue += increaseBy;
-
         statCharacterEntity.GetType().GetField(statToChange).SetValue(statCharacterEntity, statValue);
     }
 
@@ -137,7 +136,6 @@ public class CharacterPanelStatControl : MonoBehaviour
     {
         int statValue = (int)statCharacterEntity.GetType().GetField(statToChange).GetValue(statCharacterEntity);
         statValue -= decreaseBy;
-
         statCharacterEntity.GetType().GetField(statToChange).SetValue(statCharacterEntity, statValue);
     }
 }

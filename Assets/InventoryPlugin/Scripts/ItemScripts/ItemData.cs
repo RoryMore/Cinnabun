@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Item", order = 1)]
-public class Item : ScriptableObject
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/ItemData", order = 1)]
+public class ItemData : ScriptableObject
 {
     public enum ItemType
     {
@@ -63,12 +63,12 @@ public class Item : ScriptableObject
     [HideInInspector] public int magicalArmour;
 
     [Header("Random Range")]
-    [HideInInspector] public IntRange strengthRange;
-    [HideInInspector] public IntRange agilityRange;
-    [HideInInspector] public IntRange constitutionRange;
-    [HideInInspector] public IntRange intellectRange;
-    [HideInInspector] public IntRange physicalArmourRange;
-    [HideInInspector] public IntRange magicalArmourRange;
+    //[HideInInspector] public IntRange strengthRange;
+    //[HideInInspector] public IntRange agilityRange;
+    //[HideInInspector] public IntRange constitutionRange;
+    //[HideInInspector] public IntRange intellectRange;
+    //[HideInInspector] public IntRange physicalArmourRange;
+    //[HideInInspector] public IntRange magicalArmourRange;
 
     [HideInInspector] public int strengthRangeMin;
     [HideInInspector] public int strengthRangeMax;
@@ -94,13 +94,13 @@ public class Item : ScriptableObject
 
     [HideInInspector] public string itemName;
 
+    public ItemSpawner.ItemRarity itemRarity;
+
     // TODO: Add a section for Tooltip on mouseover.
 
     // Possible room to add Trait section. List of Traits. Required for Production game
     // Trait randomness/chance needs to be an option as well
 
-    // TODO: Add a function to apply random values to stats -> So we can also dynamically apply random stats on spawn rather than just our predefined item stats
-    // Parameters: ref stat value to chance, minRandomRange value, maxRandomRange value
     public void RandomiseStatValues()
     {
         strength = Random.Range(strengthRangeMin, strengthRangeMax);
@@ -121,6 +121,21 @@ public class Item : ScriptableObject
             intellect = Random.Range(intellectRangeMin, intellectRangeMax),
             physicalArmour = Random.Range(physicalArmourRangeMin, physicalArmourRangeMax),
             magicalArmour = Random.Range(magicalArmourRangeMin, magicalArmourRangeMax)
+        };
+
+        return itemStatBlock;
+    }
+
+    public InventoryItem.ItemStatBlock GetSetItemStats()
+    {
+        InventoryItem.ItemStatBlock itemStatBlock = new InventoryItem.ItemStatBlock
+        {
+            strength = strength,
+            agility = agility,
+            constitution = constitution,
+            intellect = intellect,
+            physicalArmour = physicalArmour,
+            magicalArmour = magicalArmour
         };
 
         return itemStatBlock;
