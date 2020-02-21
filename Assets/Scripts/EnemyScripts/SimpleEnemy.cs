@@ -368,6 +368,8 @@ public class SimpleEnemy : EnemyScript
     {
         base.Death();
         anim.SetBool("isDead", true);
+
+        myEncounter.itemSpawner.SpawnItem(transform.position);
     }
 
     public void Create(Vector3 position, int damageAmount, bool crit)

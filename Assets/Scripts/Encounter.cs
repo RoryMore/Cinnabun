@@ -25,12 +25,8 @@ public class Encounter : MonoBehaviour
     public bool cleared = false;
 
     // Inventory to add item to
-    [Header("Temporary Inventory stuff")]
-    
-    public List<ItemData> items;
-
-    //[SerializeField]
-    //InventoryBase inventory;
+    [Header("LootSystem")]
+    public ItemSpawner.ItemSpawnerStruct itemSpawner;
 
 
     // Start is called before the first frame update

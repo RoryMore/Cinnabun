@@ -17,8 +17,11 @@ public class Item : MonoBehaviour
     // If the item has been clicked & the Player is nearby, give the item to the Player. Reset the bool if a click has been input but not on the Item
     bool itemClicked;
 
-    GameObject player;
+    Player player;
+    RespawnControl resCon;
     InventoryBase inventoryBase;
+
+    bool isNewItem = true;
 
     // Start is called before the first frame update
     void Start()
@@ -26,22 +29,32 @@ public class Item : MonoBehaviour
         itemClicked = false;
 
         timeAlive = 0.0f;
-        player = GameObject.FindGameObjectWithTag("Player");
-        inventoryBase = GameObject.FindGameObjectWithTag("Inventory").GetComponent<InventoryBase>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
+        resCon = player.gameObject.GetComponent<RespawnControl>();
+        if (resCon == null)
+        {
+            Debug.LogError("Spawned Item could not reference RespawnControl");
+        }
+
+        inventoryBase = resCon.inventoryBase;
         if (inventoryBase == null)
         {
             Debug.LogError("Spawned Item could not reference InventoryBase");
         }
 
-        if (itemData != null)
+        if (isNewItem)
         {
-            if (itemData.applyRandomStats)
+            if (itemData != null)
             {
-                itemStatBlock = itemData.GetRandomItemStats();
-            }
-            else
-            {
-                itemStatBlock = itemData.GetSetItemStats();
+                if (itemData.applyRandomStats)
+                {
+                    itemStatBlock = itemData.GetRandomItemStats();
+                }
+                else
+                {
+                    itemStatBlock = itemData.GetSetItemStats();
+                }
             }
         }
     }
@@ -49,15 +62,18 @@ public class Item : MonoBehaviour
     /// <summary>
     /// This Initialise method will only need to be called if an Item is being created not directly from the prefab; i.e when the player is dropping an item from their inventory
     /// </summary>
-    public void Initialise(ItemData data, InventoryItem.ItemStatBlock stats, float setLifetime)
+    public void Initialise(ItemData data, InventoryItem.ItemStatBlock stats, float setLifetime, bool isNew = false)
     {
+        isNewItem = isNew;
+
         itemClicked = false;
 
         lifetime = setLifetime;
         timeAlive = 0.0f;
 
-        player = GameObject.FindGameObjectWithTag("Player");
-        inventoryBase = GameObject.FindGameObjectWithTag("Inventory").GetComponent<InventoryBase>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        resCon = player.gameObject.GetComponent<RespawnControl>();
+        inventoryBase = resCon.inventoryBase;
 
         itemData = data;
         itemStatBlock = stats;
