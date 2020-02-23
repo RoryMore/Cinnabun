@@ -46,11 +46,11 @@
 			fixed4 col = tex2D(_MainTex, _IN.uv_MainTex);
 			col *= _Color;
 			_OUT.Albedo = tex2D(_MainTex, _IN.uv_MainTex).rgb;
-            // Metallic and smoothness come from slider variables
+            
+			// Metallic and smoothness come from slider variables
 			_OUT.Metallic = _Metallic;
 			_OUT.Smoothness = _Smoothness;
            
-
 			float fresnel = dot(_IN.worldNormal, _IN.viewDir);
 			//invert the fresnel so the big values are on the outside
 			fresnel = saturate(1 - fresnel);

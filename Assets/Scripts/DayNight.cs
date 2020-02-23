@@ -10,6 +10,7 @@ public class DayNight : MonoBehaviour
         Speed,
         MultTime
     }
+    //types of day when the sun is up. the moon uses the same time slot as
     public enum CurrentTime
     {
         Night,
@@ -21,7 +22,7 @@ public class DayNight : MonoBehaviour
        
     }
 
-    //current time of day list
+    //tells when the time of day changes in degrees
     [Tooltip("Required the same amount of slots as CurrentTime, from larges to smallest")] 
     public List<float> ToNextPartOfTheDay;
     //list of times the sun/moon should take between each CurrentTime zones
@@ -87,9 +88,9 @@ public class DayNight : MonoBehaviour
         currentMoonRotation = NewPostion(Moon, pastMoonRotation, currentMoonRotation);
         currentDayRotation = NewPostion(Sun, pastDayRotation, currentDayRotation);
 
-        //
-        TimeOfNight = changeDay(TimeOfNight, currentMoonRotation);
-        TimeOfDay = changeDay(TimeOfDay, currentDayRotation);
+        //check to see if the sun or moon need to change their time of day
+        TimeOfNight = changeTimeOfDay(TimeOfNight, currentMoonRotation);
+        TimeOfDay = changeTimeOfDay(TimeOfDay, currentDayRotation);
     }
     //update the current rotation and get all the numbers for the sun and moon NewPostion
     void UpdateRotation()
@@ -130,8 +131,8 @@ public class DayNight : MonoBehaviour
         return currentRotation;
     }
 
-    //see if we have enter a new CurrentTime
-    CurrentTime changeDay(CurrentTime TimeOfLight, float currentRotation)
+    //see if the time of day has changed
+    CurrentTime changeTimeOfDay(CurrentTime TimeOfLight, float currentRotation)
     {
         if (ToNextPartOfTheDay.Count - 1 <= (int)TimeOfLight)
         {

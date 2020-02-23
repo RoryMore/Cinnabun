@@ -25,11 +25,9 @@ public class LightingIntensity : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        
+        //if the intensity is not what it should changing it
         if (lighting.intensity != inensitys[currentLight])
         {
-            //Debug.Log(lighting.intensity < inensitys[currentLight]);
-            //Debug.Log();
                 if (lighting.intensity > inensitys[currentLight])
             {
                 intensLight -= IntensityChangingStr;
@@ -43,6 +41,7 @@ public class LightingIntensity : MonoBehaviour
         }
         lighting.intensity = intensLight;
     }
+    //change what the ideal intensity it should be
     public void SetCurrentLight()
     {
         Debug.Log(inensitys.Count-1);
