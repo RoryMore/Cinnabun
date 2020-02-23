@@ -203,8 +203,8 @@ MonoBehaviour:
   - 1.6
   - 1
   currentLight: 5
-  IntensityChangingStr: 0
-  intensLight: 0
+  IntensityChangingStr: 0.01
+  intensLight: 1
 --- !u!1 &4869516955313606877
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,5 +318,5 @@ MonoBehaviour:
   - 2
   - 1
   currentLight: 2
-  IntensityChangingStr: 0
-  intensLight: 0
+  IntensityChangingStr: 0.01
+  intensLight: 1
