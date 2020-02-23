@@ -190,6 +190,8 @@ MonoBehaviour:
   enemyForces: []
   damageNumbers: {fileID: 5336142488549943110, guid: aefb4825a32499e40a5dfd55fcf983d7,
     type: 3}
+  healthBar: {fileID: 5913605161020272192, guid: 99c83e073f267364cb1a538116fcc24c,
+    type: 3}
 --- !u!114 &3292460302364433314
 MonoBehaviour:
   m_ObjectHideFlags: 0
