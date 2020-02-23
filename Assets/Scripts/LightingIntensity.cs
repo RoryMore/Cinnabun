@@ -47,7 +47,6 @@ public class LightingIntensity : MonoBehaviour
         Debug.Log(inensitys.Count-1);
         if (currentLight == inensitys.Count-1)
         {
-            Debug.LogError("heer"+ gameObject.name);
             currentLight = 0;
         }
         else
