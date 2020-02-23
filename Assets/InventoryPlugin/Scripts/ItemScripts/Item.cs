@@ -23,6 +23,9 @@ public class Item : MonoBehaviour
 
     bool isNewItem = true;
 
+    Material material;
+    MeshRenderer meshRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +58,11 @@ public class Item : MonoBehaviour
                 {
                     itemStatBlock = itemData.GetSetItemStats();
                 }
+
+                meshRenderer = GetComponent<MeshRenderer>();
+                material = new Material(Shader.Find("Standard"));
+                material.SetTexture("_MainTex", itemData.equippedSprite.texture);
+                meshRenderer.material = material;
             }
         }
     }
@@ -77,6 +85,11 @@ public class Item : MonoBehaviour
 
         itemData = data;
         itemStatBlock = stats;
+
+        meshRenderer = GetComponent<MeshRenderer>();
+        material = new Material(Shader.Find("Standard"));
+        material.SetTexture("_MainTex", itemData.equippedSprite.texture);
+        meshRenderer.material = material;
     }
 
     // Update is called once per frame

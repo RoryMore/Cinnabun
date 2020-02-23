@@ -69,8 +69,8 @@ public class EquipmentPanelControl : MonoBehaviour
                     InventoryItem equippedItem = Instantiate(invBase.itemIcon).GetComponent<InventoryItem>();
 
                     Vector3 equipInterfacePos = equipmentSlots[i].gameObject.transform.position;
-                    equipInterfacePos.x += (EquipmentSlot.width * 0.1f);
-                    equipInterfacePos.y -= (EquipmentSlot.height * 0.1f);
+                    equipInterfacePos.x += (EquipmentSlot.width * 0.025f);
+                    equipInterfacePos.y -= (EquipmentSlot.height * 0.025f);
 
                     equippedItem.Initialise(equipmentSlots[i].gameObject,
                         equippedItem,

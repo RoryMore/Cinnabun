@@ -69,16 +69,16 @@ public class CharacterPanelStatControl : MonoBehaviour
         if (characterEntity != null)
         {
             // Set Strength text field with strength
-            UpdateTextFieldWithValue(strengthText, "Str: ", strength);
+            UpdateTextFieldWithValue(strengthText, "str: ", strength);
 
             // Set Agility text field with agility
-            UpdateTextFieldWithValue(agilityText, "Agi: ", agility);
+            UpdateTextFieldWithValue(agilityText, "agi: ", agility);
 
             // Set Constitution text field with constitution
-            UpdateTextFieldWithValue(constitutionText, "Con: ", constitution);
+            UpdateTextFieldWithValue(constitutionText, "con: ", constitution);
 
             // Set Intellect text field with intellect
-            UpdateTextFieldWithValue(intellectText, "Int: ", intellect);
+            UpdateTextFieldWithValue(intellectText, "int: ", intellect);
 
             // Set Health text field with current & max health
             int realCurrentHealth = (int)characterEntity.GetType().GetField(currentHealth).GetValue(characterEntity);
@@ -86,16 +86,16 @@ public class CharacterPanelStatControl : MonoBehaviour
             healthText.text = realCurrentHealth + "/" + realMaxHealth;
 
             // Set Physical Damage Reduction text field with physicalDmgReduction
-            UpdateTextFieldWithValue(physicalDamageReductionText, "Physical: ", physicalDamageReduction);
+            UpdateTextFieldWithValue(physicalDamageReductionText, "physical: ", physicalDamageReduction);
 
             // Set Magical Damage Reduction text field with magicalDmgReduction
-            UpdateTextFieldWithValue(magicalDamageReductionText, "Magical: ", magicalDamageReduction);
+            UpdateTextFieldWithValue(magicalDamageReductionText, "magical: ", magicalDamageReduction);
 
             // Set Physical Armour text field with physicalArmour
-            UpdateTextFieldWithValue(physicalArmourText, "Physical: ", physicalArmour);
+            UpdateTextFieldWithValue(physicalArmourText, "physical: ", physicalArmour);
 
             // Set Magical Armour text field with magicalArmour
-            UpdateTextFieldWithValue(magicalArmourText, "Magical: ", magicalArmour);
+            UpdateTextFieldWithValue(magicalArmourText, "magical: ", magicalArmour);
         }
     }
 

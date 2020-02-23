@@ -87,6 +87,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsed: 0
-  unusedColour: {r: 1, g: 1, b: 1, a: 0.68235296}
-  usedColour: {r: 0.9056604, g: 0.20932718, b: 0.20932718, a: 0.68235296}
+  unusedColour: {r: 1, g: 1, b: 1, a: 0.6313726}
+  usedColour: {r: 0.9056604, g: 0.20932718, b: 0.20932718, a: 0.5019608}
   storedItem: {fileID: 0}

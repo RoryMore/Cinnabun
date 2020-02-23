@@ -43,7 +43,7 @@ public class InventoryBase : MonoBehaviour
 
         Vector2 invSize = new Vector2();
         invSize.x = (backgroundBorderWidth * 2) + (inventorySlotsWide * slotWidth);
-        invSize.y = (backgroundBorderWidth * 2) + (inventorySlotsHigh * slotHeight);
+        invSize.y = (backgroundBorderWidth * 2) + (inventorySlotsHigh * slotHeight) + (inventorySlotsHigh) + (backgroundBorderWidth * 0.75f);
 
         baseRect.sizeDelta = invSize;
 
