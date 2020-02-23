@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class SimpleEnemy : EnemyScript
 {
@@ -19,7 +20,6 @@ public class SimpleEnemy : EnemyScript
 
     PauseAbility pauseAbility;
     [SerializeField] private Transform damageNumbers;
-    [SerializeField] private Transform healthBar;
     //VERT SLICE USE ONLY
     EnemyAttack attack; 
     ConeRangeIndicator coneRangeIndicator;
@@ -71,6 +71,7 @@ public class SimpleEnemy : EnemyScript
 
         pauseAbility = GameObject.Find("PauseMenuUI").GetComponent<PauseAbility>();
 
+      
 
         foreach (SkillData checkedSkill in skillList)
         {
@@ -117,7 +118,7 @@ public class SimpleEnemy : EnemyScript
             //Attack(chosenSkill);
             
         }
-        
+
 
     }
 
@@ -383,13 +384,7 @@ public class SimpleEnemy : EnemyScript
         damagePopUp.SetUp(damageAmount, crit);
     }
 
-    public void CreateHealthBar(Vector3 position, float health)
-    {
-        Vector3 HealthbarPos = new Vector3();
-
-        Transform healthBarTransform = Instantiate(healthBar, position + HealthbarPos, Quaternion.identity);
-       // En
-    }
+ 
 
     public void VertSliceAttack()
     {
