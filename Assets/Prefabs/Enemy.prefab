@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &3959355891523949434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4141319202012018118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae98a30bb66fd534eb530a90977eab43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackEffects: []
+  DeathEffect: []
+  HitEffect: []
+  RunEffect: []
 --- !u!1 &5366817791025178614
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,6 +174,7 @@ MonoBehaviour:
   explosionParticles: {fileID: 5429681210692025233}
   destination: {x: 0, y: 0, z: 0}
   chosenSkill: {fileID: 0}
+  nav: {fileID: 0}
   enemyCooldown: 0
   initiativeSpeed: 0
   enemyTakingAction: 0
@@ -166,12 +183,13 @@ MonoBehaviour:
   turnSpeed: 1
   anim: {fileID: 2442032239992892080}
   hitParticles: {fileID: 0}
-  nav: {fileID: 0}
   skillList:
   - {fileID: 11400000, guid: d393387bb3717764b9b33e41c19f6b50, type: 2}
   enemyManager: {fileID: 0}
   myEncounter: {fileID: 0}
   enemyForces: []
+  damageNumbers: {fileID: 5336142488549943110, guid: aefb4825a32499e40a5dfd55fcf983d7,
+    type: 3}
 --- !u!114 &3292460302364433314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,8 +316,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7501409689343211919, guid: 129291d1490e4eb4cb76f7390438a629,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4c1427a96fec4ac42a607cdbb14ef415, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 129291d1490e4eb4cb76f7390438a629, type: 3}
+--- !u!1 &4141319202012018118 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1773077662644772816, guid: 129291d1490e4eb4cb76f7390438a629,
+    type: 3}
+  m_PrefabInstance: {fileID: 2442032239147559446}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1090911280286975957 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3368804008399072707, guid: 129291d1490e4eb4cb76f7390438a629,

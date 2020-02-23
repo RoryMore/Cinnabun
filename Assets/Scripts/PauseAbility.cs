@@ -80,7 +80,7 @@ public class PauseAbility : MonoBehaviour
         }
         else if (pauseMenu.isPaused)
         {
-            Time.timeScale = 0;
+            Time.timeScale = 0.0f;
         }
 
         checkAbilityCastTime();
@@ -108,7 +108,10 @@ public class PauseAbility : MonoBehaviour
     }
     public void ButtonPaused()
     {
-        states = GameStates.TIMESTOP;
+        if (states == GameStates.PLAY)
+        {
+            states = GameStates.TIMESTOP;
+        }
     }
 
    public void ButtonPlay()
@@ -123,7 +126,7 @@ public class PauseAbility : MonoBehaviour
     {
         if (isTimeStopped == true)
         {
-            Time.timeScale = 0;
+            Time.timeScale = 0.0f;
         }
         else if (isTimeStopped == false)
         {

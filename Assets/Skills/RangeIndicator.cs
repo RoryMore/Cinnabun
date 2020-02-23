@@ -27,15 +27,22 @@ public class RangeIndicator : MonoBehaviour
     [HideInInspector] public Vector3 corner3;
     [HideInInspector] public Vector3 corner4;
 
-    public void Init(SkillData.SkillShape skillShape, float angle = 0)
+    Player player;
+
+    public void Init(BaseSkill.SkillShape skillShape, float angle = 0)
     {
+        player = FindObjectOfType<Player>();
+        if (player != null)
+        {
+            Debug.Log("Range Indicator set player");
+        }
         switch (skillShape)
         {
-            case SkillData.SkillShape.RADIAL:
+            case BaseSkill.SkillShape.RADIAL:
                 shape = IndicatorShape.RADIAL;
                 break;
 
-            case SkillData.SkillShape.LINE:
+            case BaseSkill.SkillShape.RECTANGULAR:
                 shape = IndicatorShape.RECTANGULAR;
                 break;
             default:
@@ -201,8 +208,8 @@ public class RangeIndicator : MonoBehaviour
 
                     zonePositionProjected = vertices[i];
                     zonePositionProjected.y += 50.0f;
-                    LayerMask projectedLayer = LayerMask.NameToLayer("Ground");
-                    if (Physics.Raycast(zonePositionProjected, -Vector3.up, out RaycastHit hit, 55.0f, projectedLayer))
+                    
+                    if (Physics.Raycast(zonePositionProjected, -Vector3.up, out RaycastHit hit, 55.0f, player.groundLayerMask))
                     {
                         vertices[i].y = hit.point.y + 0.05f;
                         mostRecentProjectedHeight = hit.point.y + 0.05f;

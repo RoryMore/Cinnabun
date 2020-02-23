@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/BasicApplyCondition", order = 1)]
+//[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Skills/BasicApplyCondition", order = 1)]
 public class BasicApplyCondition : SkillData
 {
     [Header("Damage Over Time Setting")]
@@ -44,7 +44,7 @@ public class BasicApplyCondition : SkillData
                 zoneStart.LookAt(lookat);
             }
 
-            DrawRangeIndicator(zoneStart, shape);
+            //DrawRangeIndicator(zoneStart, shape);
             SelectTargetRay(zoneStart, ref target, true);
         }
 
@@ -57,10 +57,10 @@ public class BasicApplyCondition : SkillData
     protected override void CastSkill(Transform zoneStart)
     {
         currentlyCasting = true;
-        DrawRangeIndicator(zoneStart, shape);
+        //DrawRangeIndicator(zoneStart, shape);
 
         float drawPercent = (timeSpentOnWindUp / windUp);
-        rangeIndicator.DrawCastTimeIndicator(zoneStart, angleWidth, 0.0f, range, drawPercent);
+        rangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, maxRange, drawPercent);
 
         timeSpentOnWindUp += Time.deltaTime;
 
@@ -78,7 +78,7 @@ public class BasicApplyCondition : SkillData
 
         if (target != null)
         {
-            Entity.Condition dotCon = new Entity.Condition(duration, damageOverTimeCondition, effectivePercent, baseDamage, damageTickRate);
+            Entity.Condition dotCon = new Entity.Condition(duration, damageOverTimeCondition, effectivePercent, baseMagnitude, damageTickRate);
 
             target.currentConditions.Add(dotCon);
         }

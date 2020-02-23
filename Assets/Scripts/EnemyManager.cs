@@ -7,20 +7,26 @@ public class EnemyManager : MonoBehaviour
     public GameObject player;
     public List<Encounter> encounters;
     public float maxEncounterDistance;
+
+    public bool weWon;
+
     public bool isInBattle;
 
     public bool inBattle;
 
+    public bool WaveActive;
+
     /*Each group of enemies is handled by their own personal "Encounter" manager. The enemy manager handles the
     Global functions of managing the encounters themselves, disabling them and enabling them as required*/
-   
 
     //List all the types of enemies we want to be able to manage
 
-    
     // Start is called before the first frame update
     void Start()
     {
+        weWon = false;
+
+        player = GameObject.Find("Player");
         foreach (Encounter encounter in encounters)
         {
             encounter.enemyManager = this;
@@ -32,31 +38,25 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         UpdateActiveEncounters();
-
     }
 
     public void UpdateActiveEncounters()
     {
-        foreach (Encounter encounter in encounters)
+        if (WaveActive == false)
         {
-            float encounterDistance = Vector3.Distance(encounter.gameObject.transform.position, player.transform.position);
-            if (encounterDistance > maxEncounterDistance) //Magic number, it really only needs to be the distance that covers the maximum zoo
+            foreach (Encounter encounter in encounters)
             {
-                if (encounter.gameObject.activeInHierarchy == true)
+                //If it's not cleared and we don't already have a wave going...
+                if (encounter.cleared == false && encounter.gameObject.activeInHierarchy == false)
                 {
-                    encounter.gameObject.SetActive(false);
-                    inBattle = false;
-                }
-            }
-            else
-            {
-                if (encounter.gameObject.activeInHierarchy == false)
-                {
+                    //UI for "Wave" + encounter list.Count + 1
                     encounter.gameObject.SetActive(true);
+                    encounter.SpawnEnemies();
                     inBattle = true;
-                    player.GetComponent<Player>().SetCurrentEncounter(encounter);
+                    WaveActive = true;
+                    Entity.SetCurrentEncounter(encounter);
+                    break;
                 }
-
             }
         }
     }
@@ -76,10 +76,7 @@ public class EnemyManager : MonoBehaviour
         {
             //You Won!
             Debug.Log("You win!");
+            weWon = true;
         }
-
     }
-
-
-
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/ExampleTargettedSkill", order = 1)]
+//[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Skills/ExampleTargettedSkill", order = 1)]
 public class ExampleTargettedSkill : SkillData
 {
     Entity entityTarget1 = null;
@@ -23,7 +23,7 @@ public class ExampleTargettedSkill : SkillData
 
             // We are drawing the range indicator here so the player knows if what they are clicking is in range
             // If being in range is relevant
-            DrawRangeIndicator(zoneStart, shape);
+            //DrawRangeIndicator(zoneStart, shape);
 
             // Select our entity target
             SelectTargetRay(zoneStart, ref entityTarget1, true);
@@ -35,7 +35,7 @@ public class ExampleTargettedSkill : SkillData
         else if (!destination1Set && entityTarget1 != null)
         {
             // We draw a range indicator if we feel it's necessary
-            DrawRangeIndicator(zoneStart, shape);
+            //DrawRangeIndicator(zoneStart, shape);
 
             // The overloaded version of SelectTargetRay that sets a vector position also returns a bool
             // This is so we can set a bool saying we have set a specific location, otherwise
@@ -55,10 +55,10 @@ public class ExampleTargettedSkill : SkillData
     {
         currentlyCasting = true;
 
-        DrawRangeIndicator(zoneStart, shape);
+        //DrawRangeIndicator(zoneStart, shape);
 
         float drawPercent = (timeSpentOnWindUp / windUp);
-        rangeIndicator.DrawCastTimeIndicator(zoneStart, angleWidth, 0.0f, range, drawPercent);
+        rangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, maxRange, drawPercent);
 
         // Increment the time spent winding up the skill
         timeSpentOnWindUp += Time.deltaTime;
@@ -78,7 +78,7 @@ public class ExampleTargettedSkill : SkillData
         // What happens when the skill is activated
 
         // Deal damage to our entity target
-        entityTarget1.TakeDamage(baseDamage);   // End up passing in damage type later
+        entityTarget1.TakeDamage(baseMagnitude);   // End up passing in damage type later
 
         // We move our entity target to our destination point we are moving it
         entityTarget1.transform.position = teleportLocation;
