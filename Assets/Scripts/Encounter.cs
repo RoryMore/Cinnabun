@@ -23,6 +23,7 @@ public class Encounter : MonoBehaviour
     public EnemyManager enemyManager;
 
     public bool cleared = false;
+    public bool Reset = false;
 
     // Inventory to add item to
     [Header("Temporary Inventory stuff")]
@@ -37,14 +38,13 @@ public class Encounter : MonoBehaviour
     void Start()
     {
         cleared = false;
+        Reset = false;
     }
 
     public void SpawnEnemies()
     {
-        
-
-
         //Spawn enemies
+        //WARNING: If more spawn points are open than prefabs to fill them, this function breaks
         foreach (GameObject location in spawnPoints)
         {
 
@@ -68,6 +68,9 @@ public class Encounter : MonoBehaviour
         //Set up player inclusive
         playerInclusiveInitiativeList.AddRange(masterInitiativeList);
         playerInclusiveInitiativeList.Add(GameObject.Find("Player").GetComponent<Entity>());
+
+        //finish reset
+        Reset = false;
     }
 
     void Awake()
@@ -84,15 +87,17 @@ public class Encounter : MonoBehaviour
     void Update()
     {
         KillCode();
-
-        if (initiativeList.Count == 0)
+        if (!Reset)
         {
-            if (!cleared)
+            if (initiativeList.Count == 0)
             {
-                Debug.Log("The encounter has been cleared!");
-                Cleared();
-            }
+                if (!cleared)
+                {
+                    Debug.Log("The encounter has been cleared!");
+                    Cleared();
+                }
 
+            }
         }
     }
 
@@ -147,6 +152,14 @@ public class Encounter : MonoBehaviour
 
         }
     }
-
-
+    public void ClearInitiativeList()
+    {
+        //stopping the wave form being cleared
+        Reset = true;
+        //clearing list to stop memony out of issue
+        masterInitiativeList = new List<Entity>();
+        initiativeList = new List<Entity>();
+        playerInclusiveInitiativeList = new List<Entity>();
+        healList = new List<Entity>();
+    }
 }
