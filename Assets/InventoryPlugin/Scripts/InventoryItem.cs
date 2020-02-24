@@ -5,6 +5,15 @@ using UnityEngine.UI;
 
 public class InventoryItem : MonoBehaviour
 {
+    public struct ItemStatBlock
+    {
+        public int strength;
+        public int agility;
+        public int constitution;
+        public int intellect;
+        public int physicalArmour;
+        public int magicalArmour;
+    }
     // The item this inventoryItem is representing
     public Item item;
 

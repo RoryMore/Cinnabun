@@ -136,7 +136,7 @@ public class Entity : MonoBehaviour
     public Vector3 destination;
 
     [HideInInspector]
-    public SkillData chosenSkill;
+    public BaseSkill chosenSkill;
 
     [HideInInspector]
     public NavMeshAgent nav;
@@ -148,8 +148,9 @@ public class Entity : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-
+        //set ragdoll to false
+        SetRigidBodyState(true);
+        SetColliderState(false);
 
         //How you give a condition
         //Condition delayedBlastTest = new Condition();
@@ -196,10 +197,34 @@ public class Entity : MonoBehaviour
 
         if (currentHP <= 0)
         {
+            Debug.Log("here");
+            if (gameObject.name == "Player")
+            {
+                //stop player form doing anything
+                gameObject.GetComponentInChildren<Player>().enabled = false;
+               //stop animating
+                gameObject.GetComponentInChildren<Animator>().enabled = false;
+                //stop all enemy for attacting //possable Win animation for enemy
+                GameObject.Find("EnemyManager").GetComponent<EnemyManager>().PlayerDeath();
+                
+            }
+            else
+            {
+                //it is a enemy which die
+                gameObject.GetComponentInChildren<Animator>().enabled = false;
+                gameObject.GetComponentInChildren<SimpleEnemy>().enabled = false;
+            }
+            SetRigidBodyState(false);
+            //migth stop rewind
+           SetColliderState(true);
             Death();
+            
+            
         }
     }
 
+   
+   
 
     public virtual void Death()
     {
@@ -398,6 +423,7 @@ public class Entity : MonoBehaviour
        // transform.position = new Vector3(0, 0, 0);
         rewind = false;
 
+       
     }
 
     public void ClearList()
@@ -415,5 +441,23 @@ public class Entity : MonoBehaviour
             explosionParticles.SetActive(false);
             explosionParticles.SetActive(true);
         }
+    }
+    public void SetRigidBodyState(bool currentState)
+    {
+        Rigidbody[] Rigidbody = GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody item in Rigidbody)
+        {
+            item.isKinematic = currentState;
+        }
+       // GetComponent<Rigidbody>().isKinematic = !currentState;
+    }
+    public void SetColliderState(bool currentState)
+    {
+        Collider[] Rigidbody = GetComponentsInChildren<Collider>();
+        foreach (Collider item in Rigidbody)
+        {
+            item.enabled = currentState;
+        }
+        //GetComponent<Collider>().enabled = !currentState;
     }
 }

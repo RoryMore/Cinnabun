@@ -51,11 +51,11 @@ public class BaseSkill : MonoBehaviour
     public float timeBeenOnCooldown = 10.0f;
 
     protected float timeSpentOnWindUp = 0;
-    [HideInInspector]
-    public bool currentlyCasting = false;
+    //[HideInInspector]
+    public bool currentlyCasting;
 
     [HideInInspector]
-    public bool isAllowedToCast = true;
+    public bool isAllowedToCast;
     protected bool skillTriggered = false;
 
     [Tooltip("SET CASTER SELF TO PARENT OBJECT. \nE.G: Player object is set to this on the players skills")]
@@ -267,7 +267,7 @@ public class BaseSkill : MonoBehaviour
         // hitCheckBounds holds the 4 coordinates of where an enemy has to be standing within to be hit
         // continue to calculate if the target location is within given rectangle
         // Area A = [ x1(y2 – y3) + x2(y3 – y1) + x3(y1-y2)]/2 + [ x1(y4 – y3) + x4(y3 – y1) + x3(y1-y4)]/2
-
+        Debug.Log("WeaponAttack Hit Results: " + CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition));
         return CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition);
 
         // These statements include a height check
@@ -329,15 +329,27 @@ public class BaseSkill : MonoBehaviour
     bool CheckPointInBounds(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4, Vector3 point)
     {
         // Area of full rectangle
-        float area = TriArea(v1, v2, v3) + TriArea(v1, v4, v3);
-
+        float area = TriArea(v1, v2, v3) + TriArea(v1, v3, v4);
+        //Debug.Log("Rect Area: " + area);
         // Calculate triangle areas with point and bound corners
         float pointA1 = TriArea(point, v1, v2);
+        //Debug.Log("a1: " + pointA1);
         float pointA2 = TriArea(point, v2, v3);
+        //Debug.Log("a2: " + pointA2);
         float pointA3 = TriArea(point, v3, v4);
-        float PointA4 = TriArea(point, v1, v4);
+        //Debug.Log("a3: " + pointA3);
+        float pointA4 = TriArea(point, v1, v4);
+        //Debug.Log("a4: " + pointA4);
 
-        return (area == pointA1 + pointA2 + pointA3 + PointA4);
+        float totalPointArea = pointA1 + pointA2 + pointA3 + pointA4;
+        //Debug.Log("Total Point Area: " + totalPointArea);
+
+        if (area == totalPointArea)
+        {
+            return true;
+        }
+        return false;
+        //return (area == pointA1 + pointA2 + pointA3 + pointA4);
     }
 
     bool CheckInRange(Vector3 castPosition, Vector3 targetPosition)
@@ -413,10 +425,14 @@ public class BaseSkill : MonoBehaviour
     protected virtual void ActivateSkill(List<Entity> entityList) { }
 
     protected virtual void TargetSkill() { }
+    protected virtual void TargetSkill(Entity entity) { }
     protected virtual void TargetSkill(List<Entity> entityList) { }
+    protected virtual void TargetSkill(List<Entity> entityList, LayerMask layerMask) { }
 
     public virtual void TriggerSkill() { }
+    public virtual void TriggerSkill(Entity entity) { }
     public virtual void TriggerSkill(List<Entity> entityList) { }
+    public virtual void TriggerSkill(List<Entity> entityList, LayerMask layerMask) { }
 
     private void OnDrawGizmos()
     {

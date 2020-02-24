@@ -434,36 +434,36 @@ public class SoundManager : MonoBehaviour
    public void EnemyStepSound()
     {
        
-      //  AudioClip clip = enemyFootsteps[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
+        AudioClip clip = enemyFootsteps[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
         //Debug.Log(clip.name);
-        //enemyFootAudioSource.PlayOneShot(clip);
+        enemyFootAudioSource.PlayOneShot(clip);
         
     }
 
     public void EnemyAttackSound()
     {
 
-       // AudioClip clip = enemyAttacks[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
+        AudioClip clip = enemyAttacks[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
         //Debug.Log(clip.name);
-        //enemyAttackAudioSource.PlayOneShot(clip);
+        enemyAttackAudioSource.PlayOneShot(clip);
         
     }
 
     public void EnemyHitSound()
     {
 
-     //   AudioClip clip = enemyHits[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
-      //  Debug.Log(clip.name);
-       // enemyHitAudioSource.PlayOneShot(clip);
+        AudioClip clip = enemyHits[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
+        //Debug.Log(clip.name);
+        enemyHitAudioSource.PlayOneShot(clip);
         
     }
 
     public void EnemyDeathSound()
     {
 
-      //  AudioClip clip = enemyDeath[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
+        AudioClip clip = enemyDeath[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
         //Debug.Log(clip.name);
-        //enemyDeathAudioSource.PlayOneShot(clip);
+        enemyDeathAudioSource.PlayOneShot(clip);
         
     }
     

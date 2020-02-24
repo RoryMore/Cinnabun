@@ -67,7 +67,7 @@ public class SkillData : ScriptableObject
     public Material indicatorMaterial;              // REMOVE FOR CHANGE
 
     [HideInInspector]
-    public bool currentlyCasting = false;   // REMOVE FOR CHANGE - IS IN NEW BASE SKILL
+    public bool currentlyCasting = true;   // REMOVE FOR CHANGE - IS IN NEW BASE SKILL
 
     // The entity that casts this skill
     [HideInInspector]
