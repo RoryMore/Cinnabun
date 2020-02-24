@@ -6,7 +6,8 @@ public class PauseMenuUI : MonoBehaviour
 {
 
     GameObject[] pauseObjects;
-    PauseAbility pauseAbility; 
+    PauseAbility pauseAbility;
+    public GameObject VHSimage;
 
     public bool isPaused;
 
@@ -37,6 +38,7 @@ public class PauseMenuUI : MonoBehaviour
 
     void Update()
     {
+       // VHS();
 
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
         {
@@ -73,5 +75,17 @@ public class PauseMenuUI : MonoBehaviour
             hidePaused();
         }
     }
+
+  /*  public void VHS()
+    {
+        if (isPaused == true)
+        {
+            VHSimage.SetActive(true);
+        }
+        else if (isPaused == false)
+        {
+            VHSimage.SetActive(false);
+        }
+    }*/
 
 }

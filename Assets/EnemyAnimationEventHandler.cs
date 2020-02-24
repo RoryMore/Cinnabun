@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAnimationEventHandler : MonoBehaviour
-{
+{/*
     SoundManager soundManager;
     public ParticleSystem[] AttackEffects;
     public ParticleSystem[] DeathEffect;
@@ -62,5 +62,5 @@ public class EnemyAnimationEventHandler : MonoBehaviour
         }
     }
 
-    
+ */   
 }

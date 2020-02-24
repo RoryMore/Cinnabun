@@ -16,7 +16,7 @@ public class SoundManager : MonoBehaviour
 
 
     [Header("Battle Music")]
-    public AudioSource[] BattleMusic;
+    public AudioSource[] BattleMusic;    public AudioSource testSong;
 
     [Header("Idle Music")]
 
@@ -40,7 +40,7 @@ public class SoundManager : MonoBehaviour
     /// Enemy Audio Cues
     /// </summary>
 
-    [SerializeField]
+    /*[SerializeField]
     public AudioClip[] enemyFootsteps;
     public AudioSource enemyFootAudioSource;
 
@@ -54,17 +54,17 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField]
     public AudioClip[] enemyDeath;
-    public AudioSource enemyDeathAudioSource;
+    public AudioSource enemyDeathAudioSource;*/
 
     // public AudioSource millionaire;
 
-    private AudioSource currentAmbient;
-    private AudioSource currentMusic;
+  //  private AudioSource currentAmbient;
+  //  private AudioSource currentMusic;
 
-    float lerpSoundsTo;
+    //float lerpSoundsTo;
 
-    float ambiantProgress;
-    float musicProgress;
+   // float ambiantProgress;
+   // float musicProgress;
 
     PauseAbility pauseAbility;
     EnemyManager enemyManager;
@@ -73,8 +73,8 @@ public class SoundManager : MonoBehaviour
     float setVolume;
     public int random;
     public float timer = 1;
-    float Timeholder;
-    bool randomNumber = true;
+  //  float Timeholder;
+   // bool randomNumber = true;
     bool playBattleMusic = true;
     bool playIdleMusic = true;
     bool inBattle;
@@ -114,9 +114,10 @@ public class SoundManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MuteAllAudio();
+   //     MuteAllAudio();
         CheckInBattle();
         checkState();
+
 
         switch (state)
         {
@@ -130,13 +131,12 @@ public class SoundManager : MonoBehaviour
 
                     if (playBattleMusic == true)
                     {
-                        //MuteAllAudio();
+                        MuteAllAudio();
                         BattleMusicVolumeUp();
                         //Timeholder = Time.realtimeSinceStartup;
                         timer = 5;
-                        songs = 0;
-
-
+                        songs = 0;                        
+
                         for (int i = 0; i < BattleMusic.Length; i++)
                         {
                             if (BattleMusic[i].isPlaying)
@@ -199,7 +199,7 @@ public class SoundManager : MonoBehaviour
 
                     if (playIdleMusic == true)
                     {
-                        // MuteAllAudio();
+                         MuteAllAudio();
                         timer = 5;
                         songs = 0;
                         //Timeholder = Time.realtimeSinceStartup;
@@ -339,13 +339,13 @@ public class SoundManager : MonoBehaviour
 
         if (state != MusicState.BATTLE && state != MusicState.PAUSEDSKILL)
         {
-            randomNumber = true;
+            //randomNumber = true;
             playBattleMusic = true;   
         }
 
         if (state != MusicState.IDLE && state != MusicState.PAUSEDSKILL)
         {
-            randomNumber = true;
+            //randomNumber = true;
             playIdleMusic = true;  
         }
     }
@@ -355,12 +355,14 @@ public class SoundManager : MonoBehaviour
 		if (enemyManager != null)
 		{
 			if (enemyManager.inBattle == true)
-			{ 
+			{
+                Debug.Log("should be sounds yes yes");
                     inBattle = true;
 			}
 
 			if (enemyManager.inBattle == false)
 			{
+                Debug.Log("no sounds reeeeee");
 				inBattle = false;
 			}
 		}
@@ -431,41 +433,41 @@ public class SoundManager : MonoBehaviour
     }
 
 
-    public void EnemyStepSound()
+  /* public void EnemyStepSound()
     {
        
-        AudioClip clip = enemyFootsteps[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
-        Debug.Log(clip.name);
-        enemyFootAudioSource.PlayOneShot(clip);
+      //  AudioClip clip = enemyFootsteps[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
+        //Debug.Log(clip.name);
+        //enemyFootAudioSource.PlayOneShot(clip);
         
     }
 
     public void EnemyAttackSound()
     {
 
-        AudioClip clip = enemyAttacks[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
-        Debug.Log(clip.name);
-        enemyAttackAudioSource.PlayOneShot(clip);
+       // AudioClip clip = enemyAttacks[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
+        //Debug.Log(clip.name);
+        //enemyAttackAudioSource.PlayOneShot(clip);
         
     }
 
     public void EnemyHitSound()
     {
 
-        AudioClip clip = enemyHits[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
-        Debug.Log(clip.name);
-        enemyHitAudioSource.PlayOneShot(clip);
+     //   AudioClip clip = enemyHits[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
+      //  Debug.Log(clip.name);
+       // enemyHitAudioSource.PlayOneShot(clip);
         
     }
 
     public void EnemyDeathSound()
     {
 
-        AudioClip clip = enemyDeath[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
-        Debug.Log(clip.name);
-        enemyDeathAudioSource.PlayOneShot(clip);
+      //  AudioClip clip = enemyDeath[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
+        //Debug.Log(clip.name);
+        //enemyDeathAudioSource.PlayOneShot(clip);
         
-    }
-
+    }*/
+    
 }
 

@@ -41,6 +41,7 @@ public class Encounter : MonoBehaviour
 
 
         //Spawn enemies
+        //WARNING: If more spawn points are open than prefabs to fill them, this function breaks
         foreach (GameObject location in spawnPoints)
         {
 
@@ -98,7 +99,7 @@ public class Encounter : MonoBehaviour
         cleared = true;
         enemyManager.WaveActive = false;
         enemyManager.CheckVictory();
-        GiveItem();
+        
         //enemyManager.player.GetComponent<Entity>().currentHP += 25;
         
     }
@@ -111,25 +112,6 @@ public class Encounter : MonoBehaviour
     public void EnemyNoLongerNeedHealed(Entity enemy)
     {
         healList.Remove(enemy);
-    }
-
-    public void GiveItem()
-    {
-        //Give the player an item to use
-        Debug.Log("Player has obtained an Item!... but not really");
-
-        //if (inventory != null)
-        //{
-        //    Debug.Log("Item given to player for real");
-        //    int choice = (int)Random.Range(0, 4);
-        //    {
-        //        if (items.Count != 0)
-        //        {
-        //            inventory.AddItem(items[choice]);
-        //        }
-        //    }
-            
-        //}
     }
 
     public void KillCode()

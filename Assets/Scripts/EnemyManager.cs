@@ -10,8 +10,6 @@ public class EnemyManager : MonoBehaviour
 
     public bool weWon;
 
-    public bool isInBattle;
-
     public bool inBattle;
 
     public bool WaveActive;
@@ -50,10 +48,11 @@ public class EnemyManager : MonoBehaviour
                 if (encounter.cleared == false && encounter.gameObject.activeInHierarchy == false)
                 {
                     //UI for "Wave" + encounter list.Count + 1
-                    encounter.gameObject.SetActive(true);
-                    encounter.SpawnEnemies();
                     inBattle = true;
                     WaveActive = true;
+                    encounter.gameObject.SetActive(true);
+                    encounter.SpawnEnemies();
+
                     Entity.SetCurrentEncounter(encounter);
                     break;
                 }
