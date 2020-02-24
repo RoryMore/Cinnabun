@@ -134,9 +134,7 @@ public class SoundManager : MonoBehaviour
                         BattleMusicVolumeUp();
                         //Timeholder = Time.realtimeSinceStartup;
                         timer = 5;
-                        songs = 0;
-
-
+                        songs = 0;
                         for (int i = 0; i < BattleMusic.Length; i++)
                         {
                             if (BattleMusic[i].isPlaying)
@@ -431,7 +429,7 @@ public class SoundManager : MonoBehaviour
     }
 
 
-   public void EnemyStepSound()
+  /* public void EnemyStepSound()
     {
        
       //  AudioClip clip = enemyFootsteps[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
@@ -465,7 +463,7 @@ public class SoundManager : MonoBehaviour
         //Debug.Log(clip.name);
         //enemyDeathAudioSource.PlayOneShot(clip);
         
-    }
+    }*/
     
 }
 
