@@ -79,7 +79,7 @@ public class MouseItemControl : MonoBehaviour
                             mouseItem.isEquipped = true;
                             mouseItem.usedEquipSlot = checkedResult.usedEquipSlot;
                             //checkedResult.usedEquipSlot = null;
-                            CharacterPanelStatControl.OnItemRemove(mouseItem.itemStatBlock);
+                            CharacterPanelStatControl.OnItemRemove(mouseItem.itemInfoBlock);
                         }
                         else // Item was in inventory
                         {
@@ -166,7 +166,7 @@ public class MouseItemControl : MonoBehaviour
                         dropLocation.z += Random.Range(-2.0f, 2.0f);
 
                         Item droppedItem = Instantiate(itemDrop, dropLocation, Quaternion.identity).GetComponent<Item>();
-                        droppedItem.Initialise(mouseItem.itemData, mouseItem.itemStatBlock, 30.0f);
+                        droppedItem.Initialise(mouseItem.itemData, mouseItem.itemInfoBlock, 30.0f);
 
                         itemDroppedToGround = true;
                         mouseItem.ClearItem();

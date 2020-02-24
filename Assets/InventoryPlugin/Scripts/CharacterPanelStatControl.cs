@@ -105,7 +105,7 @@ public class CharacterPanelStatControl : MonoBehaviour
         updatedField.text = baseText + realValue;
     }
 
-    public static void OnItemEquip(InventoryItem.ItemStatBlock itemStats)
+    public static void OnItemEquip(InventoryItem.ItemInfoBlock itemStats)
     {
         IncreaseStatValue(statStrength, itemStats.strength);
         IncreaseStatValue(statAgility, itemStats.agility);
@@ -115,7 +115,7 @@ public class CharacterPanelStatControl : MonoBehaviour
         IncreaseStatValue(statMagicalArmour, itemStats.magicalArmour);
     }
 
-    public static void OnItemRemove(InventoryItem.ItemStatBlock itemStats)
+    public static void OnItemRemove(InventoryItem.ItemInfoBlock itemStats)
     {
         DecreaseStatValue(statStrength, itemStats.strength);
         DecreaseStatValue(statAgility, itemStats.agility);

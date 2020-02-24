@@ -109,9 +109,9 @@ public class ItemData : ScriptableObject
         magicalArmour = Random.Range(magicalArmourRangeMin, magicalArmourRangeMax);
     }
 
-    public InventoryItem.ItemStatBlock GetRandomItemStats()
+    public InventoryItem.ItemInfoBlock GetRandomItemStats()
     {
-        InventoryItem.ItemStatBlock itemStatBlock = new InventoryItem.ItemStatBlock
+        InventoryItem.ItemInfoBlock itemStatBlock = new InventoryItem.ItemInfoBlock
         {
             strength = Random.Range(strengthRangeMin, strengthRangeMax),
             agility = Random.Range(agilityRangeMin, agilityRangeMax),
@@ -124,9 +124,9 @@ public class ItemData : ScriptableObject
         return itemStatBlock;
     }
 
-    public InventoryItem.ItemStatBlock GetSetItemStats()
+    public InventoryItem.ItemInfoBlock GetSetItemStats()
     {
-        InventoryItem.ItemStatBlock itemStatBlock = new InventoryItem.ItemStatBlock
+        InventoryItem.ItemInfoBlock itemStatBlock = new InventoryItem.ItemInfoBlock
         {
             strength = strength,
             agility = agility,
