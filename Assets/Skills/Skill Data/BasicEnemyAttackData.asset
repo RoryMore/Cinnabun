@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxRange: 5
   minRange: 0
-  farWidth: 0
-  nearWidth: 0
+  farWidth: 3
+  nearWidth: 1
   verticalRange: 0
   angle: 25
   cooldown: 2

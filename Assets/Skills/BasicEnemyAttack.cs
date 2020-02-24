@@ -85,7 +85,7 @@ public class BasicEnemyAttack : BaseSkill
         if (timeSpentOnWindUp >= skillData.windUp)
         {
             skillState = SkillState.DOAFFECT;
-            currentlyCasting = false;
+            
             //ActivateSkill();
 
             DisableProjector();
@@ -98,6 +98,7 @@ public class BasicEnemyAttack : BaseSkill
         timeBeenOnCooldown = 0.0f;
         timeSpentOnWindUp = 0.0f;
         skillState = SkillState.INACTIVE;
+        currentlyCasting = false;
 
         // Intended effect here. Be it damage or otherwise
         // This includes checking if target is in range and such
@@ -112,4 +113,5 @@ public class BasicEnemyAttack : BaseSkill
         }
 
     }
+
 }
