@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BasicEnemyAttack : BaseSkill
 {
-    Entity target;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +25,7 @@ public class BasicEnemyAttack : BaseSkill
         SkillDeltaUpdate();
     }
 
-    public override void TriggerSkill(Entity entity)
+    public override void TriggerSkill(List<Entity> entityList)
     {
         // This needs no alteration regardless of skill
         // However, if it requires the overloaded version with an entity list, activate skill in DOAFFECT 
@@ -48,7 +47,7 @@ public class BasicEnemyAttack : BaseSkill
                 {
                     //Debug.Log("Skill being Targetted");
                     
-                    TargetSkill(entity);
+                    TargetSkill();
                     break;
                 }
 
@@ -63,17 +62,16 @@ public class BasicEnemyAttack : BaseSkill
             case SkillState.DOAFFECT:
                 {
                     //Debug.Log("Skill Effect Activated");
-                    ActivateSkill();
+                    ActivateSkill(entityList);
                     break;
                 }
         }
     }
 
-    protected override void TargetSkill(Entity entity)
+    protected override void TargetSkill()
     {
         // Because enemies handle their own targeting and such, this is just for enabling the initial projector
         base.TargetSkill();
-        target = entity;
         EnableProjector();
         skillState = SkillState.CASTING;
     }
@@ -87,7 +85,7 @@ public class BasicEnemyAttack : BaseSkill
         if (timeSpentOnWindUp >= skillData.windUp)
         {
             skillState = SkillState.DOAFFECT;
-            currentlyCasting = false;
+            
             //ActivateSkill();
 
             DisableProjector();
@@ -100,11 +98,13 @@ public class BasicEnemyAttack : BaseSkill
         timeBeenOnCooldown = 0.0f;
         timeSpentOnWindUp = 0.0f;
         skillState = SkillState.INACTIVE;
+        currentlyCasting = false;
 
         // Intended effect here. Be it damage or otherwise
         // This includes checking if target is in range and such
         foreach (Entity testedEntity in entityList)
         {
+            if(testedEntity != casterSelf)
             if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
             {
                 testedEntity.TakeDamage(skillData.baseMagnitude);
@@ -113,4 +113,5 @@ public class BasicEnemyAttack : BaseSkill
         }
 
     }
+
 }

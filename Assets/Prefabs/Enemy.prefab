@@ -964,7 +964,10 @@ MonoBehaviour:
   enemyManager: {fileID: 0}
   myEncounter: {fileID: 0}
   enemyForces: []
+  damageNumbers: {fileID: 0}
   basicAttack: {fileID: 8699164966746935574}
+  skillList:
+  - {fileID: 5874742271509955571, guid: b1b510e7e6d3d2a4c936daa02ed5d1cf, type: 3}
 --- !u!114 &3292460302364433314
 MonoBehaviour:
   m_ObjectHideFlags: 0

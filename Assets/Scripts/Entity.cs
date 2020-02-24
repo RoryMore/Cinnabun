@@ -136,7 +136,7 @@ public class Entity : MonoBehaviour
     public Vector3 destination;
 
     [HideInInspector]
-    public SkillData chosenSkill;
+    public BaseSkill chosenSkill;
 
     [HideInInspector]
     public NavMeshAgent nav;
