@@ -24,7 +24,7 @@ public class EnemyAnimationEventHandler : MonoBehaviour
     void EnemyStep()
     {
         //sound
-        soundManager.EnemyStepSound();
+        //soundManager.EnemyStepSound();
         //play all partics effects which happen 
         Debug.Log("run effe"+RunEffect.Length);
         foreach (ParticleSystem item in RunEffect)
@@ -39,7 +39,7 @@ public class EnemyAnimationEventHandler : MonoBehaviour
 
     void EnemyAttack()
     {
-        soundManager.EnemyAttackSound();
+        //soundManager.EnemyAttackSound();
 
         foreach (ParticleSystem item in AttackEffects)
         {
@@ -49,7 +49,7 @@ public class EnemyAnimationEventHandler : MonoBehaviour
 
     void EnemyHit()
     {
-        soundManager.EnemyHitSound();
+        //soundManager.EnemyHitSound();
         //takeDamage
         foreach (ParticleSystem item in HitEffect)
         {
@@ -59,7 +59,7 @@ public class EnemyAnimationEventHandler : MonoBehaviour
 
     void EnemyDeath()
     {
-        soundManager.EnemyDeathSound();
+       // soundManager.EnemyDeathSound();
 
         foreach (ParticleSystem item in DeathEffect)
         {
@@ -67,5 +67,40 @@ public class EnemyAnimationEventHandler : MonoBehaviour
         }
     }
 
-    
+
+    //public void EnemyStepSound()
+    //{
+
+    //    AudioClip clip = enemyFootsteps[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
+    //    //Debug.Log(clip.name);
+    //    enemyFootAudioSource.PlayOneShot(clip);
+
+    //}
+
+    //public void EnemyAttackSound()
+    //{
+
+    //    AudioClip clip = enemyAttacks[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
+    //    //Debug.Log(clip.name);
+    //    enemyAttackAudioSource.PlayOneShot(clip);
+
+    //}
+
+    //public void EnemyHitSound()
+    //{
+
+    //    AudioClip clip = enemyHits[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
+    //    //Debug.Log(clip.name);
+    //    enemyHitAudioSource.PlayOneShot(clip);
+
+    //}
+
+    //public void EnemyDeathSound()
+    //{
+
+    //    AudioClip clip = enemyDeath[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
+    //    //Debug.Log(clip.name);
+    //    enemyDeathAudioSource.PlayOneShot(clip);
+
+    //}
 }
