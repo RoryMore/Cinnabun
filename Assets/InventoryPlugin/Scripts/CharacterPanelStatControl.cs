@@ -69,16 +69,16 @@ public class CharacterPanelStatControl : MonoBehaviour
         if (characterEntity != null)
         {
             // Set Strength text field with strength
-            UpdateTextFieldWithValue(strengthText, "Str: ", strength);
+            UpdateTextFieldWithValue(strengthText, "str: ", strength);
 
             // Set Agility text field with agility
-            UpdateTextFieldWithValue(agilityText, "Agi: ", agility);
+            UpdateTextFieldWithValue(agilityText, "agi: ", agility);
 
             // Set Constitution text field with constitution
-            UpdateTextFieldWithValue(constitutionText, "Con: ", constitution);
+            UpdateTextFieldWithValue(constitutionText, "con: ", constitution);
 
             // Set Intellect text field with intellect
-            UpdateTextFieldWithValue(intellectText, "Int: ", intellect);
+            UpdateTextFieldWithValue(intellectText, "int: ", intellect);
 
             // Set Health text field with current & max health
             int realCurrentHealth = (int)characterEntity.GetType().GetField(currentHealth).GetValue(characterEntity);
@@ -86,16 +86,16 @@ public class CharacterPanelStatControl : MonoBehaviour
             healthText.text = realCurrentHealth + "/" + realMaxHealth;
 
             // Set Physical Damage Reduction text field with physicalDmgReduction
-            UpdateTextFieldWithValue(physicalDamageReductionText, "Physical: ", physicalDamageReduction);
+            UpdateTextFieldWithValue(physicalDamageReductionText, "physical: ", physicalDamageReduction);
 
             // Set Magical Damage Reduction text field with magicalDmgReduction
-            UpdateTextFieldWithValue(magicalDamageReductionText, "Magical: ", magicalDamageReduction);
+            UpdateTextFieldWithValue(magicalDamageReductionText, "magical: ", magicalDamageReduction);
 
             // Set Physical Armour text field with physicalArmour
-            UpdateTextFieldWithValue(physicalArmourText, "Physical: ", physicalArmour);
+            UpdateTextFieldWithValue(physicalArmourText, "physical: ", physicalArmour);
 
             // Set Magical Armour text field with magicalArmour
-            UpdateTextFieldWithValue(magicalArmourText, "Magical: ", magicalArmour);
+            UpdateTextFieldWithValue(magicalArmourText, "magical: ", magicalArmour);
         }
     }
 
@@ -105,31 +105,30 @@ public class CharacterPanelStatControl : MonoBehaviour
         updatedField.text = baseText + realValue;
     }
 
-    public static void OnItemEquip(Item item)
+    public static void OnItemEquip(InventoryItem.ItemStatBlock itemStats)
     {
-        IncreaseStatValue(statStrength, item.strength);
-        IncreaseStatValue(statAgility, item.agility);
-        IncreaseStatValue(statConstitution, item.constitution);
-        IncreaseStatValue(statIntellect, item.intellect);
-        IncreaseStatValue(statPhysicalArmour, item.physicalArmour);
-        IncreaseStatValue(statMagicalArmour, item.magicalArmour);
+        IncreaseStatValue(statStrength, itemStats.strength);
+        IncreaseStatValue(statAgility, itemStats.agility);
+        IncreaseStatValue(statConstitution, itemStats.constitution);
+        IncreaseStatValue(statIntellect, itemStats.intellect);
+        IncreaseStatValue(statPhysicalArmour, itemStats.physicalArmour);
+        IncreaseStatValue(statMagicalArmour, itemStats.magicalArmour);
     }
 
-    public static void OnItemRemove(Item item)
+    public static void OnItemRemove(InventoryItem.ItemStatBlock itemStats)
     {
-        DecreaseStatValue(statStrength, item.strength);
-        DecreaseStatValue(statAgility, item.agility);
-        DecreaseStatValue(statConstitution, item.constitution);
-        DecreaseStatValue(statIntellect, item.intellect);
-        DecreaseStatValue(statPhysicalArmour, item.physicalArmour);
-        DecreaseStatValue(statMagicalArmour, item.magicalArmour);
+        DecreaseStatValue(statStrength, itemStats.strength);
+        DecreaseStatValue(statAgility, itemStats.agility);
+        DecreaseStatValue(statConstitution, itemStats.constitution);
+        DecreaseStatValue(statIntellect, itemStats.intellect);
+        DecreaseStatValue(statPhysicalArmour, itemStats.physicalArmour);
+        DecreaseStatValue(statMagicalArmour, itemStats.magicalArmour);
     }
 
     static void IncreaseStatValue(string statToChange, int increaseBy)
     {
         int statValue = (int)statCharacterEntity.GetType().GetField(statToChange).GetValue(statCharacterEntity);
         statValue += increaseBy;
-
         statCharacterEntity.GetType().GetField(statToChange).SetValue(statCharacterEntity, statValue);
     }
 
@@ -137,7 +136,6 @@ public class CharacterPanelStatControl : MonoBehaviour
     {
         int statValue = (int)statCharacterEntity.GetType().GetField(statToChange).GetValue(statCharacterEntity);
         statValue -= decreaseBy;
-
         statCharacterEntity.GetType().GetField(statToChange).SetValue(statCharacterEntity, statValue);
     }
 }

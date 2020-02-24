@@ -10,7 +10,7 @@ public class EquipmentPanelControl : MonoBehaviour
     public float slotWidth;
     public float slotHeight;
     public float offsetFromEdge;
-    public List<Item.EquipmentSlot> equipmentSlotsUsed;
+    public List<ItemData.EquipmentSlot> equipmentSlotsUsed;
 
     [HideInInspector] public GameObject[] equipmentSlotsObj;
     [HideInInspector] public EquipmentSlot[] equipmentSlots;
@@ -61,7 +61,7 @@ public class EquipmentPanelControl : MonoBehaviour
         for (int i = 0; i < equipmentSlots.Length; i++)
         {
 
-            if (invItem.item.equipmentSlot == equipmentSlots[i].equipmentSlot)
+            if (invItem.itemData.equipmentSlot == equipmentSlots[i].equipmentSlot)
             {
                 // Equip the item into this slot if this slot isn't used
                 if (!equipmentSlots[i].isUsed)
@@ -69,11 +69,11 @@ public class EquipmentPanelControl : MonoBehaviour
                     InventoryItem equippedItem = Instantiate(invBase.itemIcon).GetComponent<InventoryItem>();
 
                     Vector3 equipInterfacePos = equipmentSlots[i].gameObject.transform.position;
-                    equipInterfacePos.x += (EquipmentSlot.width * 0.1f);
-                    equipInterfacePos.y -= (EquipmentSlot.height * 0.1f);
+                    equipInterfacePos.x += (EquipmentSlot.width * 0.025f);
+                    equipInterfacePos.y -= (EquipmentSlot.height * 0.025f);
 
                     equippedItem.Initialise(equipmentSlots[i].gameObject,
-                        equippedItem.item,
+                        equippedItem,
                         equipInterfacePos,
                         Vector3.one);
 
@@ -81,17 +81,18 @@ public class EquipmentPanelControl : MonoBehaviour
                     equippedItem.isEquipped = true;
                     equippedItem.usedEquipSlot = equipmentSlots[i];
 
-                    CharacterPanelStatControl.OnItemEquip(equippedItem.item);
+                    CharacterPanelStatControl.OnItemEquip(equippedItem.itemStatBlock);
 
                     invBase.playerOwnedItems.Add(equippedItem);
 
                     equipmentSlots[i].isUsed = true;
-                    equipmentSlots[i].equippedItem = equippedItem.item;
+                    equipmentSlots[i].equippedItem = equippedItem.itemData;
 
                     return true;
                 }
             }
         }
+        //invBase.AddItem(invItem);
         return false;
     }
 }

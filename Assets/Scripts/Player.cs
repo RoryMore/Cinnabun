@@ -43,8 +43,8 @@ public class Player : Entity
     GameObject delayedBlastCastParticles;
 
     [Header("Inventory")]
-    [SerializeField]
-    GameObject inventory;
+    //[SerializeField]
+    public GameObject inventory;
     bool inventoryBeginShit = false;
 
     // Start is called before the first frame update
@@ -204,7 +204,7 @@ public class Player : Entity
                                 if (currentEncounter != null)
                                 {
                                     // Need a current entity list to put into function parameter
-                                    selectedSkill.TriggerSkill(currentEncounter.masterInitiativeList);
+                                    selectedSkill.TriggerSkill(currentEncounter.masterInitiativeList, groundLayerMask);
 
                                     if (selectedSkill.currentlyCasting)
                                     {
