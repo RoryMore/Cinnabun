@@ -40,7 +40,7 @@ public class SoundManager : MonoBehaviour
     /// Enemy Audio Cues
     /// </summary>
 
-    [SerializeField]
+    /*[SerializeField]
     public AudioClip[] enemyFootsteps;
     public AudioSource enemyFootAudioSource;
 
@@ -54,7 +54,7 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField]
     public AudioClip[] enemyDeath;
-    public AudioSource enemyDeathAudioSource;
+    public AudioSource enemyDeathAudioSource;*/
 
     // public AudioSource millionaire;
 
@@ -431,7 +431,7 @@ public class SoundManager : MonoBehaviour
     }
 
 
-    public void EnemyStepSound()
+   public void EnemyStepSound()
     {
        
         AudioClip clip = enemyFootsteps[UnityEngine.Random.Range(0, enemyFootsteps.Length)];
@@ -466,6 +466,6 @@ public class SoundManager : MonoBehaviour
         enemyDeathAudioSource.PlayOneShot(clip);
         
     }
-
+    
 }
 

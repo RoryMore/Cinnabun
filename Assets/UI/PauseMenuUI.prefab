@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04b15ee0468f8d45a02507f111b9cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VHSimage: {fileID: 0}
   isPaused: 0
 --- !u!114 &1919330310
 MonoBehaviour:
@@ -62,6 +63,7 @@ MonoBehaviour:
   actionsLeft: 2
   maxActions: 2
   timeStopCoolDown: 0
+  abilityCastTime: 0
   inBattle: 0
   takeingTurn: 0
   entity: []

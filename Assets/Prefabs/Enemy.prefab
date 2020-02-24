@@ -801,7 +801,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5366817791025178621}
+  - component: {fileID: 6459688175753478768}
   - component: {fileID: 5366817791025178610}
   - component: {fileID: 5366817791025178611}
   - component: {fileID: 5366817791025178608}
@@ -810,6 +810,7 @@ GameObject:
   - component: {fileID: 3292460302364433314}
   - component: {fileID: 8445755082550829735}
   - component: {fileID: 2343612759555277019}
+  - component: {fileID: 1519027251376846304}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -817,8 +818,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5366817791025178621
-Transform:
+--- !u!224 &6459688175753478768
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -834,6 +835,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 2.5, y: 1.1}
+  m_SizeDelta: {x: 101, y: 81}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!33 &5366817791025178610
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1027,12 +1033,25 @@ MonoBehaviour:
   attackWidth: 30
   attackType: 1
   angle: 30
+--- !u!114 &1519027251376846304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5366817791025178614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5f1dcdb5f6ba4143a3da72862ef3047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemeyHealthBar: {fileID: 725330258493133787}
 --- !u!1001 &2442032239147559446
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5366817791025178621}
+    m_TransformParent: {fileID: 6459688175753478768}
     m_Modifications:
     - target: {fileID: 1773077662644772816, guid: 129291d1490e4eb4cb76f7390438a629,
         type: 3}
@@ -1314,7 +1333,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5366817791025178621}
+    m_TransformParent: {fileID: 6459688175753478768}
     m_Modifications:
     - target: {fileID: 4476699896159036689, guid: 8fe25790019bce94fafc2f51deccc8ba,
         type: 3}

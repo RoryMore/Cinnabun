@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class SimpleEnemy : EnemyScript
 {
@@ -120,7 +121,7 @@ public class SimpleEnemy : EnemyScript
             
 
         }
-        
+
 
     }
 
@@ -315,6 +316,7 @@ public class SimpleEnemy : EnemyScript
         if (distance <= chosenSkill.skillData.maxRange * 0.5f && chosenSkill.isAllowedToCast)
         {
 
+ 
 
             isAttacking = true;
             anim.SetTrigger("attacking");
