@@ -10,8 +10,6 @@ public class EnemyManager : MonoBehaviour
    
     public bool weWon;
 
-    public bool isInBattle;
-
     public bool inBattle;
 
     public bool WaveActive;
