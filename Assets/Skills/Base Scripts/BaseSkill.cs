@@ -222,7 +222,7 @@ public class BaseSkill : MonoBehaviour
     /// <param name="maxLength"></param>
     /// <param name="farWidth"></param>
     /// <returns>Returns TRUE if given Vector3 is within bounds and can can be damaged</returns>
-    protected bool CheckLineSkillHit(Vector3 hitCheckPosition, float minLength, float maxLength, float nearWidth, float farWidth)
+    public bool CheckLineSkillHit(Vector3 hitCheckPosition, float minLength, float maxLength, float nearWidth, float farWidth)
     {
         float angleLookAt = GetForwardAngle(casterSelf.transform);
 
@@ -248,7 +248,7 @@ public class BaseSkill : MonoBehaviour
 
         posNextMax.x += maxLength;
 
-        Vector3[]  hitCheckBounds = new Vector3[4];
+        Vector3[] hitCheckBounds = new Vector3[4];
 
         hitCheckBounds[0] = posCurrentMin;
         hitCheckBounds[1] = posCurrentMax;
@@ -266,26 +266,18 @@ public class BaseSkill : MonoBehaviour
 
         // hitCheckBounds holds the 4 coordinates of where an enemy has to be standing within to be hit
         // continue to calculate if the target location is within given rectangle
-        // Area A = [ x1(y2 – y3) + x2(y3 – y1) + x3(y1-y2)]/2 + [ x1(y4 – y3) + x4(y3 – y1) + x3(y1-y4)]/2
-        Debug.Log("WeaponAttack Hit Results: " + CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition));
-        return CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition);
-
-        // These statements include a height check
-        //if (CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition))
-        //{
-        //    if (casterSelf.transform.position.y + (skillData.verticalRange*0.5f) >= hitCheckPosition.y)
-        //    {
-        //        if (casterSelf.transform.position.y - (skillData.verticalRange*0.5f) <= hitCheckPosition.y)
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
-        //return false;
+        //Debug.Log("WeaponAttack Hit Results: " + CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition));
+        if (CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    protected bool CheckRadialSkillHit(Vector3 hitCheckPosition)
+    public bool CheckRadialSkillHit(Vector3 hitCheckPosition)
     {
         // Based on zoneStart (where the radial skill area is starting from with a given rotation) and the position we are checking
         // Returns whether hitCheckPosition is within the arc area of the radial skill
@@ -328,6 +320,8 @@ public class BaseSkill : MonoBehaviour
 
     bool CheckPointInBounds(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4, Vector3 point)
     {
+        // Area A = [ x1(y2 – y3) + x2(y3 – y1) + x3(y1-y2)]/2 + [ x1(y4 – y3) + x4(y3 – y1) + x3(y1-y4)]/2
+
         // Area of full rectangle
         float area = TriArea(v1, v2, v3) + TriArea(v1, v3, v4);
         //Debug.Log("Rect Area: " + area);
@@ -350,9 +344,13 @@ public class BaseSkill : MonoBehaviour
         }
         return false;
         //return (area == pointA1 + pointA2 + pointA3 + pointA4);
+
+        // s = 1/2 ( a + b + c )
+        // Area = sqrt ( s ( s-a) ( s-b) ( s-c) )
+        
     }
 
-    bool CheckInRange(Vector3 castPosition, Vector3 targetPosition)
+    public bool CheckInRange(Vector3 castPosition, Vector3 targetPosition)
     {
         // If the targets position is within the range of the skill,
         // Return true
@@ -361,6 +359,16 @@ public class BaseSkill : MonoBehaviour
             return true;
         }
         // Targets position from caster position is out of skill range
+        return false;
+    }
+
+    public bool CheckInVerticalRange(Vector3 targetPosition)
+    {
+        // Basic distance check with 2 floats from caster and target positions to see if they are near eachother enough of the Y axis to damage one another
+        if (Mathf.Abs(casterSelf.transform.position.y - targetPosition.y) <= skillData.verticalRange)
+        {
+            return true;
+        }
         return false;
     }
 

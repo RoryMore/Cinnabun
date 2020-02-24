@@ -298,6 +298,13 @@ public class Entity : MonoBehaviour
 
     void CalculateMovementSpeed()
     {
+        // I believe each unit should equal something along the lines of
+        // float agilityEffectiveness = 0.1f;
+        // float agilityPointThreshold = 20.0f;
+        // movementSpeed = baseMovementSpeed + (baseMovementSpeed * ((agility * agilityEffectiveness) / agilityPointThreshold))
+        // for each 20 points of agility you move 10% faster with this formula.
+        // -Sunny
+
         movementSpeed = agility;
     }
 
@@ -314,6 +321,50 @@ public class Entity : MonoBehaviour
     void CalculateMagDamagePotential()
     {
         magDamagePotential = Mathf.Abs(intellect * (intellect / 2)) * level;
+    }
+
+    // ENTITY ADDITIONS BY SUNNY TO MAKE OUR STATS USEFUL FOR SKILLS - IMPLEMENT WHERE NEEDED
+    // PUBLIC SO SKILLS CAN GRAB THIS INT AS EXTRA DAMAGE FOR THEIR ATTACKS
+    // with these functions, idk what damagePotential is going to do for us as a stat. Those formulas above seem to snowball pretty hard
+    public int GetStrengthDamageBonus()
+    {
+        // We get 25% of our strength value as added damage to physical attacks
+        float strengthEffectiveness = 0.5f;
+        // Should we floor to an int, or round to nearest
+        // Floor could be safe enough, for now this function means we get 1 extra damage every 2 strength
+        return Mathf.FloorToInt(strength * strengthEffectiveness);
+    }
+
+    public int GetIntellectDamageBonus()
+    {
+        // We get 25% of our intellect value as added damage to magical attacks
+        float intellectEffectiveness = 0.5f;
+        return Mathf.FloorToInt(intellect * intellectEffectiveness);
+    }
+
+    /// <summary>
+    /// Minus the Return value of this function from the damage being taken to reduce damage properly
+    /// </summary>
+    /// <param name="originalDamage"></param>
+    /// <param name="damageType"></param>
+    /// <returns></returns>
+    int DamageNegated(int originalDamage, SkillData.DamageType damageType)
+    {
+        // How effective armour is at 'armourPointThreshold' points of armour
+        // 0.25f effectiveness && 100.0f threshold = 25% damage reduction at 100 points of armour
+        float armourEffectiveness = 0.25f;
+        float armourPointThreshold = 100.0f;
+
+        if (damageType == SkillData.DamageType.PHYSICAL)
+        {
+            float percentReduced = armourEffectiveness * (physicalArmour / armourPointThreshold);
+            return Mathf.RoundToInt(originalDamage * percentReduced);
+        }
+        else
+        {
+            float percentReduced = armourEffectiveness * (magicalArmour / armourPointThreshold);
+            return Mathf.RoundToInt(originalDamage * percentReduced);
+        }
     }
 
     public void InitialiseAll()
