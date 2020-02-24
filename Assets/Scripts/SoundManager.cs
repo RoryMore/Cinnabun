@@ -36,42 +36,51 @@ public class SoundManager : MonoBehaviour
     AudioSource footstepRight;
     public static AudioSource rightFootstep;
 
+    [Header(" EnemyFoot")]
+    [SerializeField] AudioSource EnemyFoot1;
+    [SerializeField] AudioSource EnemyFoot2;
+    [SerializeField] AudioSource EnemyFoot3;
+    public static List<AudioSource> EnemyFoot = new List<AudioSource>();
+
+    [Header(" EnemyAttack")]
+    [SerializeField] AudioSource EnemyAttack1;
+    [SerializeField] AudioSource EnemyAttack2;
+    [SerializeField] AudioSource EnemyAttack3;
+    public static List<AudioSource> EnemyAttack = new List<AudioSource>();
+
+    [Header(" EnemyHit")]
+    [SerializeField] AudioSource EnemyHit1;
+    [SerializeField] AudioSource EnemyHit2;
+    [SerializeField] AudioSource EnemyHit3;
+    public static List<AudioSource> EnemyHit = new List<AudioSource>();
+
+    [Header(" Enemydeath")]
+    [SerializeField] AudioSource Enemydeath1;
+    [SerializeField] AudioSource Enemydeath2;
+    [SerializeField] AudioSource Enemydeath3;
+    public static List<AudioSource> Enemydeath = new List<AudioSource>();
     /// <summary>
     /// Enemy Audio Cues
     /// </summary>
 
-    /*[SerializeField]
-    public AudioClip[] enemyFootsteps;
-    public AudioSource enemyFootAudioSource;
 
-    [SerializeField]
-    public AudioClip[] enemyAttacks;
-    public AudioSource enemyAttackAudioSource;
-
-    [SerializeField]
-    public AudioClip[] enemyHits;
-    public AudioSource enemyHitAudioSource;
-
-    [SerializeField]
-    public AudioClip[] enemyDeath;
-    public AudioSource enemyDeathAudioSource;*/
 
     // public AudioSource millionaire;
 
-  //  private AudioSource currentAmbient;
-  //  private AudioSource currentMusic;
+    //  private AudioSource currentAmbient;
+    //  private AudioSource currentMusic;
 
     //float lerpSoundsTo;
 
-   // float ambiantProgress;
-   // float musicProgress;
+    // float ambiantProgress;
+    // float musicProgress;
 
     PauseAbility pauseAbility;
     EnemyManager enemyManager;
 
     int songs;
     float setVolume;
-    public int random;
+    [Header("Other")] public int random;
     public float timer = 1;
   //  float Timeholder;
    // bool randomNumber = true;
@@ -108,7 +117,27 @@ public class SoundManager : MonoBehaviour
 
         leftFootstep = footStepLeft;
         rightFootstep = footstepRight;
-        
+
+
+        //add sound to the array or list
+
+        EnemyFoot.Add(EnemyFoot1);
+        EnemyFoot.Add(EnemyFoot2);
+        EnemyFoot.Add(EnemyFoot3);
+
+        EnemyAttack.Add(EnemyAttack1);
+        EnemyAttack.Add(EnemyAttack2);
+        EnemyAttack.Add(EnemyAttack3);
+
+        EnemyHit.Add(EnemyHit1);
+        EnemyHit.Add(EnemyHit2);
+        EnemyHit.Add(EnemyHit3);
+
+        Enemydeath.Add(Enemydeath1);
+        Enemydeath.Add(Enemydeath2);
+        Enemydeath.Add(Enemydeath3);
+
+
     }
 
     // Update is called once per frame
