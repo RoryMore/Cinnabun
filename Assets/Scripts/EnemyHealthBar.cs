@@ -10,6 +10,7 @@ public class EnemyHealthBar : MonoBehaviour
     SimpleEnemy enemy;
 
     public Image enemeyHealthBar;
+    public Image outLine;
     private const float DISAPPEAR_TIMER_MAX = 1f;
     private float disappearTimer;
     private Color textColor;
@@ -31,17 +32,23 @@ public class EnemyHealthBar : MonoBehaviour
 
         enemeyHealthBar.fillAmount = (float)enemy.currentHP / (float)enemy.maxHP;
 
-        if (enemy.currentHP == enemy.maxHP)
+       /* if (enemy.currentHP == enemy.maxHP)
         {
             Color temp = enemeyHealthBar.color;
             temp.a = 0f;
             enemeyHealthBar.color = temp;
-        }
-        else
-        {
-            Color temp = enemeyHealthBar.color;
+        }*/
+    
+        
+           /* Color temp = enemeyHealthBar.color;
             temp.a = 1f;
-            enemeyHealthBar.color = temp;
+            enemeyHealthBar.color = temp;*/
+
+        if (enemy.isDead)
+        {
+            Color temp = outLine.color;
+            temp.a = 0f;
+            outLine.color = temp;
         }
         
     }

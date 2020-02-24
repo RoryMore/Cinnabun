@@ -10,24 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d86a24f12299674e8970832147bf16d, type: 3}
-  m_Name: BurnApply-Enemy
+  m_Name: PoisonApply-Enemy
   m_EditorClassIdentifier: 
-  range: 5
-  cooldown: 3
+  maxRange: 0
+  minRange: 0
+  farWidth: 0
+  nearWidth: 0
+  verticalRange: 0
+  angle: 0
+  cooldown: 8
   timeBeenOnCooldown: 10
-  windUp: 2
+  windUp: 1
   timeSpentOnWindUp: 0
-  shape: 0
-  angleWidth: 360
   skill: 3
-  baseDamage: 2
-  damageType: 1
+  baseMagnitude: 0
+  damageType: 0
   rangeIndicator: {fileID: 0}
   indicatorMaterial: {fileID: 2100000, guid: 3c6c47126b1480347ac2f55825168a69, type: 2}
   currentlyCasting: 0
   caster: {fileID: 0}
-  damageTickRate: 1
-  duration: 3
-  damageOverTimeCondition: 1
-  effectivePercent: 0
+  damageTickRate: 2.75
+  duration: 6
+  damageOverTimeCondition: 2
+  effectivePercent: 0.85
   enemyCaster: 1

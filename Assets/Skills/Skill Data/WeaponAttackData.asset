@@ -23,7 +23,7 @@ MonoBehaviour:
   windUp: 1
   timeSpentOnWindUp: 0
   skill: 3
-  baseMagnitude: 100
+  baseMagnitude: 15
   damageType: 0
   rangeIndicator: {fileID: 0}
   indicatorMaterial: {fileID: 0}
