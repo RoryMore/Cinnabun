@@ -39,4 +39,5 @@ MonoBehaviour:
   equippedSprite: {fileID: 21300000, guid: 3613a410bbe250548a2f3399935eb781, type: 3}
   inventorySpaceX: 1
   inventorySpaceY: 4
-  itemName: 
+  rarity: 0
+  itemName: {fileID: 11400000, guid: 70c4f68414ff71e46b4e06226df170cd, type: 2}

@@ -29,7 +29,6 @@ public class Player : Entity
 
     [Header("Navigation")]
     public float turningSpeed;
-    float baseMovementSpeed;
 
     [Header("Animation")]
     public Animator animator;
@@ -57,7 +56,7 @@ public class Player : Entity
         
         nav = GetComponent<NavMeshAgent>();
         nav.speed = movementSpeed;
-        baseMovementSpeed = movementSpeed;
+        //baseMovementSpeed = movementSpeed;
 
         playerState = PlayerState.FREE;
     }
@@ -99,13 +98,18 @@ public class Player : Entity
 
                             if (Input.GetKeyDown(KeyCode.I))
                             {
-                                if (!inventory.activeSelf)
+                                if (pause.states == PauseAbility.GameStates.PLAY)
                                 {
-                                    inventory.SetActive(true);
-                                }
-                                else
-                                {
-                                    inventory.SetActive(false);
+                                    if (!inventory.activeSelf)
+                                    {
+                                        pause.ButtonPaused();
+                                        inventory.SetActive(true);
+                                    }
+                                    else
+                                    {
+                                        pause.ButtonPlay();
+                                        inventory.SetActive(false);
+                                    }
                                 }
                             }
                         }
@@ -126,93 +130,33 @@ public class Player : Entity
                 case PlayerState.DOINGSKILL: // Player has selected a skill. Choose where to cast
                                              // Make the player stop moving
 
-                    nav.speed = 0.0f;
-                    nav.angularSpeed = 0.0f;
-
-                    AnimatorClipInfo[] animInfo = animator.GetCurrentAnimatorClipInfo(0);
-                    AnimationClip currentClip = animInfo[0].clip;
-                    float animSpeed = currentClip.length;
-
-                    //TargetSkill();
-                    switch (selectedSkill.skillData.skill)
+                    if (!pauseMenu.isPaused)
                     {
-                        // Special skills that need different transform
-                        case SkillData.SkillList.DELAYEDBLAST:
-                            if (currentEncounter != null)
-                            {
-                                selectedSkill.TriggerSkill(currentEncounter.playerInclusiveInitiativeList);
 
-                                if (selectedSkill.currentlyCasting)
-                                {
-                                    if (!delayedBlastCastParticles.activeSelf)
-                                    {
-                                        delayedBlastCastParticles.SetActive(true);
-                                    }
-                                    animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
-                                    animator.SetBool("skillCast", true);
-                                }
-                            }
-                            else
-                            {
-                                nav.angularSpeed = turningSpeed;
+                        nav.speed = 0.0f;
+                        nav.angularSpeed = 0.0f;
 
-                                selectedSkill = null;
-                                playerState = PlayerState.FREE;
+                        AnimatorClipInfo[] animInfo = animator.GetCurrentAnimatorClipInfo(0);
+                        AnimationClip currentClip = animInfo[0].clip;
+                        float animSpeed = currentClip.length;
 
-                                // Reset animator variables
-                                animator.SetBool("weaponAttack", false);
-                                animator.SetBool("skillCast", false);
-
-                                // Deactivate any active cast particles
-                                delayedBlastCastParticles.SetActive(false);
-                                rewindCastParticles.SetActive(false);
-                                teleportCastParticles.SetActive(false);
-                            }
-                            break;
-
-                        case SkillData.SkillList.REWIND:
-                            selectedSkill.TriggerSkill();
-
-                            if (selectedSkill.currentlyCasting)
-                            {
-                                if (!rewindCastParticles.activeSelf)
-                                {
-                                    rewindCastParticles.SetActive(true);
-                                }
-                                animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
-                                animator.SetBool("skillCast", true);
-                            }
-                            break;
-
-                        case SkillData.SkillList.TELEPORT:
-                            selectedSkill.TriggerSkill();
-
-                            if (selectedSkill.currentlyCasting)
-                            {
-                                if (!teleportCastParticles.activeSelf)
-                                {
-                                    teleportCastParticles.SetActive(true);
-                                }
-                                animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
-                                animator.SetBool("skillCast", true);
-                            }
-                            break;
-
-                        default:
-                            if (selectedSkill == weaponAttack)
-                            {
+                        //TargetSkill();
+                        switch (selectedSkill.skillData.skill)
+                        {
+                            // Special skills that need different transform
+                            case SkillData.SkillList.DELAYEDBLAST:
                                 if (currentEncounter != null)
                                 {
-                                    // Need a current entity list to put into function parameter
-                                    selectedSkill.TriggerSkill(currentEncounter.masterInitiativeList, groundLayerMask);
+                                    selectedSkill.TriggerSkill(currentEncounter.playerInclusiveInitiativeList);
 
                                     if (selectedSkill.currentlyCasting)
                                     {
-                                        // We are currently casting a skill
-                                        // Animate attack animation here
-
-                                        animator.SetFloat("weaponAttackPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
-                                        animator.SetBool("weaponAttack", true);
+                                        if (!delayedBlastCastParticles.activeSelf)
+                                        {
+                                            delayedBlastCastParticles.SetActive(true);
+                                        }
+                                        animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
+                                        animator.SetBool("skillCast", true);
                                     }
                                 }
                                 else
@@ -231,47 +175,112 @@ public class Player : Entity
                                     rewindCastParticles.SetActive(false);
                                     teleportCastParticles.SetActive(false);
                                 }
-                            }
-                            else
-                            {
+                                break;
+
+                            case SkillData.SkillList.REWIND:
                                 selectedSkill.TriggerSkill();
 
                                 if (selectedSkill.currentlyCasting)
                                 {
-                                    // We are currently casting a skill
-                                    // Animate cast animation here
-
+                                    if (!rewindCastParticles.activeSelf)
+                                    {
+                                        rewindCastParticles.SetActive(true);
+                                    }
                                     animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
                                     animator.SetBool("skillCast", true);
                                 }
-                            }
-                            
-                            break;
-                    }
-                    if (selectedSkill != null)
-                    {
-                        // skill has ended and been fully cast
-                        if (selectedSkill.timeBeenOnCooldown == 0.0f && !selectedSkill.currentlyCasting)
-                        {
-                            nav.angularSpeed = turningSpeed;
-                            pause.actionsLeft--;
-                            selectedSkill = null;
-                            playerState = PlayerState.FREE;
+                                break;
 
-                            // Reset animator variables
-                            animator.SetBool("weaponAttack", false);
-                            animator.SetBool("skillCast", false);
+                            case SkillData.SkillList.TELEPORT:
+                                selectedSkill.TriggerSkill();
 
-                            // Deactivate any active cast particles
-                            delayedBlastCastParticles.SetActive(false);
-                            rewindCastParticles.SetActive(false);
-                            teleportCastParticles.SetActive(false);
+                                if (selectedSkill.currentlyCasting)
+                                {
+                                    if (!teleportCastParticles.activeSelf)
+                                    {
+                                        teleportCastParticles.SetActive(true);
+                                    }
+                                    animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
+                                    animator.SetBool("skillCast", true);
+                                }
+                                break;
+
+                            default:
+                                if (selectedSkill == weaponAttack)
+                                {
+                                    if (currentEncounter != null)
+                                    {
+                                        // Need a current entity list to put into function parameter
+                                        selectedSkill.TriggerSkill(currentEncounter.masterInitiativeList, groundLayerMask);
+
+                                        if (selectedSkill.currentlyCasting)
+                                        {
+                                            // We are currently casting a skill
+                                            // Animate attack animation here
+
+                                            animator.SetFloat("weaponAttackPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
+                                            animator.SetBool("weaponAttack", true);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        nav.angularSpeed = turningSpeed;
+
+                                        selectedSkill = null;
+                                        playerState = PlayerState.FREE;
+
+                                        // Reset animator variables
+                                        animator.SetBool("weaponAttack", false);
+                                        animator.SetBool("skillCast", false);
+
+                                        // Deactivate any active cast particles
+                                        delayedBlastCastParticles.SetActive(false);
+                                        rewindCastParticles.SetActive(false);
+                                        teleportCastParticles.SetActive(false);
+                                    }
+                                }
+                                else
+                                {
+                                    selectedSkill.TriggerSkill();
+
+                                    if (selectedSkill.currentlyCasting)
+                                    {
+                                        // We are currently casting a skill
+                                        // Animate cast animation here
+
+                                        animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
+                                        animator.SetBool("skillCast", true);
+                                    }
+                                }
+
+                                break;
                         }
-                    }
+                        if (selectedSkill != null)
+                        {
+                            // skill has ended and been fully cast
+                            if (selectedSkill.timeBeenOnCooldown == 0.0f && !selectedSkill.currentlyCasting)
+                            {
+                                nav.angularSpeed = turningSpeed;
+                                pause.actionsLeft--;
+                                selectedSkill = null;
+                                playerState = PlayerState.FREE;
 
-                    if (Input.GetMouseButtonDown(1))
-                    {
-                        CancelSkillSelection();
+                                // Reset animator variables
+                                animator.SetBool("weaponAttack", false);
+                                animator.SetBool("skillCast", false);
+
+                                // Deactivate any active cast particles
+                                delayedBlastCastParticles.SetActive(false);
+                                rewindCastParticles.SetActive(false);
+                                teleportCastParticles.SetActive(false);
+                            }
+                        }
+
+
+                        if (Input.GetMouseButtonDown(1))
+                        {
+                            CancelSkillSelection();
+                        }
                     }
 
                     break;

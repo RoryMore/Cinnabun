@@ -11,7 +11,7 @@
 		Subshader{
 			Tags {
 				"RenderType" = "Transparent"
-				"Queue" = "Transparent+100"
+				"Queue" = "Transparent"
 			}
 			Pass {
 				ZWrite Off
