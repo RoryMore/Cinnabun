@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class MouseItemControl : MonoBehaviour
 {
     public InventoryItem mouseItem;
+    public ItemTooltip tooltip;
     public InventoryBase invBase;
     EquipmentPanelControl equipPanelControl = null;
 
@@ -27,6 +28,8 @@ public class MouseItemControl : MonoBehaviour
         raycaster = inventoryCanvas.GetComponent<GraphicRaycaster>();
         eventSystem = GetComponent<EventSystem>();
         player = FindObjectOfType<Player>();
+
+        tooltip.gameObject.SetActive(false);
     }
 
     private void Awake()
@@ -46,6 +49,46 @@ public class MouseItemControl : MonoBehaviour
         {
             transform.position = Input.mousePosition;
         }
+
+        if (CheckItemHovered())
+        {
+            tooltip.gameObject.SetActive(true);
+        }
+        else
+        {
+            tooltip.gameObject.SetActive(false);
+        }
+        if (tooltip.enabled)
+        {
+            tooltip.transform.position = Input.mousePosition;
+        }
+    }
+
+    bool CheckItemHovered()
+    {
+        foreach (RaycastResult result in GetNewPointerEventRaycast())
+        {
+            if (result.gameObject.name.Contains("InventoryItem"))
+            {
+                tooltip.gameObject.SetActive(true);
+                InventoryItem hoveredItem = result.gameObject.GetComponent<InventoryItem>();
+                tooltip.SetHoveredItem(hoveredItem.itemInfoBlock, hoveredItem.isEquipped);
+
+                InventoryItem equippedComparison = invBase.GetEquippedItem(hoveredItem.usedEquipSlot.equipmentSlot);
+                if (equippedComparison != null)
+                {
+                    tooltip.SetEquippedItemInfo(equippedComparison.itemInfoBlock);
+                }
+                else
+                {
+                    InventoryItem.ItemInfoBlock emptyInfo = new InventoryItem.ItemInfoBlock();
+                    tooltip.SetEquippedItemInfo(emptyInfo);
+                }
+                
+                return true;
+            }
+        }
+        return false;
     }
 
     void CheckItemClick()
@@ -80,6 +123,7 @@ public class MouseItemControl : MonoBehaviour
                             mouseItem.usedEquipSlot = checkedResult.usedEquipSlot;
                             //checkedResult.usedEquipSlot = null;
                             CharacterPanelStatControl.OnItemRemove(mouseItem.itemInfoBlock);
+                            invBase.playerEquippedItems.Remove(checkedResult);
                         }
                         else // Item was in inventory
                         {
@@ -140,6 +184,7 @@ public class MouseItemControl : MonoBehaviour
                         if (equipPanelControl.EquipItem(mouseItem))
                         {
                             incrementsWithoutUsableSlot--;
+                            invBase.playerEquippedItems.Add(mouseItem);
                             mouseItem.ClearItem();
                             mouseItem.gameObject.SetActive(false);
                         }
@@ -200,6 +245,7 @@ public class MouseItemControl : MonoBehaviour
                                     // Re-equip item in its slot.
                                     // Not enough inventory space
                                     equipPanelControl.EquipItem(mouseItem);
+                                    invBase.playerEquippedItems.Add(mouseItem);
 
                                     mouseItem.ClearItem();
                                     mouseItem.gameObject.SetActive(false);

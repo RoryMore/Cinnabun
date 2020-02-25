@@ -13,6 +13,9 @@ public class InventoryItem : MonoBehaviour
         public int intellect;
         public int physicalArmour;
         public int magicalArmour;
+
+        public string itemName;
+        public ItemData.ItemRarity rarity;
     }
 
     public ItemInfoBlock itemInfoBlock;

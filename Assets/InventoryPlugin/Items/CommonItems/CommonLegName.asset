@@ -9,17 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3110f89451f743848910c598af7ff19f, type: 3}
-  m_Name: WeaponAttackData
+  m_Script: {fileID: 11500000, guid: 0d454e9d7cedd98499aa9dc8ed6a51ec, type: 3}
+  m_Name: CommonLegName
   m_EditorClassIdentifier: 
-  maxRange: 6
-  minRange: 0.2
-  farWidth: 4.5
-  nearWidth: 1.5
-  verticalRange: 3
-  angle: 30
-  cooldown: 2
-  windUp: 1
-  skill: 3
-  baseMagnitude: 40
-  damageType: 0
+  itemName: Pause Button Pants

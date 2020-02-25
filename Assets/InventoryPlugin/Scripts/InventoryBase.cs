@@ -16,6 +16,7 @@ public class InventoryBase : MonoBehaviour
     InventorySlot[,] inventorySlots;
 
     [HideInInspector] public List<InventoryItem> playerOwnedItems;
+    [HideInInspector] public List<InventoryItem> playerEquippedItems;
 
     [Header("Border")]
     public float backgroundBorderWidth;
@@ -36,6 +37,7 @@ public class InventoryBase : MonoBehaviour
     void Start()
     {
         playerOwnedItems = new List<InventoryItem>();
+        playerEquippedItems = new List<InventoryItem>();
 
         baseRect = GetComponent<RectTransform>();
         inventorySlotsObj = new GameObject[inventorySlotsWide, inventorySlotsHigh];
@@ -53,6 +55,18 @@ public class InventoryBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public InventoryItem GetEquippedItem(ItemData.EquipmentSlot slotToFindItem)
+    {
+        for (int i = 0; i < playerEquippedItems.Count; i++)
+        {
+            if (playerEquippedItems[i].usedEquipSlot.equipmentSlot == slotToFindItem)
+            {
+                return playerEquippedItems[i];
+            }
+        }
+        return null;
     }
 
     void CreateSlots()

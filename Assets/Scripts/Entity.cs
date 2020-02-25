@@ -109,6 +109,8 @@ public class Entity : MonoBehaviour
     [Header("Derived Stats")]
     public int maxHP;
     public int currentHP;
+    [SerializeField]
+    float baseMovementSpeed;
     public float movementSpeed;
     public int dodgeChance;
     public int physDamagePotential;
@@ -290,22 +292,22 @@ public class Entity : MonoBehaviour
         RecordRewind();
     }
 
-    void CalculateMaxHP()
+    public void CalculateMaxHP()
     {
+        // probably needs rebalancing imo
         maxHP = ((5 + constitution) * level) * 10;
-        currentHP = maxHP;
+        //currentHP = maxHP;
     }
 
     void CalculateMovementSpeed()
     {
         // I believe each unit should equal something along the lines of
-        // float agilityEffectiveness = 0.1f;
-        // float agilityPointThreshold = 20.0f;
-        // movementSpeed = baseMovementSpeed + (baseMovementSpeed * ((agility * agilityEffectiveness) / agilityPointThreshold))
-        // for each 20 points of agility you move 10% faster with this formula.
-        // -Sunny
+        float agilityEffectiveness = 0.1f;
+        float agilityPointThreshold = 10.0f;
+        movementSpeed = baseMovementSpeed + (baseMovementSpeed * ((agility * agilityEffectiveness) / agilityPointThreshold));
+        // for each 10 points of agility you move 10% faster with this formula.
 
-        movementSpeed = agility;
+        //movementSpeed = agility;
     }
 
     void CalculateDodgeChance()

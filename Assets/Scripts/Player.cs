@@ -29,7 +29,6 @@ public class Player : Entity
 
     [Header("Navigation")]
     public float turningSpeed;
-    float baseMovementSpeed;
 
     [Header("Animation")]
     public Animator animator;
@@ -57,7 +56,7 @@ public class Player : Entity
         
         nav = GetComponent<NavMeshAgent>();
         nav.speed = movementSpeed;
-        baseMovementSpeed = movementSpeed;
+        //baseMovementSpeed = movementSpeed;
 
         playerState = PlayerState.FREE;
     }

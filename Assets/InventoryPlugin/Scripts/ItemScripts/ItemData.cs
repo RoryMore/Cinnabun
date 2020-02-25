@@ -92,7 +92,17 @@ public class ItemData : ScriptableObject
     [HideInInspector] public int inventorySpaceX;
     [HideInInspector] public int inventorySpaceY;
 
-    [HideInInspector] public string itemName;
+    public enum ItemRarity
+    {
+        COMMON,
+        UNCOMMON,
+        RARE,
+        ULTRA
+    }
+
+    public ItemRarity rarity;
+    [SerializeField]
+    ItemName itemName;
 
     // TODO: Add a section for Tooltip on mouseover.
 
@@ -118,7 +128,10 @@ public class ItemData : ScriptableObject
             constitution = Random.Range(constitutionRangeMin, constitutionRangeMax),
             intellect = Random.Range(intellectRangeMin, intellectRangeMax),
             physicalArmour = Random.Range(physicalArmourRangeMin, physicalArmourRangeMax),
-            magicalArmour = Random.Range(magicalArmourRangeMin, magicalArmourRangeMax)
+            magicalArmour = Random.Range(magicalArmourRangeMin, magicalArmourRangeMax),
+
+            itemName = itemName.itemName,
+            rarity = rarity
         };
 
         return itemStatBlock;
@@ -133,7 +146,10 @@ public class ItemData : ScriptableObject
             constitution = constitution,
             intellect = intellect,
             physicalArmour = physicalArmour,
-            magicalArmour = magicalArmour
+            magicalArmour = magicalArmour,
+
+            itemName = itemName.itemName,
+            rarity = rarity
         };
 
         return itemStatBlock;

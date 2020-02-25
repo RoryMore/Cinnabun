@@ -11,8 +11,8 @@ public class CharacterPanelStatControl : MonoBehaviour
     public Text constitutionText;
     public Text intellectText;
     public Text healthText;
-    public Text physicalDamageReductionText;
-    public Text magicalDamageReductionText;
+    //public Text physicalDamageReductionText;
+    //public Text magicalDamageReductionText;
     public Text physicalArmourText;
     public Text magicalArmourText;
 
@@ -23,8 +23,8 @@ public class CharacterPanelStatControl : MonoBehaviour
     public string intellect;
     public string currentHealth;
     public string maxHealth;
-    public string physicalDamageReduction;
-    public string magicalDamageReduction;
+    //public string physicalDamageReduction;
+    //public string magicalDamageReduction;
     public string physicalArmour;
     public string magicalArmour;
 
@@ -34,8 +34,8 @@ public class CharacterPanelStatControl : MonoBehaviour
     static string statIntellect;
     static string statCurrentHealth;
     static string statMaxHealth;
-    static string statPhysicalDamageReduction;
-    static string statMagicalDamageReduction;
+    //static string statPhysicalDamageReduction;
+    //static string statMagicalDamageReduction;
     static string statPhysicalArmour;
     static string statMagicalArmour;
 
@@ -52,8 +52,8 @@ public class CharacterPanelStatControl : MonoBehaviour
         statIntellect = intellect;
         statCurrentHealth = currentHealth;
         statMaxHealth = maxHealth;
-        statPhysicalDamageReduction = physicalDamageReduction;
-        statMagicalDamageReduction = magicalDamageReduction;
+        //statPhysicalDamageReduction = physicalDamageReduction;
+        //statMagicalDamageReduction = magicalDamageReduction;
         statPhysicalArmour = physicalArmour;
         statMagicalArmour = magicalArmour;
 
@@ -86,16 +86,16 @@ public class CharacterPanelStatControl : MonoBehaviour
             healthText.text = realCurrentHealth + "/" + realMaxHealth;
 
             // Set Physical Damage Reduction text field with physicalDmgReduction
-            UpdateTextFieldWithValue(physicalDamageReductionText, "physical: ", physicalDamageReduction);
+            //UpdateTextFieldWithValue(physicalDamageReductionText, "physical: ", physicalDamageReduction);
 
             // Set Magical Damage Reduction text field with magicalDmgReduction
-            UpdateTextFieldWithValue(magicalDamageReductionText, "magical: ", magicalDamageReduction);
+            //UpdateTextFieldWithValue(magicalDamageReductionText, "magical: ", magicalDamageReduction);
 
             // Set Physical Armour text field with physicalArmour
-            UpdateTextFieldWithValue(physicalArmourText, "physical: ", physicalArmour);
+            UpdateTextFieldWithValue(physicalArmourText, "phyzikal: ", physicalArmour);
 
             // Set Magical Armour text field with magicalArmour
-            UpdateTextFieldWithValue(magicalArmourText, "magical: ", magicalArmour);
+            UpdateTextFieldWithValue(magicalArmourText, "majikal:  ", magicalArmour);
         }
     }
 
@@ -110,6 +110,7 @@ public class CharacterPanelStatControl : MonoBehaviour
         IncreaseStatValue(statStrength, itemStats.strength);
         IncreaseStatValue(statAgility, itemStats.agility);
         IncreaseStatValue(statConstitution, itemStats.constitution);
+        statCharacterEntity.CalculateMaxHP();
         IncreaseStatValue(statIntellect, itemStats.intellect);
         IncreaseStatValue(statPhysicalArmour, itemStats.physicalArmour);
         IncreaseStatValue(statMagicalArmour, itemStats.magicalArmour);
@@ -120,6 +121,7 @@ public class CharacterPanelStatControl : MonoBehaviour
         DecreaseStatValue(statStrength, itemStats.strength);
         DecreaseStatValue(statAgility, itemStats.agility);
         DecreaseStatValue(statConstitution, itemStats.constitution);
+        statCharacterEntity.CalculateMaxHP();
         DecreaseStatValue(statIntellect, itemStats.intellect);
         DecreaseStatValue(statPhysicalArmour, itemStats.physicalArmour);
         DecreaseStatValue(statMagicalArmour, itemStats.magicalArmour);
