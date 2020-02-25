@@ -42,7 +42,7 @@ public class ItemTooltip : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         itemName.text = hoveredItemInfo.itemName;
         switch(hoveredItemInfo.rarity)
         {

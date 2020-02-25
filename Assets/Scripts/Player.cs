@@ -98,15 +98,18 @@ public class Player : Entity
 
                             if (Input.GetKeyDown(KeyCode.I))
                             {
-                                if (!inventory.activeSelf)
+                                if (pause.states == PauseAbility.GameStates.PLAY)
                                 {
-                                    pause.ButtonPaused();
-                                    inventory.SetActive(true);
-                                }
-                                else
-                                {
-                                    pause.ButtonPlay();
-                                    inventory.SetActive(false);
+                                    if (!inventory.activeSelf)
+                                    {
+                                        pause.ButtonPaused();
+                                        inventory.SetActive(true);
+                                    }
+                                    else
+                                    {
+                                        pause.ButtonPlay();
+                                        inventory.SetActive(false);
+                                    }
                                 }
                             }
                         }
