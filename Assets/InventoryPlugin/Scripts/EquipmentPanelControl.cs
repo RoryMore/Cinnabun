@@ -84,6 +84,7 @@ public class EquipmentPanelControl : MonoBehaviour
                     CharacterPanelStatControl.OnItemEquip(equippedItem.itemInfoBlock);
 
                     invBase.playerOwnedItems.Add(equippedItem);
+                    
 
                     equipmentSlots[i].isUsed = true;
                     equipmentSlots[i].equippedItem = equippedItem.itemData;

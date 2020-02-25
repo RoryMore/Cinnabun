@@ -74,10 +74,11 @@ public class MouseItemControl : MonoBehaviour
                 InventoryItem hoveredItem = result.gameObject.GetComponent<InventoryItem>();
                 tooltip.SetHoveredItem(hoveredItem.itemInfoBlock, hoveredItem.isEquipped);
 
-                InventoryItem equippedComparison = invBase.GetEquippedItem(hoveredItem.usedEquipSlot.equipmentSlot);
+                InventoryItem equippedComparison = invBase.GetEquippedItem(hoveredItem.itemData.equipmentSlot);
                 if (equippedComparison != null)
                 {
                     tooltip.SetEquippedItemInfo(equippedComparison.itemInfoBlock);
+                    Debug.Log("Tooltip set real hover info");
                 }
                 else
                 {
@@ -123,7 +124,7 @@ public class MouseItemControl : MonoBehaviour
                             mouseItem.usedEquipSlot = checkedResult.usedEquipSlot;
                             //checkedResult.usedEquipSlot = null;
                             CharacterPanelStatControl.OnItemRemove(mouseItem.itemInfoBlock);
-                            invBase.playerEquippedItems.Remove(checkedResult);
+                            //invBase.playerEquippedItems.Remove(checkedResult);
                         }
                         else // Item was in inventory
                         {
@@ -184,7 +185,7 @@ public class MouseItemControl : MonoBehaviour
                         if (equipPanelControl.EquipItem(mouseItem))
                         {
                             incrementsWithoutUsableSlot--;
-                            invBase.playerEquippedItems.Add(mouseItem);
+                            //invBase.playerEquippedItems.Add(mouseItem);
                             mouseItem.ClearItem();
                             mouseItem.gameObject.SetActive(false);
                         }
@@ -245,7 +246,7 @@ public class MouseItemControl : MonoBehaviour
                                     // Re-equip item in its slot.
                                     // Not enough inventory space
                                     equipPanelControl.EquipItem(mouseItem);
-                                    invBase.playerEquippedItems.Add(mouseItem);
+                                    //invBase.playerEquippedItems.Add(mouseItem);
 
                                     mouseItem.ClearItem();
                                     mouseItem.gameObject.SetActive(false);

@@ -81,14 +81,22 @@ public class ItemTooltip : MonoBehaviour
 
     void SetStatText(Text field, int itemStat, int equippedStat, int samePlayerStat, string statField)
     {
-        int statDifference;
-        if (hoveredItemEquipped)
+        int statDifference = 0, itemDifference = 0;
+        if (equippedStat != 0)
         {
-            statDifference = (samePlayerStat - equippedStat) - ((samePlayerStat - equippedStat) + itemStat);
+            itemDifference = itemStat - equippedStat;
         }
         else
         {
-            statDifference = ((samePlayerStat - equippedStat) + itemStat) - (samePlayerStat - equippedStat);
+            itemDifference = itemStat;
+        }
+        if (hoveredItemEquipped)
+        {
+            statDifference = -itemStat;
+        }
+        else
+        {
+            statDifference = itemDifference;
         }
         if (Mathf.Sign(statDifference) > 0)
         {
