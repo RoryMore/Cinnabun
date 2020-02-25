@@ -31,7 +31,7 @@ public class CameraController : MonoBehaviour
     [Range(0.5f, 10)]
     public float mouseXSens = 2.0f;
 
-    float xAngle = 0.0f;
+    float xAngle = 90.0f;
 
     [SerializeField]
     [Range(35.0f, 85.0f)]
