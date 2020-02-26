@@ -111,6 +111,14 @@ public class Player : Entity
                                         inventory.SetActive(false);
                                     }
                                 }
+                                else
+                                {
+                                    if (inventory.activeSelf)
+                                    {
+                                        pause.ButtonPlay();
+                                        inventory.SetActive(false);
+                                    }
+                                }
                             }
                         }
                     }

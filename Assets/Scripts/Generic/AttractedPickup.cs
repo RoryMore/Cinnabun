@@ -60,6 +60,11 @@ public class AttractedPickup : MonoBehaviour
         }
     }
 
+    public void SetTarget(Transform t)
+    {
+        target = t;
+    }
+
     bool CheckTargetInAttractionDistance()
     {
         if (Vector3.Distance(target.position, gameObject.transform.position) <= attractionDistance)

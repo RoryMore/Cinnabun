@@ -108,10 +108,6 @@ public class Item : MonoBehaviour
             {
                 timeAlive += Time.deltaTime;
             }
-
-            // Make Item move
-            transform.position = new Vector3(transform.position.x, transform.position.y + (Mathf.Sin(Time.time * 4.0f) * (0.5f * Time.deltaTime)), transform.position.z);
-            transform.Rotate(0.0f, Time.deltaTime * 20.0f, 0.0f);
         }
         else
         {

@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 2770946621699391495}
   - component: {fileID: 2770946621699391492}
   - component: {fileID: 2770946621699391496}
+  - component: {fileID: 9128234640917826910}
+  - component: {fileID: 8009078187366052676}
   m_Layer: 0
   m_Name: BaseItem
   m_TagString: Untagged
@@ -110,3 +112,32 @@ MonoBehaviour:
   lifetime: 120
   timeAlive: 0
   itemClicked: 0
+--- !u!114 &9128234640917826910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2770946621699391493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 329db498830a36848956ce398f4025b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magnitude: 0.5
+  fluctuation: 4
+--- !u!114 &8009078187366052676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2770946621699391493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cad56c39b819a7408581d3a78620002, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 20, z: 0}
+  rotateAroundPoint: 0
+  rotatedAround: {fileID: 0}
