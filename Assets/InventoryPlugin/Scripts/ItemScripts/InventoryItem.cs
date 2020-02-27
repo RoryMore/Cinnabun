@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class InventoryItem : MonoBehaviour
 {
-    public struct ItemStatBlock
+    public struct ItemInfoBlock
     {
         public int strength;
         public int agility;
@@ -13,9 +13,12 @@ public class InventoryItem : MonoBehaviour
         public int intellect;
         public int physicalArmour;
         public int magicalArmour;
+
+        public string itemName;
+        public ItemData.ItemRarity rarity;
     }
 
-    public ItemStatBlock itemStatBlock;
+    public ItemInfoBlock itemInfoBlock;
 
     // The item this inventoryItem is representing
     public ItemData itemData;
@@ -117,7 +120,7 @@ public class InventoryItem : MonoBehaviour
     public void SetItem(Item givenItem)
     {
         itemData = givenItem.itemData;
-        itemStatBlock = givenItem.itemStatBlock;
+        itemInfoBlock = givenItem.itemStatBlock;
 
         if (itemData != null)
         {
@@ -139,7 +142,7 @@ public class InventoryItem : MonoBehaviour
 
         if (itemData != null)
         {
-            itemStatBlock = givenItem.itemStatBlock;
+            itemInfoBlock = givenItem.itemInfoBlock;
 
             if (isEquipping)
             {

@@ -187,46 +187,46 @@ public class SimpleEnemy : EnemyScript
     }
 
 
-    public void Decide()
-    {
-        if(enemyCooldown <= 0)
-        {
+    //public void Decide()
+    //{
+    //    if(enemyCooldown <= 0)
+    //    {
 
-            //Choose how each enemy decides to take its actions
-            //Later I would also want the skill cooldowns to come into effect
+    //        //Choose how each enemy decides to take its actions
+    //        //Later I would also want the skill cooldowns to come into effect
 
-            //Step 1: If the turn is ready, begin the cycle
+    //        //Step 1: If the turn is ready, begin the cycle
             
 
-            //For each skill...
-            foreach (BaseSkill checkedSkill in skillList)
-            {
-                //Check if the cooldown is complete...
-                if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
-                {
-                    //Check if we are in range...
-                    if (checkedSkill.skillData.CheckInRange(transform.position, target.position))
-                    {
-                        //int choice = (int)Random.Range(0.0f, skillList.Count);
+    //        //For each skill...
+    //        foreach (BaseSkill checkedSkill in skillList)
+    //        {
+    //            //Check if the cooldown is complete...
+    //            if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
+    //            {
+    //                //Check if we are in range...
+    //                if (checkedSkill.skillData.CheckInRange(transform.position, target.position))
+    //                {
+    //                    //int choice = (int)Random.Range(0.0f, skillList.Count);
                   
-                        //Check if damage of prior skill is greater than base damange
-                        if (chosenSkill.skillData.baseMagnitude <= checkedSkill.skillData.baseMagnitude)
-                        {
-                            chosenSkill = checkedSkill;
+    //                    //Check if damage of prior skill is greater than base damange
+    //                    if (chosenSkill.skillData.baseMagnitude <= checkedSkill.skillData.baseMagnitude)
+    //                    {
+    //                        chosenSkill = checkedSkill;
                   
-                            //Reset the enemy turn
-                            enemyCooldown = 6;
-                            Attack(chosenSkill);
+    //                        //Reset the enemy turn
+    //                        enemyCooldown = 6;
+    //                        Attack(chosenSkill);
 
                   
-                        }
-                    }
-                }
-                break;
-            }
+    //                    }
+    //                }
+    //            }
+    //            break;
+    //        }
             
-        }
-    }
+    //    }
+    //}
 
     
 
@@ -234,53 +234,53 @@ public class SimpleEnemy : EnemyScript
 
  
 
-    public Entity CheckAttackers()
-    {
+    //public Entity CheckAttackers()
+    //{
 
-        // Check all enemies
-        foreach (Entity enemy in myEncounter.initiativeList)
-        {
-            //If they are attacking... 
-            if (enemy.chosenSkill.currentlyCasting == true)
-            {
-               //If it isn't us...
-                if (enemy != this)
-                {
-                    //If we are in range
-                    if (enemy.chosenSkill.skillData.CheckInRange(enemy.transform.position, transform.position))
-                    {
-                        //Get out of dodge!
-                        return enemy;
-                    }
-
-
-                }
+    //    // Check all enemies
+    //    foreach (Entity enemy in myEncounter.initiativeList)
+    //    {
+    //        //If they are attacking... 
+    //        if (enemy.chosenSkill.currentlyCasting == true)
+    //        {
+    //           //If it isn't us...
+    //            if (enemy != this)
+    //            {
+    //                //If we are in range
+    //                if (enemy.chosenSkill.skillData.CheckInRange(enemy.transform.position, transform.position))
+    //                {
+    //                    //Get out of dodge!
+    //                    return enemy;
+    //                }
 
 
-            }
+    //            }
 
 
-        }
+    //        }
 
-        return null;
 
-    }
+    //    }
 
-    public void Evade()
-    {
+    //    return null;
+
+    //}
+
+    //public void Evade()
+    //{
         
-        if (CheckAttackers() != null)
-        {
-            isEvading = true;
-            nav.SetDestination(Vector3.MoveTowards(transform.position, CheckAttackers().transform.position, -nav.speed));
-        }
+    //    if (CheckAttackers() != null)
+    //    {
+    //        isEvading = true;
+    //        nav.SetDestination(Vector3.MoveTowards(transform.position, CheckAttackers().transform.position, -nav.speed));
+    //    }
 
-        else
-        {
-            isEvading = false;
-        }
+    //    else
+    //    {
+    //        isEvading = false;
+    //    }
         
-    }
+    //}
 
 
     public override void TakeDamage(int amount)

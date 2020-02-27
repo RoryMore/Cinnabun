@@ -92,7 +92,17 @@ public class ItemData : ScriptableObject
     [HideInInspector] public int inventorySpaceX;
     [HideInInspector] public int inventorySpaceY;
 
-    [HideInInspector] public string itemName;
+    public enum ItemRarity
+    {
+        COMMON,
+        UNCOMMON,
+        RARE,
+        ULTRA
+    }
+
+    public ItemRarity rarity;
+    [SerializeField]
+    ItemName itemName;
 
     // TODO: Add a section for Tooltip on mouseover.
 
@@ -109,31 +119,37 @@ public class ItemData : ScriptableObject
         magicalArmour = Random.Range(magicalArmourRangeMin, magicalArmourRangeMax);
     }
 
-    public InventoryItem.ItemStatBlock GetRandomItemStats()
+    public InventoryItem.ItemInfoBlock GetRandomItemStats()
     {
-        InventoryItem.ItemStatBlock itemStatBlock = new InventoryItem.ItemStatBlock
+        InventoryItem.ItemInfoBlock itemStatBlock = new InventoryItem.ItemInfoBlock
         {
             strength = Random.Range(strengthRangeMin, strengthRangeMax),
             agility = Random.Range(agilityRangeMin, agilityRangeMax),
             constitution = Random.Range(constitutionRangeMin, constitutionRangeMax),
             intellect = Random.Range(intellectRangeMin, intellectRangeMax),
             physicalArmour = Random.Range(physicalArmourRangeMin, physicalArmourRangeMax),
-            magicalArmour = Random.Range(magicalArmourRangeMin, magicalArmourRangeMax)
+            magicalArmour = Random.Range(magicalArmourRangeMin, magicalArmourRangeMax),
+
+            itemName = itemName.itemName,
+            rarity = rarity
         };
 
         return itemStatBlock;
     }
 
-    public InventoryItem.ItemStatBlock GetSetItemStats()
+    public InventoryItem.ItemInfoBlock GetSetItemStats()
     {
-        InventoryItem.ItemStatBlock itemStatBlock = new InventoryItem.ItemStatBlock
+        InventoryItem.ItemInfoBlock itemStatBlock = new InventoryItem.ItemInfoBlock
         {
             strength = strength,
             agility = agility,
             constitution = constitution,
             intellect = intellect,
             physicalArmour = physicalArmour,
-            magicalArmour = magicalArmour
+            magicalArmour = magicalArmour,
+
+            itemName = itemName.itemName,
+            rarity = rarity
         };
 
         return itemStatBlock;
