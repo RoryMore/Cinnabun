@@ -222,7 +222,7 @@ public class BaseSkill : MonoBehaviour
     /// <param name="maxLength"></param>
     /// <param name="farWidth"></param>
     /// <returns>Returns TRUE if given Vector3 is within bounds and can can be damaged</returns>
-    protected bool CheckLineSkillHit(Vector3 hitCheckPosition, float minLength, float maxLength, float nearWidth, float farWidth)
+    public bool CheckLineSkillHit(Vector3 hitCheckPosition, float minLength, float maxLength, float nearWidth, float farWidth)
     {
         float angleLookAt = GetForwardAngle(casterSelf.transform);
 
@@ -352,7 +352,7 @@ public class BaseSkill : MonoBehaviour
         //return (area == pointA1 + pointA2 + pointA3 + pointA4);
     }
 
-    bool CheckInRange(Vector3 castPosition, Vector3 targetPosition)
+    public bool CheckInRange(Vector3 castPosition, Vector3 targetPosition)
     {
         // If the targets position is within the range of the skill,
         // Return true

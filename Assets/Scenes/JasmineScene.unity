@@ -1249,7 +1249,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 8748892135801146194, guid: 9308aaa0e4f81954684189cc388be004,
+      objectReference: {fileID: 1099619612952196417, guid: b32ada06bed91bb4b921b45e76c6f723,
         type: 3}
     - target: {fileID: -927199367670048503, guid: adb7500a9ad853c46a0769e0d3ddb03c,
         type: 3}
@@ -4638,7 +4638,8 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100004, guid: 47616bd0cda748d4cbedcfc908506b9d, type: 3}
+      objectReference: {fileID: 1099619612952196417, guid: b15880714c46e5b4c994fba76596f7c9,
+        type: 3}
     - target: {fileID: -927199367670048503, guid: c6dedfadb6f9c3c4baa245adc3d1442a,
         type: 3}
       propertyPath: m_Name
@@ -4861,6 +4862,11 @@ PrefabInstance:
         type: 3}
       propertyPath: maxEncounterDistance
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7169829053648171811, guid: ad4f0e7e9a260aa4b8a9cd61ae95e8d0,
+        type: 3}
+      propertyPath: timeBetweenWaves
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad4f0e7e9a260aa4b8a9cd61ae95e8d0, type: 3}
@@ -5922,7 +5928,8 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100004, guid: b451a052397f03c4f8a04d915d1c0492, type: 3}
+      objectReference: {fileID: 1099619612952196417, guid: b32ada06bed91bb4b921b45e76c6f723,
+        type: 3}
     - target: {fileID: -927199367670048503, guid: 14fc9f78e02678e48b9936ea1292036d,
         type: 3}
       propertyPath: m_Name
@@ -6687,7 +6694,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100002, guid: 47616bd0cda748d4cbedcfc908506b9d, type: 3}
+      objectReference: {fileID: 2100000, guid: 27e0f58249bfdcb4fadd880ba0ce838c, type: 2}
     - target: {fileID: -927199367670048503, guid: 53ec3e0aa24d8154c9e54142fe387044,
         type: 3}
       propertyPath: m_Name
