@@ -13,5 +13,6 @@ public class LookAtTarget : MonoBehaviour
     private void Update()
     {
         transform.LookAt(camera.transform);
+ 
     }
 }
