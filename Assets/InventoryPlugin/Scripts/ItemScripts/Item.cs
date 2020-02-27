@@ -5,7 +5,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public ItemData itemData;
-    public InventoryItem.ItemStatBlock itemStatBlock;
+    public InventoryItem.ItemInfoBlock itemStatBlock;
 
     [Header("Item World-Object Settings")]
     [Tooltip("The amount of time (seconds) until the item will get destroyed if not picked up")]
@@ -70,7 +70,7 @@ public class Item : MonoBehaviour
     /// <summary>
     /// This Initialise method will only need to be called if an Item is being created not directly from the prefab; i.e when the player is dropping an item from their inventory
     /// </summary>
-    public void Initialise(ItemData data, InventoryItem.ItemStatBlock stats, float setLifetime, bool isNew = false)
+    public void Initialise(ItemData data, InventoryItem.ItemInfoBlock stats, float setLifetime, bool isNew = false)
     {
         isNewItem = isNew;
 
@@ -108,10 +108,6 @@ public class Item : MonoBehaviour
             {
                 timeAlive += Time.deltaTime;
             }
-
-            // Make Item move
-            transform.position = new Vector3(transform.position.x, transform.position.y + (Mathf.Sin(Time.time * 4.0f) * (0.5f * Time.deltaTime)), transform.position.z);
-            transform.Rotate(0.0f, Time.deltaTime * 20.0f, 0.0f);
         }
         else
         {

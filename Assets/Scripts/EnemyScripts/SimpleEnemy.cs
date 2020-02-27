@@ -6,12 +6,18 @@ using UnityEngine.UI;
 
 public class SimpleEnemy : EnemyScript
 {
-   // DamagePopUp damagePopUp;
-   
+    //System to match enemy stats to player stats in some capacity. If the player gets higher damage, increase health
+
+    //[SerializeField] private Transform damageNumbers;
     Transform target;
     Player player; //All intents and purposes, same as target but target is just the transform
+
+    [SerializeField]
     bool isAttacking = false;
+    [SerializeField]
     bool isEvading = false;
+
+    public bool skillIsCasting;
 
     List<Entity> fakeList = new List<Entity>();
 
@@ -23,16 +29,43 @@ public class SimpleEnemy : EnemyScript
     [SerializeField] private Transform damageNumbers;
 
     public BaseSkill basicAttack;
-    public List<BaseSkill> skillList;
+    public BaseSkill[] skillList;
+
+    public TYPE type;
+    public AGRESSION agression;
+
+
+    //DecidingBools
+    bool hasDecided;
+    bool destinationLocked;
+
+    public enum AGRESSION
+    {
+        AGRESSIVE,
+        TIMID
+    }
+
+    public enum TYPE
+    {
+        MELEE,
+        RANGED,
+    }
 
     private void Start()
     {
+
+
+    }
+
+    void Awake()
+    {
+
         InitialiseAll();
 
 
         //THIS ONLY WORKS WITH CURRENT HIARCHY OF ENCOUNTER, SPAWN POINT AND THEN THE ENEMY!
         myEncounter = transform.parent.parent.GetComponent<Encounter>();
-        //damagePopUp = GetComponent<DamagePopUp>(); 
+
 
 
         nav = GetComponent<NavMeshAgent>();
@@ -45,7 +78,7 @@ public class SimpleEnemy : EnemyScript
         currentHP = maxHP;
 
 
-        
+
         target = GameObject.Find("Player").transform;
 
         player = target.GetComponent<Player>();
@@ -54,20 +87,11 @@ public class SimpleEnemy : EnemyScript
 
         basicAttack = GetComponentInChildren<BaseSkill>();
 
-        //chosenSkill = new BaseSkill();
-        //chosenSkill.skillData = new SkillData();
-        //chosenSkill.currentlyCasting = false;
-        //chosenSkill.skillData.baseMagnitude = 0;
 
-        //chosenSkill = skillList[0];
-        chosenSkill = basicAttack;
 
-    }
+        skillList = GetComponentsInChildren<BaseSkill>();
 
-    void Awake()
-    {
-
-        
+        chosenSkill = skillList[0];
 
     }
 
@@ -75,6 +99,8 @@ public class SimpleEnemy : EnemyScript
 
     void Update()
     {
+
+       
         //If we arent Dead...
         if (!isDead)
         {
@@ -83,46 +109,76 @@ public class SimpleEnemy : EnemyScript
             Turn();
 
             //Update all cooldowns and conditons
-            
             UpdateAllConditions();
 
-            //Choose what attack it want's to make this turn
-            //Decide();
+            //Choose what attack it want's to make this turn assuming we haven't already chosen.
+            if(!hasDecided)
+            {
+                Decide();
+            }
+            //Choose where we want to go, unless we're melee because we will always want to rush the player
+            if (!destinationLocked && type!= TYPE.MELEE)
+            {
+                ChooseDestination(chosenSkill);
+            }
+            
 
-            //bool isInRangeOfFriendlyAttack = CheckAttackers();
+     
 
-            //So long as we aren't attacking, move!
+            //Initiate the attack//skill at their earliest convenience
             Attack(chosenSkill);
+            ///Only call the attack function once because repreated calls stall the enemy
             if (isAttacking)
             {
+                //Trigger the skill!
                 chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
                 if (!chosenSkill.currentlyCasting)
                 {
                     isAttacking = false;
+                    hasDecided = false;
+                    
                 }
             }
 
-            if (!basicAttack.currentlyCasting)
+            //at every frame where we AREN'T attacking or using a skill, do the following
+            if (!chosenSkill.currentlyCasting)
             {
+                //Make sure we are able to move as we disable movement while attacking
                 nav.enabled = true;
-                //Evade();
-                Movement();
+                //Provide evasive manouvres 
+                Evade();
+
+                if (type == TYPE.MELEE)
+                {
+                    Movement(player.transform.position);
+                }
+                else if (type == TYPE.RANGED)
+                {
+                    Movement(destination);
+                }
+
+                
             }
             
             else
             {
                 nav.enabled = false;
             }
-            
 
-            
 
+
+            skillIsCasting = chosenSkill.currentlyCasting;
             
             
 
         }
 
 
+    }
+
+    void EnemyScaling()
+    {
+        //player.constitution 
     }
 
     public Vector3 ChooseDestination(BaseSkill skill)
@@ -135,7 +191,7 @@ public class SimpleEnemy : EnemyScript
 
 
         //Otherwise all good, move on!
-        return destination = new Vector3(x, 0, z);
+        return destination = new Vector3(x, player.transform.position.y, z);
 
     }
 
@@ -153,34 +209,94 @@ public class SimpleEnemy : EnemyScript
             //Fetch distance betweeen self and the player
             float distance = Vector3.Distance(this.gameObject.transform.position, target.transform.position);
             if (!isEvading)
-            if (!chosenSkill.currentlyCasting)
+            {
+                if (!chosenSkill.currentlyCasting)
+                {
+
+                    //If the player is using an attack and we're close to death, retreat!
+                    if (player.playerState == Player.PlayerState.DOINGSKILL && currentHP <= maxHP * 0.25f)
+                    {
+                        nav.enabled = true;
+                        nav.SetDestination(Vector3.MoveTowards(transform.position, player.transform.position, -nav.speed));
+                    }
+
+
+
+                    //If we are well within attack range, stop moving towards player
+                    else if (distance < chosenSkill.skillData.maxRange * 0.5f)
+                    {
+                        anim.SetBool("isWalking", false);
+                        nav.enabled = false;
+                    }
+                    //If we are outside of range, walk towards player
+                    else
+                    {
+                        anim.SetBool("isWalking", true);
+                        nav.enabled = true;
+                        nav.SetDestination(Vector3.MoveTowards(transform.position, player.transform.position, nav.speed));
+
+                    }
+
+
+                }
+
+            }
+        }
+
+    }
+
+    //Movement that uses chosen destination function
+    public void Movement(Vector3 destination)
+    {
+        // REQUIREMENTS 
+        // When the enemy is not attacking, approach the player until they are within range of their attack
+        // If the enemy health is low
+
+        // If dead, stop moving towards the player
+
+        if (!isDead)
+        {
+            //Fetch distance betweeen self and the player
+            float distance = Vector3.Distance(this.gameObject.transform.position, target.transform.position);
+            if (!isEvading)
             {
 
-                //If the player is using an attack and we're close to death, retreat!
-                if (player.playerState == Player.PlayerState.DOINGSKILL && currentHP <= maxHP * 0.25f)
+            
+                if (!chosenSkill.currentlyCasting)
                 {
-                    nav.enabled = true;
-                    nav.SetDestination(Vector3.MoveTowards(transform.position, player.transform.position, -nav.speed));
+
+                    //If the player is using an attack and we're close to death, retreat!
+                    if (player.playerState == Player.PlayerState.DOINGSKILL && currentHP <= maxHP * 0.25f)
+                    {
+                        nav.enabled = true;
+                        nav.SetDestination(Vector3.MoveTowards(transform.position, destination, -nav.speed));
+                    }
+
+
+
+                    //If we are well within attack range, stop moving towards player
+                    else if (distance <= chosenSkill.skillData.maxRange * 0.5f)
+                    {
+                        anim.SetBool("isWalking", false);
+                        nav.enabled = false;
+                    }
+                    //If we are outside of range, walk towards player
+                    else
+                    {
+                        anim.SetBool("isWalking", true);
+                        nav.enabled = true;
+                        nav.SetDestination(Vector3.MoveTowards(transform.position, destination, nav.speed));
+
+                    }
+
+
                 }
 
+            }
 
-
-                //If we are well within attack range, stop moving towards player
-                else if (distance < chosenSkill.skillData.maxRange * 0.5f)
-                {
-                    anim.SetBool("isWalking", false);
-                    nav.enabled = false;
-                }
-                //If we are outside of range, walk towards player
-                else
-                {
-                    anim.SetBool("isWalking", true);
-                    nav.enabled = true;
-                    nav.SetDestination(Vector3.MoveTowards(transform.position, player.transform.position, nav.speed));
-
-                }
-                
-
+            if (transform.position == destination)
+            {
+                destinationLocked = false;
             }
         }
 
@@ -196,35 +312,42 @@ public class SimpleEnemy : EnemyScript
             //Later I would also want the skill cooldowns to come into effect
 
             //Step 1: If the turn is ready, begin the cycle
-            
+          
+             //For each skill...
+             foreach (BaseSkill checkedSkill in skillList)
+             {
+                 //Check if the cooldown is complete...
+                 if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
+                 {
 
-            //For each skill...
-            foreach (BaseSkill checkedSkill in skillList)
-            {
-                //Check if the cooldown is complete...
-                if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
-                {
-                    //Check if we are in range...
-                    if (checkedSkill.skillData.CheckInRange(transform.position, target.position))
-                    {
-                        //int choice = (int)Random.Range(0.0f, skillList.Count);
-                  
-                        //Check if damage of prior skill is greater than base damange
-                        if (chosenSkill.skillData.baseMagnitude <= checkedSkill.skillData.baseMagnitude)
+                     //Check if we are in range...
+                     if (checkedSkill.CheckInRange(transform.position, target.position))
+                     {
+                        //More performance intensive, check that the player would be hit if we used it now
+                        if (checkedSkill.CheckLineSkillHit(target.position,
+                                                            chosenSkill.skillData.minRange,
+                                                            chosenSkill.skillData.maxRange,
+                                                            chosenSkill.skillData.nearWidth,
+                                                            chosenSkill.skillData.farWidth))
+
                         {
-                            chosenSkill = checkedSkill;
-                  
-                            //Reset the enemy turn
-                            enemyCooldown = 6;
-                            Attack(chosenSkill);
+                            //Check if damage of prior skill is greater than base damange
+                            if (chosenSkill.skillData.baseMagnitude <= checkedSkill.skillData.baseMagnitude)
+                            {
+                                isAttacking = true;
+                                hasDecided = true;
+                                chosenSkill = checkedSkill;
 
-                  
+                                //Reset the enemy turn
+                                enemyCooldown = 6;
+
+
+
+                            }
                         }
-                    }
-                }
-                break;
-            }
-            
+                     }
+                 }
+             }
         }
     }
 
@@ -237,21 +360,25 @@ public class SimpleEnemy : EnemyScript
     public Entity CheckAttackers()
     {
 
-        // Check all enemies
-        foreach (Entity enemy in myEncounter.initiativeList)
-        {
-            //If they are attacking... 
-            if (enemy.chosenSkill.currentlyCasting == true)
-            {
-               //If it isn't us...
-                if (enemy != this)
-                {
-                    //If we are in range
-                    if (enemy.chosenSkill.skillData.CheckInRange(enemy.transform.position, transform.position))
-                    {
-                        //Get out of dodge!
-                        return enemy;
-                    }
+      // Check all enemies
+      foreach (Entity enemy in myEncounter.initiativeList)
+      {
+          //If they are attacking... 
+          if (enemy.chosenSkill.currentlyCasting == true)
+          {
+             //If it isn't us...
+              if (enemy != this)
+              {
+                  //If we are in range
+                  if (enemy.chosenSkill.CheckLineSkillHit(target.position,
+                      chosenSkill.skillData.minRange,
+                      chosenSkill.skillData.maxRange,
+                      chosenSkill.skillData.nearWidth,
+                      chosenSkill.skillData.farWidth))
+                  {
+                      //Get out of dodge!
+                      return enemy;
+                  }
 
 
                 }
@@ -259,27 +386,29 @@ public class SimpleEnemy : EnemyScript
 
             }
 
+      }
 
-        }
 
-        return null;
+
+      return null;
 
     }
 
     public void Evade()
     {
-        
-        if (CheckAttackers() != null)
-        {
-            isEvading = true;
-            nav.SetDestination(Vector3.MoveTowards(transform.position, CheckAttackers().transform.position, -nav.speed));
-        }
+      
+      if (CheckAttackers() != null)
+      {
+          isEvading = true;
+          anim.SetBool("isWalking", true);
+          nav.SetDestination(Vector3.MoveTowards(transform.position, CheckAttackers().transform.position, -nav.speed));
+      }
 
         else
         {
             isEvading = false;
         }
-        
+      
     }
 
 
@@ -324,81 +453,34 @@ public class SimpleEnemy : EnemyScript
         //If we are in range and ready to attack
         if (distance <= chosenSkill.skillData.maxRange * 0.5f && chosenSkill.isAllowedToCast)
         {
+            FaceTarget(target);
+            if(chosenSkill.CheckLineSkillHit(target.position, 
+                chosenSkill.skillData.minRange,
+                chosenSkill.skillData.maxRange,
+                chosenSkill.skillData.nearWidth,
+                chosenSkill.skillData.farWidth))
+            {
+                isAttacking = true;
+                nav.enabled = false;
+                anim.SetTrigger("attacking");
+                
+            }
 
  
-
-            isAttacking = true;
-            anim.SetTrigger("attacking");
 
 
             
         }
        else if (chosenSkill.skillData.maxRange <= distance && enemyCooldown <= 0.0f)
        {
-           //HoldTurn();
+           HoldTurn();
            Debug.Log("she's too far!");
-           //chosenSkill.TriggerSkill(fakeList);
+           
 
        }
 
 
 
-    }
-
-
-    public void VertSliceAttack()
-    {
-
-            //float distance = Vector3.Distance(transform.position, player.transform.position);
-
-            ////we are ready to make our attack, and we are in range. attack!
-            //if (distance <= attack.range && enemyCooldown <= 0.0f)
-            //{
-            //    isAttacking = true;
-            //    nav.enabled = false;
-            //}
-            //if (isAttacking == true)
-            //{
-            //    anim.SetTrigger("attacking");
-
-            //     if (pauseAbility.states != PauseAbility.GameStates.TIMESTOP)
-            //     {
-            //         timeSpentDoingAction += Time.fixedDeltaTime;
-            //     }
-
-            //     attack.DrawCastTimeRangeIndicator(timeSpentDoingAction);//drawcasttimerangeindicator(timespentdoingaction);
-
-            //         if (timeSpentDoingAction >= attack.actionSpeed)
-            //         {
-            //             if (attack.ShouldEnemyInPositionBeDamaged(player.transform.position) == true)
-            //             {
-            //                 player.TakeDamage((int)attack.magnitude);
-            //             }
-
-            //             //play animation
-            //             enemyCooldown = 6.0f;
-            //             timeSpentDoingAction = 0.0f;
-            //             anim.SetTrigger("attacking");
-            //             nav.enabled = true;
-            //             isAttacking = false;
-
-            //         }
-            //}
-            ////debug.log("attack!");
-            ////if its the melee enemy turn but we are out of range, we go into defence stance!
-            //else if (attack.range <= distance && enemyCooldown <= 0.0f)
-            //{
-            //    HoldTurn();
-            //    //debug.log("she's too far!");
-            //}
-            //else if (attack.range <= distance && 0.0f <= enemyCooldown)
-            //{
-            //    //debug.log("");
-            //}
-       
-
-            
-        
     }
 
 
