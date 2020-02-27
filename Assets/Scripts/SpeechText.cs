@@ -31,7 +31,7 @@ public class SpeechText : MonoBehaviour
     {
         changeFontSize();
     }
-
+    //changes the font to what the user wants
     void changeFontSize()
     {
         text.fontSize = wordSize;

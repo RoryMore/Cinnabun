@@ -27,6 +27,8 @@ public class PlayerInGameUI : MonoBehaviour
     public Image MeleeAttack;
 
     public Image VHSimage;
+
+    public Text timeSinceStartUp;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +48,7 @@ public class PlayerInGameUI : MonoBehaviour
             TeleportBackground.interactable = true;
             WeaponAttackButtonBackground.interactable = true;
             VHSimage.gameObject.SetActive(true);
+           timeSinceStartUp.gameObject.SetActive(true);
 
    
 
@@ -59,6 +62,7 @@ public class PlayerInGameUI : MonoBehaviour
             TeleportBackground.interactable = false;
             WeaponAttackButtonBackground.interactable = false;
             VHSimage.gameObject.SetActive(false);
+           timeSinceStartUp.gameObject.SetActive(false);
         }
 
         foreach (BaseSkill skill in player.skillList)
