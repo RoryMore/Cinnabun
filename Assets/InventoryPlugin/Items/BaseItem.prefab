@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 2770946621699391496}
   - component: {fileID: 9128234640917826910}
   - component: {fileID: 8009078187366052676}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BaseItem
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -140,4 +140,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: {x: 0, y: 20, z: 0}
   rotateAroundPoint: 0
+  rotateAroundSpeed: 0
+  rotateAroundAxis: {x: 0, y: 0, z: 0}
   rotatedAround: {fileID: 0}

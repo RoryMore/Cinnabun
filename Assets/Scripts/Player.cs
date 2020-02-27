@@ -329,14 +329,15 @@ public class Player : Entity
 
             if (Physics.Raycast(ray, out RaycastHit hit, moveRaycastDistance, groundLayerMask))
             {
-                //if (hit.collider.tag.Contains("Finish"))
-                //{
-                nav.SetDestination(hit.point);
-
-                Debug.Log("Move Player");
-                //}
+                if (hit.collider.tag.Contains("Item"))
+                {
+                    nav.SetDestination(hit.collider.transform.position);
+                }
+                else
+                {
+                    nav.SetDestination(hit.point);
+                }
             }
-
         }
     }
 
