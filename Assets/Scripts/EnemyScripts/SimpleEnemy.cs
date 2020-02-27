@@ -303,13 +303,13 @@ public class SimpleEnemy : EnemyScript
     }
 
 
-    //public void Decide()
-    //{
-    //    if(enemyCooldown <= 0)
-    //    {
+    public void Decide()
+    {
+        if(enemyCooldown <= 0)
+        {
 
-    //        //Choose how each enemy decides to take its actions
-    //        //Later I would also want the skill cooldowns to come into effect
+            //Choose how each enemy decides to take its actions
+            //Later I would also want the skill cooldowns to come into effect
 
             //Step 1: If the turn is ready, begin the cycle
           
@@ -317,11 +317,11 @@ public class SimpleEnemy : EnemyScript
              foreach (BaseSkill checkedSkill in skillList)
              {
                  //Check if the cooldown is complete...
-                 if (checkedSkill.skillData.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
+                 if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
                  {
 
                      //Check if we are in range...
-                     if (checkedSkill.skillData.CheckInRange(transform.position, target.position))
+                     if (checkedSkill.CheckInRange(transform.position, target.position))
                      {
                         //More performance intensive, check that the player would be hit if we used it now
                         if (checkedSkill.CheckLineSkillHit(target.position,
@@ -357,59 +357,59 @@ public class SimpleEnemy : EnemyScript
 
  
 
-    //public Entity CheckAttackers()
-    //{
+    public Entity CheckAttackers()
+    {
 
-        // Check all enemies
-        foreach (Entity enemy in myEncounter.initiativeList)
+      // Check all enemies
+      foreach (Entity enemy in myEncounter.initiativeList)
+      {
+          //If they are attacking... 
+          if (enemy.chosenSkill.currentlyCasting == true)
+          {
+             //If it isn't us...
+              if (enemy != this)
+              {
+                  //If we are in range
+                  if (enemy.chosenSkill.CheckLineSkillHit(target.position,
+                      chosenSkill.skillData.minRange,
+                      chosenSkill.skillData.maxRange,
+                      chosenSkill.skillData.nearWidth,
+                      chosenSkill.skillData.farWidth))
+                  {
+                      //Get out of dodge!
+                      return enemy;
+                  }
+
+
+                }
+
+
+            }
+
+      }
+
+
+
+      return null;
+
+    }
+
+    public void Evade()
+    {
+      
+      if (CheckAttackers() != null)
+      {
+          isEvading = true;
+          anim.SetBool("isWalking", true);
+          nav.SetDestination(Vector3.MoveTowards(transform.position, CheckAttackers().transform.position, -nav.speed));
+      }
+
+        else
         {
-            //If they are attacking... 
-            if (enemy.chosenSkill.currentlyCasting == true)
-            {
-               //If it isn't us...
-                if (enemy != this)
-                {
-                    //If we are in range
-                    if (enemy.chosenSkill.CheckLineSkillHit(target.position,
-                        chosenSkill.skillData.minRange,
-                        chosenSkill.skillData.maxRange,
-                        chosenSkill.skillData.nearWidth,
-                        chosenSkill.skillData.farWidth))
-                    {
-                        //Get out of dodge!
-                        return enemy;
-                    }
-
-
-    //            }
-
-
-    //        }
-
+            isEvading = false;
         }
-
-
-
-        return null;
-
-    //}
-
-    //public void Evade()
-    //{
-        
-        if (CheckAttackers() != null)
-        {
-            isEvading = true;
-            anim.SetBool("isWalking", true);
-            nav.SetDestination(Vector3.MoveTowards(transform.position, CheckAttackers().transform.position, -nav.speed));
-        }
-
-    //    else
-    //    {
-    //        isEvading = false;
-    //    }
-        
-    //}
+      
+    }
 
 
     public override void TakeDamage(int amount)
