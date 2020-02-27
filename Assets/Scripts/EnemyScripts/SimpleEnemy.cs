@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class SimpleEnemy : EnemyScript
 {
@@ -171,7 +172,7 @@ public class SimpleEnemy : EnemyScript
             
 
         }
-        
+
 
     }
 
@@ -302,13 +303,13 @@ public class SimpleEnemy : EnemyScript
     }
 
 
-    public void Decide()
-    {
-        if(enemyCooldown <= 0)
-        {
+    //public void Decide()
+    //{
+    //    if(enemyCooldown <= 0)
+    //    {
 
-            //Choose how each enemy decides to take its actions
-            //Later I would also want the skill cooldowns to come into effect
+    //        //Choose how each enemy decides to take its actions
+    //        //Later I would also want the skill cooldowns to come into effect
 
             //Step 1: If the turn is ready, begin the cycle
           
@@ -356,8 +357,8 @@ public class SimpleEnemy : EnemyScript
 
  
 
-    public Entity CheckAttackers()
-    {
+    //public Entity CheckAttackers()
+    //{
 
         // Check all enemies
         foreach (Entity enemy in myEncounter.initiativeList)
@@ -380,10 +381,10 @@ public class SimpleEnemy : EnemyScript
                     }
 
 
-                }
+    //            }
 
 
-            }
+    //        }
 
         }
 
@@ -391,10 +392,10 @@ public class SimpleEnemy : EnemyScript
 
         return null;
 
-    }
+    //}
 
-    public void Evade()
-    {
+    //public void Evade()
+    //{
         
         if (CheckAttackers() != null)
         {
@@ -403,18 +404,18 @@ public class SimpleEnemy : EnemyScript
             nav.SetDestination(Vector3.MoveTowards(transform.position, CheckAttackers().transform.position, -nav.speed));
         }
 
-        else
-        {
-            isEvading = false;
-        }
+    //    else
+    //    {
+    //        isEvading = false;
+    //    }
         
-    }
+    //}
 
 
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
-        Create(transform.position, amount, false);
+       Create(transform.position, amount, false);
          
         anim.SetTrigger("getHit");
     }
@@ -428,6 +429,8 @@ public class SimpleEnemy : EnemyScript
             skill.DisableProjector();
         }
         anim.enabled = false;
+
+        myEncounter.itemSpawner.SpawnItem(transform.position);
     }
 
     public void Create(Vector3 position, int damageAmount, bool crit)
@@ -435,6 +438,11 @@ public class SimpleEnemy : EnemyScript
         float x = Random.Range(-0.9f, 0.3f);
         float y = Random.Range(-0.9f, 0.3f);
         Vector3 numberVec = new Vector3(x, y + 3, 0.0f);
+
+        Transform damagePopUpTransfrom = Instantiate(damageNumbers, position + numberVec, Quaternion.identity);
+
+        DamagePopUp damagePopUp = damagePopUpTransfrom.GetComponent<DamagePopUp>();
+        damagePopUp.SetUp(damageAmount, crit);
     }
 
     public void Attack(BaseSkill chosenSkill)

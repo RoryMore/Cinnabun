@@ -306,8 +306,11 @@ public class WeaponAttack : BaseSkill
                         if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                         {
                             weaponhit = true;
-                            
-                            testedEntity.TakeDamage(skillData.baseMagnitude * swordDamageMultiplier);
+
+                            int swordDamage = Mathf.FloorToInt((float)skillData.baseMagnitude * swordDamageMultiplier);
+                            swordDamage = Mathf.Clamp(swordDamage, 1, 99999);
+
+                            testedEntity.TakeDamage(swordDamage + casterSelf.GetStrengthDamageBonus());
                         }
                     }
 

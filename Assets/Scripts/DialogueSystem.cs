@@ -13,6 +13,7 @@ public class DialogueSystem : MonoBehaviour
 
     public ELEMENTS elements;
 
+	public string speakerNameHold;
 
 
     // public Text test;
@@ -35,11 +36,11 @@ public class DialogueSystem : MonoBehaviour
     {
         Catch();
     }
-
+    //starts the coroutine to write the text.
     public void Say(string speech, string speaker = "")
     {
         StopSpeaking();
-        speaking = StartCoroutine(Speaking(speech, speaker));
+        speaking = StartCoroutine(Speaking(speech));
     }
 
     [HideInInspector] public bool isSpeaking { get { return speaking != null; } }
@@ -48,7 +49,7 @@ public class DialogueSystem : MonoBehaviour
 
     Coroutine speaking = null;
 
-
+    //checks if the coroutine is still wrting out the text or not
     public void StopSpeaking()
     {
         if (isSpeaking)
@@ -59,11 +60,12 @@ public class DialogueSystem : MonoBehaviour
         speaking = null;     
     }
 
-    IEnumerator Speaking(string targetSpeech, string speaker = "")
+    //This get the text pannel and writes the text to it 
+    IEnumerator Speaking(string targetSpeech)
     {
         speechPanel.SetActive(true);
         speechText.text = "";
-        speakerNameText.text = DetermineSpeaker(speaker);
+        speakerNameText.text = DetermineSpeaker();
         isWatingForUserInput = false;
 
         while (speechText.text != targetSpeech)
@@ -81,6 +83,7 @@ public class DialogueSystem : MonoBehaviour
         StopSpeaking();    
     }
 
+    //checks if the text is currently being written out then if it isnt will write out all the text at once
     public void SkipTextScroll(string targetSpeech, string speaker = "")
     {
         if (speaking != null)
@@ -91,18 +94,15 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    string DetermineSpeaker(string speakerName)
+    //Determins who is speaking
+    string DetermineSpeaker()
     {
-        string retVal = speakerNameText.text;
-        if (speakerName != speakerNameText.text && speakerName != "")
-            retVal = (speakerName.ToLower().Contains("narrator")) ? "" : speakerName;
+       speakerNameHold = textSystem.text[textSystem.index].CharacterName;
 
-        return retVal;
+        return speakerNameHold;
     }
 
-
-
-
+    //make sure the text does not skip it self.
     void Catch()
     {
         if (isWatingForUserInput == true)
@@ -111,6 +111,7 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
+    //gets the text object elements
     [System.Serializable]
     public class ELEMENTS
     {

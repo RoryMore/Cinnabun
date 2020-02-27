@@ -47,7 +47,7 @@ public class RespawnControl : MonoBehaviour
                         }
                         if (item.isEquipped)
                         {
-                            CharacterPanelStatControl.OnItemRemove(item.item);
+                            CharacterPanelStatControl.OnItemRemove(item.itemInfoBlock);
 
                             item.usedEquipSlot.equippedItem = null;
                             item.usedEquipSlot.isUsed = false;

@@ -25,12 +25,8 @@ public class Encounter : MonoBehaviour
     public bool cleared = false;
 
     // Inventory to add item to
-    [Header("Temporary Inventory stuff")]
-    
-    public List<Item> items;
-
-    [SerializeField]
-    InventoryBase inventory;
+    [Header("LootSystem")]
+    public ItemSpawner.ItemSpawnerStruct itemSpawner;
 
 
     // Start is called before the first frame update
@@ -75,10 +71,10 @@ public class Encounter : MonoBehaviour
     {
         //inventory = FindObjectOfType<InventoryBase>();
 
-        if (inventory != null)
-        {
-            Debug.Log("Inventory set properly");
-        }
+        //if (inventory != null)
+        //{
+        //    Debug.Log("Inventory set properly");
+        //}
     }
 
     // Update is called once per frame
@@ -105,7 +101,7 @@ public class Encounter : MonoBehaviour
         enemyManager.inBattle = false;
         enemyManager.SetTimeToNextWave(enemyManager.timeBetweenWaves);
         enemyManager.CheckVictory();
-        GiveItem();
+        
         //enemyManager.player.GetComponent<Entity>().currentHP += 25;
         
     }
@@ -118,22 +114,6 @@ public class Encounter : MonoBehaviour
     public void EnemyNoLongerNeedHealed(Entity enemy)
     {
         healList.Remove(enemy);
-    }
-
-    public void GiveItem()
-    {
-        //Give the player an item to use
-        Debug.Log("Player has obtained an Item!... but not really");
-
-        if (inventory != null)
-        {
-            Debug.Log("Item given to player for real");
-            int choice = (int)Random.Range(0, 4);
-            {
-                inventory.AddItem(items[choice]);
-            }
-            
-        }
     }
 
     public void KillCode()
