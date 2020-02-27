@@ -95,19 +95,21 @@ public class PauseAbility : MonoBehaviour
         {    
             if (player.playerState != Player.PlayerState.DOINGSKILL)
             {
-                if (states == GameStates.PLAY)
+                if (!player.inventory.activeSelf)
                 {
-                    states = GameStates.TIMESTOP;
-                }
-                else if (states == GameStates.TIMESTOP)
-                {
-                    states = GameStates.PLAY;
-                    clearAllList();
-                    calculateTimeStop();
-                    takeingTurn = false;
+                    if (states == GameStates.PLAY)
+                    {
+                        states = GameStates.TIMESTOP;
+                    }
+                    else if (states == GameStates.TIMESTOP)
+                    {
+                        states = GameStates.PLAY;
+                        clearAllList();
+                        calculateTimeStop();
+                        takeingTurn = false;
+                    }
                 }
             }
-          
         }
     }
     public void ButtonPaused()
