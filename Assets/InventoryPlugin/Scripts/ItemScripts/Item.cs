@@ -122,6 +122,7 @@ public class Item : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 400.0f))
             {
+                // Did this object get clicked
                 if (hit.collider.gameObject == gameObject)
                 {
                     itemClicked = true;
