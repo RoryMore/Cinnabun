@@ -223,57 +223,57 @@ public class BaseSkill : MonoBehaviour
     /// <param name="farWidth"></param>
     /// <returns>Returns TRUE if given Vector3 is within bounds and can can be damaged</returns>
     public bool CheckLineSkillHit(Vector3 hitCheckPosition, float minLength, float maxLength, float nearWidth, float farWidth)
-    {
-        float angleLookAt = GetForwardAngle(casterSelf.transform);
-
-        float halfFarWidth = farWidth * 0.5f;
-        float halfNearWidth = nearWidth * 0.5f;
-
-        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
-
-        posCurrentMin = casterSelf.transform.position;
-        posCurrentMin.x += minLength;
-        posCurrentMin.z -= halfNearWidth;
-
-        posCurrentMax = casterSelf.transform.position;
-        posCurrentMax.x += maxLength;
-        posCurrentMax.z -= halfFarWidth;
-
-        posNextMin = casterSelf.transform.position;
-        posNextMin.x += minLength;
-        posNextMin.z += halfNearWidth;
-
-        posNextMax = casterSelf.transform.position;
-        posNextMax.z += halfFarWidth;
-
-        posNextMax.x += maxLength;
-
-        Vector3[] hitCheckBounds = new Vector3[4];
-
-        hitCheckBounds[0] = posCurrentMin;
-        hitCheckBounds[1] = posCurrentMax;
-        hitCheckBounds[2] = posNextMax;
-        hitCheckBounds[3] = posNextMin;
-
-        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
-
-        for (int i = 0; i < hitCheckBounds.Length; i++)
-        {
-            hitCheckBounds[i] -= casterSelf.transform.position;
-            hitCheckBounds[i] = qAngle * hitCheckBounds[i];
-            hitCheckBounds[i] += casterSelf.transform.position;
-        }
-
-        // hitCheckBounds holds the 4 coordinates of where an enemy has to be standing within to be hit
-        // continue to calculate if the target location is within given rectangle
+    {
+        float angleLookAt = GetForwardAngle(casterSelf.transform);
+
+        float halfFarWidth = farWidth * 0.5f;
+        float halfNearWidth = nearWidth * 0.5f;
+
+        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
+
+        posCurrentMin = casterSelf.transform.position;
+        posCurrentMin.x += minLength;
+        posCurrentMin.z -= halfNearWidth;
+
+        posCurrentMax = casterSelf.transform.position;
+        posCurrentMax.x += maxLength;
+        posCurrentMax.z -= halfFarWidth;
+
+        posNextMin = casterSelf.transform.position;
+        posNextMin.x += minLength;
+        posNextMin.z += halfNearWidth;
+
+        posNextMax = casterSelf.transform.position;
+        posNextMax.z += halfFarWidth;
+
+        posNextMax.x += maxLength;
+
+        Vector3[] hitCheckBounds = new Vector3[4];
+
+        hitCheckBounds[0] = posCurrentMin;
+        hitCheckBounds[1] = posCurrentMax;
+        hitCheckBounds[2] = posNextMax;
+        hitCheckBounds[3] = posNextMin;
+
+        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
+
+        for (int i = 0; i < hitCheckBounds.Length; i++)
+        {
+            hitCheckBounds[i] -= casterSelf.transform.position;
+            hitCheckBounds[i] = qAngle * hitCheckBounds[i];
+            hitCheckBounds[i] += casterSelf.transform.position;
+        }
+
+        // hitCheckBounds holds the 4 coordinates of where an enemy has to be standing within to be hit
+        // continue to calculate if the target location is within given rectangle
         //Debug.Log("WeaponAttack Hit Results: " + CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition));
-        if (CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition))
-        {
-            return true;
+        if (CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition))
+        {
+            return true;
         }
-        else
-        {
-            return false;
+        else
+        {
+            return false;
         }
     }
 
@@ -362,14 +362,14 @@ public class BaseSkill : MonoBehaviour
         return false;
     }
 
-    public bool CheckInVerticalRange(Vector3 targetPosition)
-    {
-        // Basic distance check with 2 floats from caster and target positions to see if they are near eachother enough of the Y axis to damage one another
-        if (Mathf.Abs(casterSelf.transform.position.y - targetPosition.y) <= skillData.verticalRange)
-        {
-            return true;
-        }
-        return false;
+    public bool CheckInVerticalRange(Vector3 targetPosition)
+    {
+        // Basic distance check with 2 floats from caster and target positions to see if they are near eachother enough of the Y axis to damage one another
+        if (Mathf.Abs(casterSelf.transform.position.y - targetPosition.y) <= skillData.verticalRange)
+        {
+            return true;
+        }
+        return false;
     }
 
     protected void SelectTargetRay(ref Entity entityToSet, bool checkInRange = false)

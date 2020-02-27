@@ -14,6 +14,9 @@ public class EnemyManager : MonoBehaviour
 
     public bool WaveActive;
 
+    float waveCooldownTimer;
+    public float timeBetweenWaves;
+
     /*Each group of enemies is handled by their own personal "Encounter" manager. The enemy manager handles the
     Global functions of managing the encounters themselves, disabling them and enabling them as required*/
 
@@ -23,6 +26,7 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         weWon = false;
+        waveCooldownTimer = 0.0f;
 
         player = GameObject.Find("Player");
         foreach (Encounter encounter in encounters)
@@ -36,11 +40,15 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         UpdateActiveEncounters();
+        if (WaveActive == false)
+        {
+            waveCooldownTimer -= Time.deltaTime;
+        }
     }
 
     public void UpdateActiveEncounters()
     {
-        if (WaveActive == false)
+        if (WaveActive == false && waveCooldownTimer <= 0.0f)
         {
             foreach (Encounter encounter in encounters)
             {
@@ -77,5 +85,10 @@ public class EnemyManager : MonoBehaviour
             Debug.Log("You win!");
             weWon = true;
         }
+    }
+
+    public void SetTimeToNextWave(float timer)
+    {
+        waveCooldownTimer = timer;
     }
 }
