@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &683819299406208336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105419801254285340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61897f3bfebc8c24a8ccc93398f7574f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skill: {fileID: 1759311214}
 --- !u!1 &819698099673919354
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,6 +244,7 @@ MonoBehaviour:
   swordDamageMultiplier: 1
   staffDamageMultiplier: 1
   bowDamageMultiplier: 1
+  meshCollider: {fileID: 6211071506982483612}
 --- !u!1001 &537844692203287803
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1319,10 +1333,17 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 4543721152574756542, guid: 4b49b41e504c98d4588fe653d8839020, type: 3}
     - {fileID: 6045951291823921618, guid: 4b49b41e504c98d4588fe653d8839020, type: 3}
+    - {fileID: 6731399793853943188, guid: 4b49b41e504c98d4588fe653d8839020, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4b49b41e504c98d4588fe653d8839020, type: 3}
---- !u!4 &7811462828264994496 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4543721152574756543, guid: 4b49b41e504c98d4588fe653d8839020,
+--- !u!1 &7811462828264994510 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4543721152574756529, guid: 4b49b41e504c98d4588fe653d8839020,
+    type: 3}
+  m_PrefabInstance: {fileID: 6010456530514780287}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &105419801254285340 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5917704202994282595, guid: 4b49b41e504c98d4588fe653d8839020,
     type: 3}
   m_PrefabInstance: {fileID: 6010456530514780287}
   m_PrefabAsset: {fileID: 0}
@@ -1332,9 +1353,15 @@ Projector:
     type: 3}
   m_PrefabInstance: {fileID: 6010456530514780287}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7811462828264994510 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4543721152574756529, guid: 4b49b41e504c98d4588fe653d8839020,
+--- !u!4 &7811462828264994496 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4543721152574756543, guid: 4b49b41e504c98d4588fe653d8839020,
+    type: 3}
+  m_PrefabInstance: {fileID: 6010456530514780287}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &6211071506982483612 stripped
+MeshCollider:
+  m_CorrespondingSourceObject: {fileID: 385980251542329059, guid: 4b49b41e504c98d4588fe653d8839020,
     type: 3}
   m_PrefabInstance: {fileID: 6010456530514780287}
   m_PrefabAsset: {fileID: 0}

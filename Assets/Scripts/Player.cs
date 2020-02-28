@@ -102,9 +102,6 @@ public class Player : Entity
                                 {
                                     if (!inventory.activeSelf)
                                     {
-                                        CurrencyManager.AddGold(1);
-                                        CurrencyManager.AddUpgradeMoney(1);
-
                                         pause.ButtonPaused();
                                         inventory.SetActive(true);
                                     }

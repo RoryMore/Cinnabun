@@ -308,7 +308,7 @@ public class BaseSkill : MonoBehaviour
         }
     }
 
-    float GetForwardAngle(Transform t)
+    protected float GetForwardAngle(Transform t)
     {
         return 90 - Mathf.Rad2Deg * Mathf.Atan2(t.forward.z, t.forward.x);
     }

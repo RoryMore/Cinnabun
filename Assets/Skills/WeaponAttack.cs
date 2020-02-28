@@ -35,6 +35,9 @@ public class WeaponAttack : BaseSkill
 
     bool attackAreaChosen = false;
 
+    [SerializeField]
+    MeshCollider meshCollider;  // MUST BE SET TO A CONVEX MESH FOR ACCURACY
+
     private void Start()
     {
         Initialise();
@@ -44,6 +47,88 @@ public class WeaponAttack : BaseSkill
     {
         base.Initialise();
         oldWeapon = UsedWeaponType.NotInitialised;
+
+        meshCollider.sharedMesh = GenerateRectMesh();
+    }
+
+    private Mesh GenerateRectMesh()
+    {
+        float angleLookAt = GetForwardAngle(casterSelf.transform);
+        float halfFarWidth = skillData.farWidth * 0.5f;
+        float halfNearWidth = skillData.nearWidth * 0.5f;
+        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
+        posCurrentMin = Vector3.zero;// casterSelf.transform.position;
+        posCurrentMin.x += skillData.minRange;
+        posCurrentMin.z -= halfNearWidth;        posCurrentMin.y += skillData.verticalRange * 0.5f;
+        posCurrentMax = Vector3.zero;// casterSelf.transform.position;
+        posCurrentMax.x += skillData.maxRange;
+        posCurrentMax.z -= halfFarWidth;        posCurrentMax.y += skillData.verticalRange * 0.5f;
+        posNextMin = Vector3.zero; //casterSelf.transform.position;
+        posNextMin.x += skillData.minRange;
+        posNextMin.z += halfNearWidth;        posNextMin.y += skillData.verticalRange * 0.5f;
+        posNextMax = Vector3.zero; //casterSelf.transform.position;
+        posNextMax.z += halfFarWidth;
+        posNextMax.x += skillData.maxRange;        posNextMax.y += skillData.verticalRange * 0.5f;
+        Vector3[] hitCheckBounds = new Vector3[8];
+        hitCheckBounds[0] = posCurrentMin;
+        hitCheckBounds[1] = posCurrentMax;
+        hitCheckBounds[2] = posNextMax;
+        hitCheckBounds[3] = posNextMin;        posCurrentMin.y -= skillData.verticalRange;        posCurrentMax.y -= skillData.verticalRange;        posNextMax.y -= skillData.verticalRange;        posNextMin.y -= skillData.verticalRange;        hitCheckBounds[4] = posNextMin;        hitCheckBounds[5] = posNextMax;        hitCheckBounds[6] = posCurrentMax;        hitCheckBounds[7] = posCurrentMin;
+        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
+        for (int i = 0; i < hitCheckBounds.Length; i++)
+        {
+            //hitCheckBounds[i] -= casterSelf.transform.position;
+            hitCheckBounds[i] = qAngle * hitCheckBounds[i];
+            //hitCheckBounds[i] += casterSelf.transform.position;
+        }
+
+        Mesh mesh = new Mesh();
+        mesh.vertices = hitCheckBounds;
+        int[] triangles = new int[12 * 3];
+        triangles[0] = 0;
+        triangles[1] = 1;
+        triangles[2] = 2;
+        triangles[3] = 2;
+        triangles[4] = 3;
+        triangles[5] = 0;
+
+        triangles[6] = 0;
+        triangles[7] = 3;
+        triangles[8] = 4;
+        triangles[9] = 4;
+        triangles[10] = 7;
+        triangles[11] = 0;
+
+        triangles[12] = 0;
+        triangles[13] = 7;
+        triangles[14] = 6;
+        triangles[15] = 6;
+        triangles[16] = 1;
+        triangles[17] = 0;
+
+        triangles[18] = 7;
+        triangles[19] = 6;
+        triangles[20] = 5;
+        triangles[21] = 5;
+        triangles[22] = 4;
+        triangles[23] = 7;
+
+        triangles[24] = 6;
+        triangles[25] = 1;
+        triangles[26] = 2;
+        triangles[27] = 2;
+        triangles[28] = 5;
+        triangles[29] = 6;
+
+        triangles[30] = 3;
+        triangles[31] = 4;
+        triangles[32] = 5;
+        triangles[33] = 5;
+        triangles[34] = 2;
+        triangles[35] = 3;
+        mesh.triangles = triangles;
+        mesh.RecalculateBounds();
+        return mesh;
     }
 
     private void Update()
@@ -303,7 +388,16 @@ public class WeaponAttack : BaseSkill
                         //    weaponhit = true;
                         //    testedEntity.TakeDamage(skillData.baseMagnitude * swordDamageMultiplier);
                         //}
-                        if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
+                        //if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
+                        //{
+                        //    weaponhit = true;
+
+                        //    int swordDamage = Mathf.FloorToInt((float)skillData.baseMagnitude * swordDamageMultiplier);
+                        //    swordDamage = Mathf.Clamp(swordDamage, 1, 99999);
+
+                        //    testedEntity.TakeDamage(swordDamage + casterSelf.GetStrengthDamageBonus());
+                        //}
+                        if (CheckTargetInRectCollider(meshCollider, testedEntity.transform.position))
                         {
                             weaponhit = true;
 
@@ -343,6 +437,20 @@ public class WeaponAttack : BaseSkill
         attackAreaChosen = false;
         timeSpentOnWindUp = 0.0f;
         skillState = SkillState.INACTIVE;
+    }
+
+    protected bool CheckTargetInRectCollider(MeshCollider meshCollider, Vector3 point)
+    {
+        // MESH MUST BE SET TO CONCAVE
+        Vector3 direction = meshCollider.bounds.center - point;
+        Ray ray = new Ray(point, direction);
+        if (meshCollider.Raycast(ray, out RaycastHit hit, direction.magnitude))
+        {
+            // If the raycast hits the collider, the point is outside the collider
+            return false;
+        }
+        //Debug.Log("Tested point inside collider");
+        return true;
     }
 
     // Needs to be called if they start using a new weapon
