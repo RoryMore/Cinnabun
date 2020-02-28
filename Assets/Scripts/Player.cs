@@ -9,6 +9,7 @@ public class Player : Entity
     public LayerMask groundLayerMask;
     public float moveRaycastDistance;
     public CameraController cameraShake;
+    TextSystem textSystem;
 
     public enum PlayerState
     {
@@ -65,6 +66,7 @@ public class Player : Entity
     {
         pause = FindObjectOfType<PauseAbility>();
         pauseMenu = FindObjectOfType<PauseMenuUI>();
+        textSystem = FindObjectOfType<TextSystem>();
         //InitialiseSkills();
     }
 
@@ -320,23 +322,28 @@ public class Player : Entity
 
     void Move()
     {
-        if (Input.GetMouseButton(0))
+
+        if (textSystem.novelActive == true)
         {
 
-            nav.speed = movementSpeed;
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit hit, moveRaycastDistance, groundLayerMask))
+            if (Input.GetMouseButton(0))
             {
-                //if (hit.collider.tag.Contains("Finish"))
-                //{
-                nav.SetDestination(hit.point);
 
-                Debug.Log("Move Player");
-                //}
+                nav.speed = movementSpeed;
+
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out RaycastHit hit, moveRaycastDistance, groundLayerMask))
+                {
+                    //if (hit.collider.tag.Contains("Finish"))
+                    //{
+                    nav.SetDestination(hit.point);
+
+                    Debug.Log("Move Player");
+                    //}
+                }
+
             }
-
         }
     }
 
