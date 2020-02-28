@@ -102,6 +102,9 @@ public class Player : Entity
                                 {
                                     if (!inventory.activeSelf)
                                     {
+                                        CurrencyManager.AddGold(1);
+                                        CurrencyManager.AddUpgradeMoney(1);
+
                                         pause.ButtonPaused();
                                         inventory.SetActive(true);
                                     }
@@ -322,7 +325,6 @@ public class Player : Entity
     {
         if (Input.GetMouseButton(0))
         {
-
             nav.speed = movementSpeed;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

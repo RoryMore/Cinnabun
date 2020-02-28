@@ -211,16 +211,7 @@ public class MouseItemControl : MonoBehaviour
                         Vector3 dropLocation = player.transform.position;
                         dropLocation.x += Random.Range(-2.0f, 2.0f);
                         dropLocation.z += Random.Range(-2.0f, 2.0f);
-                        if (NavMesh.SamplePosition(dropLocation, out NavMeshHit hit, 20.0f, NavMesh.AllAreas))
-                        {
-                            dropLocation.x = hit.position.x;
-                            dropLocation.y = hit.position.y + 1.0f;
-                            dropLocation.z = hit.position.z;
-                        }
-                        else
-                        {
-                            Debug.LogError("Dropped Item (dropped from player Inventory) could not find suitable location on NavMesh to drop at! Item may be inside an object or underground if the spawnLocation was near unsuitable terrain/objects");
-                        }
+                        
 
                         Item droppedItem = Instantiate(itemDrop, dropLocation, Quaternion.identity).GetComponent<Item>();
                         droppedItem.Initialise(mouseItem.itemData, mouseItem.itemInfoBlock, 30.0f);

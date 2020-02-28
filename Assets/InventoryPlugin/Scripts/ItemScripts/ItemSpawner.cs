@@ -32,16 +32,16 @@ public class ItemSpawner : MonoBehaviour
             Vector3 spawnLocation = position;
             spawnLocation.x += Random.Range(-2.0f, 2.0f);
             spawnLocation.z += Random.Range(-2.0f, 2.0f);
-            if (NavMesh.SamplePosition(spawnLocation, out NavMeshHit hit, 20.0f, NavMesh.AllAreas))
-            {
-                spawnLocation.x = hit.position.x;
-                spawnLocation.y = hit.position.y + 1.0f;
-                spawnLocation.z = hit.position.z;
-            }
-            else
-            {
-                Debug.LogError("Dropped Item (Spawned from Enemy) could not find suitable location on NavMesh to drop at! Item may be inside an object or underground if the spawnLocation was near unsuitable terrain/objects");
-            }
+            //if (NavMesh.SamplePosition(spawnLocation, out NavMeshHit hit, 20.0f, NavMesh.AllAreas))
+            //{
+            //    spawnLocation.x = hit.position.x;
+            //    spawnLocation.y = hit.position.y + 1.0f;
+            //    spawnLocation.z = hit.position.z;
+            //}
+            //else
+            //{
+            //    Debug.LogError("Dropped Item (Spawned from Enemy) could not find suitable location on NavMesh to drop at! Item may be inside an object or underground if the spawnLocation was near unsuitable terrain/objects");
+            //}
 
             if ((randomNumber <= ultraRatio) && (ultraRatio != 0))  //randomNumber hit the ultra loot
             {

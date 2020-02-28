@@ -70,6 +70,7 @@ MonoBehaviour:
   magicalArmour: 0
   maxHP: 0
   currentHP: 0
+  baseMovementSpeed: 5
   movementSpeed: 0
   dodgeChance: 0
   physDamagePotential: 0
@@ -112,7 +113,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 5
-  m_Acceleration: 100
+  m_Acceleration: 300
   avoidancePriority: 50
   m_AngularSpeed: 900
   m_StoppingDistance: 0

@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 0}
+  dropHeight: 1
   lifetime: 120
   timeAlive: 0
   itemClicked: 0

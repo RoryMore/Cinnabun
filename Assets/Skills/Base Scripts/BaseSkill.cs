@@ -382,12 +382,12 @@ public class BaseSkill : MonoBehaviour
             {
                 if (Physics.Raycast(ray, out RaycastHit hit, 400))
                 {
-                    Debug.Log("Skill is raycasting");
+                    //Debug.Log("Skill is raycasting");
                     if (checkInRange)
                     {
                         if (CheckInRange(casterSelf.transform.position, hit.point))
                         {
-                            Debug.Log("Entity reference set for skill");
+                            //Debug.Log("Entity reference set for skill");
                             entityToSet = hit.collider.gameObject.GetComponent<Entity>();
                         }
                     }
