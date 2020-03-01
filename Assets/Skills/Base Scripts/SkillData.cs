@@ -19,7 +19,11 @@ public class SkillData : ScriptableObject
         TELEPORT,
         DELAYEDBLAST,
         REWIND,
-        WEAPONATTACK
+        WEAPONATTACK,
+        BUFF,
+        HEAL,
+        AOE,
+        STATUS
     }
 
     [Header("Ranges")]

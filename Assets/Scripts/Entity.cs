@@ -11,13 +11,16 @@ public class Entity : MonoBehaviour
         public int damage;  // If this condition deals damage, this is how much damage is dealt each time damage is dealt
         public float damageTickRate; // The rate at which this condition will deal its damage
         public float duration; //The duration of the condition
-        public ConditionType conditionType; //Name of condition
+        public ConditionEffect conditionType; //Name of condition
+        public int BuffStat;
         public float effectivePercent; // If this condition uses any percent value in any way
 
         public float timePassed;
         public bool begun;
 
-        public Condition(float _duration, ConditionType _conditionType)
+       
+
+        public Condition(float _duration, ConditionEffect _conditionType)
         {
             damage = 0;
             damageTickRate = 0;
@@ -25,10 +28,22 @@ public class Entity : MonoBehaviour
             conditionType = _conditionType;
             timePassed = 0;
             begun = false;
+            BuffStat = 0;
             effectivePercent = 1.0f;
         }
+        public Condition(float _duration, ConditionEffect _conditionType, float Effectiveness)
+        {
+            damage = 0;
+            damageTickRate = 0;
+            duration = _duration;
+            conditionType = _conditionType;
+            timePassed = 0;
+            begun = false;
+            BuffStat = 0;
+            effectivePercent = Effectiveness;
+        }
 
-        public Condition(float _duration, ConditionType _conditionType, int _damage, float _damageTickRate)
+        public Condition(float _duration, ConditionEffect _conditionType, int _damage, float _damageTickRate)
         {
             damage = _damage;
             damageTickRate = _damageTickRate;
@@ -36,10 +51,11 @@ public class Entity : MonoBehaviour
             conditionType = _conditionType;
             timePassed = 0;
             begun = false;
+            BuffStat = 0;
             effectivePercent = 1.0f;
         }
 
-        public Condition(float _duration, ConditionType _conditionType, float _effectivePercent, int _damage, float _damageTickRate)
+        public Condition(float _duration, ConditionEffect _conditionType, float _effectivePercent, int _damage, float _damageTickRate)
         {
             damage = _damage;
             damageTickRate = _damageTickRate;
@@ -47,6 +63,7 @@ public class Entity : MonoBehaviour
             conditionType = _conditionType;
             timePassed = 0;
             begun = false;
+            BuffStat = 0;
             effectivePercent = _effectivePercent;
         }
 
@@ -67,8 +84,15 @@ public class Entity : MonoBehaviour
             begun = true;
         }
     }
-
-    public enum ConditionType
+    public enum ConditionTypeA
+    {
+        DELAYEDBLAST,
+        [Tooltip("Deals damage over time based on damage and tickrate")]
+        BURN,
+        [Tooltip("Deals damage over time based on damage and tickrate, and also applies a slow multiplying movementSpeed by effective percent")]
+        POISON
+    }
+    public enum ConditionEffect
     {
         DELAYEDBLAST,
         [Tooltip("Deals damage over time based on damage and tickrate")]
@@ -216,14 +240,14 @@ public class Entity : MonoBehaviour
             int conditionIndex = 0;
             foreach (Condition condition in currentConditions)
             {
-                if (condition.conditionType == ConditionType.DELAYEDBLAST)
+                if (condition.conditionType == ConditionEffect.DELAYEDBLAST)
                 {
                     //Do the thing!
                     //Wait for player input of kaboom
                     //If have condition, detonate and remove condition
 
                 }
-                else if (condition.conditionType == ConditionType.BURN)
+                else if (condition.conditionType == ConditionEffect.BURN)
                 {
                     // Does this condition still have time to continue being active?
                     if (condition.duration > 0)
@@ -247,7 +271,7 @@ public class Entity : MonoBehaviour
                         currentConditions.RemoveAt(conditionIndex);
                     }
                 }
-                else if (condition.conditionType == ConditionType.POISON)
+                else if (condition.conditionType == ConditionEffect.POISON)
                 {
                     if (!condition.begun)
                     {
