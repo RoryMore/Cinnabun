@@ -67,6 +67,9 @@ public class BaseSkill : MonoBehaviour
     [SerializeField]
     Sprite fillCookie;
 
+    [Header("Ground Layer Mask if necessary to use")]
+    public LayerMask groundMask;
+
     protected virtual void Initialise()
     {
         if (skillData != null)
@@ -493,13 +496,13 @@ public class BaseSkill : MonoBehaviour
             }
         }
     }
-    protected bool SelectTargetRay(ref Vector3 pointToSet, bool checkInRange = false)
+    protected bool SelectTargetRay(ref Vector3 pointToSet, LayerMask raycastMask, bool checkInRange = false)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(ray, out RaycastHit hit, 400))
+            if (Physics.Raycast(ray, out RaycastHit hit, raycastMask))
             {
                 if (checkInRange)
                 {
