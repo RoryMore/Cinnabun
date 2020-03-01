@@ -41,7 +41,8 @@ public class ProjectorPositionControl : MonoBehaviour
                     break;
                 }
         }
-        
+        projector.farClipPlane = skill.skillData.verticalRange;
+        projector.nearClipPlane = -skill.skillData.verticalRange;
     }
 
     // Update is called once per frame

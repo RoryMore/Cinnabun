@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Item : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class Item : MonoBehaviour
     public InventoryItem.ItemInfoBlock itemStatBlock;
 
     [Header("Item World-Object Settings")]
+    [SerializeField]
+    [Tooltip("How far off the ground/NavMesh the item will be")]
+    float dropHeight;
     [Tooltip("The amount of time (seconds) until the item will get destroyed if not picked up")]
     public float lifetime;
     // The amount of time the item has been alive
@@ -25,6 +29,18 @@ public class Item : MonoBehaviour
 
     Material material;
     MeshRenderer meshRenderer;
+
+    private void Awake()
+    {
+        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 20.0f, NavMesh.AllAreas))
+        {
+            transform.position = new Vector3(hit.position.x, hit.position.y + dropHeight, hit.position.z);
+        }
+        else
+        {
+            Debug.LogError("Dropped Item could not find suitable location on NavMesh to drop at! Item may be inside an object or underground if the spawnLocation was near unsuitable terrain/objects");
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -122,6 +138,7 @@ public class Item : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 400.0f))
             {
+                // Did this object get clicked
                 if (hit.collider.gameObject == gameObject)
                 {
                     itemClicked = true;
