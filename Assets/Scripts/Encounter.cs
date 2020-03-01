@@ -98,6 +98,8 @@ public class Encounter : MonoBehaviour
         //The encounter has been defeated!
         cleared = true;
         enemyManager.WaveActive = false;
+        enemyManager.inBattle = false;
+        enemyManager.SetTimeToNextWave(enemyManager.timeBetweenWaves);
         enemyManager.CheckVictory();
         
         //enemyManager.player.GetComponent<Entity>().currentHP += 25;

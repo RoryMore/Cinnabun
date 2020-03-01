@@ -5,6 +5,7 @@ using UnityEngine;
 public class BasicEnemyAttack : BaseSkill
 {
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -95,22 +96,29 @@ public class BasicEnemyAttack : BaseSkill
     protected override void ActivateSkill(List<Entity> entityList)
     {
         base.ActivateSkill();
-        timeBeenOnCooldown = 0.0f;
-        timeSpentOnWindUp = 0.0f;
-        skillState = SkillState.INACTIVE;
-        currentlyCasting = false;
+
 
         // Intended effect here. Be it damage or otherwise
         // This includes checking if target is in range and such
         foreach (Entity testedEntity in entityList)
         {
-            if(testedEntity != casterSelf)
-            if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
+            if (testedEntity != casterSelf)
             {
-                testedEntity.TakeDamage(skillData.baseMagnitude);
+                if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
+                {
+                    testedEntity.TakeDamage(skillData.baseMagnitude);
+
+                }
             }
 
         }
+
+
+            timeBeenOnCooldown = 0.0f;
+            timeSpentOnWindUp = 0.0f;
+            skillState = SkillState.INACTIVE;
+            currentlyCasting = false;
+
 
     }
 

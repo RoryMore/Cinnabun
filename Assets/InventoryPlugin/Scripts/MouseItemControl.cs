@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.AI;
 
 public class MouseItemControl : MonoBehaviour
 {
@@ -78,7 +79,7 @@ public class MouseItemControl : MonoBehaviour
                 if (equippedComparison != null)
                 {
                     tooltip.SetEquippedItemInfo(equippedComparison.itemInfoBlock);
-                    Debug.Log("Tooltip set real hover info");
+                    //Debug.Log("Tooltip set real hover info");
                 }
                 else
                 {
@@ -106,7 +107,7 @@ public class MouseItemControl : MonoBehaviour
                     // Is the currently checked object an inventoryItem
                     if (result.gameObject.name.Contains("InventoryItem"))
                     {
-                        Debug.Log("InventoryItem hit with click");
+                        //Debug.Log("InventoryItem hit with click");
                         InventoryItem checkedResult = result.gameObject.GetComponent<InventoryItem>();
 
                         // Put item on our mouse
@@ -159,7 +160,7 @@ public class MouseItemControl : MonoBehaviour
 
                         if (invBase.AddItem(mouseItem, checkedSlot.slotID))
                         {
-                            Debug.Log("ITEM WAS ADDED FROM MOUSE");
+                            //Debug.Log("ITEM WAS ADDED FROM MOUSE");
 
                             mouseItem.ClearItem();
                             mouseItem.gameObject.SetActive(false);
@@ -168,7 +169,7 @@ public class MouseItemControl : MonoBehaviour
                         {
                             invBase.AddItem(mouseItem, mouseItem.slotsUsed[0].slotID);
 
-                            Debug.Log("ITEM WAS ADDED FROM MOUSE");
+                            //Debug.Log("ITEM WAS ADDED FROM MOUSE");
 
                             mouseItem.ClearItem();
                             mouseItem.gameObject.SetActive(false);
@@ -210,6 +211,7 @@ public class MouseItemControl : MonoBehaviour
                         Vector3 dropLocation = player.transform.position;
                         dropLocation.x += Random.Range(-2.0f, 2.0f);
                         dropLocation.z += Random.Range(-2.0f, 2.0f);
+                        
 
                         Item droppedItem = Instantiate(itemDrop, dropLocation, Quaternion.identity).GetComponent<Item>();
                         droppedItem.Initialise(mouseItem.itemData, mouseItem.itemInfoBlock, 30.0f);
@@ -223,7 +225,7 @@ public class MouseItemControl : MonoBehaviour
                     {
                         if (invBase.AddItem(mouseItem, mouseItem.slotsUsed[0].slotID))
                         {
-                            Debug.Log("ITEM WAS ADDED FROM MOUSE - OUT OF INVENTORY SLOT BOUNDS");
+                            //Debug.Log("ITEM WAS ADDED FROM MOUSE - OUT OF INVENTORY SLOT BOUNDS");
 
                             mouseItem.ClearItem();
                             mouseItem.gameObject.SetActive(false);
@@ -232,7 +234,7 @@ public class MouseItemControl : MonoBehaviour
                         {
                             if (invBase.AddItem(mouseItem))
                             {
-                                Debug.Log("ITEM WAS ADDED FROM MOUSE - OUT OF INVENTORY SLOT BOUNDS");
+                                //Debug.Log("ITEM WAS ADDED FROM MOUSE - OUT OF INVENTORY SLOT BOUNDS");
 
                                 mouseItem.ClearItem();
                                 mouseItem.gameObject.SetActive(false);
@@ -242,7 +244,7 @@ public class MouseItemControl : MonoBehaviour
 
                                 if (mouseItem.isEquipped)
                                 {
-                                    Debug.Log("MouseItemControl: Re-equipping item. Not enough free inventory space to unequip");
+                                    //Debug.Log("MouseItemControl: Re-equipping item. Not enough free inventory space to unequip");
                                     // Re-equip item in its slot.
                                     // Not enough inventory space
                                     equipPanelControl.EquipItem(mouseItem);

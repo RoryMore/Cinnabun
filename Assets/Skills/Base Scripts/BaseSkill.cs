@@ -215,7 +215,7 @@ public class BaseSkill : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks if the given vector3 is within the rectangular area of a skill hit based on width and length
+    /// For skills that use a rectangular shape, use the function GenerateRectHitboxMesh() at skill initialisation instead. Then use CheckPointInCollider() for detection
     /// </summary>
     /// <param name="hitCheckPosition">Given Vector3 to check if it's within bounds</param>
     /// <param name="minLength"></param>
@@ -223,58 +223,152 @@ public class BaseSkill : MonoBehaviour
     /// <param name="farWidth"></param>
     /// <returns>Returns TRUE if given Vector3 is within bounds and can can be damaged</returns>
     public bool CheckLineSkillHit(Vector3 hitCheckPosition, float minLength, float maxLength, float nearWidth, float farWidth)
+    {
+        float angleLookAt = GetForwardAngle(casterSelf.transform);
+
+        float halfFarWidth = farWidth * 0.5f;
+        float halfNearWidth = nearWidth * 0.5f;
+
+        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
+
+        posCurrentMin = casterSelf.transform.position;
+        posCurrentMin.x += minLength;
+        posCurrentMin.z -= halfNearWidth;
+
+        posCurrentMax = casterSelf.transform.position;
+        posCurrentMax.x += maxLength;
+        posCurrentMax.z -= halfFarWidth;
+
+        posNextMin = casterSelf.transform.position;
+        posNextMin.x += minLength;
+        posNextMin.z += halfNearWidth;
+
+        posNextMax = casterSelf.transform.position;
+        posNextMax.z += halfFarWidth;
+
+        posNextMax.x += maxLength;
+
+        Vector3[] hitCheckBounds = new Vector3[4];
+
+        hitCheckBounds[0] = posCurrentMin;
+        hitCheckBounds[1] = posCurrentMax;
+        hitCheckBounds[2] = posNextMax;
+        hitCheckBounds[3] = posNextMin;
+
+        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
+
+        for (int i = 0; i < hitCheckBounds.Length; i++)
+        {
+            hitCheckBounds[i] -= casterSelf.transform.position;
+            hitCheckBounds[i] = qAngle * hitCheckBounds[i];
+            hitCheckBounds[i] += casterSelf.transform.position;
+        }
+
+        // hitCheckBounds holds the 4 coordinates of where an enemy has to be standing within to be hit
+        // continue to calculate if the target location is within given rectangle
+        //Debug.Log("WeaponAttack Hit Results: " + CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition));
+        if (CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    protected Mesh GenerateRectHitboxMesh()
     {
-        float angleLookAt = GetForwardAngle(casterSelf.transform);
-
-        float halfFarWidth = farWidth * 0.5f;
-        float halfNearWidth = nearWidth * 0.5f;
-
-        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
-
-        posCurrentMin = casterSelf.transform.position;
-        posCurrentMin.x += minLength;
-        posCurrentMin.z -= halfNearWidth;
-
-        posCurrentMax = casterSelf.transform.position;
-        posCurrentMax.x += maxLength;
-        posCurrentMax.z -= halfFarWidth;
-
-        posNextMin = casterSelf.transform.position;
-        posNextMin.x += minLength;
-        posNextMin.z += halfNearWidth;
-
-        posNextMax = casterSelf.transform.position;
+        float angleLookAt = GetForwardAngle(casterSelf.transform);
+        float halfFarWidth = skillData.farWidth * 0.5f;
+        float halfNearWidth = skillData.nearWidth * 0.5f;
+        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
+        posCurrentMin = Vector3.zero;// casterSelf.transform.position;
+        posCurrentMin.x += skillData.minRange;
+        posCurrentMin.z -= halfNearWidth;        posCurrentMin.y += skillData.verticalRange;
+        posCurrentMax = Vector3.zero;// casterSelf.transform.position;
+        posCurrentMax.x += skillData.maxRange;
+        posCurrentMax.z -= halfFarWidth;        posCurrentMax.y += skillData.verticalRange;
+        posNextMin = Vector3.zero; //casterSelf.transform.position;
+        posNextMin.x += skillData.minRange;
+        posNextMin.z += halfNearWidth;        posNextMin.y += skillData.verticalRange;
+        posNextMax = Vector3.zero; //casterSelf.transform.position;
         posNextMax.z += halfFarWidth;
-
-        posNextMax.x += maxLength;
-
-        Vector3[] hitCheckBounds = new Vector3[4];
-
+        posNextMax.x += skillData.maxRange;        posNextMax.y += skillData.verticalRange;
+        Vector3[] hitCheckBounds = new Vector3[8];
         hitCheckBounds[0] = posCurrentMin;
         hitCheckBounds[1] = posCurrentMax;
         hitCheckBounds[2] = posNextMax;
-        hitCheckBounds[3] = posNextMin;
-
-        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
-
+        hitCheckBounds[3] = posNextMin;        posCurrentMin.y -= skillData.verticalRange * 2.0f;        posCurrentMax.y -= skillData.verticalRange * 2.0f;        posNextMax.y -= skillData.verticalRange * 2.0f;        posNextMin.y -= skillData.verticalRange * 2.0f;        hitCheckBounds[4] = posNextMin;        hitCheckBounds[5] = posNextMax;        hitCheckBounds[6] = posCurrentMax;        hitCheckBounds[7] = posCurrentMin;
+        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
         for (int i = 0; i < hitCheckBounds.Length; i++)
         {
-            hitCheckBounds[i] -= casterSelf.transform.position;
+            //hitCheckBounds[i] -= casterSelf.transform.position;
             hitCheckBounds[i] = qAngle * hitCheckBounds[i];
-            hitCheckBounds[i] += casterSelf.transform.position;
+            //hitCheckBounds[i] += casterSelf.transform.position;
         }
 
-        // hitCheckBounds holds the 4 coordinates of where an enemy has to be standing within to be hit
-        // continue to calculate if the target location is within given rectangle
-        //Debug.Log("WeaponAttack Hit Results: " + CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition));
-        if (CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition))
+        Mesh mesh = new Mesh();
+        mesh.vertices = hitCheckBounds;
+        int[] triangles = new int[12 * 3];
+        triangles[0] = 0;
+        triangles[1] = 1;
+        triangles[2] = 2;
+        triangles[3] = 2;
+        triangles[4] = 3;
+        triangles[5] = 0;
+
+        triangles[6] = 0;
+        triangles[7] = 3;
+        triangles[8] = 4;
+        triangles[9] = 4;
+        triangles[10] = 7;
+        triangles[11] = 0;
+
+        triangles[12] = 0;
+        triangles[13] = 7;
+        triangles[14] = 6;
+        triangles[15] = 6;
+        triangles[16] = 1;
+        triangles[17] = 0;
+
+        triangles[18] = 7;
+        triangles[19] = 6;
+        triangles[20] = 5;
+        triangles[21] = 5;
+        triangles[22] = 4;
+        triangles[23] = 7;
+
+        triangles[24] = 6;
+        triangles[25] = 1;
+        triangles[26] = 2;
+        triangles[27] = 2;
+        triangles[28] = 5;
+        triangles[29] = 6;
+
+        triangles[30] = 3;
+        triangles[31] = 4;
+        triangles[32] = 5;
+        triangles[33] = 5;
+        triangles[34] = 2;
+        triangles[35] = 3;
+        mesh.triangles = triangles;
+        mesh.RecalculateBounds();
+        return mesh;
+    }
+
+    protected bool CheckPointInRectCollider(MeshCollider testedCollider, Vector3 point)
+    {
+        // MESH MUST BE SET TO CONVEX
+        Vector3 direction = testedCollider.bounds.center - point;
+        Ray ray = new Ray(point, direction);
+        if (testedCollider.Raycast(ray, out RaycastHit hit, direction.magnitude))
         {
-            return true;
-        }
-        else
-        {
+            // If the raycast hits the collider, the point is outside the collider
             return false;
         }
+        //Debug.Log("Tested point inside collider");
+        return true;
     }
 
     public bool CheckRadialSkillHit(Vector3 hitCheckPosition)
@@ -308,7 +402,7 @@ public class BaseSkill : MonoBehaviour
         }
     }
 
-    float GetForwardAngle(Transform t)
+    protected float GetForwardAngle(Transform t)
     {
         return 90 - Mathf.Rad2Deg * Mathf.Atan2(t.forward.z, t.forward.x);
     }
@@ -362,14 +456,14 @@ public class BaseSkill : MonoBehaviour
         return false;
     }
 
-    public bool CheckInVerticalRange(Vector3 targetPosition)
-    {
-        // Basic distance check with 2 floats from caster and target positions to see if they are near eachother enough of the Y axis to damage one another
-        if (Mathf.Abs(casterSelf.transform.position.y - targetPosition.y) <= skillData.verticalRange)
-        {
-            return true;
-        }
-        return false;
+    public bool CheckInVerticalRange(Vector3 targetPosition)
+    {
+        // Basic distance check with 2 floats from caster and target positions to see if they are near eachother enough of the Y axis to damage one another
+        if (Mathf.Abs(casterSelf.transform.position.y - targetPosition.y) <= skillData.verticalRange)
+        {
+            return true;
+        }
+        return false;
     }
 
     protected void SelectTargetRay(ref Entity entityToSet, bool checkInRange = false)
@@ -382,12 +476,12 @@ public class BaseSkill : MonoBehaviour
             {
                 if (Physics.Raycast(ray, out RaycastHit hit, 400))
                 {
-                    Debug.Log("Skill is raycasting");
+                    //Debug.Log("Skill is raycasting");
                     if (checkInRange)
                     {
                         if (CheckInRange(casterSelf.transform.position, hit.point))
                         {
-                            Debug.Log("Entity reference set for skill");
+                            //Debug.Log("Entity reference set for skill");
                             entityToSet = hit.collider.gameObject.GetComponent<Entity>();
                         }
                     }
