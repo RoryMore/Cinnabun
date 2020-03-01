@@ -136,7 +136,7 @@ public class DelayedBlast : BaseSkill
         if (entityTarget1.ReturnConditions().Count == 0)
         {
             Entity.Condition delayedBlast = new Entity.Condition();
-            delayedBlast.conditionType = Entity.ConditionType.DELAYEDBLAST;
+            delayedBlast.conditionType = Entity.ConditionEffect.DELAYEDBLAST;
             delayedBlast.duration = 9.0f;
             entityTarget1.currentConditions.Add(delayedBlast);
             Debug.Log("Tick tick tick...");
@@ -148,7 +148,7 @@ public class DelayedBlast : BaseSkill
 
             for (int i = 0; i < entityTarget1.currentConditions.Count; i++)
             {
-                if (entityTarget1.currentConditions[i].conditionType == Entity.ConditionType.DELAYEDBLAST)
+                if (entityTarget1.currentConditions[i].conditionType == Entity.ConditionEffect.DELAYEDBLAST)
                 {
                     entityTarget1.currentConditions.Remove(entityTarget1.currentConditions[i]);
                     entityTarget1.TakeDamage(skillData.baseMagnitude);
@@ -188,7 +188,7 @@ public class DelayedBlast : BaseSkill
             if (numOfDelayedBlasts == 0)
             {
             Entity.Condition delayedBlast = new Entity.Condition();
-            delayedBlast.conditionType = Entity.ConditionType.DELAYEDBLAST;
+            delayedBlast.conditionType = Entity.ConditionEffect.DELAYEDBLAST;
             delayedBlast.duration = 9.0f;
             entityTarget1.currentConditions.Add(delayedBlast);
             Debug.Log("Tick tick tick...");
