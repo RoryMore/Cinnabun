@@ -455,7 +455,7 @@ public class Entity : MonoBehaviour
 
     public void ClearList()
     {
-        Debug.Log("List clear!");
+        //Debug.Log("List clear!");
         rewindPoints.Clear();
     }
 

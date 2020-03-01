@@ -304,9 +304,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   attractionDistance: 5
-  minDistance: 0.5
-  maxTravelSpeed: 20
-  acceleration: 2
+  minDistance: 0.75
+  maxTravelSpeed: 50
+  acceleration: 8
   targetInRange: 0
 --- !u!114 &314784850471960404
 MonoBehaviour:
@@ -323,6 +323,7 @@ MonoBehaviour:
   targetIsPlayer: 1
   isPercentageHealed: 1
   healAmount: 5
+  droppedHeight: 1
 --- !u!1 &5448280798065101242
 GameObject:
   m_ObjectHideFlags: 0
