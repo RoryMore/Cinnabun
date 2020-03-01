@@ -32,7 +32,7 @@ public class SkillData : ScriptableObject
     [Tooltip("The width of a rectangular shaped skill at the minRange")]
     public float nearWidth;
 
-    [Tooltip("The maximum height difference allowed between units that makes it possible to be hit or not")]
+    [Tooltip("Half the maximum height difference allowed between units that makes it possible to be hit or not \nProjector near and far clip planes will equal this value")]
     public float verticalRange;
 
     [Tooltip("The Width a line Skill will have, or the Angle a Radial skill will use")]

@@ -16,16 +16,10 @@ MonoBehaviour:
   minRange: 0
   farWidth: 0
   nearWidth: 0
-  verticalRange: 0
+  verticalRange: 15
   angle: 0
   cooldown: 2
-  timeBeenOnCooldown: 10
   windUp: 3
-  timeSpentOnWindUp: 0
   skill: 1
   baseMagnitude: 30
   damageType: 1
-  rangeIndicator: {fileID: 0}
-  indicatorMaterial: {fileID: 0}
-  currentlyCasting: 0
-  caster: {fileID: 0}
