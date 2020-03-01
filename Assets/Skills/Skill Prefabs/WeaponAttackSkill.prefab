@@ -71,6 +71,9 @@ MonoBehaviour:
   casterSelf: {fileID: 0}
   mainCookie: {fileID: 21300000, guid: 14643146a3b1130488e64610d90b0996, type: 3}
   fillCookie: {fileID: 21300000, guid: 42b6de6bc0caab8479e801a943d0f819, type: 3}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 1024
   usedWeapon: 1
   unarmedRange: 2
   swordRange: 6

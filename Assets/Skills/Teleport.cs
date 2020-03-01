@@ -10,6 +10,7 @@ public class Teleport : BaseSkill
     Vector3 teleportLocation;
     bool destination1Set = false;
 
+    
     private void Start()
     {
         Initialise();
@@ -72,7 +73,7 @@ public class Teleport : BaseSkill
             EnableProjector();
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 400))
+            if (Physics.Raycast(ray, out RaycastHit hit, 400, groundMask))
             {
                 Vector3 lookat = new Vector3(hit.point.x, casterSelf.transform.position.y, hit.point.z);
                 casterSelf.transform.LookAt(lookat);
@@ -89,7 +90,7 @@ public class Teleport : BaseSkill
         else if (entityTarget1 != null && !destination1Set)
         {
             //DrawRangeIndicator(zoneStart, shape);
-            destination1Set = SelectTargetRay(ref teleportLocation, true);
+            destination1Set = SelectTargetRay(ref teleportLocation, groundMask, true);
 
 
         }

@@ -9,6 +9,7 @@ public class DelayedBlast : BaseSkill
     // SUGGESTION: Make the Blast a targetted area.
     Entity entityTarget1 = null;
     
+    [Header("Blast Explosion")]
     public float explosionRadius;
     public float explosionDamageMultiplier;
 
@@ -74,7 +75,7 @@ public class DelayedBlast : BaseSkill
             EnableProjector();
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 400))
+            if (Physics.Raycast(ray, out RaycastHit hit, 400, groundMask))
             {
                 Vector3 lookAt = new Vector3(hit.point.x, casterSelf.transform.position.y, hit.point.z);
                 casterSelf.transform.LookAt(lookAt);

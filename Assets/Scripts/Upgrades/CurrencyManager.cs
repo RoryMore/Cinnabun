@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class CurrencyManager : MonoBehaviour
 {
-    [SerializeField]
-    string gameSceneName;
+    public string nonStat_gameSceneName;
+    public static string gameSceneName;
 
     [Header("Currencies")]
     public UpgradeMoney upgradeMoney;
@@ -27,6 +27,7 @@ public class CurrencyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameSceneName = nonStat_gameSceneName;
         staticUpgradeMoney = upgradeMoney;
         // If we are in the game scene, set our gold to 0 because we always start with 0 gold.
         if (SceneManager.GetActiveScene().name == gameSceneName)
@@ -47,8 +48,8 @@ public class CurrencyManager : MonoBehaviour
         {
             gold = staticGold;
         }
-        Debug.Log("Gold: " + gold);
-        Debug.Log("UpgradeMoney: " + upgradeMoney.GetAmount());
+        //Debug.Log("Gold: " + gold);
+        //Debug.Log("UpgradeMoney: " + upgradeMoney.GetAmount());
         if (!upgradeMoneyRewarded)
         {
             if (enemyManager != null)
