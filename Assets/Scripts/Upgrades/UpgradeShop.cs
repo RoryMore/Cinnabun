@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UpgradeShop : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class UpgradeShop : MonoBehaviour
     {
         public CharacterUpgrade upgrade;
         public FunctionalUpgradeUI ui;
+        [TextArea]
         public string tooltipDescription;
     }
 
@@ -37,6 +39,9 @@ public class UpgradeShop : MonoBehaviour
     [Header("Player Stats")]
     public Upgrade playerBaseMovementSpeed;
 
+    [Header("Upgrade Money Counter")]
+    public Text upgradeMoneyCounter;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,20 +52,30 @@ public class UpgradeShop : MonoBehaviour
     void Update()
     {
         ProcessUpgradeUI(teleportRange);
-        ProcessUpgradeUI(blastExplosionRadius);
-        ProcessUpgradeUI(blastExplosionDmgMultiplier);
-        ProcessUpgradeUI(bloodOrbEffectiveness);
-        ProcessUpgradeUI(playerBaseMovementSpeed);
+        //ProcessUpgradeUI(blastExplosionRadius);
+        //ProcessUpgradeUI(blastExplosionDmgMultiplier);
+        //ProcessUpgradeUI(bloodOrbEffectiveness);
+        //ProcessUpgradeUI(playerBaseMovementSpeed);
+
+        upgradeMoneyCounter.text = CurrencyManager.GetUpgradeMoney().ToString();
     }
 
     void ProcessUpgradeUI(Upgrade upgrade)
     {
         // Update Purchase Progress bar
-        upgrade.ui.progressFillImage.fillAmount = upgrade.upgrade.progressToUpgrade / upgrade.upgrade.GetUpgradeCost();
+        if (upgrade.upgrade.upgradeCount == upgrade.upgrade.maxUpgrades)
+        {
+            upgrade.ui.progressFillImage.fillAmount = 1.0f;
 
-        // Update Purchase Progress text
-        upgrade.ui.progressText.text = upgrade.upgrade.progressToUpgrade.ToString() + "/" + upgrade.upgrade.GetUpgradeCost();
-
+            upgrade.ui.progressText.text = "Maxed";
+        }
+        else
+        {
+            upgrade.ui.progressFillImage.fillAmount = (float)((float)upgrade.upgrade.progressToUpgrade / (float)upgrade.upgrade.GetUpgradeCost());  // Says casts are redundant. They aren't. Trust me
+                                                                                                                                                    // Update Purchase Progress text
+            upgrade.ui.progressText.text = upgrade.upgrade.progressToUpgrade.ToString() + "/" + upgrade.upgrade.GetUpgradeCost();
+        }
+        
         // Update Buy Button with appropriate graphic if a purchase can be made here
         if (upgrade.upgrade.CanBuyUpgrade() && (CurrencyManager.GetUpgradeMoney() > 0))
         {
@@ -106,5 +121,10 @@ public class UpgradeShop : MonoBehaviour
     public void BuyBaseMovementSpeed()
     {
         playerBaseMovementSpeed.upgrade.IncrementUpgradeProgress();
+    }
+
+    public void LoadGameScene()
+    {
+        SceneManager.LoadSceneAsync(CurrencyManager.gameSceneName);
     }
 }

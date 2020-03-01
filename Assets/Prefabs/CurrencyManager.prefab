@@ -43,6 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7b92c052a67bf54e95700045ae9579e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSceneName: JasmineScene
+  nonStat_gameSceneName: JasmineScene
   upgradeMoney: {fileID: 11400000, guid: c4032c869490d8d4987d4e5c96c42f3a, type: 2}
   gold: 0
