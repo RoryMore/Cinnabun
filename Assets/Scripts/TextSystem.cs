@@ -124,6 +124,7 @@ public class TextSystem : MonoBehaviour
                     {
                         Debug.Log("Text,Done");
 						visualNovel.SetActive(false);
+						novelActive = true;
 						index = 0;
 						LoadScene(sceneNumber);
                         return;

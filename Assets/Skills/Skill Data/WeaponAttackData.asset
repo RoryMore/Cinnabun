@@ -16,10 +16,10 @@ MonoBehaviour:
   minRange: 0.2
   farWidth: 4.5
   nearWidth: 1.5
-  verticalRange: 3
+  verticalRange: 6
   angle: 30
   cooldown: 2
   windUp: 1
   skill: 3
-  baseMagnitude: 40
+  baseMagnitude: 15
   damageType: 0

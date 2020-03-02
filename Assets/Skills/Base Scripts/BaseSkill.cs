@@ -67,6 +67,9 @@ public class BaseSkill : MonoBehaviour
     [SerializeField]
     Sprite fillCookie;
 
+    [Header("Ground Layer Mask if necessary to use")]
+    public LayerMask groundMask;
+
     protected virtual void Initialise()
     {
         if (skillData != null)
@@ -215,7 +218,7 @@ public class BaseSkill : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks if the given vector3 is within the rectangular area of a skill hit based on width and length
+    /// For skills that use a rectangular shape, use the function GenerateRectHitboxMesh() at skill initialisation instead. Then use CheckPointInCollider() for detection
     /// </summary>
     /// <param name="hitCheckPosition">Given Vector3 to check if it's within bounds</param>
     /// <param name="minLength"></param>
@@ -277,6 +280,100 @@ public class BaseSkill : MonoBehaviour
         }
     }
 
+    protected Mesh GenerateRectHitboxMesh()
+    {
+        float angleLookAt = GetForwardAngle(casterSelf.transform);
+        float halfFarWidth = skillData.farWidth * 0.5f;
+        float halfNearWidth = skillData.nearWidth * 0.5f;
+        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
+        posCurrentMin = Vector3.zero;// casterSelf.transform.position;
+        posCurrentMin.x += skillData.minRange;
+        posCurrentMin.z -= halfNearWidth;        posCurrentMin.y += skillData.verticalRange;
+        posCurrentMax = Vector3.zero;// casterSelf.transform.position;
+        posCurrentMax.x += skillData.maxRange;
+        posCurrentMax.z -= halfFarWidth;        posCurrentMax.y += skillData.verticalRange;
+        posNextMin = Vector3.zero; //casterSelf.transform.position;
+        posNextMin.x += skillData.minRange;
+        posNextMin.z += halfNearWidth;        posNextMin.y += skillData.verticalRange;
+        posNextMax = Vector3.zero; //casterSelf.transform.position;
+        posNextMax.z += halfFarWidth;
+        posNextMax.x += skillData.maxRange;        posNextMax.y += skillData.verticalRange;
+        Vector3[] hitCheckBounds = new Vector3[8];
+        hitCheckBounds[0] = posCurrentMin;
+        hitCheckBounds[1] = posCurrentMax;
+        hitCheckBounds[2] = posNextMax;
+        hitCheckBounds[3] = posNextMin;        posCurrentMin.y -= skillData.verticalRange * 2.0f;        posCurrentMax.y -= skillData.verticalRange * 2.0f;        posNextMax.y -= skillData.verticalRange * 2.0f;        posNextMin.y -= skillData.verticalRange * 2.0f;        hitCheckBounds[4] = posNextMin;        hitCheckBounds[5] = posNextMax;        hitCheckBounds[6] = posCurrentMax;        hitCheckBounds[7] = posCurrentMin;
+        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
+        for (int i = 0; i < hitCheckBounds.Length; i++)
+        {
+            //hitCheckBounds[i] -= casterSelf.transform.position;
+            hitCheckBounds[i] = qAngle * hitCheckBounds[i];
+            //hitCheckBounds[i] += casterSelf.transform.position;
+        }
+
+        Mesh mesh = new Mesh();
+        mesh.vertices = hitCheckBounds;
+        int[] triangles = new int[12 * 3];
+        triangles[0] = 0;
+        triangles[1] = 1;
+        triangles[2] = 2;
+        triangles[3] = 2;
+        triangles[4] = 3;
+        triangles[5] = 0;
+
+        triangles[6] = 0;
+        triangles[7] = 3;
+        triangles[8] = 4;
+        triangles[9] = 4;
+        triangles[10] = 7;
+        triangles[11] = 0;
+
+        triangles[12] = 0;
+        triangles[13] = 7;
+        triangles[14] = 6;
+        triangles[15] = 6;
+        triangles[16] = 1;
+        triangles[17] = 0;
+
+        triangles[18] = 7;
+        triangles[19] = 6;
+        triangles[20] = 5;
+        triangles[21] = 5;
+        triangles[22] = 4;
+        triangles[23] = 7;
+
+        triangles[24] = 6;
+        triangles[25] = 1;
+        triangles[26] = 2;
+        triangles[27] = 2;
+        triangles[28] = 5;
+        triangles[29] = 6;
+
+        triangles[30] = 3;
+        triangles[31] = 4;
+        triangles[32] = 5;
+        triangles[33] = 5;
+        triangles[34] = 2;
+        triangles[35] = 3;
+        mesh.triangles = triangles;
+        mesh.RecalculateBounds();
+        return mesh;
+    }
+
+    protected bool CheckPointInRectCollider(MeshCollider testedCollider, Vector3 point)
+    {
+        // MESH MUST BE SET TO CONVEX
+        Vector3 direction = testedCollider.bounds.center - point;
+        Ray ray = new Ray(point, direction);
+        if (testedCollider.Raycast(ray, out RaycastHit hit, direction.magnitude))
+        {
+            // If the raycast hits the collider, the point is outside the collider
+            return false;
+        }
+        //Debug.Log("Tested point inside collider");
+        return true;
+    }
+
     public bool CheckRadialSkillHit(Vector3 hitCheckPosition)
     {
         // Based on zoneStart (where the radial skill area is starting from with a given rotation) and the position we are checking
@@ -308,7 +405,7 @@ public class BaseSkill : MonoBehaviour
         }
     }
 
-    float GetForwardAngle(Transform t)
+    protected float GetForwardAngle(Transform t)
     {
         return 90 - Mathf.Rad2Deg * Mathf.Atan2(t.forward.z, t.forward.x);
     }
@@ -382,12 +479,12 @@ public class BaseSkill : MonoBehaviour
             {
                 if (Physics.Raycast(ray, out RaycastHit hit, 400))
                 {
-                    Debug.Log("Skill is raycasting");
+                    //Debug.Log("Skill is raycasting");
                     if (checkInRange)
                     {
                         if (CheckInRange(casterSelf.transform.position, hit.point))
                         {
-                            Debug.Log("Entity reference set for skill");
+                            //Debug.Log("Entity reference set for skill");
                             entityToSet = hit.collider.gameObject.GetComponent<Entity>();
                         }
                     }
@@ -399,13 +496,13 @@ public class BaseSkill : MonoBehaviour
             }
         }
     }
-    protected bool SelectTargetRay(ref Vector3 pointToSet, bool checkInRange = false)
+    protected bool SelectTargetRay(ref Vector3 pointToSet, LayerMask raycastMask, bool checkInRange = false)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(ray, out RaycastHit hit, 400))
+            if (Physics.Raycast(ray, out RaycastHit hit, raycastMask))
             {
                 if (checkInRange)
                 {
