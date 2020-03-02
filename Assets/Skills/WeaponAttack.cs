@@ -49,6 +49,7 @@ public class WeaponAttack : BaseSkill
         oldWeapon = UsedWeaponType.NotInitialised;
 
         meshCollider.sharedMesh = GenerateRectHitboxMesh();
+        meshCollider.enabled = false;
     }
 
     private void Update()
@@ -300,6 +301,7 @@ public class WeaponAttack : BaseSkill
 
             case UsedWeaponType.Sword:
                 {
+                    meshCollider.enabled = true;
                     bool weaponhit = false;
 
                     int swordDamage = Mathf.FloorToInt((float)skillData.baseMagnitude * swordDamageMultiplier);
@@ -344,6 +346,8 @@ public class WeaponAttack : BaseSkill
         attackAreaChosen = false;
         timeSpentOnWindUp = 0.0f;
         skillState = SkillState.INACTIVE;
+
+        meshCollider.enabled = false;
     }
 
     // Needs to be called if they start using a new weapon
