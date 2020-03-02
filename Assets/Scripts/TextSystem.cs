@@ -9,6 +9,7 @@ public class TextSystem : MonoBehaviour
     public static TextSystem instance;
     SpeechText speechText;
     DialogueSystem dialogue;
+	GameObject[] playerUI;
 
   
     [Header("Text Settings")]
@@ -91,7 +92,7 @@ public class TextSystem : MonoBehaviour
 	float waitTime = 0.0f;
 	[HideInInspector] public string backgroundName;
 	[HideInInspector] public int index = 0;
-	[HideInInspector] public bool userInput = false;
+	public bool userInput = false;
 
 	public GameObject visualNovel;
 
@@ -104,6 +105,8 @@ public class TextSystem : MonoBehaviour
 	{
 		dialogue = DialogueSystem.instance;
 		speechText = GetComponent<SpeechText>();
+		playerUI = GameObject.FindGameObjectsWithTag("PlayerUI");
+	
 		dialogue.waitfor = textSpeed;
 	}
 
@@ -111,9 +114,10 @@ public class TextSystem : MonoBehaviour
     {
 		
 		gameStart();
+		//sayPaused(text[wordIndex].text[index]);
 		
 
-        if (dialogue != null)
+		if (dialogue != null)
         {
             if ((Input.GetKeyDown(KeyCode.Space) || (Input.GetMouseButtonDown(0))) && userInput == false)
             {
@@ -123,9 +127,13 @@ public class TextSystem : MonoBehaviour
                     if (index >= text[wordIndex].text.Length)
                     {
                         Debug.Log("Text,Done");
-						visualNovel.SetActive(false);
+						visualNovel.SetActive(false);						
 						novelActive = true;
 						index = 0;
+						foreach (GameObject g in playerUI)
+						{
+							g.SetActive(true);
+						}
 						LoadScene(sceneNumber);
                         return;
                     }
@@ -142,7 +150,7 @@ public class TextSystem : MonoBehaviour
 
             }
 
-            if (index < text.Length)
+            if (index <= text.Length)
             {
                 stopSay(text[wordIndex].text[index]);
             }
@@ -167,25 +175,30 @@ public class TextSystem : MonoBehaviour
         SkipText(speech, speaker);
     }
 
-//If the user wants to skip the text it checks for either mouse or space bar input and the writes out the rest of the passage.
-    void SkipText(string speech, string speaker)
-    {
-        if ((Input.GetKeyDown(KeyCode.Space) || (Input.GetMouseButtonDown(0))) && !dialogue.isWatingForUserInput)
-        {
-            if (userInput == true)
-            {
-                dialogue.SkipTextScroll(speech, speaker);
-                index++;
-                userInput = false;
-                waitTime = 0;
-                textSound.Play();
-            }
 
-        }
-    }
 
-    //This delay makes it so that if space or mouse is clicked it does not skip multiple diolouges 
-    void Delay()
+	//If the user wants to skip the text it checks for either mouse or space bar input and the writes out the rest of the passage.
+	void SkipText(string speech, string speaker)
+	{
+		if ((Input.GetKeyDown(KeyCode.Space) || (Input.GetMouseButtonDown(0))) && !dialogue.isWatingForUserInput)
+		{
+			if (userInput == true)
+			{
+				dialogue.SkipTextScroll(speech, speaker);
+				index++;
+				userInput = false;
+				waitTime = 0;
+				textSound.Play();
+			}
+
+		}
+
+		//make an if to check skiptext = truee then automaticly skip the text
+	}
+    
+
+	//This delay makes it so that if space or mouse is clicked it does not skip multiple diolouges 
+	void Delay()
     {
         if (dialogue.isWatingForUserInput == false)
         {
@@ -338,6 +351,8 @@ public class TextSystem : MonoBehaviour
         }
 			
 	}
+
+	
 
 
 }

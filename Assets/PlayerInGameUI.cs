@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerInGameUI : MonoBehaviour
 {
     PauseAbility pauseAbility;
+
     Player player;
 
     public Button PauseButton;
@@ -33,6 +34,7 @@ public class PlayerInGameUI : MonoBehaviour
     void Start()
     {
         pauseAbility = FindObjectOfType<PauseAbility>();
+      
         player = FindObjectOfType<Player>();
     }
 
@@ -64,6 +66,7 @@ public class PlayerInGameUI : MonoBehaviour
             VHSimage.gameObject.SetActive(false);
            timeSinceStartUp.gameObject.SetActive(false);
         }
+
 
         foreach (BaseSkill skill in player.skillList)
         {
