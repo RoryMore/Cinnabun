@@ -25,11 +25,13 @@ public class PauseAbility : MonoBehaviour
     }
     public GameStates states;
     PauseMenuUI pauseMenu;
+    TextSystem textSystem;
 
     // Start is called before the first frame update
     void Start()
     {
        pauseMenu = FindObjectOfType<PauseMenuUI>();
+        textSystem = FindObjectOfType<TextSystem>();
        states = GameStates.PLAY;
     }
 
@@ -90,23 +92,26 @@ public class PauseAbility : MonoBehaviour
 
     void TimeStop()
     {
-        //Add in to check if player is casting an ability, cannot Starttime again until this is complete
-        if (Input.GetKeyDown(KeyCode.Space))
-        {    
-            if (player.playerState != Player.PlayerState.DOINGSKILL)
+        if (textSystem.novelActive == true)
+        {
+            //Add in to check if player is casting an ability, cannot Starttime again until this is complete
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (!player.inventory.activeSelf)
+                if (player.playerState != Player.PlayerState.DOINGSKILL)
                 {
-                    if (states == GameStates.PLAY)
+                    if (!player.inventory.activeSelf)
                     {
-                        states = GameStates.TIMESTOP;
-                    }
-                    else if (states == GameStates.TIMESTOP)
-                    {
-                        states = GameStates.PLAY;
-                        clearAllList();
-                        calculateTimeStop();
-                        takeingTurn = false;
+                        if (states == GameStates.PLAY)
+                        {
+                            states = GameStates.TIMESTOP;
+                        }
+                        else if (states == GameStates.TIMESTOP)
+                        {
+                            states = GameStates.PLAY;
+                            clearAllList();
+                            calculateTimeStop();
+                            takeingTurn = false;
+                        }
                     }
                 }
             }
