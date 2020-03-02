@@ -78,11 +78,13 @@ public class CurrencyManager : MonoBehaviour
     public static void AddUpgradeMoney(int value)
     {
         staticUpgradeMoney.AddMoney(value);
+        staticUpgradeMoney.SetDirty();
     }
 
     public static void DeductUpgradeMoney(int value)
     {
         staticUpgradeMoney.DeductMoney(value);
+        staticUpgradeMoney.SetDirty();
     }
 
     public static int GetUpgradeMoney()
