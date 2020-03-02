@@ -8,10 +8,7 @@ public class TextSystem : MonoBehaviour
 {
     public static TextSystem instance;
     SpeechText speechText;
-	WordText wordText;
     DialogueSystem dialogue;
-	public GameObject visualNovel;
-	public bool novelActive = true;
 
   
     [Header("Text Settings")]
@@ -58,23 +55,14 @@ public class TextSystem : MonoBehaviour
 		public Emotion emotion;
 		[Space(10)]
         [TextArea(10, 20)]
-        public string text;
+        public string[] text;
         }
 
-	[System.Serializable]
-	public struct visualNovelWords
-	{
-		[Space(10)]
-		[TextArea(10, 20)]
-		public string[] words;
-	}
-	int wordindex = 0;
-	public visualNovelWords[] words;
-
 	//[Header("Script Settings")]
-	//[Space(10)]
+	[Space(10)]
 	public Text[] text;
-	
+	public int wordIndex = 0;
+	public bool novelActive;
 	[System.Serializable]
 	public struct Characters
 	{
@@ -105,6 +93,8 @@ public class TextSystem : MonoBehaviour
 	[HideInInspector] public int index = 0;
 	[HideInInspector] public bool userInput = false;
 
+	public GameObject visualNovel;
+
 	void Awake()
 	{
 		instance = this;
@@ -114,44 +104,38 @@ public class TextSystem : MonoBehaviour
 	{
 		dialogue = DialogueSystem.instance;
 		speechText = GetComponent<SpeechText>();
-		wordText = GetComponent<WordText>();
 		dialogue.waitfor = textSpeed;
-		//text[index].text = words[wordindex].words[index];
 	}
 
 	void Update()
     {
 		
 		gameStart();
+		
 
-	
-	   
-	
-
-		if (dialogue != null)
+        if (dialogue != null)
         {
             if ((Input.GetKeyDown(KeyCode.Space) || (Input.GetMouseButtonDown(0))) && userInput == false)
             {
 
                 if (!dialogue.isSpeaking || dialogue.isWatingForUserInput)
                 {
-                    if (index >= text.Length)
+                    if (index >= text[wordIndex].text.Length)
                     {
                         Debug.Log("Text,Done");
 						visualNovel.SetActive(false);
-						novelActive = true;
-						LoadScene(sceneNumber);
 						index = 0;
+						LoadScene(sceneNumber);
                         return;
                     }
                    
                     textSound.Play();
-					//text[index].text = words[wordindex].words[index];
-					Say(text[index].text);
+
+                    Say(text[wordIndex].text[index]);
 				
-					checkIfNull();
-					getBackGroundName();
-					checkBackground();
+					//checkIfNull();
+				//getBackGroundName();
+					//checkBackground();
 
                 }
 
@@ -159,7 +143,7 @@ public class TextSystem : MonoBehaviour
 
             if (index < text.Length)
             {
-                stopSay(text[index].text);
+                stopSay(text[wordIndex].text[index]);
             }
         }
         Delay();
@@ -225,11 +209,10 @@ public class TextSystem : MonoBehaviour
     {
         if (GameStart == true)
         {
-			//text[index].text = words[wordindex].words[index];
 			getBackGroundName();
-			Say(text[index].text);
-			checkIfNull();
-			checkBackground();
+			Say(text[wordIndex].text[index]);
+			//checkIfNull();
+			//checkBackground();
 			GameStart = false;
         }
     }
@@ -354,6 +337,8 @@ public class TextSystem : MonoBehaviour
         }
 			
 	}
+
+
 }
 
 
