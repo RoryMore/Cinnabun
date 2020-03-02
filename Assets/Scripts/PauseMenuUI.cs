@@ -9,11 +9,12 @@ public class PauseMenuUI : MonoBehaviour
     GameObject[] hidePauseObjects;
     GameObject[] playerUI;
     PauseAbility pauseAbility;
+    TextSystem textSystem;
     public GameObject visualNovel;
     public GameObject VHSimage;
     bool inventory;
     bool pause;
-    bool novel;
+   public bool novel;
     public bool skipText = false;
 
     public bool isPaused;
@@ -22,8 +23,8 @@ public class PauseMenuUI : MonoBehaviour
     {
         pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
         hidePauseObjects = GameObject.FindGameObjectsWithTag("HideOnPause");
-        playerUI = GameObject.FindGameObjectsWithTag("PlayerUI");
-
+        playerUI = GameObject.FindGameObjectsWithTag("PlayerUI"); 
+        textSystem = FindObjectOfType<TextSystem>();
         pauseAbility = FindObjectOfType<PauseAbility>();
         hidePaused();
     }
@@ -68,11 +69,18 @@ public class PauseMenuUI : MonoBehaviour
             g.SetActive(false);
         }
 
-        if (visualNovel.activeSelf == true)
+        if (textSystem.hideNovel == false)
         {
-            visualNovel.SetActive(false);
-            novel = true;
-            skipText = true;
+            if (visualNovel.activeSelf == true)
+            {
+                visualNovel.SetActive(false);
+                novel = true;
+                skipText = true;
+            }
+        }
+        else
+        {
+            novel = false;
         }
     }
 
@@ -92,10 +100,12 @@ public class PauseMenuUI : MonoBehaviour
             g.SetActive(true);
         }
 
-        if (novel == true)
-        {
-            visualNovel.SetActive(true);
-        }
+     
+            if (novel == true)
+            {
+                visualNovel.SetActive(true);
+            }
+     
     }
 
     public void onPaused()

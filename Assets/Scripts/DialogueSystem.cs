@@ -67,7 +67,7 @@ public class DialogueSystem : MonoBehaviour
    {
         speechPanel.SetActive(true);
         speechText.text = "";
-        //speakerNameText.text = DetermineSpeaker();
+        speakerNameText.text = DetermineSpeaker();
         isWatingForUserInput = false;
 
         while (speechText.text != targetSpeech)
@@ -109,7 +109,7 @@ public class DialogueSystem : MonoBehaviour
     //Determins who is speaking
     string DetermineSpeaker()
     {
-      // speakerNameHold = textSystem.text[textSystem.index].CharacterName;
+       speakerNameHold = textSystem.text[textSystem.index].CharacterName;
 
         return speakerNameHold;
     }
