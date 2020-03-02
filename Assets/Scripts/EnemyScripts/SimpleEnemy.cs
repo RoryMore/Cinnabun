@@ -430,6 +430,8 @@ public class SimpleEnemy : EnemyScript
         }
         anim.enabled = false;
 
+        GetComponent<BloodOrbDropControl>().DropItem(transform.position);
+
         myEncounter.itemSpawner.SpawnItem(transform.position);
     }
 
@@ -439,7 +441,7 @@ public class SimpleEnemy : EnemyScript
         float y = Random.Range(-0.9f, 0.3f);
         Vector3 numberVec = new Vector3(x, y + 3, 0.0f);
 
-        Transform damagePopUpTransfrom = Instantiate(damageNumbers, position + numberVec, Quaternion.identity);
+        Transform damagePopUpTransfrom = Instantiate(damageNumbers, position + numberVec, Quaternion.identity );
 
         DamagePopUp damagePopUp = damagePopUpTransfrom.GetComponent<DamagePopUp>();
         damagePopUp.SetUp(damageAmount, crit);
