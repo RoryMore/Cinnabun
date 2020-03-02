@@ -25,11 +25,13 @@ public class PauseAbility : MonoBehaviour
     }
     public GameStates states;
     PauseMenuUI pauseMenu;
+    TextSystem textSystem;
 
     // Start is called before the first frame update
     void Start()
     {
        pauseMenu = FindObjectOfType<PauseMenuUI>();
+        textSystem = FindObjectOfType<TextSystem>();
        states = GameStates.PLAY;
     }
 
@@ -90,19 +92,28 @@ public class PauseAbility : MonoBehaviour
 
     void TimeStop()
     {
-        //Add in to check if player is casting an ability, cannot Starttime again until this is complete
-        if (Input.GetKeyDown(KeyCode.Space))
-        {    
-          if (states == GameStates.PLAY)
-          {    
-                states = GameStates.TIMESTOP;  
-          }
-          else if (states == GameStates.TIMESTOP)
-          {
-                states = GameStates.PLAY;
-                clearAllList();
-                calculateTimeStop();
-                takeingTurn = false;
+        if (textSystem.novelActive == true)
+        {
+            //Add in to check if player is casting an ability, cannot Starttime again until this is complete
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (player.playerState != Player.PlayerState.DOINGSKILL)
+                {
+                    if (!player.inventory.activeSelf)
+                    {
+                        if (states == GameStates.PLAY)
+                        {
+                            states = GameStates.TIMESTOP;
+                        }
+                        else if (states == GameStates.TIMESTOP)
+                        {
+                            states = GameStates.PLAY;
+                            clearAllList();
+                            calculateTimeStop();
+                            takeingTurn = false;
+                        }
+                    }
+                }
             }
         }
     }
@@ -116,10 +127,14 @@ public class PauseAbility : MonoBehaviour
 
    public void ButtonPlay()
     {
-        states = GameStates.PLAY;
-        clearAllList();
-        calculateTimeStop();
-        takeingTurn = false;
+        if (player.playerState != Player.PlayerState.DOINGSKILL)
+        {
+
+            states = GameStates.PLAY;
+            clearAllList();
+            calculateTimeStop();
+            takeingTurn = false;
+        }
     }
 
     void checkTime()

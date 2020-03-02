@@ -11,13 +11,16 @@ public class Entity : MonoBehaviour
         public int damage;  // If this condition deals damage, this is how much damage is dealt each time damage is dealt
         public float damageTickRate; // The rate at which this condition will deal its damage
         public float duration; //The duration of the condition
-        public ConditionType conditionType; //Name of condition
+        public ConditionEffect conditionType; //Name of condition
+        public int BuffStat;
         public float effectivePercent; // If this condition uses any percent value in any way
 
         public float timePassed;
         public bool begun;
 
-        public Condition(float _duration, ConditionType _conditionType)
+       
+
+        public Condition(float _duration, ConditionEffect _conditionType)
         {
             damage = 0;
             damageTickRate = 0;
@@ -25,10 +28,22 @@ public class Entity : MonoBehaviour
             conditionType = _conditionType;
             timePassed = 0;
             begun = false;
+            BuffStat = 0;
             effectivePercent = 1.0f;
         }
+        public Condition(float _duration, ConditionEffect _conditionType, float Effectiveness)
+        {
+            damage = 0;
+            damageTickRate = 0;
+            duration = _duration;
+            conditionType = _conditionType;
+            timePassed = 0;
+            begun = false;
+            BuffStat = 0;
+            effectivePercent = Effectiveness;
+        }
 
-        public Condition(float _duration, ConditionType _conditionType, int _damage, float _damageTickRate)
+        public Condition(float _duration, ConditionEffect _conditionType, int _damage, float _damageTickRate)
         {
             damage = _damage;
             damageTickRate = _damageTickRate;
@@ -36,10 +51,11 @@ public class Entity : MonoBehaviour
             conditionType = _conditionType;
             timePassed = 0;
             begun = false;
+            BuffStat = 0;
             effectivePercent = 1.0f;
         }
 
-        public Condition(float _duration, ConditionType _conditionType, float _effectivePercent, int _damage, float _damageTickRate)
+        public Condition(float _duration, ConditionEffect _conditionType, float _effectivePercent, int _damage, float _damageTickRate)
         {
             damage = _damage;
             damageTickRate = _damageTickRate;
@@ -47,6 +63,7 @@ public class Entity : MonoBehaviour
             conditionType = _conditionType;
             timePassed = 0;
             begun = false;
+            BuffStat = 0;
             effectivePercent = _effectivePercent;
         }
 
@@ -67,8 +84,15 @@ public class Entity : MonoBehaviour
             begun = true;
         }
     }
-
-    public enum ConditionType
+    public enum ConditionTypeA
+    {
+        DELAYEDBLAST,
+        [Tooltip("Deals damage over time based on damage and tickrate")]
+        BURN,
+        [Tooltip("Deals damage over time based on damage and tickrate, and also applies a slow multiplying movementSpeed by effective percent")]
+        POISON
+    }
+    public enum ConditionEffect
     {
         DELAYEDBLAST,
         [Tooltip("Deals damage over time based on damage and tickrate")]
@@ -109,6 +133,8 @@ public class Entity : MonoBehaviour
     [Header("Derived Stats")]
     public int maxHP;
     public int currentHP;
+    [SerializeField]
+    float baseMovementSpeed;
     public float movementSpeed;
     public int dodgeChance;
     public int physDamagePotential;
@@ -136,7 +162,7 @@ public class Entity : MonoBehaviour
     public Vector3 destination;
 
     [HideInInspector]
-    public SkillData chosenSkill;
+    public BaseSkill chosenSkill;
 
     [HideInInspector]
     public NavMeshAgent nav;
@@ -214,14 +240,14 @@ public class Entity : MonoBehaviour
             int conditionIndex = 0;
             foreach (Condition condition in currentConditions)
             {
-                if (condition.conditionType == ConditionType.DELAYEDBLAST)
+                if (condition.conditionType == ConditionEffect.DELAYEDBLAST)
                 {
                     //Do the thing!
                     //Wait for player input of kaboom
                     //If have condition, detonate and remove condition
 
                 }
-                else if (condition.conditionType == ConditionType.BURN)
+                else if (condition.conditionType == ConditionEffect.BURN)
                 {
                     // Does this condition still have time to continue being active?
                     if (condition.duration > 0)
@@ -245,7 +271,7 @@ public class Entity : MonoBehaviour
                         currentConditions.RemoveAt(conditionIndex);
                     }
                 }
-                else if (condition.conditionType == ConditionType.POISON)
+                else if (condition.conditionType == ConditionEffect.POISON)
                 {
                     if (!condition.begun)
                     {
@@ -290,15 +316,22 @@ public class Entity : MonoBehaviour
         RecordRewind();
     }
 
-    void CalculateMaxHP()
+    public void CalculateMaxHP()
     {
+        // probably needs rebalancing imo
         maxHP = ((5 + constitution) * level) * 10;
-        currentHP = maxHP;
+        //currentHP = maxHP;
     }
 
     void CalculateMovementSpeed()
     {
-        movementSpeed = agility;
+        // I believe each unit should equal something along the lines of
+        float agilityEffectiveness = 0.1f;
+        float agilityPointThreshold = 10.0f;
+        movementSpeed = baseMovementSpeed + (baseMovementSpeed * ((agility * agilityEffectiveness) / agilityPointThreshold));
+        // for each 10 points of agility you move 10% faster with this formula.
+
+        //movementSpeed = agility;
     }
 
     void CalculateDodgeChance()
@@ -314,6 +347,50 @@ public class Entity : MonoBehaviour
     void CalculateMagDamagePotential()
     {
         magDamagePotential = Mathf.Abs(intellect * (intellect / 2)) * level;
+    }
+
+    // ENTITY ADDITIONS BY SUNNY TO MAKE OUR STATS USEFUL FOR SKILLS - IMPLEMENT WHERE NEEDED
+    // PUBLIC SO SKILLS CAN GRAB THIS INT AS EXTRA DAMAGE FOR THEIR ATTACKS
+    // with these functions, idk what damagePotential is going to do for us as a stat. Those formulas above seem to snowball pretty hard
+    public int GetStrengthDamageBonus()
+    {
+        // We get 25% of our strength value as added damage to physical attacks
+        float strengthEffectiveness = 0.5f;
+        // Should we floor to an int, or round to nearest
+        // Floor could be safe enough, for now this function means we get 1 extra damage every 2 strength
+        return Mathf.FloorToInt(strength * strengthEffectiveness);
+    }
+
+    public int GetIntellectDamageBonus()
+    {
+        // We get 25% of our intellect value as added damage to magical attacks
+        float intellectEffectiveness = 0.5f;
+        return Mathf.FloorToInt(intellect * intellectEffectiveness);
+    }
+
+    /// <summary>
+    /// Minus the Return value of this function from the damage being taken to reduce damage properly
+    /// </summary>
+    /// <param name="originalDamage"></param>
+    /// <param name="damageType"></param>
+    /// <returns></returns>
+    int DamageNegated(int originalDamage, SkillData.DamageType damageType)
+    {
+        // How effective armour is at 'armourPointThreshold' points of armour
+        // 0.25f effectiveness && 100.0f threshold = 25% damage reduction at 100 points of armour
+        float armourEffectiveness = 0.25f;
+        float armourPointThreshold = 100.0f;
+
+        if (damageType == SkillData.DamageType.PHYSICAL)
+        {
+            float percentReduced = armourEffectiveness * (physicalArmour / armourPointThreshold);
+            return Mathf.RoundToInt(originalDamage * percentReduced);
+        }
+        else
+        {
+            float percentReduced = armourEffectiveness * (magicalArmour / armourPointThreshold);
+            return Mathf.RoundToInt(originalDamage * percentReduced);
+        }
     }
 
     public void InitialiseAll()
@@ -402,7 +479,7 @@ public class Entity : MonoBehaviour
 
     public void ClearList()
     {
-        Debug.Log("List clear!");
+        //Debug.Log("List clear!");
         rewindPoints.Clear();
     }
 

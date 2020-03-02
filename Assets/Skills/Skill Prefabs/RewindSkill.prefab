@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 49504213262221333}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 90.487335, y: 56.43734, z: 57.110405}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 805213517413392882}
@@ -56,6 +56,9 @@ MonoBehaviour:
   casterSelf: {fileID: 0}
   mainCookie: {fileID: 21300000, guid: 720297794a6dade45bdd067a834d121c, type: 3}
   fillCookie: {fileID: 21300000, guid: d40a27d208708ce4ca00ce4f95a6f253, type: 3}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1001 &7367277265235108323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -71,17 +74,17 @@ PrefabInstance:
     - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 99.98
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 56.03
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 80.52
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
         type: 3}

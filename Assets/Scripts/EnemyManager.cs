@@ -10,11 +10,12 @@ public class EnemyManager : MonoBehaviour
 
     public bool weWon;
 
-    public bool isInBattle;
-
     public bool inBattle;
 
     public bool WaveActive;
+
+    float waveCooldownTimer;
+    public float timeBetweenWaves;
 
     /*Each group of enemies is handled by their own personal "Encounter" manager. The enemy manager handles the
     Global functions of managing the encounters themselves, disabling them and enabling them as required*/
@@ -25,6 +26,7 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         weWon = false;
+        waveCooldownTimer = 0.0f;
 
         player = GameObject.Find("Player");
         foreach (Encounter encounter in encounters)
@@ -38,11 +40,15 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         UpdateActiveEncounters();
+        if (WaveActive == false)
+        {
+            waveCooldownTimer -= Time.deltaTime;
+        }
     }
 
     public void UpdateActiveEncounters()
     {
-        if (WaveActive == false)
+        if (WaveActive == false && waveCooldownTimer <= 0.0f)
         {
             foreach (Encounter encounter in encounters)
             {
@@ -50,10 +56,11 @@ public class EnemyManager : MonoBehaviour
                 if (encounter.cleared == false && encounter.gameObject.activeInHierarchy == false)
                 {
                     //UI for "Wave" + encounter list.Count + 1
-                    encounter.gameObject.SetActive(true);
-                    encounter.SpawnEnemies();
                     inBattle = true;
                     WaveActive = true;
+                    encounter.gameObject.SetActive(true);
+                    encounter.SpawnEnemies();
+
                     Entity.SetCurrentEncounter(encounter);
                     break;
                 }
@@ -78,5 +85,10 @@ public class EnemyManager : MonoBehaviour
             Debug.Log("You win!");
             weWon = true;
         }
+    }
+
+    public void SetTimeToNextWave(float timer)
+    {
+        waveCooldownTimer = timer;
     }
 }

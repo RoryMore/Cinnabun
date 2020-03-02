@@ -28,8 +28,6 @@ public class EnemyScript : Entity
     public Animator anim;
     //AudioSource enemyAudio;
     public ParticleSystem hitParticles;
-    
-    public List<SkillData> skillList;
 
     public EnemyManager enemyManager;
     public Encounter myEncounter;
@@ -70,14 +68,6 @@ public class EnemyScript : Entity
         if (currentHP <= 0)
         {
             Death();
-        }
-    }
-
-    public void UpdateAllSkillCooldowns()
-    {
-        foreach (SkillData skill in skillList)
-        {
-            skill.ProgressCooldown();
         }
     }
 

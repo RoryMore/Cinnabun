@@ -11,7 +11,7 @@ public class InventorySlot : MonoBehaviour
     [SerializeField]
     Color usedColour;
 
-    public Item storedItem;
+    public ItemData storedItem;
 
     public static float width;
     public static float height;

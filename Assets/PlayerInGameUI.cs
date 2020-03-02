@@ -25,6 +25,10 @@ public class PlayerInGameUI : MonoBehaviour
 
     public Button WeaponAttackButtonBackground;
     public Image MeleeAttack;
+
+    public Image VHSimage;
+
+    public Text timeSinceStartUp;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +47,9 @@ public class PlayerInGameUI : MonoBehaviour
             DelayedBlastButtonBackground.interactable = true;
             TeleportBackground.interactable = true;
             WeaponAttackButtonBackground.interactable = true;
+            VHSimage.gameObject.SetActive(true);
+           timeSinceStartUp.gameObject.SetActive(true);
+
    
 
         }
@@ -54,7 +61,8 @@ public class PlayerInGameUI : MonoBehaviour
             DelayedBlastButtonBackground.interactable = false;
             TeleportBackground.interactable = false;
             WeaponAttackButtonBackground.interactable = false;
-
+            VHSimage.gameObject.SetActive(false);
+           timeSinceStartUp.gameObject.SetActive(false);
         }
 
         foreach (BaseSkill skill in player.skillList)
@@ -148,4 +156,6 @@ public class PlayerInGameUI : MonoBehaviour
          TurnCounter.fillAmount = 1.0f - ( (float)pauseAbility.timeStopCoolDown / 4.0f);
 
     }
+
+  
 }

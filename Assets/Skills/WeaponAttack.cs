@@ -35,6 +35,9 @@ public class WeaponAttack : BaseSkill
 
     bool attackAreaChosen = false;
 
+    [SerializeField]
+    MeshCollider meshCollider;  // MUST BE SET TO A CONVEX MESH FOR ACCURACY
+
     private void Start()
     {
         Initialise();
@@ -44,6 +47,8 @@ public class WeaponAttack : BaseSkill
     {
         base.Initialise();
         oldWeapon = UsedWeaponType.NotInitialised;
+
+        meshCollider.sharedMesh = GenerateRectHitboxMesh();
     }
 
     private void Update()
@@ -296,18 +301,17 @@ public class WeaponAttack : BaseSkill
             case UsedWeaponType.Sword:
                 {
                     bool weaponhit = false;
+
+                    int swordDamage = Mathf.FloorToInt((float)skillData.baseMagnitude * swordDamageMultiplier);
+                    swordDamage = Mathf.Clamp(swordDamage, 1, 99999);
+
                     foreach (Entity testedEntity in entityList)
                     {
-                        //if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
-                        //{
-                        //    weaponhit = true;
-                        //    testedEntity.TakeDamage(skillData.baseMagnitude * swordDamageMultiplier);
-                        //}
-                        if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
+                        if (CheckPointInRectCollider(meshCollider, testedEntity.transform.position))
                         {
                             weaponhit = true;
-                            
-                            testedEntity.TakeDamage(skillData.baseMagnitude * swordDamageMultiplier);
+
+                            testedEntity.TakeDamage(swordDamage + casterSelf.GetStrengthDamageBonus());
                         }
                     }
 
