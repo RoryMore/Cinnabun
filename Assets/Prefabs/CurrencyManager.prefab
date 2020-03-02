@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 201353573743220985}
   - component: {fileID: 201353573743220986}
+  - component: {fileID: 2063185482}
   m_Layer: 0
   m_Name: CurrencyManager
   m_TagString: Untagged
@@ -44,5 +45,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nonStat_gameSceneName: NewLevel
-  upgradeMoney: {fileID: 11400000, guid: c4032c869490d8d4987d4e5c96c42f3a, type: 2}
-  gold: 0
+--- !u!114 &2063185482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201353573743220987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e5e686b63c40342a33e434f6637144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeSaveFileName: /upgrades.ugs
+  upgradeMoneyFileName: /permanentCurrency.pcs
+  settingsFileName: /gameSettings.gss
+  gameSceneName: NewLevel
+  defaultCharacterUpgrades:
+    teleportRange:
+      maxUpgrades: 0
+      upgradeCount: 0
+      upgradeMagnitude: 0
+      progressToUpgrade: 0
+      initialUpgradeCost: 0
+      upgradeCostIncrements: 0
+    playerMovespeed:
+      maxUpgrades: 0
+      upgradeCount: 0
+      upgradeMagnitude: 0
+      progressToUpgrade: 0
+      initialUpgradeCost: 0
+      upgradeCostIncrements: 0
+    bloodOrbEffectiveness:
+      maxUpgrades: 0
+      upgradeCount: 0
+      upgradeMagnitude: 0
+      progressToUpgrade: 0
+      initialUpgradeCost: 0
+      upgradeCostIncrements: 0
+    blastExplosionRadius:
+      maxUpgrades: 0
+      upgradeCount: 0
+      upgradeMagnitude: 0
+      progressToUpgrade: 0
+      initialUpgradeCost: 0
+      upgradeCostIncrements: 0
+  defaultSettings:
+    musicVolume: 1
+    sfxVolume: 1
+    cameraMoveSensitivity: 0.5
+    keybindings:
+      gamePause: 27
+      pauseAbility: 32
+      weaponAttack: 49
+      blast: 50
+      teleport: 51
+      rewind: 52

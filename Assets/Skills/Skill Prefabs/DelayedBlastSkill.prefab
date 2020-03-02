@@ -59,7 +59,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 1024
-  explosionRadius: 15
+  explosionRadius: 5
   explosionDamageMultiplier: 0.4
 --- !u!1001 &4005502552263515046
 PrefabInstance:

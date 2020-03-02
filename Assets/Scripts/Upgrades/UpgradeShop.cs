@@ -101,31 +101,26 @@ public class UpgradeShop : MonoBehaviour
     public void BuyTeleportRange()
     {
         teleportRange.upgrade.IncrementUpgradeProgress();
-        teleportRange.upgrade.SetDirty();
     }
 
     public void BuyBlastExplRadius()
     {
         blastExplosionRadius.upgrade.IncrementUpgradeProgress();
-        blastExplosionRadius.upgrade.SetDirty();
     }
 
     public void BuyBlastExplDmgMultipier()
     {
         blastExplosionDmgMultiplier.upgrade.IncrementUpgradeProgress();
-        blastExplosionDmgMultiplier.upgrade.SetDirty();
     }
 
     public void BuyBloodOrbEffectiveness()
     {
         bloodOrbEffectiveness.upgrade.IncrementUpgradeProgress();
-        bloodOrbEffectiveness.upgrade.SetDirty();
     }
 
     public void BuyBaseMovementSpeed()
     {
         playerBaseMovementSpeed.upgrade.IncrementUpgradeProgress();
-        playerBaseMovementSpeed.upgrade.SetDirty();
     }
 
     public void LoadGameScene()

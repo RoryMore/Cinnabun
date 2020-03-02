@@ -986,7 +986,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportRange:
-    upgrade: {fileID: 11400000, guid: ca38afea46fe71541a91e32d208d880c, type: 2}
+    upgrade:
+      upgradeType: 0
+      maxUpgrades: 0
+      upgradeCount: 0
+      upgradeMagnitude: 0
+      progressToUpgrade: 0
+      initialUpgradeCost: 0
+      upgradeCostIncrements: 0
     ui:
       progressFillImage: {fileID: 444101418}
       progressText: {fileID: 467220788}
@@ -998,7 +1005,14 @@ MonoBehaviour:
     tooltipDescription: This Field is currently irrelevant. Will be a small description
       of what the user is getting with their purchase; On MouseOver upgrade buy buttons
   blastExplosionRadius:
-    upgrade: {fileID: 0}
+    upgrade:
+      upgradeType: 0
+      maxUpgrades: 0
+      upgradeCount: 0
+      upgradeMagnitude: 0
+      progressToUpgrade: 0
+      initialUpgradeCost: 0
+      upgradeCostIncrements: 0
     ui:
       progressFillImage: {fileID: 0}
       progressText: {fileID: 0}
@@ -1007,7 +1021,14 @@ MonoBehaviour:
       noBuyButtonSprite: {fileID: 0}
     tooltipDescription: 
   blastExplosionDmgMultiplier:
-    upgrade: {fileID: 0}
+    upgrade:
+      upgradeType: 0
+      maxUpgrades: 0
+      upgradeCount: 0
+      upgradeMagnitude: 0
+      progressToUpgrade: 0
+      initialUpgradeCost: 0
+      upgradeCostIncrements: 0
     ui:
       progressFillImage: {fileID: 0}
       progressText: {fileID: 0}
@@ -1016,7 +1037,14 @@ MonoBehaviour:
       noBuyButtonSprite: {fileID: 0}
     tooltipDescription: 
   bloodOrbEffectiveness:
-    upgrade: {fileID: 0}
+    upgrade:
+      upgradeType: 0
+      maxUpgrades: 0
+      upgradeCount: 0
+      upgradeMagnitude: 0
+      progressToUpgrade: 0
+      initialUpgradeCost: 0
+      upgradeCostIncrements: 0
     ui:
       progressFillImage: {fileID: 0}
       progressText: {fileID: 0}
@@ -1025,7 +1053,14 @@ MonoBehaviour:
       noBuyButtonSprite: {fileID: 0}
     tooltipDescription: 
   playerBaseMovementSpeed:
-    upgrade: {fileID: 0}
+    upgrade:
+      upgradeType: 0
+      maxUpgrades: 0
+      upgradeCount: 0
+      upgradeMagnitude: 0
+      progressToUpgrade: 0
+      initialUpgradeCost: 0
+      upgradeCostIncrements: 0
     ui:
       progressFillImage: {fileID: 0}
       progressText: {fileID: 0}
