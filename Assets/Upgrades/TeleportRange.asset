@@ -15,6 +15,6 @@ MonoBehaviour:
   maxUpgrades: 3
   upgradeCount: 0
   upgradeMagnitude: 1
-  progressToUpgrade: 0
+  progressToUpgrade: 3
   initialUpgradeCost: 5
   upgradeCostIncrements: 5

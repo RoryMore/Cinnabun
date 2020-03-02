@@ -39,7 +39,7 @@ public class CharacterUpgrade : ScriptableObject
         {
             upgradeCount++;
             progressToUpgrade = 0;
-            EditorUtility.SetDirty(this);
+            //EditorUtility.SetDirty(this);
         }
     }
 
@@ -54,7 +54,7 @@ public class CharacterUpgrade : ScriptableObject
             {
                 IncrementUpgradeCount();
             }
-            EditorUtility.SetDirty(this);
+            //EditorUtility.SetDirty(this);
         }
     }
 
@@ -82,6 +82,6 @@ public class CharacterUpgrade : ScriptableObject
     public void ResetUpgrades()
     {
         upgradeCount = 0;
-        EditorUtility.SetDirty(this);
+        //EditorUtility.SetDirty(this);
     }
 }

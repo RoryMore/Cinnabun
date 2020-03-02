@@ -17,12 +17,12 @@ public class UpgradeMoney : ScriptableObject
     public void AddMoney(int value)
     {
         amount += value;
-        EditorUtility.SetDirty(this);
+        //EditorUtility.SetDirty(this);
     }
 
     public void DeductMoney(int value)
     {
         amount -= value;
-        EditorUtility.SetDirty(this);
+        //EditorUtility.SetDirty(this);
     }
 }
