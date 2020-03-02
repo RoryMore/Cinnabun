@@ -473,11 +473,10 @@ public class BaseSkill : MonoBehaviour
     {
         if (entityToSet == null)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
             if (Input.GetMouseButtonDown(0))
             {
-                if (Physics.Raycast(ray, out RaycastHit hit, 400))
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
                 {
                     //Debug.Log("Skill is raycasting");
                     if (checkInRange)
