@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77514c8b7e8cc634a88f7703c6ef49dc, type: 3}
   m_Name: PersistentUpgradeMoney
   m_EditorClassIdentifier: 
-  amount: 38
+  amount: 36

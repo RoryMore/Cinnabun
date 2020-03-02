@@ -301,6 +301,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Url: https://forms.gle/QqxUgbUfwPhVNqh96
+--- !u!1 &2063185481 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 201353573743220987, guid: 031f21ec329e8d7478b27426393e81be,
+    type: 3}
+  m_PrefabInstance: {fileID: 1398361443}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2063185482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063185481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e5e686b63c40342a33e434f6637144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterUpgrades:
+  - upgradeType: 0
+    maxUpgrades: 5
+    upgradeCount: 0
+    upgradeMagnitude: 0
+    progressToUpgrade: 0
+    initialUpgradeCost: 0
+    upgradeCostIncrements: 0
+  gameSceneName: NewLevel
+  upgradeMoney: 0
 --- !u!1 &2109572834
 GameObject:
   m_ObjectHideFlags: 0
