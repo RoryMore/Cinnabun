@@ -6,15 +6,15 @@ using UnityEditor;
 [System.Serializable]
 public class CharacterUpgrade
 {
-    public enum UpgradeType
-    {
-        TeleportRange,
-        PlayerMoveSpeed,
-        BloodOrbEffectiveness,
-        BlastExplosionRadius
-    }
+    //public enum UpgradeType
+    //{
+    //    TeleportRange,
+    //    PlayerMoveSpeed,
+    //    BloodOrbEffectiveness,
+    //    BlastExplosionRadius
+    //}
 
-    public UpgradeType upgradeType;
+    //public UpgradeType upgradeType;
 
     [Header("Number of Upgrades & Magnitude")]
     public int maxUpgrades;
@@ -28,9 +28,9 @@ public class CharacterUpgrade
     [SerializeField]
     int upgradeCostIncrements;
 
-    public CharacterUpgrade(UpgradeType type)
+    public CharacterUpgrade()
     {
-        upgradeType = type;
+        //upgradeType = type;
 
         maxUpgrades = 0;
         upgradeCount = 0;
