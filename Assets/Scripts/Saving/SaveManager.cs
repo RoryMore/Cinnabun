@@ -19,12 +19,15 @@ public class SaveManager : MonoBehaviour
 
     [Header("Save File Names")]
     [SerializeField]
+    [Tooltip("Must be prefixed with a '/'")]
     string upgradeSaveFileName;
     static string staticUpgradeSaveFileName;
     [SerializeField]
+    [Tooltip("Must be prefixed with a '/'")]
     string upgradeMoneyFileName;
     static string staticUpgradeMoneyFileName;
     [SerializeField]
+    [Tooltip("Must be prefixed with a '/'")]
     string settingsFileName;
     static string staticSettingsFileName;
 
@@ -46,6 +49,11 @@ public class SaveManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+    {
+        
+    }
+
+    private void Awake()
     {
         DontDestroyOnLoad(gameObject);
         //Debug.Log(Application.persistentDataPath);
@@ -72,7 +80,7 @@ public class SaveManager : MonoBehaviour
         {
             Debug.Log("SaveManager: No UpgradeMoney file to load");
         }
-        if(LoadSettingsSave())
+        if (LoadSettingsSave())
         {
             Debug.Log("SaveManager: Settings Loaded");
         }
@@ -82,18 +90,13 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Period))
-        //{
-        //    CurrencyManager.AddUpgradeMoney(1);
-        //}
+        if (Input.GetKeyDown(KeyCode.Period))
+        {
+            CurrencyManager.AddUpgradeMoney(1);
+        }
         //else if (Input.GetKeyDown(KeyCode.Comma))
         //{
         //    CurrencyManager.DeductUpgradeMoney(1);

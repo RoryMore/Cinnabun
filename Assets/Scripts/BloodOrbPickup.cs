@@ -39,6 +39,11 @@ public class BloodOrbPickup : MonoBehaviour
             Debug.LogError("BloodOrb drop failed to find a suitable position on the NavMesh");
             Destroy(gameObject);
         }
+
+        if (SaveManager.GetUpgradeList().bloodOrbEffectiveness != null)
+        {
+            healAmount += Mathf.RoundToInt(SaveManager.GetUpgradeList().bloodOrbEffectiveness.GetUpgradedMagnitude());
+        }
     }
 
     public void SetEntityToHeal(Entity entity)

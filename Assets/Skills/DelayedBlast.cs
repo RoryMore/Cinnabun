@@ -21,6 +21,11 @@ public class DelayedBlast : BaseSkill
     protected override void Initialise()
     {
         base.Initialise();
+
+        if (SaveManager.GetUpgradeList().blastExplosionRadius != null)
+        {
+            explosionRadius += SaveManager.GetUpgradeList().blastExplosionRadius.GetUpgradedMagnitude();
+        }
     }
 
     private void Update()

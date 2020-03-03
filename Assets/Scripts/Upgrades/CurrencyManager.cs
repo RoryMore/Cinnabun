@@ -72,6 +72,7 @@ public class CurrencyManager : MonoBehaviour
                             }
                         }
                         AddUpgradeMoney(wavesCleared);
+                        SaveManager.SaveUpgradeMoney();
                         upgradeMoneyRewarded = true;
                     }
                 }

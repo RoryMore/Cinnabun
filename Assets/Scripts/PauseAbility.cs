@@ -95,7 +95,7 @@ public class PauseAbility : MonoBehaviour
         if (textSystem.novelActive == true)
         {
             //Add in to check if player is casting an ability, cannot Starttime again until this is complete
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.pauseAbility))
             {
                 if (player.playerState != Player.PlayerState.DOINGSKILL)
                 {

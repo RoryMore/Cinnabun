@@ -19,6 +19,11 @@ public class Teleport : BaseSkill
     protected override void Initialise()
     {
         base.Initialise();
+
+        if (SaveManager.GetUpgradeList().teleportRange != null)
+        {
+            skillData.maxRange += SaveManager.GetUpgradeList().teleportRange.GetUpgradedMagnitude();
+        }
     }
 
     private void Update()
