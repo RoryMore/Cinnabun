@@ -22880,6 +22880,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1759311214, guid: 768628249c4c2f647b7f7962b17fc210, type: 3}
+      propertyPath: usedWeapon
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 819698099673919328, guid: 768628249c4c2f647b7f7962b17fc210,
         type: 3}
       propertyPath: cameraShake
