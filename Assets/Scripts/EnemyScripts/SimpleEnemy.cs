@@ -430,6 +430,8 @@ public class SimpleEnemy : EnemyScript
         }
         anim.enabled = false;
 
+        GetComponent<BloodOrbDropControl>().DropItem(transform.position);
+
         myEncounter.itemSpawner.SpawnItem(transform.position);
     }
 

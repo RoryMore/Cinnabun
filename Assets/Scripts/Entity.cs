@@ -134,7 +134,7 @@ public class Entity : MonoBehaviour
     public int maxHP;
     public int currentHP;
     [SerializeField]
-    float baseMovementSpeed;
+    protected float baseMovementSpeed;
     public float movementSpeed;
     public int dodgeChance;
     public int physDamagePotential;

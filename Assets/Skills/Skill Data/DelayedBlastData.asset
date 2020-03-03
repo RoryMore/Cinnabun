@@ -18,8 +18,8 @@ MonoBehaviour:
   nearWidth: 0
   verticalRange: 15
   angle: 0
-  cooldown: 2
-  windUp: 3
+  cooldown: 15
+  windUp: 1.75
   skill: 1
   baseMagnitude: 30
   damageType: 1

@@ -51,6 +51,12 @@ public class Player : Entity
     void Start()
     {
         level = 1;
+
+        if (SaveManager.GetUpgradeList().playerMovespeed != null)
+        {
+            baseMovementSpeed += SaveManager.GetUpgradeList().playerMovespeed.GetUpgradedMagnitude();
+        }
+
         // Using base given stats, get derived stats
         InitialiseAll();
         currentHP = maxHP;
@@ -98,7 +104,7 @@ public class Player : Entity
                                 Move();
                             }
 
-                            if (Input.GetKeyDown(KeyCode.I))
+                            if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.toggleInventory))
                             {
                                 if (pause.states == PauseAbility.GameStates.PLAY)
                                 {
@@ -360,10 +366,8 @@ public class Player : Entity
 
     void EvaluateInputForSkillSelection()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.weaponAttack))
         {
-            //SelectSkill(SkillData.SkillList.TELEPORT);
-            //SelectSkill(0);
             if (weaponAttack != null)
             {
                 if (weaponAttack.isAllowedToCast)
@@ -373,22 +377,22 @@ public class Player : Entity
                 }
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.skillSlot2))
         {
             SelectSkill(1);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.skillSlot3))
         {
             SelectSkill(2);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        else if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.skillSlot4))
         {
             SelectSkill(3);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            SelectSkill(4);
-        }
+        //else if (Input.GetKeyDown(KeyCode.Alpha5))
+        //{
+        //    SelectSkill(4);
+        //}
     }
 
     public void SelectSkill(SkillData.SkillList skill)
