@@ -8044,7 +8044,7 @@ PrefabInstance:
         type: 3}
       propertyPath: targetObject
       value: 
-      objectReference: {fileID: 1274274380}
+      objectReference: {fileID: 267953260}
     - target: {fileID: 6531685087654547189, guid: ce4bdc152542dff48aeece5e87082805,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -8145,7 +8145,7 @@ PrefabInstance:
         type: 3}
       propertyPath: characterEntity
       value: 
-      objectReference: {fileID: 1274274379}
+      objectReference: {fileID: 267953261}
     - target: {fileID: 6531685088700490649, guid: ce4bdc152542dff48aeece5e87082805,
         type: 3}
       propertyPath: m_LocalPosition.x

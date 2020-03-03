@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerInGameUI : MonoBehaviour
 {
     PauseAbility pauseAbility;
+
     Player player;
 
     public Button PauseButton;
@@ -33,6 +34,7 @@ public class PlayerInGameUI : MonoBehaviour
     void Start()
     {
         pauseAbility = FindObjectOfType<PauseAbility>();
+      
         player = FindObjectOfType<Player>();
     }
 
@@ -65,6 +67,7 @@ public class PlayerInGameUI : MonoBehaviour
            timeSinceStartUp.gameObject.SetActive(false);
         }
 
+
         foreach (BaseSkill skill in player.skillList)
         {
             //if (skill.timeBeenOnCooldown < skill.cooldown)
@@ -87,7 +90,7 @@ public class PlayerInGameUI : MonoBehaviour
                     case SkillData.SkillList.TELEPORT:
                         {
                             TeleportButton.gameObject.SetActive(true);
-                            TeleportButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.skillData.cooldown);
+                             TeleportButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.skillData.cooldown);
                             break;
                         }
                     default:
@@ -153,7 +156,7 @@ public class PlayerInGameUI : MonoBehaviour
 
     void UpdateTurnCounter()
     {
-         TurnCounter.fillAmount = 1.0f - ( (float)pauseAbility.timeStopCoolDown / 4.0f);
+        TurnCounter.fillAmount = 1.0f - ( (float)pauseAbility.timeStopCoolDown / 4.0f);
 
     }
 
