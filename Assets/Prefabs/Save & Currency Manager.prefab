@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 201353573743220986}
   - component: {fileID: 2063185482}
   m_Layer: 0
-  m_Name: CurrencyManager
+  m_Name: Save & Currency Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,9 +95,9 @@ MonoBehaviour:
     sfxVolume: 1
     cameraMoveSensitivity: 0.5
     keybindings:
-      gamePause: 27
+      toggleInventory: 105
       pauseAbility: 32
       weaponAttack: 49
-      blast: 50
-      teleport: 51
-      rewind: 52
+      skillSlot2: 50
+      skillSlot3: 51
+      skillSlot4: 52

@@ -8,13 +8,13 @@ public class SavedSettings
     [System.Serializable]
     public struct Keybindings
     {
-        public KeyCode gamePause;
+        //public KeyCode gamePause;
         public KeyCode toggleInventory;
         public KeyCode pauseAbility;
         public KeyCode weaponAttack;
-        public KeyCode blast;
-        public KeyCode teleport;
-        public KeyCode rewind;
+        public KeyCode skillSlot2;
+        public KeyCode skillSlot3;
+        public KeyCode skillSlot4;
     }
 
     public float musicVolume;
