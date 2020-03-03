@@ -79,10 +79,10 @@ MonoBehaviour:
   swordRange: 6
   staffRange: 10
   bowRange: 10
-  unarmedDamageMultiplier: 0.75
-  swordDamageMultiplier: 1.75
-  staffDamageMultiplier: 2.5
-  bowDamageMultiplier: 1.3
+  unarmedDamageMultiplier: 0.85
+  swordDamageMultiplier: 1.45
+  staffDamageMultiplier: 2
+  bowDamageMultiplier: 1.2
   meshCollider: {fileID: 385980251542329059}
 --- !u!114 &6045951291823921618
 MonoBehaviour:
