@@ -9,6 +9,7 @@ public class Player : Entity
     public LayerMask groundLayerMask;
     public float moveRaycastDistance;
     public CameraController cameraShake;
+    TextSystem textSystem;
 
     public enum PlayerState
     {
@@ -50,6 +51,12 @@ public class Player : Entity
     void Start()
     {
         level = 1;
+
+        if (SaveManager.GetUpgradeList().playerMovespeed != null)
+        {
+            baseMovementSpeed += SaveManager.GetUpgradeList().playerMovespeed.GetUpgradedMagnitude();
+        }
+
         // Using base given stats, get derived stats
         InitialiseAll();
         currentHP = maxHP;
@@ -65,6 +72,7 @@ public class Player : Entity
     {
         pause = FindObjectOfType<PauseAbility>();
         pauseMenu = FindObjectOfType<PauseMenuUI>();
+        textSystem = FindObjectOfType<TextSystem>();
         //InitialiseSkills();
     }
 
@@ -96,7 +104,7 @@ public class Player : Entity
                                 Move();
                             }
 
-                            if (Input.GetKeyDown(KeyCode.I))
+                            if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.toggleInventory))
                             {
                                 if (pause.states == PauseAbility.GameStates.PLAY)
                                 {
@@ -320,21 +328,26 @@ public class Player : Entity
 
     void Move()
     {
-        if (Input.GetMouseButton(0))
+
+        if (textSystem.novelActive == true)
         {
-            nav.speed = movementSpeed;
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit hit, moveRaycastDistance, groundLayerMask))
+            if (Input.GetMouseButton(0))
             {
-                if (hit.collider.tag.Contains("Item"))
+
+                nav.speed = movementSpeed;
+
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out RaycastHit hit, moveRaycastDistance, groundLayerMask))
                 {
-                    nav.SetDestination(hit.collider.transform.position);
-                }
-                else
-                {
-                    nav.SetDestination(hit.point);
+                    if (hit.collider.tag.Contains("Item"))
+                    {
+                        nav.SetDestination(hit.collider.transform.position);
+                    }
+                    else
+                    {
+                        nav.SetDestination(hit.point);
+                    }
                 }
             }
         }
@@ -342,10 +355,8 @@ public class Player : Entity
 
     void EvaluateInputForSkillSelection()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.weaponAttack))
         {
-            //SelectSkill(SkillData.SkillList.TELEPORT);
-            //SelectSkill(0);
             if (weaponAttack != null)
             {
                 if (weaponAttack.isAllowedToCast)
@@ -355,22 +366,22 @@ public class Player : Entity
                 }
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.skillSlot2))
         {
             SelectSkill(1);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.skillSlot3))
         {
             SelectSkill(2);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        else if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.skillSlot4))
         {
             SelectSkill(3);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            SelectSkill(4);
-        }
+        //else if (Input.GetKeyDown(KeyCode.Alpha5))
+        //{
+        //    SelectSkill(4);
+        //}
     }
 
     public void SelectSkill(SkillData.SkillList skill)

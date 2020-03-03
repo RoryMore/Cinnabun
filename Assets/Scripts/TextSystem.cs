@@ -55,14 +55,14 @@ public class TextSystem : MonoBehaviour
 		public Emotion emotion;
 		[Space(10)]
         [TextArea(10, 20)]
-        public string text;
+        public string[] text;
         }
 
 	//[Header("Script Settings")]
 	[Space(10)]
 	public Text[] text;
-
-
+	public int wordIndex = 0;
+	public bool novelActive;
 	[System.Serializable]
 	public struct Characters
 	{
@@ -93,6 +93,8 @@ public class TextSystem : MonoBehaviour
 	[HideInInspector] public int index = 0;
 	[HideInInspector] public bool userInput = false;
 
+	public GameObject visualNovel;
+
 	void Awake()
 	{
 		instance = this;
@@ -118,20 +120,23 @@ public class TextSystem : MonoBehaviour
 
                 if (!dialogue.isSpeaking || dialogue.isWatingForUserInput)
                 {
-                    if (index >= text.Length)
+                    if (index >= text[wordIndex].text.Length)
                     {
                         Debug.Log("Text,Done");
+						visualNovel.SetActive(false);
+						novelActive = true;
+						index = 0;
 						LoadScene(sceneNumber);
                         return;
                     }
                    
                     textSound.Play();
 
-                    Say(text[index].text);
+                    Say(text[wordIndex].text[index]);
 				
-					checkIfNull();
-					getBackGroundName();
-					checkBackground();
+					//checkIfNull();
+				//getBackGroundName();
+					//checkBackground();
 
                 }
 
@@ -139,7 +144,7 @@ public class TextSystem : MonoBehaviour
 
             if (index < text.Length)
             {
-                stopSay(text[index].text);
+                stopSay(text[wordIndex].text[index]);
             }
         }
         Delay();
@@ -206,9 +211,9 @@ public class TextSystem : MonoBehaviour
         if (GameStart == true)
         {
 			getBackGroundName();
-			Say(text[index].text);
-			checkIfNull();
-			checkBackground();
+			Say(text[wordIndex].text[index]);
+			//checkIfNull();
+			//checkBackground();
 			GameStart = false;
         }
     }
@@ -333,6 +338,8 @@ public class TextSystem : MonoBehaviour
         }
 			
 	}
+
+
 }
 
 
