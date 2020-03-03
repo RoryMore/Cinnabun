@@ -90,7 +90,7 @@ public class PlayerInGameUI : MonoBehaviour
                     case SkillData.SkillList.TELEPORT:
                         {
                             TeleportButton.gameObject.SetActive(true);
-                            TeleportButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.skillData.cooldown);
+                             TeleportButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.skillData.cooldown);
                             break;
                         }
                     default:
@@ -156,7 +156,7 @@ public class PlayerInGameUI : MonoBehaviour
 
     void UpdateTurnCounter()
     {
-         TurnCounter.fillAmount = 1.0f - ( (float)pauseAbility.timeStopCoolDown / 4.0f);
+        TurnCounter.fillAmount = 1.0f - ( (float)pauseAbility.timeStopCoolDown / 4.0f);
 
     }
 

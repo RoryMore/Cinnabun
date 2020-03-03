@@ -517,6 +517,19 @@ public class Player : Entity
         playerState = PlayerState.DOINGSKILL;
     }
 
+    public void SelectBlastAttack()
+    {
+        SelectSkill(1);
+    }
+    public void SelectTeleport()
+    {
+        SelectSkill(2);
+    }
+    public void SelectRewind()
+    {
+        SelectSkill(3);
+    }
+
     //void OnDrawGizmos()
     //{
     //    Gizmos.color = Color.red;

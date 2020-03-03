@@ -7,6 +7,7 @@ public class MainMenuUI : MonoBehaviour
 
     public GameObject menuButtons;
     public GameObject credits;
+    public GameObject Options
 
 
     public void OnClickPlay()
@@ -31,5 +32,10 @@ public class MainMenuUI : MonoBehaviour
     {
         menuButtons.SetActive(true);
         credits.SetActive(false);
+    }
+
+    public void Options()
+    {
+        
     }
 }
