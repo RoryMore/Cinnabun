@@ -84,7 +84,7 @@ MonoBehaviour:
   magicalArmour: 0
   maxHP: 0
   currentHP: 0
-  baseMovementSpeed: 10
+  baseMovementSpeed: 7
   movementSpeed: 0
   dodgeChance: 0
   physDamagePotential: 0
@@ -244,10 +244,10 @@ MonoBehaviour:
   swordRange: 6
   staffRange: 10
   bowRange: 10
-  unarmedDamageMultiplier: 1
-  swordDamageMultiplier: 1
-  staffDamageMultiplier: 1
-  bowDamageMultiplier: 1
+  unarmedDamageMultiplier: 0.75
+  swordDamageMultiplier: 1.75
+  staffDamageMultiplier: 2.5
+  bowDamageMultiplier: 1.3
   meshCollider: {fileID: 6211071506982483612}
 --- !u!1001 &537844692203287803
 PrefabInstance:

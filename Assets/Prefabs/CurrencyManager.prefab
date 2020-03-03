@@ -63,32 +63,32 @@ MonoBehaviour:
   gameSceneName: NewLevel
   defaultCharacterUpgrades:
     teleportRange:
-      maxUpgrades: 0
+      maxUpgrades: 3
       upgradeCount: 0
-      upgradeMagnitude: 0
+      upgradeMagnitude: 2
       progressToUpgrade: 0
-      initialUpgradeCost: 0
+      initialUpgradeCost: 8
       upgradeCostIncrements: 0
     playerMovespeed:
-      maxUpgrades: 0
+      maxUpgrades: 4
       upgradeCount: 0
-      upgradeMagnitude: 0
+      upgradeMagnitude: 2
       progressToUpgrade: 0
-      initialUpgradeCost: 0
+      initialUpgradeCost: 6
       upgradeCostIncrements: 0
     bloodOrbEffectiveness:
-      maxUpgrades: 0
+      maxUpgrades: 10
       upgradeCount: 0
-      upgradeMagnitude: 0
+      upgradeMagnitude: 2
       progressToUpgrade: 0
-      initialUpgradeCost: 0
+      initialUpgradeCost: 5
       upgradeCostIncrements: 0
     blastExplosionRadius:
-      maxUpgrades: 0
+      maxUpgrades: 5
       upgradeCount: 0
-      upgradeMagnitude: 0
+      upgradeMagnitude: 2
       progressToUpgrade: 0
-      initialUpgradeCost: 0
+      initialUpgradeCost: 3
       upgradeCostIncrements: 0
   defaultSettings:
     musicVolume: 1

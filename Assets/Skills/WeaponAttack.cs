@@ -22,10 +22,10 @@ public class WeaponAttack : BaseSkill
     public float bowRange;
 
     [Header("Damage Multiplier Based on Weapon")]
-    public int unarmedDamageMultiplier;
-    public int swordDamageMultiplier;
-    public int staffDamageMultiplier;
-    public int bowDamageMultiplier;
+    public float unarmedDamageMultiplier;
+    public float swordDamageMultiplier;
+    public float staffDamageMultiplier;
+    public float bowDamageMultiplier;
 
     [Tooltip("The width the line indicator will use. \nAngleWidth will be what is used for sword")]
     //public float lineWidth;
@@ -294,7 +294,11 @@ public class WeaponAttack : BaseSkill
         switch (usedWeapon)
         {
             case UsedWeaponType.Unarmed:
-                entityTarget.TakeDamage(skillData.baseMagnitude * unarmedDamageMultiplier);
+                int unarmedDamage = Mathf.FloorToInt((skillData.baseMagnitude + casterSelf.GetStrengthDamageBonus()) * unarmedDamageMultiplier);
+                //unarmedDamage += casterSelf.GetStrengthDamageBonus();
+                unarmedDamage = Mathf.Clamp(unarmedDamage, 1, int.MaxValue);
+
+                entityTarget.TakeDamage(unarmedDamage);
 
                 //SoundManager.meleeSwing.Play();
                 break;
@@ -304,8 +308,9 @@ public class WeaponAttack : BaseSkill
                     meshCollider.enabled = true;
                     bool weaponhit = false;
 
-                    int swordDamage = Mathf.FloorToInt((float)skillData.baseMagnitude * swordDamageMultiplier);
-                    swordDamage = Mathf.Clamp(swordDamage, 1, 99999);
+                    int swordDamage = Mathf.FloorToInt((skillData.baseMagnitude + casterSelf.GetStrengthDamageBonus()) * swordDamageMultiplier);
+                    //swordDamage += casterSelf.GetStrengthDamageBonus();
+                    swordDamage = Mathf.Clamp(swordDamage, 1, int.MaxValue);
 
                     foreach (Entity testedEntity in entityList)
                     {
@@ -313,7 +318,7 @@ public class WeaponAttack : BaseSkill
                         {
                             weaponhit = true;
 
-                            testedEntity.TakeDamage(swordDamage + casterSelf.GetStrengthDamageBonus());
+                            testedEntity.TakeDamage(swordDamage);
                         }
                     }
 
@@ -326,17 +331,25 @@ public class WeaponAttack : BaseSkill
                 }
 
             case UsedWeaponType.Staff:
+                int staffDamage = Mathf.FloorToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * staffDamageMultiplier);
+                //staffDamage += casterSelf.GetIntellectDamageBonus();
+                staffDamage = Mathf.Clamp(staffDamage, 1, int.MaxValue);
+
                 foreach (Entity testedEntity in entityList)
                 {
                     if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                     {
-                        testedEntity.TakeDamage(skillData.baseMagnitude * staffDamageMultiplier);
+                        testedEntity.TakeDamage(staffDamage);
                     }
                 }
                 break;
 
             case UsedWeaponType.Bow:
-                entityTarget.TakeDamage(skillData.baseMagnitude * bowDamageMultiplier);
+                int bowDamage = Mathf.FloorToInt((skillData.baseMagnitude + casterSelf.GetStrengthDamageBonus()) * bowDamageMultiplier);
+                //bowDamage += casterSelf.GetStrengthDamageBonus();
+                bowDamage = Mathf.Clamp(bowDamage, 1, int.MaxValue);
+
+                entityTarget.TakeDamage(bowDamage);
                 break;
             default:
                 break;

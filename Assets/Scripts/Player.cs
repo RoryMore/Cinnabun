@@ -51,6 +51,12 @@ public class Player : Entity
     void Start()
     {
         level = 1;
+
+        if (SaveManager.GetUpgradeList().playerMovespeed != null)
+        {
+            baseMovementSpeed += SaveManager.GetUpgradeList().playerMovespeed.GetUpgradedMagnitude();
+        }
+
         // Using base given stats, get derived stats
         InitialiseAll();
         currentHP = maxHP;

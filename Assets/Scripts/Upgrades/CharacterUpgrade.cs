@@ -93,4 +93,9 @@ public class CharacterUpgrade
             return 0;
         }
     }
+
+    public float GetUpgradedMagnitude()
+    {
+        return upgradeMagnitude * upgradeCount;
+    }
 }
