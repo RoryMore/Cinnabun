@@ -305,39 +305,48 @@ public class SoundManager : MonoBehaviour
 
     void checkState()
     {
-        if (pauseAbility.states == PauseAbility.GameStates.TIMESTOP)
+        if (pauseAbility != null)
         {
-            state = MusicState.PAUSEDSKILL; 
-        }
-
-        if (inBattle == true)
-        {
-            if (pauseAbility.states != PauseAbility.GameStates.TIMESTOP)
+            if (pauseAbility.states == PauseAbility.GameStates.TIMESTOP)
             {
-                state = MusicState.BATTLE;
-                BattleMusicVolumeUp();
+                state = MusicState.PAUSEDSKILL;
             }
-        }
 
-        if (inBattle == false && visualNovel.activeSelf == false)
-        {
-            if (pauseAbility.states != PauseAbility.GameStates.TIMESTOP)
-            {
-                state = MusicState.IDLE;
-                IdleMusicVolumeUp();
-            }          
-        }
+            if (inBattle == true)
+            {
+                if (pauseAbility.states != PauseAbility.GameStates.TIMESTOP)
+                {
+                    state = MusicState.BATTLE;
+                    BattleMusicVolumeUp();
+                }
+            }
 
-        if (state != MusicState.BATTLE && state != MusicState.PAUSEDSKILL)
-        {
-            //randomNumber = true;
-            playBattleMusic = true;   
-        }
+            if (inBattle == false && visualNovel.activeSelf == false)
+            {
 
-        if (state != MusicState.IDLE && state != MusicState.PAUSEDSKILL)
-        {
-            //randomNumber = true;
-            playIdleMusic = true;  
+                if (pauseAbility.states != PauseAbility.GameStates.TIMESTOP)
+
+                {
+
+                    state = MusicState.IDLE;
+
+                    IdleMusicVolumeUp();
+
+                }
+            }
+
+            if (state != MusicState.BATTLE && state != MusicState.PAUSEDSKILL)
+            {
+                //randomNumber = true;
+                playBattleMusic = true;
+            }
+
+            if (state != MusicState.IDLE && state != MusicState.PAUSEDSKILL)
+            {
+
+                //randomNumber = true;
+                playIdleMusic = true;
+            }
         }
     }
 
