@@ -10,6 +10,7 @@ public class DialogueSystem : MonoBehaviour
 
     public static DialogueSystem instance;
     TextSystem textSystem;
+    PauseMenuUI pauseMenu;
 
     public ELEMENTS elements;
 
@@ -29,6 +30,7 @@ public class DialogueSystem : MonoBehaviour
     void Start()
     {
         textSystem = TextSystem.instance;
+        pauseMenu = GetComponent<PauseMenuUI>();
     }
 
     // Update is called once per frame
@@ -62,7 +64,7 @@ public class DialogueSystem : MonoBehaviour
 
     //This get the text pannel and writes the text to it 
     IEnumerator Speaking(string targetSpeech)
-    {
+   {
         speechPanel.SetActive(true);
         speechText.text = "";
         speakerNameText.text = DetermineSpeaker();
@@ -86,11 +88,21 @@ public class DialogueSystem : MonoBehaviour
     //checks if the text is currently being written out then if it isnt will write out all the text at once
     public void SkipTextScroll(string targetSpeech, string speaker = "")
     {
-        if (speaking != null)
-        {
+       if (speaking != null)
+       {  
             speechText.text = targetSpeech;
             StopCoroutine(speaking);
             isWatingForUserInput = true;
+       }
+
+        if (pauseMenu != null)
+        {
+            if (pauseMenu.skipText == true)
+            {
+                speechText.text = targetSpeech;
+                //textSystem.index++;
+                isWatingForUserInput = true;
+            }
         }
     }
 

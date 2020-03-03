@@ -135,11 +135,14 @@ public class Player : Entity
                         Move();
                     }
 
-                    // Player can only select a skill to use if they have paused
-                    if (pause.states == PauseAbility.GameStates.TIMESTOP)
+                    if (pause != null)
                     {
-                        //Time.timeScale = 0.001f;
-                        EvaluateInputForSkillSelection();
+                        // Player can only select a skill to use if they have paused
+                        if (pause.states == PauseAbility.GameStates.TIMESTOP)
+                        {
+                            //Time.timeScale = 0.001f;
+                            EvaluateInputForSkillSelection();
+                        }
                     }
                     break;
 
@@ -328,25 +331,33 @@ public class Player : Entity
 
     void Move()
     {
-
-        if (textSystem.novelActive == true)
+        if (textSystem != null)
         {
-
-            if (Input.GetMouseButton(0))
+            if (textSystem.novelActive == true)
             {
 
-                nav.speed = movementSpeed;
-
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit, moveRaycastDistance, groundLayerMask))
+                if (Input.GetMouseButton(0))
                 {
-                    if (hit.collider.tag.Contains("Item"))
-                    {
-                        nav.SetDestination(hit.collider.transform.position);
-                    }
-                    else
-                    {
-                        nav.SetDestination(hit.point);
+
+                    nav.speed = movementSpeed;
+
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out RaycastHit hit, moveRaycastDistance, groundLayerMask))
+                    {
+                        if (hit.collider.tag.Contains("Item"))
+
+                        {
+
+                            nav.SetDestination(hit.collider.transform.position);
+
+                        }
+                        else
+
+                        {
+
+                            nav.SetDestination(hit.point);
+
+                        }
                     }
                 }
             }
@@ -508,6 +519,19 @@ public class Player : Entity
     {
         selectedSkill = weaponAttack;
         playerState = PlayerState.DOINGSKILL;
+    }
+
+    public void SelectBlastAttack()
+    {
+        SelectSkill(1);
+    }
+    public void SelectTeleport()
+    {
+        SelectSkill(2);
+    }
+    public void SelectRewind()
+    {
+        SelectSkill(3);
     }
 
     //void OnDrawGizmos()

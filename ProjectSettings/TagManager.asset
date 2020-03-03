@@ -9,6 +9,9 @@ TagManager:
   - Inventory
   - MainRespawn
   - Item
+  - HideOnPause
+  - PlayerUI
+  - VisualNovel
   layers:
   - Default
   - TransparentFX
