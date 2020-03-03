@@ -12,6 +12,7 @@ public class WeaponAttack : BaseSkill
         Bow,
         NotInitialised
     }
+    [Space][Space]
     public UsedWeaponType usedWeapon;
     UsedWeaponType oldWeapon;
 
@@ -38,6 +39,21 @@ public class WeaponAttack : BaseSkill
     [SerializeField]
     MeshCollider meshCollider;  // MUST BE SET TO A CONVEX MESH FOR ACCURACY
 
+    // Sword will use the default existing mainCookie and fillCookie
+    [Header("Other Weapon Projector Images")]
+    [SerializeField]
+    Sprite unarmedCookie;
+    [SerializeField]
+    Sprite unarmedFillCookie;
+    [SerializeField]
+    Sprite bowCookie;
+    [SerializeField]
+    Sprite bowfillCookie;
+    [SerializeField]
+    Sprite staffCookie;
+    [SerializeField]
+    Sprite staffFillCookie;
+
     private void Start()
     {
         Initialise();
@@ -50,6 +66,12 @@ public class WeaponAttack : BaseSkill
 
         meshCollider.sharedMesh = GenerateRectHitboxMesh();
         meshCollider.enabled = false;
+    }
+
+    protected void SetIndicatorImages(Sprite mainCookie, Sprite fillCookie)
+    {
+        projector.material.SetTexture("_ShadowTex", mainCookie.texture);
+        projector.material.SetTexture("_FillTex", fillCookie.texture);
     }
 
     private void Update()
@@ -105,6 +127,7 @@ public class WeaponAttack : BaseSkill
                 {
                     oldWeapon = usedWeapon;
                     skillData.maxRange = unarmedRange;
+                    SetIndicatorImages(unarmedCookie, unarmedFillCookie);
                     
                 }
                 if (entityTarget == null)
@@ -143,7 +166,7 @@ public class WeaponAttack : BaseSkill
                     //rangeIndicator.Init(SkillShape.RADIAL, angle);
                     oldWeapon = usedWeapon;
                     skillData.maxRange = swordRange;
-                    
+                    SetIndicatorImages(mainCookie, fillCookie);
                 }
                 if (!attackAreaChosen)
                 {
@@ -177,7 +200,7 @@ public class WeaponAttack : BaseSkill
                     //rangeIndicator.Init(SkillShape.RECTANGULAR, lineWidth);
                     oldWeapon = usedWeapon;
                     skillData.maxRange = staffRange;
-                    
+                    SetIndicatorImages(staffCookie, staffFillCookie);
                 }
                 if (!attackAreaChosen)
                 {
@@ -211,7 +234,7 @@ public class WeaponAttack : BaseSkill
                     //rangeIndicator.Init(SkillShape.RADIAL, 360.0f);
                     oldWeapon = usedWeapon;
                     skillData.maxRange = bowRange;
-                    
+                    SetIndicatorImages(bowCookie, bowfillCookie);
                 }
                 if (entityTarget == null)
                 {

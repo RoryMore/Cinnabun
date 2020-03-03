@@ -63,9 +63,9 @@ public class BaseSkill : MonoBehaviour
 
     [Header("Indicator Image Settings")]
     [SerializeField]
-    Sprite mainCookie;
+    protected Sprite mainCookie;
     [SerializeField]
-    Sprite fillCookie;
+    protected Sprite fillCookie;
 
     [Header("Ground Layer Mask if necessary to use")]
     public LayerMask groundMask;
