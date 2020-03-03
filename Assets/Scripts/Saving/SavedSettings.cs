@@ -9,7 +9,7 @@ public class SavedSettings
     public struct Keybindings
     {
         public KeyCode gamePause;
-
+        public KeyCode toggleInventory;
         public KeyCode pauseAbility;
         public KeyCode weaponAttack;
         public KeyCode blast;
