@@ -38,5 +38,8 @@ public class MainMenuUI : MonoBehaviour
     {
         OptionsUI.SetActive(true);
         menuButtons.SetActive(false);
+       // SaveManager.GetSettings().musicVolume = 3f;
+
+     //   SaveManager.SaveSettings();
     }
 }
