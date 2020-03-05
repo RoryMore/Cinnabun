@@ -85,7 +85,7 @@ public class SimpleEnemy : EnemyScript
 
         pauseAbility = GameObject.Find("PauseMenuUI").GetComponent<PauseAbility>();
 
-        basicAttack = GetComponentInChildren<BaseSkill>();
+        basicAttack = transform.GetChild(7).GetComponent<BaseSkill>();//GetComponentInChildren<BaseSkill>();
 
 
 
@@ -131,7 +131,7 @@ public class SimpleEnemy : EnemyScript
             if (isAttacking)
             {
                 //Trigger the skill!
-                chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
+                basicAttack.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
                 if (!chosenSkill.currentlyCasting)
                 {
                     isAttacking = false;
