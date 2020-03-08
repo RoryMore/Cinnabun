@@ -56,4 +56,23 @@ public class StatusEfect : MonoBehaviour
     }
     return false; 
 }
+    public void RemoveEffect(Entity entity, Effects effectApply)
+    {
+        CheckToContrion(entity, effectApply);
+
+        foreach (Entity.Condition item in entity.currentConditions)
+        {
+            if (effectApply.Effect == item.conditionType)
+            {
+                if (effectApply.permanent == item.permanent)
+                {
+                    entity.currentConditions.Remove(item);
+                    return;
+                }
+            }
+        }
+
+    Debug.LogError("Couldn't Remove Effect: "+ effectApply.Effect);
+       
+    }
 }

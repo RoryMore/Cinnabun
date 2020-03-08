@@ -10,6 +10,8 @@ public class Entity : MonoBehaviour
     {
         public float damage;  // If this condition deals damage, this is how much damage is dealt each time damage is dealt
         public float damageTickRate; // The rate at which this condition will deal its damage
+
+        public bool permanent;//will the effect be remove though time
         public float duration; //The duration of the condition
         public ConditionEffect conditionType; //Name of condition
         public int BuffStat;
@@ -24,6 +26,7 @@ public class Entity : MonoBehaviour
         {
             damage = 0;
             damageTickRate = 0;
+            permanent = false;
             duration = _duration;
             conditionType = _conditionType;
             timePassed = 0;
@@ -35,6 +38,7 @@ public class Entity : MonoBehaviour
         {
             damage = 0;
             damageTickRate = 0;
+            permanent = false;
             duration = _duration;
             conditionType = _conditionType;
             timePassed = 0;
@@ -47,6 +51,7 @@ public class Entity : MonoBehaviour
         {
             damage = _damage;
             damageTickRate = _damageTickRate;
+            permanent = false;
             duration = _duration;
             conditionType = _conditionType;
             timePassed = 0;
@@ -59,6 +64,7 @@ public class Entity : MonoBehaviour
         {
             damage = _damage;
             damageTickRate = _damageTickRate;
+            permanent = false;
             duration = _duration;
             conditionType = _conditionType;
             timePassed = 0;

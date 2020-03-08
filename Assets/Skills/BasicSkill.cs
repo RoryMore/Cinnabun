@@ -11,11 +11,11 @@ public class BasicSkill : BaseSkill
         End,
     }
 
-    [SerializeField]
    
-
-    [Header("buff")]
-    public Effects[] StatusEffects;
+    [Header("Targeting")]
+   [Tooltip("if only hiting player")] [SerializeField] private bool TargetPlayer;
+    [Tooltip("if only not hiting player")] [SerializeField] private bool IgnorePlayer;
+    //public Effects[] StatusEffects;
     private Entity Entity;
     private Entity.Condition[] Conditions;
     // Start is called before the first frame update
@@ -106,6 +106,7 @@ public class BasicSkill : BaseSkill
 
             DisableProjector();
         }
+        ApplyCastSkillProplys();
     }
 
     protected override void ActivateSkill(List<Entity> entityList)
@@ -125,8 +126,27 @@ public class BasicSkill : BaseSkill
             {
                 if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                 {
-                    testedEntity.TakeDamage(skillData.baseMagnitude);
-                    GetComponentInParent<StatusEfect>().applyEffects(testedEntity, Effects.EffectApplyType.OnHit);
+                    if (TargetPlayer)
+                    {
+                        if (testedEntity.name == "Player")
+                        {
+                            //testedEntity.TakeDamage((int)(skillData.baseMagnitude* DamageMult));
+                            GetComponentInParent<StatusEfect>().applyEffects(testedEntity, Effects.EffectApplyType.OnHit);
+                        }
+                    }else
+                    if (IgnorePlayer)
+                    {
+                        if (testedEntity.name != "Player")
+                        {
+                            //testedEntity.TakeDamage((int)(skillData.baseMagnitude * DamageMult));
+                            GetComponentInParent<StatusEfect>().applyEffects(testedEntity, Effects.EffectApplyType.OnHit);
+                        }
+                    }else
+                    {
+                       // testedEntity.TakeDamage((int)(skillData.baseMagnitude * DamageMult));
+                        GetComponentInParent<StatusEfect>().applyEffects(testedEntity, Effects.EffectApplyType.OnHit);
+                    }
+                   
                 }
             }
             
@@ -142,5 +162,8 @@ public class BasicSkill : BaseSkill
 
     }
 
-   
+    protected virtual void ApplyCastSkillProplys()
+    {
+
+    }
 }

@@ -22,14 +22,17 @@ public class Effects : ScriptableObject
     public EffectApplyType EfectApplyWhen;
 
 #if EfectApplyWhen == OnSkill
-    public string Skill;
+    [Tooltip("Name of the skill which causes this effect")] public string Skill;
 #endif
 
     public Entity.ConditionEffect Effect;
+    [Tooltip("Effect that don't get removed, if they do then ")]
+    public bool permanent;
+    [Tooltip("How Long it effect last for")] 
     public float Duration;
     public buffeType BuffType;
 
-    [Tooltip("is buff type is percent strength is the percent amount, if number then strength is a falt")]
+    [Tooltip("is buff type is percent strength is the percent amount, if number then strength is a falt. - heals intsead")]
     public float Damage;
-    public float TickDamage;
+    [Tooltip(" - heals intsead")]public float TickDamage;
 }
