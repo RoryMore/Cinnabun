@@ -31,7 +31,10 @@ public class SaveManager : MonoBehaviour
     string settingsFileName;
     static string staticSettingsFileName;
 
-    [Space][Space]
+    [Space]
+    [Space]
+    public string upgradeShopSceneName;
+    public static string upgradeShopScene;
     public string gameSceneName;
     // Inspector values of this list are default values.
     // Defaults will be used on first time playing. Future times, access the save file

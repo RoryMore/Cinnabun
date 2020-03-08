@@ -62,16 +62,16 @@ public class CurrencyManager : MonoBehaviour
                 {
                     if (player.isDead)
                     {
-                        int wavesCleared = 0;
-                        // Add an amount of upgrade money = wavesCompleted
-                        foreach (Encounter encounter in enemyManager.encounters)
-                        {
-                            if (encounter.cleared)
-                            {
-                                wavesCleared++;
-                            }
-                        }
-                        AddUpgradeMoney(wavesCleared);
+                        //int wavesCleared = 0;
+                        //// Add an amount of upgrade money = wavesCompleted
+                        //foreach (Encounter encounter in enemyManager.encounters)
+                        //{
+                        //    if (encounter.cleared)
+                        //    {
+                        //        wavesCleared++;
+                        //    }
+                        //}
+                        AddUpgradeMoney(enemyManager.numOfClearedEncounters);
                         SaveManager.SaveUpgradeMoney();
                         upgradeMoneyRewarded = true;
                     }

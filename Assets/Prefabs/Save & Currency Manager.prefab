@@ -60,6 +60,7 @@ MonoBehaviour:
   upgradeSaveFileName: /upgrades.CINNABUN
   upgradeMoneyFileName: /permanentCurrency.CINNABUN
   settingsFileName: /gameSettings.CINNABUN
+  upgradeShopSceneName: SunnyTest
   gameSceneName: NewLevel
   defaultCharacterUpgrades:
     teleportRange:

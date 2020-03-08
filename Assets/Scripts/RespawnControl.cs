@@ -63,21 +63,22 @@ public class RespawnControl : MonoBehaviour
                 }
 
                 //player.transform.position = respawnPoint.position;
-                player.nav.Warp(respawnPoint.position);
-                player.Revive();
-                itemsCleared = false;
+                //player.nav.Warp(respawnPoint.position);
+                //player.Revive();
+                //itemsCleared = false;
+                SceneManager.LoadSceneAsync(SaveManager.upgradeShopScene);
             }
         }
-        else
-        {
-            if (winLoseCanvas != null)
-            {
-                if (winLoseCanvas.gameWon)
-                {
-                    string currentScene = SceneManager.GetActiveScene().name;
-                    SceneManager.LoadSceneAsync(currentScene);
-                }
-            }
-        }
+        //else
+        //{
+        //    if (winLoseCanvas != null)
+        //    {
+        //        if (winLoseCanvas.gameWon)
+        //        {
+        //            string currentScene = SceneManager.GetActiveScene().name;
+        //            SceneManager.LoadSceneAsync(currentScene);
+        //        }
+        //    }
+        //}
     }
 }
