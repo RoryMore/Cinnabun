@@ -244,6 +244,7 @@ public class Encounter : MonoBehaviour
         enemyManager.WaveActive = false;
         enemyManager.inBattle = false;
         enemyManager.SetTimeToNextWave(enemyManager.timeBetweenWaves);
+        
         enemyManager.CheckVictory();
         
     }
