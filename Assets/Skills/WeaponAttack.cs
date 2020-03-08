@@ -321,7 +321,7 @@ public class WeaponAttack : BaseSkill
                 //unarmedDamage += casterSelf.GetStrengthDamageBonus();
                 unarmedDamage = Mathf.Clamp(unarmedDamage, 1, int.MaxValue);
 
-                entityTarget.TakeDamage(unarmedDamage);
+                entityTarget.TakeDamage(unarmedDamage, SkillData.DamageType.PHYSICAL);
 
                 //SoundManager.meleeSwing.Play();
                 break;
@@ -341,7 +341,7 @@ public class WeaponAttack : BaseSkill
                         {
                             weaponhit = true;
 
-                            testedEntity.TakeDamage(swordDamage);
+                            testedEntity.TakeDamage(swordDamage, SkillData.DamageType.PHYSICAL);
                         }
                     }
 
@@ -362,7 +362,7 @@ public class WeaponAttack : BaseSkill
                 {
                     if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                     {
-                        testedEntity.TakeDamage(staffDamage);
+                        testedEntity.TakeDamage(staffDamage, SkillData.DamageType.MAGICAL);
                     }
                 }
                 break;
@@ -372,7 +372,7 @@ public class WeaponAttack : BaseSkill
                 //bowDamage += casterSelf.GetStrengthDamageBonus();
                 bowDamage = Mathf.Clamp(bowDamage, 1, int.MaxValue);
 
-                entityTarget.TakeDamage(bowDamage);
+                entityTarget.TakeDamage(bowDamage, SkillData.DamageType.PHYSICAL);
                 break;
             default:
                 break;
