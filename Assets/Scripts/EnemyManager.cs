@@ -12,6 +12,8 @@ public class EnemyManager : MonoBehaviour
 
     public bool inBattle;
 
+    public int numOfClearedEncounters = 0;
+
     public bool WaveActive;
 
     float waveCooldownTimer;
@@ -56,12 +58,7 @@ public class EnemyManager : MonoBehaviour
                 if (encounter.cleared == false && encounter.gameObject.activeInHierarchy == false)
                 {
                     //UI for "Wave" + encounter list.Count + 1
-                    inBattle = true;
-                    WaveActive = true;
-                    encounter.gameObject.SetActive(true);
-                    encounter.SpawnEnemies();
-
-                    Entity.SetCurrentEncounter(encounter);
+                    ActivateWave(encounter);
                     break;
                 }
             }
@@ -70,7 +67,7 @@ public class EnemyManager : MonoBehaviour
 
     public void CheckVictory()
     {
-        int numOfClearedEncounters = 0;
+        
 
         foreach (Encounter encounter in encounters)
         {
@@ -79,16 +76,39 @@ public class EnemyManager : MonoBehaviour
                 numOfClearedEncounters++;
             }
         }
+        // If the player has beaten every wave
         if (numOfClearedEncounters == encounters.Count)
         {
+           //We want an infinite loop, so reset the list
+           // If in future, we want to specifically alter some waves, we can do so here
+
+        foreach (Encounter encounter in encounters)
+            {
+                encounter.cleared = false;
+                encounter.gameObject.SetActive(false);
+            }
+            //Start at the beginning
+            ActivateWave(encounters[0]);
+
             //You Won!
-            Debug.Log("You win!");
-            weWon = true;
+            //Debug.Log("You win!");
+            //weWon = true;
         }
     }
 
     public void SetTimeToNextWave(float timer)
     {
         waveCooldownTimer = timer;
+    }
+
+    public void ActivateWave(Encounter encounter)
+    {
+        inBattle = true;
+        WaveActive = true;
+        encounter.gameObject.SetActive(true);
+        encounter.Initialise();
+
+        Entity.SetCurrentEncounter(encounter);
+        
     }
 }
