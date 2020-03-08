@@ -148,9 +148,9 @@ public class TextSystem : MonoBehaviour
 
                     Say(text[wordIndex].text[index]);
 				
-					checkIfNull();
-				getBackGroundName();
-					checkBackground();
+					//checkIfNull();
+				//getBackGroundName();
+				//	checkBackground();
 
                 }
 

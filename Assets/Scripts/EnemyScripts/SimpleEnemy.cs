@@ -25,6 +25,7 @@ public class SimpleEnemy : EnemyScript
 
     public List<EnemyScript> enemyForces;
 
+    TextSystem textSystem;
     PauseAbility pauseAbility;
     [SerializeField] private Transform damageNumbers;
 
@@ -77,7 +78,7 @@ public class SimpleEnemy : EnemyScript
 
         currentHP = maxHP;
 
-
+        textSystem = GetComponent<TextSystem>();
 
         target = GameObject.Find("Player").transform;
 
@@ -99,79 +100,79 @@ public class SimpleEnemy : EnemyScript
 
     void Update()
     {
-
        
-        //If we arent Dead...
-        if (!isDead)
-        {
-            
-            // Update turn cooldown
-            Turn();
+                //If we arent Dead...
+                if (!isDead)
+                {
 
-            //Update all cooldowns and conditons
-            UpdateAllConditions();
+                    // Update turn cooldown
+                    Turn();
 
-            //Choose what attack it want's to make this turn assuming we haven't already chosen.
-            if(!hasDecided)
-            {
-                Decide();
-            }
+                    //Update all cooldowns and conditons
+                    UpdateAllConditions();
+
+                    //Choose what attack it want's to make this turn assuming we haven't already chosen.
+                    if (!hasDecided)
+                    {
+                        Decide();
+                    }
             //Choose where we want to go, unless we're melee because we will always want to rush the player
-            if (!destinationLocked && type!= TYPE.MELEE)
-            {
-                ChooseDestination(chosenSkill);
-            }
-            
-
-     
-
-            //Initiate the attack//skill at their earliest convenience
-            Attack(chosenSkill);
-            ///Only call the attack function once because repreated calls stall the enemy
-            if (isAttacking)
-            {
-                //Trigger the skill!
-                chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
-                if (!chosenSkill.currentlyCasting)
-                {
-                    isAttacking = false;
-                    hasDecided = false;
-                    
-                }
-            }
-
-            //at every frame where we AREN'T attacking or using a skill, do the following
-            if (!chosenSkill.currentlyCasting)
-            {
-                //Make sure we are able to move as we disable movement while attacking
-                nav.enabled = true;
-                //Provide evasive manouvres 
-                Evade();
-
-                if (type == TYPE.MELEE)
-                {
-                    Movement(player.transform.position);
-                }
-                else if (type == TYPE.RANGED)
-                {
-                    Movement(destination);
-                }
-
+       
+               
+                    if (!destinationLocked && type != TYPE.MELEE)
+                    {
+                        ChooseDestination(chosenSkill);
+                    }
                 
-            }
-            
-            else
-            {
-                nav.enabled = false;
-            }
+   
+                    //Initiate the attack//skill at their earliest convenience
+                    Attack(chosenSkill);
+                    ///Only call the attack function once because repreated calls stall the enemy
+                    if (isAttacking)
+                    {
+                        //Trigger the skill!
+                        chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
+                        if (!chosenSkill.currentlyCasting)
+                        {
+                            isAttacking = false;
+                            hasDecided = false;
+
+                        }
+                    }
+
+                    //at every frame where we AREN'T attacking or using a skill, do the following
+                    if (!chosenSkill.currentlyCasting)
+                    {
+                        //Make sure we are able to move as we disable movement while attacking
+                        nav.enabled = true;
+                        //Provide evasive manouvres 
+                        Evade();
+
+                        if (type == TYPE.MELEE)
+                        {
+                            Movement(player.transform.position);
+                        }
+                        else if (type == TYPE.RANGED)
+                        {
+                            Movement(destination);
+                        }
+
+
+                    }
+
+                    else
+                    {
+                        nav.enabled = false;
+                    }
 
 
 
-            skillIsCasting = chosenSkill.currentlyCasting;
-            
-            
+                    skillIsCasting = chosenSkill.currentlyCasting;
 
-        }
+
+
+                }
+       
 
 
     }

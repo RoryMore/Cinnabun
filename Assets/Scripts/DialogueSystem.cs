@@ -67,7 +67,7 @@ public class DialogueSystem : MonoBehaviour
    {
         speechPanel.SetActive(true);
         speechText.text = "";
-        speakerNameText.text = DetermineSpeaker();
+       // speakerNameText.text = DetermineSpeaker();
         isWatingForUserInput = false;
 
         while (speechText.text != targetSpeech)
