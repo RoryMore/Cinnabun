@@ -56,7 +56,11 @@ MonoBehaviour:
   casterSelf: {fileID: 0}
   mainCookie: {fileID: 21300000, guid: 720297794a6dade45bdd067a834d121c, type: 3}
   fillCookie: {fileID: 21300000, guid: d40a27d208708ce4ca00ce4f95a6f253, type: 3}
-  explosionRadius: 15
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  explosionRadius: 5
+  explosionDamageMultiplier: 0.4
 --- !u!1001 &4005502552263515046
 PrefabInstance:
   m_ObjectHideFlags: 0

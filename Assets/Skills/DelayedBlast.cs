@@ -6,10 +6,12 @@ using UnityEngine;
 
 public class DelayedBlast : BaseSkill
 {
+    // SUGGESTION: Make the Blast a targetted area.
     Entity entityTarget1 = null;
-    int numOfDelayedBlasts = 0;
-
+    
+    [Header("Blast Explosion")]
     public float explosionRadius;
+    public float explosionDamageMultiplier;
 
     private void Start()
     {
@@ -19,6 +21,11 @@ public class DelayedBlast : BaseSkill
     protected override void Initialise()
     {
         base.Initialise();
+
+        if (SaveManager.GetUpgradeList().blastExplosionRadius != null)
+        {
+            explosionRadius += SaveManager.GetUpgradeList().blastExplosionRadius.GetUpgradedMagnitude();
+        }
     }
 
     private void Update()
@@ -73,7 +80,7 @@ public class DelayedBlast : BaseSkill
             EnableProjector();
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 400))
+            if (Physics.Raycast(ray, out RaycastHit hit, 400, groundMask))
             {
                 Vector3 lookAt = new Vector3(hit.point.x, casterSelf.transform.position.y, hit.point.z);
                 casterSelf.transform.LookAt(lookAt);
@@ -127,73 +134,33 @@ public class DelayedBlast : BaseSkill
     protected override void ActivateSkill(List<Entity> entityList)
     {
         timeBeenOnCooldown = 0.0f;
-        numOfDelayedBlasts = 0;
         timeSpentOnWindUp = 0.0f;
 
         skillState = SkillState.INACTIVE;
 
-        //Assuming the list is empty, give it a delayed blast condition
-        if (entityTarget1.ReturnConditions().Count == 0)
+        entityTarget1.TakeDamage(skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus());
+        entityTarget1.ParticleExplosion();
+
+        if (entityList != null)
         {
-            Entity.Condition delayedBlast = new Entity.Condition();
-            delayedBlast.conditionType = Entity.ConditionType.DELAYEDBLAST;
-            delayedBlast.duration = 9.0f;
-            entityTarget1.currentConditions.Add(delayedBlast);
-            Debug.Log("Tick tick tick...");
-            entityTarget1 = null;
-
-        }
-        else
-        {
-
-            for (int i = 0; i < entityTarget1.currentConditions.Count; i++)
-            {
-                if (entityTarget1.currentConditions[i].conditionType == Entity.ConditionType.DELAYEDBLAST)
-                {
-                    entityTarget1.currentConditions.Remove(entityTarget1.currentConditions[i]);
-                    entityTarget1.TakeDamage(skillData.baseMagnitude);
-                    entityTarget1.ParticleExplosion();
-
-                    if (entityList != null)
-                    {
  
-                        //Deal splash damage to enemies
-                        //rangeIndicator.DrawIndicator(entityTarget1.transform, 360, 0, explosionRadius);
-                        foreach (Entity enemy in entityList)
-                        {
-                            //Make sure we don't deal double damage
-                            if (enemy == entityTarget1)
-                            {
-                                continue;
-                            }
-                            if (Vector3.Distance(enemy.transform.position, entityTarget1.transform.position) < explosionRadius)
-                            {
-                                enemy.TakeDamage(skillData.baseMagnitude);
-
-                                // Call function that activates explosion particles
-                                //enemy.ParticleExplosion();
-                            }
-                        }
-
-                    }
-
-
-                    numOfDelayedBlasts++;
-                    Debug.Log("BOOM!");
-                    entityTarget1 = null;
-                    break;
+            //Deal splash damage to enemies
+            //rangeIndicator.DrawIndicator(entityTarget1.transform, 360, 0, explosionRadius);
+            foreach (Entity enemy in entityList)
+            {
+                //Make sure we don't deal double damage
+                if (enemy == entityTarget1)
+                {
+                    continue;
+                }
+                if (Vector3.Distance(enemy.transform.position, entityTarget1.transform.position) < explosionRadius)
+                {
+                    enemy.TakeDamage(Mathf.RoundToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * explosionDamageMultiplier));
                 }
             }
 
-            if (numOfDelayedBlasts == 0)
-            {
-            Entity.Condition delayedBlast = new Entity.Condition();
-            delayedBlast.conditionType = Entity.ConditionType.DELAYEDBLAST;
-            delayedBlast.duration = 9.0f;
-            entityTarget1.currentConditions.Add(delayedBlast);
-            Debug.Log("Tick tick tick...");
-            entityTarget1 = null;
-            }
         }
+        entityTarget1 = null;
+
     }
 }

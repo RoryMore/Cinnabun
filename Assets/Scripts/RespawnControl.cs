@@ -70,10 +70,13 @@ public class RespawnControl : MonoBehaviour
         }
         else
         {
-            if (winLoseCanvas.gameWon)
+            if (winLoseCanvas != null)
             {
-                string currentScene = SceneManager.GetActiveScene().name;
-                SceneManager.LoadSceneAsync(currentScene);
+                if (winLoseCanvas.gameWon)
+                {
+                    string currentScene = SceneManager.GetActiveScene().name;
+                    SceneManager.LoadSceneAsync(currentScene);
+                }
             }
         }
     }

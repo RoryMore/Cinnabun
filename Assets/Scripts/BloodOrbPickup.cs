@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BloodOrbPickup : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class BloodOrbPickup : MonoBehaviour
     [Tooltip("If isPercentageHealed is TRUE; healAmount is a percentage of that entities maxHP. Else, healAmount is a flat heal value")]
     int healAmount;
 
+    [Header("Dropped Height Above Ground")]
+    [SerializeField]
+    float droppedHeight;
+
     private void Awake()
     {
         attractor = GetComponent<AttractedPickup>();
@@ -22,6 +27,22 @@ public class BloodOrbPickup : MonoBehaviour
         {
             entityToHeal = FindObjectOfType<Player>();
             attractor.SetTarget(entityToHeal.transform);
+        }
+
+        // Make sure we are dropped on the NavMesh
+        if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 20.0f, NavMesh.AllAreas))
+        {
+            transform.position = new Vector3(hit.position.x, hit.position.y + droppedHeight, hit.position.z);
+        }
+        else
+        {
+            Debug.LogError("BloodOrb drop failed to find a suitable position on the NavMesh");
+            Destroy(gameObject);
+        }
+
+        if (SaveManager.GetUpgradeList().bloodOrbEffectiveness != null)
+        {
+            healAmount += Mathf.RoundToInt(SaveManager.GetUpgradeList().bloodOrbEffectiveness.GetUpgradedMagnitude());
         }
     }
 

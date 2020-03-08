@@ -12,6 +12,7 @@ public class WeaponAttack : BaseSkill
         Bow,
         NotInitialised
     }
+    [Space][Space]
     public UsedWeaponType usedWeapon;
     UsedWeaponType oldWeapon;
 
@@ -22,10 +23,10 @@ public class WeaponAttack : BaseSkill
     public float bowRange;
 
     [Header("Damage Multiplier Based on Weapon")]
-    public int unarmedDamageMultiplier;
-    public int swordDamageMultiplier;
-    public int staffDamageMultiplier;
-    public int bowDamageMultiplier;
+    public float unarmedDamageMultiplier;
+    public float swordDamageMultiplier;
+    public float staffDamageMultiplier;
+    public float bowDamageMultiplier;
 
     [Tooltip("The width the line indicator will use. \nAngleWidth will be what is used for sword")]
     //public float lineWidth;
@@ -34,6 +35,24 @@ public class WeaponAttack : BaseSkill
     //Entity caster = null;
 
     bool attackAreaChosen = false;
+
+    [SerializeField]
+    MeshCollider meshCollider;  // MUST BE SET TO A CONVEX MESH FOR ACCURACY
+
+    // Sword will use the default existing mainCookie and fillCookie
+    [Header("Other Weapon Projector Images")]
+    [SerializeField]
+    Sprite unarmedCookie;
+    [SerializeField]
+    Sprite unarmedFillCookie;
+    [SerializeField]
+    Sprite bowCookie;
+    [SerializeField]
+    Sprite bowfillCookie;
+    [SerializeField]
+    Sprite staffCookie;
+    [SerializeField]
+    Sprite staffFillCookie;
 
     private void Start()
     {
@@ -44,6 +63,15 @@ public class WeaponAttack : BaseSkill
     {
         base.Initialise();
         oldWeapon = UsedWeaponType.NotInitialised;
+
+        meshCollider.sharedMesh = GenerateRectHitboxMesh();
+        meshCollider.enabled = false;
+    }
+
+    protected void SetIndicatorImages(Sprite mainCookie, Sprite fillCookie)
+    {
+        projector.material.SetTexture("_ShadowTex", mainCookie.texture);
+        projector.material.SetTexture("_FillTex", fillCookie.texture);
     }
 
     private void Update()
@@ -99,6 +127,7 @@ public class WeaponAttack : BaseSkill
                 {
                     oldWeapon = usedWeapon;
                     skillData.maxRange = unarmedRange;
+                    SetIndicatorImages(unarmedCookie, unarmedFillCookie);
                     
                 }
                 if (entityTarget == null)
@@ -137,7 +166,7 @@ public class WeaponAttack : BaseSkill
                     //rangeIndicator.Init(SkillShape.RADIAL, angle);
                     oldWeapon = usedWeapon;
                     skillData.maxRange = swordRange;
-                    
+                    SetIndicatorImages(mainCookie, fillCookie);
                 }
                 if (!attackAreaChosen)
                 {
@@ -171,7 +200,7 @@ public class WeaponAttack : BaseSkill
                     //rangeIndicator.Init(SkillShape.RECTANGULAR, lineWidth);
                     oldWeapon = usedWeapon;
                     skillData.maxRange = staffRange;
-                    
+                    SetIndicatorImages(staffCookie, staffFillCookie);
                 }
                 if (!attackAreaChosen)
                 {
@@ -205,7 +234,7 @@ public class WeaponAttack : BaseSkill
                     //rangeIndicator.Init(SkillShape.RADIAL, 360.0f);
                     oldWeapon = usedWeapon;
                     skillData.maxRange = bowRange;
-                    
+                    SetIndicatorImages(bowCookie, bowfillCookie);
                 }
                 if (entityTarget == null)
                 {
@@ -288,29 +317,31 @@ public class WeaponAttack : BaseSkill
         switch (usedWeapon)
         {
             case UsedWeaponType.Unarmed:
-                entityTarget.TakeDamage(skillData.baseMagnitude * unarmedDamageMultiplier);
+                int unarmedDamage = Mathf.FloorToInt((skillData.baseMagnitude + casterSelf.GetStrengthDamageBonus()) * unarmedDamageMultiplier);
+                //unarmedDamage += casterSelf.GetStrengthDamageBonus();
+                unarmedDamage = Mathf.Clamp(unarmedDamage, 1, int.MaxValue);
+
+                entityTarget.TakeDamage(unarmedDamage);
 
                 //SoundManager.meleeSwing.Play();
                 break;
 
             case UsedWeaponType.Sword:
                 {
+                    meshCollider.enabled = true;
                     bool weaponhit = false;
+
+                    int swordDamage = Mathf.FloorToInt((skillData.baseMagnitude + casterSelf.GetStrengthDamageBonus()) * swordDamageMultiplier);
+                    //swordDamage += casterSelf.GetStrengthDamageBonus();
+                    swordDamage = Mathf.Clamp(swordDamage, 1, int.MaxValue);
+
                     foreach (Entity testedEntity in entityList)
                     {
-                        //if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
-                        //{
-                        //    weaponhit = true;
-                        //    testedEntity.TakeDamage(skillData.baseMagnitude * swordDamageMultiplier);
-                        //}
-                        if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
+                        if (CheckPointInRectCollider(meshCollider, testedEntity.transform.position))
                         {
                             weaponhit = true;
 
-                            int swordDamage = Mathf.FloorToInt((float)skillData.baseMagnitude * swordDamageMultiplier);
-                            swordDamage = Mathf.Clamp(swordDamage, 1, 99999);
-
-                            testedEntity.TakeDamage(swordDamage + casterSelf.GetStrengthDamageBonus());
+                            testedEntity.TakeDamage(swordDamage);
                         }
                     }
 
@@ -323,17 +354,25 @@ public class WeaponAttack : BaseSkill
                 }
 
             case UsedWeaponType.Staff:
+                int staffDamage = Mathf.FloorToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * staffDamageMultiplier);
+                //staffDamage += casterSelf.GetIntellectDamageBonus();
+                staffDamage = Mathf.Clamp(staffDamage, 1, int.MaxValue);
+
                 foreach (Entity testedEntity in entityList)
                 {
                     if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                     {
-                        testedEntity.TakeDamage(skillData.baseMagnitude * staffDamageMultiplier);
+                        testedEntity.TakeDamage(staffDamage);
                     }
                 }
                 break;
 
             case UsedWeaponType.Bow:
-                entityTarget.TakeDamage(skillData.baseMagnitude * bowDamageMultiplier);
+                int bowDamage = Mathf.FloorToInt((skillData.baseMagnitude + casterSelf.GetStrengthDamageBonus()) * bowDamageMultiplier);
+                //bowDamage += casterSelf.GetStrengthDamageBonus();
+                bowDamage = Mathf.Clamp(bowDamage, 1, int.MaxValue);
+
+                entityTarget.TakeDamage(bowDamage);
                 break;
             default:
                 break;
@@ -343,6 +382,8 @@ public class WeaponAttack : BaseSkill
         attackAreaChosen = false;
         timeSpentOnWindUp = 0.0f;
         skillState = SkillState.INACTIVE;
+
+        meshCollider.enabled = false;
     }
 
     // Needs to be called if they start using a new weapon
