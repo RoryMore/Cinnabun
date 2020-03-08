@@ -8,8 +8,10 @@ public class Entity : MonoBehaviour
     
     public struct Condition
     {
-        public int damage;  // If this condition deals damage, this is how much damage is dealt each time damage is dealt
+        public float damage;  // If this condition deals damage, this is how much damage is dealt each time damage is dealt
         public float damageTickRate; // The rate at which this condition will deal its damage
+
+        public bool permanent;//will the effect be remove though time
         public float duration; //The duration of the condition
         public ConditionEffect conditionType; //Name of condition
         public int BuffStat;
@@ -24,6 +26,7 @@ public class Entity : MonoBehaviour
         {
             damage = 0;
             damageTickRate = 0;
+            permanent = false;
             duration = _duration;
             conditionType = _conditionType;
             timePassed = 0;
@@ -35,6 +38,7 @@ public class Entity : MonoBehaviour
         {
             damage = 0;
             damageTickRate = 0;
+            permanent = false;
             duration = _duration;
             conditionType = _conditionType;
             timePassed = 0;
@@ -43,10 +47,11 @@ public class Entity : MonoBehaviour
             effectivePercent = Effectiveness;
         }
 
-        public Condition(float _duration, ConditionEffect _conditionType, int _damage, float _damageTickRate)
+        public Condition(float _duration, ConditionEffect _conditionType, float _damage, float _damageTickRate)
         {
             damage = _damage;
             damageTickRate = _damageTickRate;
+            permanent = false;
             duration = _duration;
             conditionType = _conditionType;
             timePassed = 0;
@@ -55,10 +60,11 @@ public class Entity : MonoBehaviour
             effectivePercent = 1.0f;
         }
 
-        public Condition(float _duration, ConditionEffect _conditionType, float _effectivePercent, int _damage, float _damageTickRate)
+        public Condition(float _duration, ConditionEffect _conditionType, float _effectivePercent, float _damage, float _damageTickRate)
         {
             damage = _damage;
             damageTickRate = _damageTickRate;
+            permanent = false;
             duration = _duration;
             conditionType = _conditionType;
             timePassed = 0;
@@ -258,7 +264,7 @@ public class Entity : MonoBehaviour
                         // After every second deal burn damage
                         if (condition.timePassed >= condition.damageTickRate)
                         {
-                            TakeDamage(condition.damage);
+                            TakeDamage((int)condition.damage);
 
                             // Reset the timePassed value
                             condition.ResetTimePassed();
@@ -286,7 +292,7 @@ public class Entity : MonoBehaviour
 
                         if (condition.timePassed >= condition.damageTickRate)
                         {
-                            TakeDamage(condition.damage);
+                            TakeDamage((int)condition.damage);
                             condition.ResetTimePassed();
                         }
                     }

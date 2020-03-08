@@ -2,25 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Charge : BaseSkill
+public class BasicSkill : BaseSkill
 {
-    BoxCollider Box;
-    [SerializeField] float Timer;
-    float MaxTimer;
-    [SerializeField]  bool TimerON = false;
-    public float Speed;
-    void Start()
+    public enum WhenApplyed
     {
-        //Call init in start
-        Initialise();
-        MaxTimer = skillData.maxRange/ (100 * Speed);
-        
-        Box = GetComponent<BoxCollider>();
+        Start,
+        Hit,
+        End,
     }
 
-    protected override void Initialise()
+   
+    [Header("Targeting")]
+   [Tooltip("if only hiting player")] [SerializeField] private bool TargetPlayer;
+    [Tooltip("if only not hiting player")] [SerializeField] private bool IgnorePlayer;
+    //public Effects[] StatusEffects;
+    private Entity Entity;
+    private Entity.Condition[] Conditions;
+    // Start is called before the first frame update
+    //void Start()
+    //{
+    //    //Call init in start
+    //    Initialise();
+    //}
+
+    protected virtual void Initialise(Entity _Entity)
     {
         //Init to make sure its clean
+        Entity = _Entity;
         base.Initialise();
     }
 
@@ -29,23 +37,6 @@ public class Charge : BaseSkill
     {
         //Every skill uses this in their update, zero exceptions
         SkillDeltaUpdate();
-        if (TimerON)
-        {
-
-            if (Timer <= 0)
-            {
-                Debug.Log("triger");
-                Box.enabled = false;
-                TimerON = false;
-               
-                skillState = SkillState.INACTIVE;
-            }
-            else
-            { 
-                gameObject.transform.parent.transform.Translate(transform.forward* Speed);
-                Timer -= Time.deltaTime;
-            }
-        }
     }
 
     public override void TriggerSkill(List<Entity> entityList)
@@ -85,7 +76,9 @@ public class Charge : BaseSkill
             case SkillState.DOAFFECT:
                 {
                     //Debug.Log("Skill Effect Activated");
+                    Debug.Log("effect");
                     ActivateSkill(entityList);
+
                     break;
                 }
         }
@@ -108,40 +101,69 @@ public class Charge : BaseSkill
         if (timeSpentOnWindUp >= skillData.windUp)
         {
             skillState = SkillState.DOAFFECT;
-
+            GetComponentInParent<StatusEfect>().applyEffects(Entity, Effects.EffectApplyType.StartSkill);
             //ActivateSkill();
 
             DisableProjector();
         }
+        ApplyCastSkillProplys();
     }
 
     protected override void ActivateSkill(List<Entity> entityList)
     {
+        Debug.Log("dummyattack");
         base.ActivateSkill();
-        timeBeenOnCooldown = 0.0f;
-        timeSpentOnWindUp = 0.0f;
-        currentlyCasting = false;
 
 
         // Intended effect here. Be it damage or otherwise
         // This includes checking if target is in range and such
 
-        Box.enabled = true;
-        Timer = MaxTimer;
-        TimerON = true;
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
+        ApplySkillProplys();
+
+        foreach (Entity testedEntity in entityList)
         {
-            collision.gameObject.GetComponent<Entity>().TakeDamage(skillData.baseMagnitude);
-        }
-        else
-        {
-            if (collision.gameObject.CompareTag("Enemy"))
+            if (testedEntity != casterSelf)
             {
-                collision.gameObject.GetComponent<Entity>().TakeDamage(skillData.baseMagnitude);
+                if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
+                {
+                    if (TargetPlayer)
+                    {
+                        if (testedEntity.name == "Player")
+                        {
+                            //testedEntity.TakeDamage((int)(skillData.baseMagnitude* DamageMult));
+                            GetComponentInParent<StatusEfect>().applyEffects(testedEntity, Effects.EffectApplyType.OnHit);
+                        }
+                    }else
+                    if (IgnorePlayer)
+                    {
+                        if (testedEntity.name != "Player")
+                        {
+                            //testedEntity.TakeDamage((int)(skillData.baseMagnitude * DamageMult));
+                            GetComponentInParent<StatusEfect>().applyEffects(testedEntity, Effects.EffectApplyType.OnHit);
+                        }
+                    }else
+                    {
+                       // testedEntity.TakeDamage((int)(skillData.baseMagnitude * DamageMult));
+                        GetComponentInParent<StatusEfect>().applyEffects(testedEntity, Effects.EffectApplyType.OnHit);
+                    }
+                   
+                }
             }
+            
         }
+        GetComponentInParent<StatusEfect>().applyEffects(Entity, Effects.EffectApplyType.EndSkill);
+        //ApplySkillProplys(List<Entity> entityList)
+        
+        
+
+    }
+    protected virtual void ApplySkillProplys()
+    {
+
+    }
+
+    protected virtual void ApplyCastSkillProplys()
+    {
+
     }
 }
