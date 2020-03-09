@@ -13,6 +13,8 @@ public class DelayedBlast : BaseSkill
     public float explosionRadius;
     public float explosionDamageMultiplier;
 
+    CameraController cameraController;
+
     private void Start()
     {
         Initialise();
@@ -21,7 +23,7 @@ public class DelayedBlast : BaseSkill
     protected override void Initialise()
     {
         base.Initialise();
-
+        cameraController = FindObjectOfType<CameraController>();
         if (SaveManager.GetUpgradeList().blastExplosionRadius != null)
         {
             explosionRadius += SaveManager.GetUpgradeList().blastExplosionRadius.GetUpgradedMagnitude();
@@ -138,7 +140,13 @@ public class DelayedBlast : BaseSkill
 
         skillState = SkillState.INACTIVE;
 
-        entityTarget1.TakeDamage(skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus(), skillData.damageType);
+        // Whether the hit is a crit or not is rolled independantly for each target
+        // Create local bool here which equals casterSelf.CalculateCriticalStrike() and use that result to have the entire skill crit or not. Not independant per target
+
+        // Camera shake effect on explosion
+        StartCoroutine(cameraController.cShake(0.5f, 1.5f));
+
+        entityTarget1.TakeDamage(skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus(), skillData.damageType, casterSelf.CalculateCriticalStrike());
         entityTarget1.ParticleExplosion();
 
         if (entityList != null)
@@ -155,7 +163,7 @@ public class DelayedBlast : BaseSkill
                 }
                 if (Vector3.Distance(enemy.transform.position, entityTarget1.transform.position) < explosionRadius)
                 {
-                    enemy.TakeDamage(Mathf.RoundToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * explosionDamageMultiplier), skillData.damageType);
+                    enemy.TakeDamage(Mathf.RoundToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * explosionDamageMultiplier), skillData.damageType, casterSelf.CalculateCriticalStrike());
                 }
             }
 

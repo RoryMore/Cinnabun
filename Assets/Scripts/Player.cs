@@ -310,24 +310,41 @@ public class Player : Entity
         }
     }
 
-    public override void TakeDamage(int amount, SkillData.DamageType damageType)
+    public override void TakeDamage(int amount, SkillData.DamageType damageType, bool isCrit)
     {
-        animator.SetTrigger("gotHit");
         StartCoroutine(cameraShake.cShake(.3f, 1f));
+
+        base.TakeDamage(amount, damageType, isCrit);
+
+        animator.SetTrigger("gotHit");
         ParticleHit();
-        base.TakeDamage(Mathf.Clamp(amount - DamageNegated(amount, damageType), 0, int.MaxValue));
+    }
+
+    public override void TakeDamage(int amount)
+    {
+        StartCoroutine(cameraShake.cShake(.3f, 1f));
+
+        //Vector3 popUpSpawn = new Vector3(Random.Range(-0.9f, 0.3f), Random.Range(-0.9f, 0.3f) + 3, 0);
+
+        //DamagePopUp damagePopUpNumber = Instantiate(damageNumber, transform.position + popUpSpawn, Quaternion.identity).GetComponent<DamagePopUp>();
+        //damagePopUpNumber.SetUp(amount, false);
+
+        base.TakeDamage(amount);
+
+        animator.SetTrigger("gotHit");
+        ParticleHit();
     }
 
     //void UpdateSkillCooldowns()
     //{
-        //if (weaponAttack != null)
-        //{
-            //weaponAttack.ProgressCooldown();
-        //}
-       // foreach (SkillData checkedSkill in skillList)
-        //{
-            //checkedSkill.ProgressCooldown();
-        //}
+    //if (weaponAttack != null)
+    //{
+    //weaponAttack.ProgressCooldown();
+    //}
+    // foreach (SkillData checkedSkill in skillList)
+    //{
+    //checkedSkill.ProgressCooldown();
+    //}
     //}
 
     void Move()

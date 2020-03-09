@@ -437,11 +437,17 @@ public class SimpleEnemy : EnemyScript
     }
 
 
-    public override void TakeDamage(int amount, SkillData.DamageType damageType)
+    public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
-       Create(transform.position, amount, false);
-         
+        //Create(transform.position, amount, false);
+
+        anim.SetTrigger("getHit");
+    }
+
+    public override void TakeDamage(int amount, SkillData.DamageType damageType, bool isCrit)
+    {
+        base.TakeDamage(amount, damageType, isCrit);
         anim.SetTrigger("getHit");
     }
 

@@ -188,6 +188,8 @@ MonoBehaviour:
   destination: {x: 0, y: 0, z: 0}
   chosenSkill: {fileID: 0}
   nav: {fileID: 0}
+  damageNumber: {fileID: 8057154830621439696, guid: aefb4825a32499e40a5dfd55fcf983d7,
+    type: 3}
   enemyCooldown: 0
   initiativeSpeed: 0
   enemyTakingAction: 0
@@ -195,9 +197,10 @@ MonoBehaviour:
   timeSpentDoingAction: 0
   turnSpeed: 1
   anim: {fileID: 2442032239992892080}
-  hitParticles: {fileID: 0}
+  hitParticles: {fileID: 7205109164804254991}
   enemyManager: {fileID: 0}
   myEncounter: {fileID: 0}
+  isActive: 0
   isAttacking: 0
   isEvading: 0
   skillIsCasting: 0

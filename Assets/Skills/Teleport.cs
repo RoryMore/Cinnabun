@@ -141,7 +141,7 @@ public class Teleport : BaseSkill
         }
         //entityTarget1.transform.position = teleportLocation;
         
-        entityTarget1.TakeDamage(skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus(), skillData.damageType);
+        entityTarget1.TakeDamage(skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus(), skillData.damageType, casterSelf.CalculateCriticalStrike());
 
         entityTarget1 = null;
         teleportLocation.Set(0, 0, 0);

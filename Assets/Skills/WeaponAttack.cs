@@ -60,6 +60,8 @@ public class WeaponAttack : BaseSkill
     Vector3 slashLocation = Vector3.zero;
     Quaternion slashRotation = Quaternion.identity;
 
+    CameraController cameraController;
+
     private void Start()
     {
         Initialise();
@@ -72,6 +74,8 @@ public class WeaponAttack : BaseSkill
 
         meshCollider.sharedMesh = GenerateRectHitboxMesh();
         meshCollider.enabled = false;
+
+        cameraController = GetComponent<CameraController>();
     }
 
     protected void SetIndicatorImages(Sprite mainCookie, Sprite fillCookie)
@@ -336,7 +340,7 @@ public class WeaponAttack : BaseSkill
                 //unarmedDamage += casterSelf.GetStrengthDamageBonus();
                 unarmedDamage = Mathf.Clamp(unarmedDamage, 1, int.MaxValue);
 
-                entityTarget.TakeDamage(unarmedDamage, SkillData.DamageType.PHYSICAL);
+                entityTarget.TakeDamage(unarmedDamage, SkillData.DamageType.PHYSICAL, casterSelf.CalculateCriticalStrike());
 
                 //SoundManager.meleeSwing.Play();
                 break;
@@ -352,19 +356,24 @@ public class WeaponAttack : BaseSkill
                     //swordDamage += casterSelf.GetStrengthDamageBonus();
                     swordDamage = Mathf.Clamp(swordDamage, 1, int.MaxValue);
 
+                    // Whether the hit is a crit or not is rolled independantly for each target
+                    // Create local bool here which equals casterSelf.CalculateCriticalStrike() and use that result to have the entire skill crit or not. Not independant per target
+
                     foreach (Entity testedEntity in entityList)
                     {
                         if (CheckPointInRectCollider(meshCollider, testedEntity.transform.position))
                         {
                             weaponhit = true;
 
-                            testedEntity.TakeDamage(swordDamage, SkillData.DamageType.PHYSICAL);
+                            testedEntity.TakeDamage(swordDamage, SkillData.DamageType.PHYSICAL, casterSelf.CalculateCriticalStrike());
                         }
                     }
 
                     if (weaponhit)
                     {
                         SoundManager.meleeSwing.Play(0);
+
+                        // Do a camera shake effect
                     }
                     //SoundManager.meleeSwing.Play(0);
                     break;
@@ -379,7 +388,7 @@ public class WeaponAttack : BaseSkill
                 {
                     if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                     {
-                        testedEntity.TakeDamage(staffDamage, SkillData.DamageType.MAGICAL);
+                        testedEntity.TakeDamage(staffDamage, SkillData.DamageType.MAGICAL, casterSelf.CalculateCriticalStrike());
                     }
                 }
                 break;
@@ -389,7 +398,7 @@ public class WeaponAttack : BaseSkill
                 //bowDamage += casterSelf.GetStrengthDamageBonus();
                 bowDamage = Mathf.Clamp(bowDamage, 1, int.MaxValue);
 
-                entityTarget.TakeDamage(bowDamage, SkillData.DamageType.PHYSICAL);
+                entityTarget.TakeDamage(bowDamage, SkillData.DamageType.PHYSICAL, casterSelf.CalculateCriticalStrike());
                 break;
             default:
                 break;
