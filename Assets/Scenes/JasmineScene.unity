@@ -4447,6 +4447,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
         type: 3}
+      propertyPath: spawnPoints.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
+        type: 3}
       propertyPath: inventory
       value: 
       objectReference: {fileID: 2065094111}
@@ -4502,12 +4507,12 @@ PrefabInstance:
     - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
         type: 3}
       propertyPath: waveType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
         type: 3}
       propertyPath: milestone
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
         type: 3}

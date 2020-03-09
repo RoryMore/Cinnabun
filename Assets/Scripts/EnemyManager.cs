@@ -6,7 +6,6 @@ public class EnemyManager : MonoBehaviour
 {
     public GameObject player;
     public List<Encounter> encounters;
-    public float maxEncounterDistance;
 
     public bool weWon;
 
@@ -15,6 +14,9 @@ public class EnemyManager : MonoBehaviour
     public int numOfClearedEncounters = 0;
 
     public bool WaveActive;
+
+    [HideInInspector]
+    public Encounter enemyMangerCurrentEncounter;
 
     float waveCooldownTimer;
     public float timeBetweenWaves;
@@ -41,16 +43,23 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         UpdateActiveEncounters();
-        if (WaveActive == false)
+        if (inBattle == false)
         {
             waveCooldownTimer -= Time.deltaTime;
         }
+
+        if (Input.GetKeyDown("y"))
+        {
+            enemyMangerCurrentEncounter.SetActiveBehavior();
+        }
+
     }
 
     public void UpdateActiveEncounters()
     {
-        if (WaveActive == false && waveCooldownTimer <= 0.0f)
+        if (inBattle == false && waveCooldownTimer <= 0.0f)
         {
             foreach (Encounter encounter in encounters)
             {
@@ -107,6 +116,7 @@ public class EnemyManager : MonoBehaviour
         WaveActive = true;
         encounter.gameObject.SetActive(true);
         encounter.Initialise();
+        enemyMangerCurrentEncounter = encounter;
 
         Entity.SetCurrentEncounter(encounter);
         
