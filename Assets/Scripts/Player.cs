@@ -10,7 +10,7 @@ public class Player : Entity
     public float moveRaycastDistance;
     public CameraController cameraShake;
     TextSystem textSystem;
-
+    [HideInInspector] public bool triggerBox = false;
     public enum PlayerState
     {
         FREE,
@@ -540,4 +540,24 @@ public class Player : Entity
     //    Gizmos.color = Color.red;
     //    Gizmos.DrawLine(transform.position, transform.forward * 2.0f);
     //}
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (triggerBox == false)
+        {
+            if (other.tag == "TriggerBox")
+            {
+                Debug.Log("I walked through it");
+                triggerBox = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "TriggerBox")
+        {
+            Destroy(other);
+        }
+    }
 }

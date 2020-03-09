@@ -12,6 +12,7 @@ TagManager:
   - HideOnPause
   - PlayerUI
   - VisualNovel
+  - TriggerBox
   layers:
   - Default
   - TransparentFX
