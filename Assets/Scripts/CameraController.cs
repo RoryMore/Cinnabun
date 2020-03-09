@@ -68,6 +68,8 @@ public class CameraController : MonoBehaviour
         // While RMB is held
         if (Input.GetMouseButton(2))
         {
+            mouseXSens = SaveManager.GetSettings().cameraMoveSensitivity;
+
             xAngle += Input.GetAxis("Mouse X") * xSpeed * mouseXSens * Time.unscaledDeltaTime * (invertMouseXAxis ? -1.0f : 1.0f);
 
             // If there is any object obstructing vision from the Camera to Focused Transform

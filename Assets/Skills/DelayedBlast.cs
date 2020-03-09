@@ -138,7 +138,7 @@ public class DelayedBlast : BaseSkill
 
         skillState = SkillState.INACTIVE;
 
-        entityTarget1.TakeDamage(skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus());
+        entityTarget1.TakeDamage(skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus(), skillData.damageType);
         entityTarget1.ParticleExplosion();
 
         if (entityList != null)
@@ -155,7 +155,7 @@ public class DelayedBlast : BaseSkill
                 }
                 if (Vector3.Distance(enemy.transform.position, entityTarget1.transform.position) < explosionRadius)
                 {
-                    enemy.TakeDamage(Mathf.RoundToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * explosionDamageMultiplier));
+                    enemy.TakeDamage(Mathf.RoundToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * explosionDamageMultiplier), skillData.damageType);
                 }
             }
 

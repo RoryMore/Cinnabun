@@ -437,7 +437,7 @@ public class SimpleEnemy : EnemyScript
     }
 
 
-    public override void TakeDamage(int amount)
+    public override void TakeDamage(int amount, SkillData.DamageType damageType)
     {
         base.TakeDamage(amount);
        Create(transform.position, amount, false);
