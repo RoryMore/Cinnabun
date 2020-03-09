@@ -12,6 +12,9 @@ public class SimpleEnemy : EnemyScript
     Transform target;
     Player player; //All intents and purposes, same as target but target is just the transform
 
+    //[HideInInspector]
+    public bool isActive;
+
     [SerializeField]
     bool isAttacking = false;
     [SerializeField]
@@ -94,54 +97,63 @@ public class SimpleEnemy : EnemyScript
 
         chosenSkill = skillList[0];
 
+        isActive = true;
+
     }
 
 
 
     void Update()
     {
-       
-                //If we arent Dead...
-                if (!isDead)
+
+        if(isActive)
+
+        {
+            //If we arent Dead...
+            if (!isDead)
+            {
+
+                // Update turn cooldown
+                Turn();
+
+                //Update all cooldowns and conditons
+                UpdateAllConditions();
+
+                //Choose what attack it want's to make this turn assuming we haven't already chosen.
+                if (!hasDecided)
                 {
+                    Decide();
+                }
+                //Choose where we want to go, unless we're melee because we will always want to rush the player
+                if (!destinationLocked && type != TYPE.MELEE)
+                {
+                    ChooseDestination(chosenSkill);
+                }
 
-                    // Update turn cooldown
-                    Turn();
 
-                    //Update all cooldowns and conditons
-                    UpdateAllConditions();
 
-                    //Choose what attack it want's to make this turn assuming we haven't already chosen.
-                    if (!hasDecided)
-                    {
-                        Decide();
-                    }
-            //Choose where we want to go, unless we're melee because we will always want to rush the player
-       
-               
-                    if (!destinationLocked && type != TYPE.MELEE)
-                    {
-                        ChooseDestination(chosenSkill);
-                    }
-                
-   
-                    //Initiate the attack//skill at their earliest convenience
-                    Attack(chosenSkill);
-                    ///Only call the attack function once because repreated calls stall the enemy
-                    if (isAttacking)
-                    {
-                        //Trigger the skill!
-                        chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
-                        if (!chosenSkill.currentlyCasting)
-                        {
-                            isAttacking = false;
-                            hasDecided = false;
 
-                        }
-                    }
+                Attack(chosenSkill);
+                //Initiate the attack//skill at their earliest convenience
 
-                    //at every frame where we AREN'T attacking or using a skill, do the following
+                ///Only call the attack function once because repreated calls stall the enemy
+                if (isAttacking)
+                {
+                    //Trigger the skill!
+                    chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
                     if (!chosenSkill.currentlyCasting)
+                    {
+                        isAttacking = false;
+                        hasDecided = false;
+
+                    }
+                }
+
+                //at every frame where we AREN'T attacking or using a skill, do the following
+
+                foreach (BaseSkill skill in skillList)
+                {
+                    if (!skill.currentlyCasting)
                     {
                         //Make sure we are able to move as we disable movement while attacking
                         nav.enabled = true;
@@ -165,14 +177,26 @@ public class SimpleEnemy : EnemyScript
                         nav.enabled = false;
                     }
 
-
-
-                    skillIsCasting = chosenSkill.currentlyCasting;
-
-
-
                 }
-       
+
+
+
+
+                skillIsCasting = chosenSkill.currentlyCasting;
+
+            }
+
+                    else
+                    {
+                        nav.enabled = false;
+                    }
+
+
+
+
+
+        }
+
 
 
     }
@@ -329,7 +353,7 @@ public class SimpleEnemy : EnemyScript
                                                             chosenSkill.skillData.minRange,
                                                             chosenSkill.skillData.maxRange,
                                                             chosenSkill.skillData.nearWidth,
-                                                            chosenSkill.skillData.farWidth))
+                                                            chosenSkill.skillData.farWidth)) 
 
                         {
                             //Check if damage of prior skill is greater than base damange
@@ -484,6 +508,12 @@ public class SimpleEnemy : EnemyScript
 
 
 
+    }
+
+    public void SwitchActiveBehavior()
+    {
+        nav.enabled = !nav.enabled;
+        isActive = !isActive;
     }
 
 

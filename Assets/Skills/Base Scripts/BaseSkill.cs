@@ -63,9 +63,9 @@ public class BaseSkill : MonoBehaviour
 
     [Header("Indicator Image Settings")]
     [SerializeField]
-    Sprite mainCookie;
+    protected Sprite mainCookie;
     [SerializeField]
-    Sprite fillCookie;
+    protected Sprite fillCookie;
 
     [Header("Ground Layer Mask if necessary to use")]
     public LayerMask groundMask;
@@ -161,6 +161,7 @@ public class BaseSkill : MonoBehaviour
         {
             case SkillState.CASTING:
                 {
+                    Debug.Log("SkillUpdate: Casting windUp being incremented");
                     // Increment the delta value for time spent casting ability
                     timeSpentOnWindUp += Time.deltaTime;
                     //Debug.Log("Cast time for Windup being calculated and passed to shader");

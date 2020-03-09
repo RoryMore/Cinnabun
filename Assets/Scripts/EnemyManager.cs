@@ -6,13 +6,17 @@ public class EnemyManager : MonoBehaviour
 {
     public GameObject player;
     public List<Encounter> encounters;
-    public float maxEncounterDistance;
 
     public bool weWon;
 
     public bool inBattle;
 
+    public int numOfClearedEncounters = 0;
+
     public bool WaveActive;
+
+    [HideInInspector]
+    public Encounter enemyMangerCurrentEncounter;
 
     float waveCooldownTimer;
     public float timeBetweenWaves;
@@ -39,16 +43,23 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         UpdateActiveEncounters();
-        if (WaveActive == false)
+        if (inBattle == false)
         {
             waveCooldownTimer -= Time.deltaTime;
         }
+
+        if (Input.GetKeyDown("y"))
+        {
+            enemyMangerCurrentEncounter.SetActiveBehavior();
+        }
+
     }
 
     public void UpdateActiveEncounters()
     {
-        if (WaveActive == false && waveCooldownTimer <= 0.0f)
+        if (inBattle == false && waveCooldownTimer <= 0.0f)
         {
             foreach (Encounter encounter in encounters)
             {
@@ -56,12 +67,7 @@ public class EnemyManager : MonoBehaviour
                 if (encounter.cleared == false && encounter.gameObject.activeInHierarchy == false)
                 {
                     //UI for "Wave" + encounter list.Count + 1
-                    inBattle = true;
-                    WaveActive = true;
-                    encounter.gameObject.SetActive(true);
-                    encounter.SpawnEnemies();
-
-                    Entity.SetCurrentEncounter(encounter);
+                    ActivateWave(encounter);
                     break;
                 }
             }
@@ -70,7 +76,7 @@ public class EnemyManager : MonoBehaviour
 
     public void CheckVictory()
     {
-        int numOfClearedEncounters = 0;
+        
 
         foreach (Encounter encounter in encounters)
         {
@@ -79,16 +85,40 @@ public class EnemyManager : MonoBehaviour
                 numOfClearedEncounters++;
             }
         }
+        // If the player has beaten every wave
         if (numOfClearedEncounters == encounters.Count)
         {
+           //We want an infinite loop, so reset the list
+           // If in future, we want to specifically alter some waves, we can do so here
+
+        foreach (Encounter encounter in encounters)
+            {
+                encounter.cleared = false;
+                encounter.gameObject.SetActive(false);
+            }
+            //Start at the beginning
+            ActivateWave(encounters[0]);
+
             //You Won!
-            Debug.Log("You win!");
-            weWon = true;
+            //Debug.Log("You win!");
+            //weWon = true;
         }
     }
 
     public void SetTimeToNextWave(float timer)
     {
         waveCooldownTimer = timer;
+    }
+
+    public void ActivateWave(Encounter encounter)
+    {
+        inBattle = true;
+        WaveActive = true;
+        encounter.gameObject.SetActive(true);
+        encounter.Initialise();
+        enemyMangerCurrentEncounter = encounter;
+
+        Entity.SetCurrentEncounter(encounter);
+        
     }
 }
