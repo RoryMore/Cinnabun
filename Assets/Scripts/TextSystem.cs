@@ -9,7 +9,7 @@ public class TextSystem : MonoBehaviour
     public static TextSystem instance;
     SpeechText speechText;
     DialogueSystem dialogue;
-	
+	EnemyManager enemyManager;
 	GameObject[] playerUI;
 
 	[Header("Text Settings")]
@@ -107,7 +107,7 @@ public class TextSystem : MonoBehaviour
 		dialogue = DialogueSystem.instance;
 		speechText = GetComponent<SpeechText>();
 		playerUI = GameObject.FindGameObjectsWithTag("PlayerUI");
-
+		enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
 		dialogue.waitfor = textSpeed;
 	}
 
@@ -128,6 +128,7 @@ public class TextSystem : MonoBehaviour
                 {
                     if (index >= text[wordIndex].text.Length)
                     {
+						enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior();
 						hideNovel = true;
 						Debug.Log("Text,Done");
 						novelActive = true;
@@ -148,9 +149,9 @@ public class TextSystem : MonoBehaviour
 
                     Say(text[wordIndex].text[index]);
 				
-					checkIfNull();
-				getBackGroundName();
-					checkBackground();
+					//checkIfNull();
+				//getBackGroundName();
+				//	checkBackground();
 
                 }
 
@@ -227,7 +228,8 @@ public class TextSystem : MonoBehaviour
     {
         if (GameStart == true)
         {
-			getBackGroundName();
+			//getBackGroundName();
+			enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior();
 			Say(text[wordIndex].text[index]);
 			//checkIfNull();
 			//checkBackground();
