@@ -88,7 +88,7 @@ public class SimpleEnemy : EnemyScript
 
         pauseAbility = GameObject.Find("PauseMenuUI").GetComponent<PauseAbility>();
 
-        basicAttack = GetComponentInChildren<BaseSkill>();
+        basicAttack = transform.GetChild(7).GetComponent<BaseSkill>();//GetComponentInChildren<BaseSkill>();
 
 
 
@@ -432,7 +432,7 @@ public class SimpleEnemy : EnemyScript
     }
 
 
-    public override void TakeDamage(int amount)
+    public override void TakeDamage(int amount, SkillData.DamageType damageType)
     {
         base.TakeDamage(amount);
        Create(transform.position, amount, false);

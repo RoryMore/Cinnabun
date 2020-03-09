@@ -55,7 +55,7 @@ public class EnemyScript : Entity
 
     }
 
-    public override void TakeDamage(int amount)
+    public override void TakeDamage(int amount, SkillData.DamageType damageType = SkillData.DamageType.PHYSICAL)
     {
         Debug.Log("OOF x " + amount);
         if (isDead)
