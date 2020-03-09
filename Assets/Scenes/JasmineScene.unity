@@ -1613,6 +1613,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
         type: 3}
+      propertyPath: itemSpawner.commonItems.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
+        type: 3}
       propertyPath: inventory
       value: 
       objectReference: {fileID: 2065094111}
@@ -1620,6 +1625,17 @@ PrefabInstance:
         type: 3}
       propertyPath: spawnPoints.Array.data[1]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
+        type: 3}
+      propertyPath: itemSpawner.commonItems.Array.data[0]
+      value: 
+      objectReference: {fileID: 1526126495533058551, guid: eeb43a808647605409122699c649cd63,
+        type: 3}
+    - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
+        type: 3}
+      propertyPath: itemSpawner.commonRatio
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7232339297610492455, guid: 3439b444dacb43f4aa477ee2f85d6f78,
         type: 3}
@@ -4167,6 +4183,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
         type: 3}
+      propertyPath: itemSpawner.commonItems.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
+        type: 3}
       propertyPath: inventory
       value: 
       objectReference: {fileID: 2065094111}
@@ -4175,6 +4196,17 @@ PrefabInstance:
       propertyPath: spawnPoints.Array.data[1]
       value: 
       objectReference: {fileID: 1812731552}
+    - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
+        type: 3}
+      propertyPath: itemSpawner.commonItems.Array.data[0]
+      value: 
+      objectReference: {fileID: 1526126495533058551, guid: eeb43a808647605409122699c649cd63,
+        type: 3}
+    - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
+        type: 3}
+      propertyPath: itemSpawner.commonRatio
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7232339297610492455, guid: 3439b444dacb43f4aa477ee2f85d6f78,
         type: 3}
       propertyPath: m_IsActive

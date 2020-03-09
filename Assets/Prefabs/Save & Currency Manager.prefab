@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7b92c052a67bf54e95700045ae9579e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nonStat_gameSceneName: NewLevel
 --- !u!114 &2063185482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,10 +56,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e5e686b63c40342a33e434f6637144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeSaveFileName: /upgrades.ugs
-  upgradeMoneyFileName: /permanentCurrency.pcs
-  settingsFileName: /gameSettings.gss
-  gameSceneName: NewLevel
+  upgradeSaveFileName: /upgrades.CINNABUN
+  upgradeMoneyFileName: /permanentCurrency.CINNABUN
+  settingsFileName: /gameSettings.CINNABUN
+  upgradeShopSceneName: SunnyTest
+  gameSceneName: JasmineScene
   defaultCharacterUpgrades:
     teleportRange:
       maxUpgrades: 3
@@ -93,7 +93,7 @@ MonoBehaviour:
   defaultSettings:
     musicVolume: 1
     sfxVolume: 1
-    cameraMoveSensitivity: 0.5
+    cameraMoveSensitivity: 4
     keybindings:
       toggleInventory: 105
       pauseAbility: 32
