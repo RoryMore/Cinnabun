@@ -275,5 +275,16 @@ public class Encounter : MonoBehaviour
         }
     }
 
+    public void SetActiveBehavior()
+    {
+
+        foreach (SimpleEnemy enemy in masterInitiativeList)
+        {
+            enemy.SwitchActiveBehavior();
+        }
+
+        
+    }
+
 
 }

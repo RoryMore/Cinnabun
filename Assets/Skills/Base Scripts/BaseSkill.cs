@@ -161,6 +161,7 @@ public class BaseSkill : MonoBehaviour
         {
             case SkillState.CASTING:
                 {
+                    Debug.Log("SkillUpdate: Casting windUp being incremented");
                     // Increment the delta value for time spent casting ability
                     timeSpentOnWindUp += Time.deltaTime;
                     //Debug.Log("Cast time for Windup being calculated and passed to shader");
