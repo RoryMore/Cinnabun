@@ -15,9 +15,10 @@ public class EnemyManager : MonoBehaviour
 
     public bool WaveActive;
 
-    [HideInInspector]
+    //[HideInInspector]
     public Encounter enemyMangerCurrentEncounter;
 
+    [SerializeField]
     float waveCooldownTimer;
     public float timeBetweenWaves;
 
@@ -37,6 +38,9 @@ public class EnemyManager : MonoBehaviour
         {
             encounter.enemyManager = this;
         }
+
+        //Start with First basic wave
+        ActivateWave(encounters[0]);
         
     }
 
@@ -50,27 +54,29 @@ public class EnemyManager : MonoBehaviour
             waveCooldownTimer -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown("y"))
-        {
-            enemyMangerCurrentEncounter.SetActiveBehavior();
-        }
-
     }
 
     public void UpdateActiveEncounters()
     {
         if (inBattle == false && waveCooldownTimer <= 0.0f)
         {
-            foreach (Encounter encounter in encounters)
+            int randNum = Random.Range(0, encounters.Count);
+
+            if (encounters[randNum].cleared == false && encounters[randNum].gameObject.activeInHierarchy == false)
             {
-                //If it's not cleared and we don't already have a wave going...
-                if (encounter.cleared == false && encounter.gameObject.activeInHierarchy == false)
-                {
-                    //UI for "Wave" + encounter list.Count + 1
-                    ActivateWave(encounter);
-                    break;
-                }
+                ActivateWave(encounters[randNum]);
             }
+
+            //foreach (Encounter encounter in encounters)
+            //{
+            //    //If it's not cleared and we don't already have a wave going...
+            //    if (encounter.cleared == false && encounter.gameObject.activeInHierarchy == false)
+            //    {
+            //        //UI for "Wave" + encounter list.Count + 1
+            //        ActivateWave(encounter);
+            //        break;
+            //    }
+            //}
         }
     }
 
@@ -86,12 +92,12 @@ public class EnemyManager : MonoBehaviour
             }
         }
         // If the player has beaten every wave
-        if (numOfClearedEncounters == encounters.Count)
+        if (numOfClearedEncounters >= encounters.Count)
         {
            //We want an infinite loop, so reset the list
            // If in future, we want to specifically alter some waves, we can do so here
 
-        foreach (Encounter encounter in encounters)
+            foreach (Encounter encounter in encounters)
             {
                 encounter.cleared = false;
                 encounter.gameObject.SetActive(false);
