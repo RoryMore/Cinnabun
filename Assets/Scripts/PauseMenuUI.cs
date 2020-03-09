@@ -75,6 +75,13 @@ public class PauseMenuUI : MonoBehaviour
             }
             player = false;
         }
+        if (isPaused == true)
+        {
+            foreach (GameObject g in playerUI)
+            {
+                g.SetActive(false);
+            }
+        }
 
     }
 

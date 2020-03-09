@@ -554,10 +554,9 @@ public class Player : Entity
 
     private void OnTriggerExit(Collider other)
     {
-       /* if (other.tag == "TriggerBox")
+        if (other.tag == "TriggerBox")
         {
-            Debug.Log("I walked through it");
-            triggerBox = true;
-        }*/
+            Destroy(other);
+        }
     }
 }
