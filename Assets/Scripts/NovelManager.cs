@@ -25,7 +25,7 @@ public class NovelManager : MonoBehaviour
 
     void test()
     {
-        if (player.triggerBox == true)
+        if (player.triggerBox == true || Input.GetKeyDown(KeyCode.L))
         {
            
             visualNovel.SetActive(true);
