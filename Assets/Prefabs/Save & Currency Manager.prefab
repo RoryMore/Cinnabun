@@ -61,7 +61,7 @@ MonoBehaviour:
   upgradeMoneyFileName: /permanentCurrency.CINNABUN
   settingsFileName: /gameSettings.CINNABUN
   upgradeShopSceneName: SunnyTest
-  gameSceneName: NewLevel
+  gameSceneName: JasmineScene
   defaultCharacterUpgrades:
     teleportRange:
       maxUpgrades: 3

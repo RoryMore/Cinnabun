@@ -54,6 +54,12 @@ public class WeaponAttack : BaseSkill
     [SerializeField]
     Sprite staffFillCookie;
 
+    [Header("VFX Particles")]
+    [SerializeField]
+    GameObject swordSlashParticles;
+    Vector3 slashLocation = Vector3.zero;
+    Quaternion slashRotation = Quaternion.identity;
+
     private void Start()
     {
         Initialise();
@@ -77,6 +83,15 @@ public class WeaponAttack : BaseSkill
     private void Update()
     {
         SkillDeltaUpdate();
+
+        if (slashLocation != Vector3.zero)
+        {
+            swordSlashParticles.transform.position = slashLocation;
+        }
+        if (slashRotation != Quaternion.identity)
+        {
+            swordSlashParticles.transform.rotation = slashRotation;
+        }
     }
 
     public override void TriggerSkill(List<Entity> entityList, LayerMask layerMask)
@@ -328,6 +343,8 @@ public class WeaponAttack : BaseSkill
 
             case UsedWeaponType.Sword:
                 {
+                    ActivateSwordParticles();
+
                     meshCollider.enabled = true;
                     bool weaponhit = false;
 
@@ -398,6 +415,20 @@ public class WeaponAttack : BaseSkill
         else
         {
             skillData.damageType = SkillData.DamageType.PHYSICAL;
+        }
+    }
+
+    private void ActivateSwordParticles()
+    {
+        if (swordSlashParticles != null)
+        {
+            swordSlashParticles.SetActive(false);
+            swordSlashParticles.SetActive(true);
+
+            slashLocation = transform.position;
+            slashLocation = slashLocation + (transform.forward * 1.67f);
+            slashRotation = transform.rotation;
+            slashRotation.eulerAngles = new Vector3(-90, slashRotation.eulerAngles.y, slashRotation.eulerAngles.z);
         }
     }
 }

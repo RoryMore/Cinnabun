@@ -314,7 +314,7 @@ public class Player : Entity
     {
         animator.SetTrigger("gotHit");
         StartCoroutine(cameraShake.cShake(.3f, 1f));
-
+        ParticleHit();
         base.TakeDamage(Mathf.Clamp(amount - DamageNegated(amount, damageType), 0, int.MaxValue));
     }
 

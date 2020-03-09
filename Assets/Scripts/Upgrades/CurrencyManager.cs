@@ -6,7 +6,7 @@ using UnityEditor;
 
 public class CurrencyManager : MonoBehaviour
 {
-    public string nonStat_gameSceneName;
+    //public string nonStat_gameSceneName;
     public static string gameSceneName;
 
     [Header("Currencies")]
@@ -28,7 +28,7 @@ public class CurrencyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameSceneName = nonStat_gameSceneName;
+        gameSceneName = SaveManager.gameScene;
 
         
         //staticUpgradeMoney = upgradeMoney;
@@ -39,7 +39,6 @@ public class CurrencyManager : MonoBehaviour
             //gold = 0;
             staticGold = 0;
             player = FindObjectOfType<Player>();
-            enemyManager = FindObjectOfType<EnemyManager>();
         }
 
         upgradeMoneyRewarded = false;
@@ -62,17 +61,9 @@ public class CurrencyManager : MonoBehaviour
                 {
                     if (player.isDead)
                     {
-                        //int wavesCleared = 0;
-                        //// Add an amount of upgrade money = wavesCompleted
-                        //foreach (Encounter encounter in enemyManager.encounters)
-                        //{
-                        //    if (encounter.cleared)
-                        //    {
-                        //        wavesCleared++;
-                        //    }
-                        //}
-                        AddUpgradeMoney(enemyManager.numOfClearedEncounters);
-                        SaveManager.SaveUpgradeMoney();
+                        
+                        
+                        
                         upgradeMoneyRewarded = true;
                     }
                 }
@@ -83,7 +74,9 @@ public class CurrencyManager : MonoBehaviour
     public static void AddUpgradeMoney(int value)
     {
         staticUpgradeMoney += value;
+        Debug.Log("CurrencyManager: Money Rewarded = " + value);
         staticUpgradeMoney = Mathf.Clamp(staticUpgradeMoney, 0, int.MaxValue);
+        Debug.Log("CurrencyManager: staticUpgradeMoney = " + staticUpgradeMoney);
     }
 
     public static void DeductUpgradeMoney(int value)

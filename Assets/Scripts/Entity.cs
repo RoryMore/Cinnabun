@@ -153,9 +153,11 @@ public class Entity : MonoBehaviour
     [Header("Encounter")]
     public static Encounter currentEncounter;
 
-    [Header("Damaged VFX")]
+    [Header("VFX")]
     [SerializeField]
     GameObject explosionParticles;
+    [SerializeField]
+    GameObject hitParticles;
 
     // Variables needed for enemies to function efficiently without additional list
     [HideInInspector]
@@ -214,7 +216,7 @@ public class Entity : MonoBehaviour
     //Default condition format
     public virtual void TakeDamage(int amount, SkillData.DamageType damageType = SkillData.DamageType.PHYSICAL)
     {
-        Debug.Log("OOF x " + amount);
+        //Debug.Log("OOF x " + amount);
         if (isDead)
             return;
 
@@ -492,6 +494,15 @@ public class Entity : MonoBehaviour
         {
             explosionParticles.SetActive(false);
             explosionParticles.SetActive(true);
+        }
+    }
+
+    public void ParticleHit()
+    {
+        if (hitParticles != null)
+        {
+            hitParticles.SetActive(false);
+            hitParticles.SetActive(true);
         }
     }
 }
