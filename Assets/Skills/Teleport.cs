@@ -26,6 +26,17 @@ public class Teleport : BaseSkill
         }
     }
 
+    /// <summary>
+    /// Used when the player wishes to unSelect the skill
+    /// </summary>
+    public override void ResetSkillVars()
+    {
+        base.ResetSkillVars();
+        destination1Set = false;
+        entityTarget1 = null;
+        teleportLocation.Set(0, 0, 0);
+    }
+
     private void Update()
     {
         SkillDeltaUpdate();

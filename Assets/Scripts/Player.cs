@@ -23,7 +23,8 @@ public class Player : Entity
     [Header("Skills & Casting")]
     public WeaponAttack weaponAttack;
     public List<BaseSkill> skillList;
-    [HideInInspector] public BaseSkill selectedSkill = null;
+    //[HideInInspector] 
+    public BaseSkill selectedSkill = null;
 
     public PauseAbility pause = null;
     PauseMenuUI pauseMenu = null;
@@ -295,8 +296,7 @@ public class Player : Entity
                             }
                         }
 
-
-                        if (Input.GetMouseButtonDown(1))
+                        if (Input.GetMouseButtonDown(1) && !selectedSkill.currentlyCasting)
                         {
                             CancelSkillSelection();
                         }
@@ -475,6 +475,7 @@ public class Player : Entity
     public void CancelSkillSelection()
     {
         selectedSkill.DisableProjector();
+        selectedSkill.ResetSkillVars();
         selectedSkill = null;
         playerState = PlayerState.FREE;
         nav.angularSpeed = turningSpeed;

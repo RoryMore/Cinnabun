@@ -78,6 +78,15 @@ public class WeaponAttack : BaseSkill
         cameraController = GetComponent<CameraController>();
     }
 
+    public override void ResetSkillVars()
+    {
+        base.ResetSkillVars();
+        attackAreaChosen = false;
+        entityTarget = null;
+        slashLocation = Vector3.zero;
+        slashRotation = Quaternion.identity;
+    }
+
     protected void SetIndicatorImages(Sprite mainCookie, Sprite fillCookie)
     {
         projector.material.SetTexture("_ShadowTex", mainCookie.texture);

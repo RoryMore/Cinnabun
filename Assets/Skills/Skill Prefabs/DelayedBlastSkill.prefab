@@ -56,7 +56,7 @@ MonoBehaviour:
   currentlyCasting: 0
   isAllowedToCast: 1
   casterSelf: {fileID: 0}
-  mainCookie: {fileID: 21300000, guid: 86fdcda00d6ed354893ecc5b80e017e8, type: 3}
+  mainCookie: {fileID: 21300000, guid: 761c5c78d9ecbaf4c869e9a9e5c951a8, type: 3}
   fillCookie: {fileID: 21300000, guid: 8415458c730a9e34b9667c9806adb970, type: 3}
   groundMask:
     serializedVersion: 2

@@ -31,6 +31,22 @@ public class DelayedBlast : BaseSkill
         Initialise();
     }
 
+    public override void DisableProjector()
+    {
+        base.DisableProjector();
+        if (explosionProjector.enabled)
+        {
+            explosionProjector.enabled = false;
+        }
+    }
+
+    public override void ResetSkillVars()
+    {
+        base.ResetSkillVars();
+        explosionLocationSet = false;
+        explosionLocation = Vector3.zero;
+    }
+
     protected override void Initialise()
     {
         base.Initialise();
@@ -150,6 +166,10 @@ public class DelayedBlast : BaseSkill
     protected override void CastSkill()
     {
         DisableProjector();
+        if (!explosionProjector.enabled)
+        {
+            explosionProjector.enabled = true;
+        }
         //SetFillType(fillType);
 
         currentlyCasting = true;
