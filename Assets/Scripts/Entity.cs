@@ -155,8 +155,7 @@ public class Entity : MonoBehaviour
     public static Encounter currentEncounter;
 
     [Header("VFX")]
-    [SerializeField]
-    GameObject explosionParticles;
+    //GameObject explosionParticles;    // DelayedBlast handles the explosion now
     [SerializeField]
     GameObject hitParticles;
 
@@ -536,15 +535,6 @@ public class Entity : MonoBehaviour
     }
 
     //End of Rewind Features
-
-    public void ParticleExplosion()
-    {
-        if (explosionParticles != null)
-        {
-            explosionParticles.SetActive(false);
-            explosionParticles.SetActive(true);
-        }
-    }
 
     public void ParticleHit()
     {
