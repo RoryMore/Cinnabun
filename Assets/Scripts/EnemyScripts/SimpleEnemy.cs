@@ -463,7 +463,7 @@ public class SimpleEnemy : EnemyScript
 
         GetComponent<BloodOrbDropControl>().DropItem(transform.position);
 
-        myEncounter.itemSpawner.SpawnItem(transform.position);
+        ItemSpawner.SpawnItem(transform.position);
     }
 
     public void Create(Vector3 position, int damageAmount, bool crit)

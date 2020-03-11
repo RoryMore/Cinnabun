@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 059f6bcc50c845540a7039bccdc67d1b, type: 3}
+  m_Name: CommonLegs1
+  m_EditorClassIdentifier: 
+  itemType: 1
+  armourType: 0
+  weaponType: 0
+  equipmentSlot: 3
+  applyRandomStats: 1
+  strength: 0
+  agility: 0
+  constitution: 0
+  intellect: 0
+  physicalArmour: 0
+  magicalArmour: 0
+  strengthRangeMin: 3
+  strengthRangeMax: 6
+  agilityRangeMin: 0
+  agilityRangeMax: 0
+  constitutionRangeMin: 3
+  constitutionRangeMax: 5
+  intellectRangeMin: 0
+  intellectRangeMax: 0
+  physicalArmourRangeMin: 3
+  physicalArmourRangeMax: 6
+  magicalArmourRangeMin: 3
+  magicalArmourRangeMax: 6
+  inventorySprite: {fileID: 21300000, guid: 23f267142481dcb468b618cb9b42fde6, type: 3}
+  equippedSprite: {fileID: 21300000, guid: 23f267142481dcb468b618cb9b42fde6, type: 3}
+  inventorySpaceX: 2
+  inventorySpaceY: 3
+  rarity: 0
+  itemName: LEG_NAME
