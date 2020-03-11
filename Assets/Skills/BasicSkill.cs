@@ -12,12 +12,12 @@ public class BasicSkill : BaseSkill
     }
 
    
-    [Header("Targeting")]
+    [Header("Targeting")]   
    [Tooltip("if only hiting player")] [SerializeField] private bool TargetPlayer;
     [Tooltip("if only not hiting player")] [SerializeField] private bool IgnorePlayer;
     //public Effects[] StatusEffects;
     private Entity Entity;
-    private Entity.Condition[] Conditions;
+    //private Entity.Condition[] Conditions;
     // Start is called before the first frame update
     //void Start()
     //{
@@ -101,8 +101,16 @@ public class BasicSkill : BaseSkill
         if (timeSpentOnWindUp >= skillData.windUp)
         {
             skillState = SkillState.DOAFFECT;
-            GetComponentInParent<StatusEfect>().applyEffects(Entity, Effects.EffectApplyType.StartSkill);
-            //ActivateSkill();
+           
+            if (GetComponentInParent<StatusEfect>())
+            {
+                GetComponentInParent<StatusEfect>().applyEffects(Entity, Effects.EffectApplyType.StartSkill);
+            }
+
+            if (GetComponentInParent<BuffEffect>())
+            {
+                GetComponentInParent<BuffEffect>().applyEffects(Entity, Buff.EffectApplyType.StartSkill);
+            }//ActivateSkill();
 
             DisableProjector();
         }
@@ -126,35 +134,33 @@ public class BasicSkill : BaseSkill
             {
                 if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                 {
-                    if (TargetPlayer)
-                    {
-                        if (testedEntity.name == "Player")
+                    
+                        // testedEntity.TakeDamage((int)(skillData.baseMagnitude * DamageMult));
+
+                        if (GetComponentInParent<StatusEfect>())
                         {
-                            //testedEntity.TakeDamage((int)(skillData.baseMagnitude* DamageMult));
                             GetComponentInParent<StatusEfect>().applyEffects(testedEntity, Effects.EffectApplyType.OnHit);
                         }
-                    }else
-                    if (IgnorePlayer)
+
+                    if (GetComponentInParent<BuffEffect>())
                     {
-                        if (testedEntity.name != "Player")
-                        {
-                            //testedEntity.TakeDamage((int)(skillData.baseMagnitude * DamageMult));
-                            GetComponentInParent<StatusEfect>().applyEffects(testedEntity, Effects.EffectApplyType.OnHit);
-                        }
-                    }else
-                    {
-                       // testedEntity.TakeDamage((int)(skillData.baseMagnitude * DamageMult));
-                        GetComponentInParent<StatusEfect>().applyEffects(testedEntity, Effects.EffectApplyType.OnHit);
+                        GetComponentInParent<BuffEffect>().applyEffects(testedEntity, Buff.EffectApplyType.OnHit);
                     }
-                   
                 }
-            }
-            
+            }  
         }
-        GetComponentInParent<StatusEfect>().applyEffects(Entity, Effects.EffectApplyType.EndSkill);
-        //ApplySkillProplys(List<Entity> entityList)
-        
-        
+
+        if (GetComponentInParent<StatusEfect>())
+        {
+            GetComponentInParent<StatusEfect>().applyEffects(Entity, Effects.EffectApplyType.EndSkill);
+        }
+
+        if (GetComponentInParent<BuffEffect>())
+        {
+            GetComponentInParent<BuffEffect>().applyEffects(Entity, Buff.EffectApplyType.EndSkill);
+        }//ApplySkillProplys(List<Entity> entityList)
+
+
 
     }
     protected virtual void ApplySkillProplys()

@@ -20,11 +20,11 @@ public class StatusEfect : MonoBehaviour
                     //add condition to entity basiced on if it is percent damage
                         if (item.BuffType == Effects.buffeType.Percent)
                         {
-                        entity.currentConditions.Add(new Entity.Condition(item.Duration, item.Effect, item.Damage, 0, item.TickDamage));
+                        entity.currentEffConditions.Add(new Entity.ConditionEff(item.Duration, item.Effect, item.Damage));
                         }
                         else
                         {
-                        entity.currentConditions.Add(new Entity.Condition(item.Duration, item.Effect, 0, item.Damage, item.TickDamage));
+                        entity.currentEffConditions.Add(new Entity.ConditionEff(item.Duration, item.Effect, item.Damage, item.TickDamage));
                         }             
                 }
                 else
@@ -32,9 +32,9 @@ public class StatusEfect : MonoBehaviour
                     //set duration to need effect duration if lower
                     if (StatusEffects[checkLoctation].Duration< item.Duration)//Duration of the contration vs 
                     {
-                        var temp = entity.currentConditions[checkLoctation];
+                        var temp = entity.currentEffConditions[checkLoctation];
                         temp.duration = item.Duration;
-                        entity.currentConditions[checkLoctation] = temp;
+                        entity.currentEffConditions[checkLoctation] = temp;
                     }
                 }
             }
@@ -45,7 +45,7 @@ public class StatusEfect : MonoBehaviour
     public bool CheckToContrion(Entity entity, Effects efect)
 {
         int Cyle=0;
-    foreach (var item in entity.currentConditions)
+    foreach (var item in entity.currentEffConditions)
     {
         if (item.conditionType == efect.Effect)
         {
@@ -56,23 +56,22 @@ public class StatusEfect : MonoBehaviour
     }
     return false; 
 }
-    public void RemoveEffect(Entity entity, Effects effectApply)
-    {
-        CheckToContrion(entity, effectApply);
+    //public void RemoveEffect(Entity entity, Effects effectApply)
+    //{
+    //    CheckToContrion(entity, effectApply);
 
-        foreach (Entity.Condition item in entity.currentConditions)
-        {
-            if (effectApply.Effect == item.conditionType)
-            {
-                if (effectApply.permanent == item.permanent)
-                {
-                    entity.currentConditions.Remove(item);
-                    return;
-                }
-            }
-        }
-
-    Debug.LogError("Couldn't Remove Effect: "+ effectApply.Effect);
+    //    foreach (Entity.Condition item in entity.currentEffConditions)
+    //    {
+    //        if (effectApply.Effect == item.conditionType)
+    //        {
+    //            if (effectApply.permanent == item.permanent)
+    //            {
+    //                entity.currentConditions.Remove(item);
+    //                return;
+    //            }
+    //        }
+    //    }
+    //Debug.LogError("Couldn't Remove Effect: "+ effectApply.Effect);
        
-    }
+    //}
 }

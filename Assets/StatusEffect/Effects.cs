@@ -15,15 +15,13 @@ public class Effects : ScriptableObject
         StartSkill,//trigger on BaseSkill
         OnDamage,
         OnHit,//trigger on BaseSkill
-        OnSkill,
+       // OnSkill,
         EndSkill,//trigger on BaseSkill
         Death
     }
     public EffectApplyType EfectApplyWhen;
 
-#if EfectApplyWhen == OnSkill
-    [Tooltip("Name of the skill which causes this effect")] public string Skill;
-#endif
+
 
     public Entity.ConditionEffect Effect;
     [Tooltip("Effect that don't get removed, if they do then ")]

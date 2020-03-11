@@ -5,73 +5,50 @@ using UnityEngine.AI;
 
 public class Entity : MonoBehaviour
 {
-    
-    public struct Condition
+    public struct ConditionBuf
     {
-        public float damage;  // If this condition deals damage, this is how much damage is dealt each time damage is dealt
-        public float damageTickRate; // The rate at which this condition will deal its damage
-
-        public bool permanent;//will the effect be remove though time
+        
         public float duration; //The duration of the condition
-        public ConditionEffect conditionType; //Name of condition
-        public int BuffStat;
+        public ConditionBuff conditionType; //Name of condition
+
+        public string BuffStat;
+        public float Buff;  // If this condition deals damage, this is how much damage is dealt each time damage is dealt
         public float effectivePercent; // If this condition uses any percent value in any way
 
         public float timePassed;
         public bool begun;
 
-       
 
-        public Condition(float _duration, ConditionEffect _conditionType)
-        {
-            damage = 0;
-            damageTickRate = 0;
-            permanent = false;
-            duration = _duration;
-            conditionType = _conditionType;
-            timePassed = 0;
-            begun = false;
-            BuffStat = 0;
-            effectivePercent = 1.0f;
-        }
-        public Condition(float _duration, ConditionEffect _conditionType, float Effectiveness)
-        {
-            damage = 0;
-            damageTickRate = 0;
-            permanent = false;
-            duration = _duration;
-            conditionType = _conditionType;
-            timePassed = 0;
-            begun = false;
-            BuffStat = 0;
-            effectivePercent = Effectiveness;
-        }
+        //public ConditionBuf(float _duration, ConditionBuff _conditionType, string _BuffStat, float _Effectiveness)
+        //{
+        //    duration = _duration;
+        //    conditionType = _conditionType;
+            
+        //    BuffStat = _BuffStat;
+        //    Buff = 0; 
+        //    effectivePercent = _Effectiveness;
 
-        public Condition(float _duration, ConditionEffect _conditionType, float _damage, float _damageTickRate)
+        //    timePassed = 0;
+        //    begun = false;
+
+            
+        //}
+
+
+        public ConditionBuf(float _duration, ConditionBuff _conditionType, float _Buff, string _BuffStat)
         {
-            damage = _damage;
-            damageTickRate = _damageTickRate;
-            permanent = false;
             duration = _duration;
             conditionType = _conditionType;
+            
+            BuffStat = _BuffStat;
+            Buff = _Buff;
+            effectivePercent = 0;
+
             timePassed = 0;
             begun = false;
-            BuffStat = 0;
-            effectivePercent = 1.0f;
         }
 
-        public Condition(float _duration, ConditionEffect _conditionType, float _effectivePercent, float _damage, float _damageTickRate)
-        {
-            damage = _damage;
-            damageTickRate = _damageTickRate;
-            permanent = false;
-            duration = _duration;
-            conditionType = _conditionType;
-            timePassed = 0;
-            begun = false;
-            BuffStat = 0;
-            effectivePercent = _effectivePercent;
-        }
+
 
         public void ReduceDuration(float reducedBy)
         {
@@ -90,30 +67,90 @@ public class Entity : MonoBehaviour
             begun = true;
         }
     }
-    public enum ConditionTypeA
+    public struct ConditionEff
     {
-        DELAYEDBLAST,
-        [Tooltip("Deals damage over time based on damage and tickrate")]
-        BURN,
-        [Tooltip("Deals damage over time based on damage and tickrate, and also applies a slow multiplying movementSpeed by effective percent")]
-        POISON
+        public float damage;  // If this condition deals damage, this is how much damage is dealt each time damage is dealt
+        public float damageTickRate; // The rate at which this condition will deal its damage
+
+        public float duration; //The duration of the condition
+        public ConditionEffect conditionType; //Name of condition
+        public float effectivePercent; // If this condition uses any percent value in any way
+
+        public float timePassed;
+        public bool begun;
+
+       
+        public ConditionEff(float _duration, ConditionEffect _conditionType, float Effectiveness)
+        {
+            damage = 0;
+            damageTickRate = 0;
+           
+            duration = _duration;
+            conditionType = _conditionType;
+            timePassed = 0;
+            begun = false;
+            
+            effectivePercent = Effectiveness;
+        }
+
+        public ConditionEff(float _duration, ConditionEffect _conditionType, float _damage, float _damageTickRate)
+        {
+            damage = _damage;
+            damageTickRate = _damageTickRate;
+            
+            duration = _duration;
+            conditionType = _conditionType;
+            timePassed = 0;
+            begun = false;
+            
+            effectivePercent = 1.0f;
+        }
+
+       
+
+        public void ReduceDuration(float reducedBy)
+        {
+            duration -= reducedBy;
+
+            timePassed += reducedBy;
+        }
+
+        public void ResetTimePassed()
+        {
+            timePassed = 0.0f;
+        }
+
+        public void BeginStart()
+        {
+            begun = true;
+        }
     }
     public enum ConditionEffect
     {
-        DELAYEDBLAST,
-        [Tooltip("Deals damage over time based on damage and tickrate")]
-        BURN,
-         [Tooltip("Deals damage over time based on damage and tickrate, and also applies a slow multiplying movementSpeed by effective percent")]
-        POISON
+        [Tooltip("cancel action")]
+        STUN,
+        [Tooltip("Moving deals Dot damage")]
+        SPIKED,
     }
-
+    public enum ConditionBuff
+    {
+        [Tooltip("Increased dodge")]
+        DODGE,
+        [Tooltip("ReduceCoolDown")]
+        FOCUS,
+        [Tooltip("Attacks are boosted we'll defence is lowered")]
+        RAGE,
+        [Tooltip("death cause Entity to explored")]
+        UNSTABLE,
+    }
     public struct RewindPoint
     {
         public int currentHealthRewind;
         public bool isDeadRewind;
         public Vector3 locationRewind;
         public Quaternion rotaionRewind;
-        public List<Condition> currentConditionsRewind;
+        public List<ConditionEff> currentConditionEffsRewind;
+        public List<ConditionBuf> currentConditionBufsRewind;
 
     }
 
@@ -150,7 +187,8 @@ public class Entity : MonoBehaviour
     public int magDamageReduction;
 
     [Header("Conditions and Immunities")]
-    public List<Condition> currentConditions;
+    public List<ConditionEff> currentEffConditions;
+    public List<ConditionBuf> currentBufConditions;
     public bool cannotBeTeleported;
 
     [Header("Rewind Point")]
@@ -241,85 +279,90 @@ public class Entity : MonoBehaviour
 
     public void UpdateAllConditions()
     {
-        if (currentConditions.Count != 0)
+        if (currentEffConditions.Count != 0)
         {
             int conditionIndex = 0;
-            foreach (Condition condition in currentConditions)
+            foreach (ConditionEff condition in currentEffConditions)
             {
-                if (condition.conditionType == ConditionEffect.DELAYEDBLAST)
+                switch (condition.conditionType)
                 {
-                    //Do the thing!
-                    //Wait for player input of kaboom
-                    //If have condition, detonate and remove condition
-
-                }
-                else if (condition.conditionType == ConditionEffect.BURN)
-                {
-                    // Does this condition still have time to continue being active?
-                    if (condition.duration > 0)
-                    {
-                        // Reduce the condition time
-                        condition.ReduceDuration(Time.deltaTime);
-
-                        // After every second deal burn damage
-                        if (condition.timePassed >= condition.damageTickRate)
-                        {
-                            TakeDamage((int)condition.damage);
-
-                            // Reset the timePassed value
-                            condition.ResetTimePassed();
-                        }
-                    }
-                    else
-                    {
-                        // This condition has timed out
-                        // Remove it
-                        currentConditions.RemoveAt(conditionIndex);
-                    }
-                }
-                else if (condition.conditionType == ConditionEffect.POISON)
-                {
-                    if (!condition.begun)
-                    {
-                        condition.BeginStart();
-                        originalMovementSpeed = movementSpeed;
-
-                        movementSpeed = movementSpeed * condition.effectivePercent;
-                    }
-                    if (condition.duration > 0)
-                    {
-                        condition.ReduceDuration(Time.deltaTime);
-
-                        if (condition.timePassed >= condition.damageTickRate)
-                        {
-                            TakeDamage((int)condition.damage);
-                            condition.ResetTimePassed();
-                        }
-                    }
-                    else
-                    {
-                        movementSpeed = originalMovementSpeed;
-
-                        // This condition has timed out
-                        // Remove it
-                        currentConditions.RemoveAt(conditionIndex);
-                    }
+                    case ConditionEffect.STUN:
+                        //entity can't do anything
+                        break;
+                    case ConditionEffect.SPIKED:
+                        //if move do damage
+                        break;
+                    default:
+                        break;
                 }
 
-                //At moment of adding condition
-                //timeLeft = condition.duration;
+                if (condition.duration > 0)
+                {
+                    condition.ReduceDuration(Time.deltaTime);
+                }
+                else
+                {
+                    currentEffConditions.RemoveAt(conditionIndex);
+                }
+                conditionIndex++;
+            }
+        }
 
-                //timeLeft -= Time.DeltaTime;
-                //if (timeLeft >= 0)
-                //{
-                //remove condition
-                // }
+        if (currentBufConditions.Count != 0)
+        {
+            int conditionIndex = 0;
+            foreach (ConditionBuf condition in currentBufConditions)
+            {
+                
 
+                if (condition.duration > 0)
+                {
+                    condition.ReduceDuration(Time.deltaTime);
+                }
+                else
+                {
+                    //remove buff
+                    switch (condition.conditionType)
+                    {
+                        case ConditionBuff.DODGE:
+                            //remove dodge effect
+                            break;
+                        case ConditionBuff.FOCUS:
+                            //remove cooldown reduetion
+                            break;
+                        case ConditionBuff.RAGE:
+                            //reduce damage
+                            break;
+                        case ConditionBuff.UNSTABLE:
+                            //remove effect
+                            break;
+                        default:
+                            break;
+                    }
+                    currentEffConditions.RemoveAt(conditionIndex);
+                }
                 conditionIndex++;
             }
         }
 
         RecordRewind();
+    }
+
+    public void ApplyBuff()
+    {
+        switch (currentBufConditions[currentBufConditions.Count].BuffStat) {
+            case "Attack":
+                break;
+            case "Death":
+                break;
+            case "SkillCooldown":
+                break;
+            case "Dodge":
+                break;
+            default:
+                break;
+
+        };
     }
 
     public void CalculateMaxHP()
@@ -402,8 +445,9 @@ public class Entity : MonoBehaviour
 
     public void InitialiseAll()
     {
-        currentConditions = new List<Condition>();
-        
+        currentEffConditions = new List<ConditionEff>();
+        currentBufConditions = new List<ConditionBuf>();
+
         rewindPoints = new List<RewindPoint>();
         
 
@@ -435,9 +479,13 @@ public class Entity : MonoBehaviour
     }
 
 
-    public List<Condition> ReturnConditions()
+    public List<ConditionEff> ReturnConditionEffs()
     {
-        return currentConditions;
+        return currentEffConditions;
+    }
+    public List<ConditionBuf> ReturnConditionBufs()
+    {
+        return currentBufConditions;
     }
 
     public Encounter ReturnEncounter()
@@ -460,8 +508,8 @@ public class Entity : MonoBehaviour
         temp.isDeadRewind = isDead;
         temp.locationRewind = transform.position;
         temp.rotaionRewind = transform.rotation;
-        temp.currentConditionsRewind = currentConditions;
-
+        temp.currentConditionEffsRewind = currentEffConditions;
+        temp.currentConditionBufsRewind = currentBufConditions;
         rewindPoints.Add(temp);
     }
     public void RewindBack()
@@ -477,7 +525,8 @@ public class Entity : MonoBehaviour
         //transform.position = point.locationRewind;
         currentHP = point.currentHealthRewind;
         isDead = point.isDeadRewind;
-        currentConditions = point.currentConditionsRewind;
+        currentEffConditions = point.currentConditionEffsRewind;
+        currentBufConditions = point.currentConditionBufsRewind;
         transform.rotation = point.rotaionRewind;
        // transform.position = new Vector3(0, 0, 0);
         rewind = false;
