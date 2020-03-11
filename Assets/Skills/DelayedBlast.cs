@@ -81,6 +81,10 @@ public class DelayedBlast : BaseSkill
         {
             explosionProjector.material.SetFloat("_Progress", (timeSpentOnWindUp / skillData.windUp) * 0.5f);
         }
+        if (explosionParticles.activeSelf)
+        {
+            explosionParticles.transform.position = explosionLocation;
+        }
     }
 
     public override void TriggerSkill(List<Entity> entityList)
@@ -227,7 +231,7 @@ public class DelayedBlast : BaseSkill
 
         }
         explosionLocationSet = false;
-        explosionLocation = Vector3.zero;
+        //explosionLocation = Vector3.zero;
 
     }
 
