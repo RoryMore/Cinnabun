@@ -37,12 +37,6 @@ public class Encounter : MonoBehaviour
     [SerializeField]
     private float waveOverTicker;
 
-    
-
-    // Inventory to add item to
-    [Header("LootSystem")]
-    public ItemSpawner.ItemSpawnerStruct itemSpawner;
-
     public enum WaveType
     {
         SLAUGHTER, //Kill all enemies who spawn to progress

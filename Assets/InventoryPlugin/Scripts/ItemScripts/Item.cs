@@ -31,6 +31,10 @@ public class Item : MonoBehaviour
     Material material;
     MeshRenderer meshRenderer;
 
+    Light rarityLight;
+    [SerializeField]
+    RarityColour rarityColour;
+
     private void Awake()
     {
         if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 20.0f, NavMesh.AllAreas))
@@ -71,7 +75,7 @@ public class Item : MonoBehaviour
             {
                 if (itemData.applyRandomStats)
                 {
-                    float statScalar = enemyManager.numOfClearedEncounters * 0.2f;
+                    float statScalar = enemyManager.numOfClearedEncounters * 0.1f;
                     itemStatBlock = itemData.GetRandomItemStats(statScalar);
                 }
                 else
@@ -84,6 +88,31 @@ public class Item : MonoBehaviour
                 material.SetTexture("_MainTex", itemData.equippedSprite.texture);
                 meshRenderer.material = material;
             }
+        }
+
+        rarityLight = GetComponent<Light>();
+        switch (itemStatBlock.rarity)
+        {
+            case ItemData.ItemRarity.COMMON:
+                {
+                    rarityLight.color = rarityColour.commonColour;
+                    break;
+                }
+            case ItemData.ItemRarity.UNCOMMON:
+                {
+                    rarityLight.color = rarityColour.uncommonColour;
+                    break;
+                }
+            case ItemData.ItemRarity.RARE:
+                {
+                    rarityLight.color = rarityColour.rareColour;
+                    break;
+                }
+            case ItemData.ItemRarity.ULTRA:
+                {
+                    rarityLight.color = rarityColour.ultraColour;
+                    break;
+                }
         }
     }
 
