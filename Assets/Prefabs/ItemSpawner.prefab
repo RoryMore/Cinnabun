@@ -54,7 +54,11 @@ MonoBehaviour:
   - {fileID: 2274588209890222965, guid: 73db8db5b44a7134e91619ecfeb73a3a, type: 3}
   uncommonItems: []
   rareItems: []
-  ultraItems: []
+  ultraItems:
+  - {fileID: 5532828376481931553, guid: 30b40d3d1a4a6fb48817e4989a0024d1, type: 3}
+  - {fileID: 4439177388469462412, guid: 890b3ca0b37ab8e499d217c0f47b25b2, type: 3}
+  - {fileID: 2934424198788435539, guid: b5974f245b7541041a4ed35dff176f3d, type: 3}
+  - {fileID: 4867941062328590087, guid: 5f60987a0709936449bd66d5bea84093, type: 3}
   noLootRatio: 45
   commonRatio: 35
   uncommonRatio: 20
