@@ -107,7 +107,7 @@ public class BasicEnemyAttack : BaseSkill
             {
                 if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                 {
-                    testedEntity.TakeDamage(skillData.baseMagnitude);
+                    testedEntity.TakeDamage(skillData.baseMagnitude, skillData.damageType, casterSelf.CalculateCriticalStrike());
 
                 }
             }

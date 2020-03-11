@@ -47,14 +47,14 @@ public class BaseSkill : MonoBehaviour
     [Tooltip("Indicator Moveability for this skill. \nMOVEABLE: For skills that wants the indicator to follow a targeted position for example. \nALWAYSNEARCASTER: Will always stay at the caster and rotate where the caster is facing. Circular Fill type won't use rotation, Linear fill type will rotate where the player is looking")]
     public IndicatorMoveType moveType;
 
-    [HideInInspector]
+    //[HideInInspector]
     public float timeBeenOnCooldown = 10.0f;
-
+    [SerializeField]
     protected float timeSpentOnWindUp = 0;
     //[HideInInspector]
     public bool currentlyCasting;
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool isAllowedToCast;
     protected bool skillTriggered = false;
 
@@ -147,12 +147,20 @@ public class BaseSkill : MonoBehaviour
         }
     }
 
-    public void DisableProjector()
+    public virtual void DisableProjector()
     {
         if (projector.enabled)
         {
             projector.enabled = false;
         }
+    }
+
+    public virtual void ResetSkillVars() 
+    {
+        currentlyCasting = false;
+        timeBeenOnCooldown = skillData.cooldown;
+        timeSpentOnWindUp = 0.0f;
+        skillState = SkillState.INACTIVE;
     }
 
     void UpdateCastTime()

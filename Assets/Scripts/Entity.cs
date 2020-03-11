@@ -142,6 +142,7 @@ public class Entity : MonoBehaviour
     public int experienceRequiredToNextLevel;
     public int physDamageReduction;
     public int magDamageReduction;
+    protected float criticalStrikeMultiplier;
 
     [Header("Conditions and Immunities")]
     public List<Condition> currentConditions;
@@ -154,8 +155,7 @@ public class Entity : MonoBehaviour
     public static Encounter currentEncounter;
 
     [Header("VFX")]
-    [SerializeField]
-    GameObject explosionParticles;
+    //GameObject explosionParticles;    // DelayedBlast handles the explosion now
     [SerializeField]
     GameObject hitParticles;
 
@@ -169,6 +169,8 @@ public class Entity : MonoBehaviour
     [HideInInspector]
     public NavMeshAgent nav;
 
+    [SerializeField]
+    protected GameObject damageNumber;
 
     // Data for original values
     float originalMovementSpeed;
@@ -214,7 +216,7 @@ public class Entity : MonoBehaviour
 
     //Function that is called when the player deals damage to you
     //Default condition format
-    public virtual void TakeDamage(int amount, SkillData.DamageType damageType = SkillData.DamageType.PHYSICAL)
+    public virtual void TakeDamage(int amount)
     {
         //Debug.Log("OOF x " + amount);
         if (isDead)
@@ -226,6 +228,35 @@ public class Entity : MonoBehaviour
         {
             Death();
         }
+    }
+
+    public virtual void TakeDamage(int amount, SkillData.DamageType damageType, bool isCrit)
+    {
+        // Code inside here may actually be irrelevant. Actual characters (player/enemies) can use this function in their class which can call the other TakeDamage function in itself
+        if (isDead)
+        {
+            return;
+        }
+
+        int damageTaken = Mathf.Clamp(amount - DamageNegated(amount, damageType), 0, int.MaxValue);
+        if (isCrit)
+        {
+            damageTaken = Mathf.RoundToInt(damageTaken * criticalStrikeMultiplier);
+        }
+
+        Vector3 popUpSpawn = new Vector3(Random.Range(-0.9f, 0.3f), Random.Range(-0.9f, 0.3f) + 3, 0);
+
+        DamagePopUp damagePopUpNumber = Instantiate(damageNumber, transform.position + popUpSpawn, Quaternion.identity).GetComponent<DamagePopUp>();
+        damagePopUpNumber.SetUp(damageTaken, isCrit);
+
+        TakeDamage(damageTaken);
+
+        //currentHP -= amount;
+
+        //if (currentHP <= 0)
+        //{
+        //    Death();
+        //}
     }
 
 
@@ -336,6 +367,21 @@ public class Entity : MonoBehaviour
         //movementSpeed = agility;
     }
     // TODO: Implement function for Critical Chance
+    public bool CalculateCriticalStrike()
+    {
+        float agilityEffectiveness = 0.1f;
+        float agilityPointThreshold = 15.0f;
+
+        // For every [agilityPointThreshold] points of agility, we gain [agilityEffectiveness * 100]% crit strike
+        float result = agilityEffectiveness * (agility / agilityPointThreshold);
+
+        if (Random.Range(0.0f, 1.0f) <= result)
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     void CalculateDodgeChance()
     {
@@ -428,6 +474,8 @@ public class Entity : MonoBehaviour
         CalculateDodgeChance();
         CalculateMagDamagePotential();
         CalculatePhysDamagePotential();
+
+        criticalStrikeMultiplier = 1.5f;
     }
 
 
@@ -487,15 +535,6 @@ public class Entity : MonoBehaviour
     }
 
     //End of Rewind Features
-
-    public void ParticleExplosion()
-    {
-        if (explosionParticles != null)
-        {
-            explosionParticles.SetActive(false);
-            explosionParticles.SetActive(true);
-        }
-    }
 
     public void ParticleHit()
     {
