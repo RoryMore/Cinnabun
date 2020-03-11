@@ -22,6 +22,12 @@ public class Rewind : BaseSkill
         base.Initialise();
     }
 
+    public override void ResetSkillVars()
+    {
+        base.ResetSkillVars();
+        entity = null;
+    }
+
     private void Update()
     {
         SkillDeltaUpdate();

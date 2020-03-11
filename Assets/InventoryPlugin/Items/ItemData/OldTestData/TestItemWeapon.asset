@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 059f6bcc50c845540a7039bccdc67d1b, type: 3}
-  m_Name: TestItemChest
+  m_Name: TestItemWeapon
   m_EditorClassIdentifier: 
-  itemType: 1
-  armourType: 2
+  itemType: 0
+  armourType: 0
   weaponType: 0
-  equipmentSlot: 2
+  equipmentSlot: 6
   applyRandomStats: 1
   strength: 0
   agility: 0
@@ -24,20 +24,20 @@ MonoBehaviour:
   physicalArmour: 0
   magicalArmour: 0
   strengthRangeMin: 0
-  strengthRangeMax: 5
+  strengthRangeMax: 10
   agilityRangeMin: 0
-  agilityRangeMax: 5
+  agilityRangeMax: 10
   constitutionRangeMin: 0
-  constitutionRangeMax: 10
+  constitutionRangeMax: 2
   intellectRangeMin: 0
-  intellectRangeMax: 2
+  intellectRangeMax: 10
   physicalArmourRangeMin: 0
-  physicalArmourRangeMax: 10
+  physicalArmourRangeMax: 0
   magicalArmourRangeMin: 0
-  magicalArmourRangeMax: 10
-  inventorySprite: {fileID: 21300000, guid: 4217e8311801ec649be3b1a9bbbcfe1e, type: 3}
-  equippedSprite: {fileID: 21300000, guid: 4217e8311801ec649be3b1a9bbbcfe1e, type: 3}
-  inventorySpaceX: 3
-  inventorySpaceY: 2
+  magicalArmourRangeMax: 0
+  inventorySprite: {fileID: 21300000, guid: 3613a410bbe250548a2f3399935eb781, type: 3}
+  equippedSprite: {fileID: 21300000, guid: 3613a410bbe250548a2f3399935eb781, type: 3}
+  inventorySpaceX: 1
+  inventorySpaceY: 4
   rarity: 0
-  itemName: {fileID: 11400000, guid: 940d4841f5b5b5f41b1278c93118ce64, type: 2}
+  itemName: weapon

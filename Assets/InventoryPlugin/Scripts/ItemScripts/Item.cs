@@ -24,11 +24,16 @@ public class Item : MonoBehaviour
     Player player;
     RespawnControl resCon;
     InventoryBase inventoryBase;
+    EnemyManager enemyManager;
 
     bool isNewItem = true;
 
     Material material;
     MeshRenderer meshRenderer;
+
+    Light rarityLight;
+    [SerializeField]
+    RarityColour rarityColour;
 
     private void Awake()
     {
@@ -40,6 +45,8 @@ public class Item : MonoBehaviour
         {
             Debug.LogError("Dropped Item could not find suitable location on NavMesh to drop at! Item may be inside an object or underground if the spawnLocation was near unsuitable terrain/objects");
         }
+
+        enemyManager = FindObjectOfType<EnemyManager>();
     }
 
     // Start is called before the first frame update
@@ -68,7 +75,8 @@ public class Item : MonoBehaviour
             {
                 if (itemData.applyRandomStats)
                 {
-                    itemStatBlock = itemData.GetRandomItemStats();
+                    float statScalar = enemyManager.numOfClearedEncounters * 0.1f;
+                    itemStatBlock = itemData.GetRandomItemStats(statScalar);
                 }
                 else
                 {
@@ -80,6 +88,31 @@ public class Item : MonoBehaviour
                 material.SetTexture("_MainTex", itemData.equippedSprite.texture);
                 meshRenderer.material = material;
             }
+        }
+
+        rarityLight = GetComponent<Light>();
+        switch (itemStatBlock.rarity)
+        {
+            case ItemData.ItemRarity.COMMON:
+                {
+                    rarityLight.color = rarityColour.commonColour;
+                    break;
+                }
+            case ItemData.ItemRarity.UNCOMMON:
+                {
+                    rarityLight.color = rarityColour.uncommonColour;
+                    break;
+                }
+            case ItemData.ItemRarity.RARE:
+                {
+                    rarityLight.color = rarityColour.rareColour;
+                    break;
+                }
+            case ItemData.ItemRarity.ULTRA:
+                {
+                    rarityLight.color = rarityColour.ultraColour;
+                    break;
+                }
         }
     }
 

@@ -31,8 +31,12 @@ public class SaveManager : MonoBehaviour
     string settingsFileName;
     static string staticSettingsFileName;
 
-    [Space][Space]
+    [Space]
+    [Space]
+    public string upgradeShopSceneName;
+    public static string upgradeShopScene;
     public string gameSceneName;
+    public static string gameScene;
     // Inspector values of this list are default values.
     // Defaults will be used on first time playing. Future times, access the save file
     [Tooltip("The values in this List will be the default starting values for the upgrades")]
@@ -64,6 +68,9 @@ public class SaveManager : MonoBehaviour
         characterUpgrades = defaultCharacterUpgrades;
         savedSettings = defaultSettings;
 
+        upgradeShopScene = upgradeShopSceneName;
+        gameScene = gameSceneName;
+
         if (LoadUpgradeSave())
         {
             Debug.Log("SaveManager: Upgrades Loaded");
@@ -93,10 +100,10 @@ public class SaveManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Period))
-        {
-            CurrencyManager.AddUpgradeMoney(1);
-        }
+        //if (Input.GetKeyDown(KeyCode.Period))
+        //{
+        //    CurrencyManager.AddUpgradeMoney(1);
+        //}
         //else if (Input.GetKeyDown(KeyCode.Comma))
         //{
         //    CurrencyManager.DeductUpgradeMoney(1);

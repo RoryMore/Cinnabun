@@ -22,6 +22,7 @@ public class BasicEnemyAttack : BaseSkill
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log("BASICEnemyAttack Update");
         //Every skill uses this in their update, zero exceptions
         SkillDeltaUpdate();
     }
@@ -37,6 +38,7 @@ public class BasicEnemyAttack : BaseSkill
         {
             case SkillState.INACTIVE:
                 {
+                    //Debug.Log("BasicEnemyAttack: State is INACTIVE");
                     if (isAllowedToCast)
                     {
                         skillState = SkillState.TARGETTING;
@@ -97,7 +99,6 @@ public class BasicEnemyAttack : BaseSkill
     {
         base.ActivateSkill();
 
-
         // Intended effect here. Be it damage or otherwise
         // This includes checking if target is in range and such
         foreach (Entity testedEntity in entityList)
@@ -106,7 +107,7 @@ public class BasicEnemyAttack : BaseSkill
             {
                 if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                 {
-                    testedEntity.TakeDamage(skillData.baseMagnitude);
+                    testedEntity.TakeDamage(skillData.baseMagnitude, skillData.damageType, casterSelf.CalculateCriticalStrike());
 
                 }
             }
