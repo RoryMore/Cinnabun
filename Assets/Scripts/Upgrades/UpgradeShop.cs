@@ -290,6 +290,12 @@ public class UpgradeShop : MonoBehaviour
         SceneManager.LoadSceneAsync(CurrencyManager.gameSceneName);
     }
 
+    public void LoadMainMenu()
+    {
+        // Level index 0 is likely the main menu
+        SceneManager.LoadSceneAsync(0);
+    }
+
     List<RaycastResult> GetNewPointerEventRaycast()
     {
         pointerEventData = new PointerEventData(eventSystem);

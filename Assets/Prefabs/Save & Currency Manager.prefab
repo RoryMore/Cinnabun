@@ -67,29 +67,29 @@ MonoBehaviour:
       upgradeCount: 0
       upgradeMagnitude: 2
       progressToUpgrade: 0
-      initialUpgradeCost: 8
-      upgradeCostIncrements: 0
+      initialUpgradeCost: 7
+      upgradeCostIncrements: 1
     playerMovespeed:
       maxUpgrades: 4
       upgradeCount: 0
       upgradeMagnitude: 2
       progressToUpgrade: 0
       initialUpgradeCost: 6
-      upgradeCostIncrements: 0
+      upgradeCostIncrements: 1
     bloodOrbEffectiveness:
       maxUpgrades: 10
       upgradeCount: 0
       upgradeMagnitude: 2
       progressToUpgrade: 0
       initialUpgradeCost: 5
-      upgradeCostIncrements: 0
+      upgradeCostIncrements: 2
     blastExplosionRadius:
       maxUpgrades: 5
       upgradeCount: 0
       upgradeMagnitude: 2
       progressToUpgrade: 0
       initialUpgradeCost: 3
-      upgradeCostIncrements: 0
+      upgradeCostIncrements: 2
   defaultSettings:
     musicVolume: 1
     sfxVolume: 1
