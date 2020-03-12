@@ -25,6 +25,10 @@ public class BasicSkill : BaseSkill
     //    Initialise();
     //}
 
+    void Start()
+    {
+        base.Initialise();
+    }
     protected virtual void Initialise(Entity _Entity)
     {
         //Init to make sure its clean
@@ -101,13 +105,15 @@ public class BasicSkill : BaseSkill
         if (timeSpentOnWindUp >= skillData.windUp)
         {
             skillState = SkillState.DOAFFECT;
+
            
-            if (GetComponentInParent<StatusEfect>())
+          
+            if (GetComponentInParent<StatusEfect>() != null)
             {
                 GetComponentInParent<StatusEfect>().applyEffects(Entity, Effects.EffectApplyType.StartSkill);
             }
 
-            if (GetComponentInParent<BuffEffect>())
+            if (GetComponentInParent<BuffEffect>() != null)
             {
                 GetComponentInParent<BuffEffect>().applyEffects(Entity, Buff.EffectApplyType.StartSkill);
             }//ActivateSkill();
@@ -165,7 +171,10 @@ public class BasicSkill : BaseSkill
     }
     protected virtual void ApplySkillProplys()
     {
-
+        timeBeenOnCooldown = 0.0f;
+        timeSpentOnWindUp = 0.0f;
+        currentlyCasting = false;
+        skillState = SkillState.INACTIVE;
     }
 
     protected virtual void ApplyCastSkillProplys()

@@ -19,12 +19,8 @@ public class BuffEffect: MonoBehaviour
                 if (CheckToContrion(entity, item))//enetity is already in that condition
                 {
                     //add condition to entity basiced on if it is percent damage
-                    entity.currentBufConditions.Add(new Entity.ConditionBuf(item.Duration, item.BuffType, item.buffnumber, item.BuffStat.ToString()));
-
-                    //apply buff
-                    entity.ApplyBuff();
-
-
+                    //entity.currentBufConditions.Add(new Entity.ConditionBuf(item.Duration, item.BuffType, item.buffnumber, item.BuffStat.ToString()));
+                    entity.AddCurrentBuf(item.Duration, item.BuffType, item.buffnumber, item.BuffStat.ToString());
                 }
                 else
                 {

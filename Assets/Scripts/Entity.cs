@@ -113,6 +113,7 @@ public class Entity : MonoBehaviour
             duration -= reducedBy;
 
             timePassed += reducedBy;
+            Debug.LogWarning(duration);
         }
 
         public void ResetTimePassed()
@@ -125,6 +126,14 @@ public class Entity : MonoBehaviour
             begun = true;
         }
     }
+    public enum Action
+    {
+        Move,
+        BasicAttack,
+        Skill,
+        Wait
+    }
+    
     public enum ConditionEffect
     {
         [Tooltip("cancel action")]
@@ -274,6 +283,65 @@ public class Entity : MonoBehaviour
         }
     }
 
+    public virtual bool IntendedAction(Action action)
+    {
+        foreach (var item in currentEffConditions)
+        {
+            switch (item.conditionType)
+            {
+                case ConditionEffect.STUN:
+                    return false;
+                    
+                case ConditionEffect.SPIKED:
+                    switch (action)
+                    {
+                        case Action.Move:
+                            TakeDamage((int)item.damageTickRate, SkillData.DamageType.PHYSICAL, false);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return true;
+    }
+    //public virtual void DealAttack(SkillData damageType)
+    //{
+
+    //}
+
+    public virtual void ApplyBuff(int amount, SkillData.DamageType damageType, bool isCrit)
+    {
+        foreach (var item in currentBufConditions)
+        {
+            switch (item.conditionType)
+            {
+                case ConditionBuff.DODGE:
+                    if (Random.Range(0, 100) <= 50)
+                    {
+                        amount = 0;
+                    }
+                    break;
+
+                case ConditionBuff.FOCUS:
+
+                    break;
+
+                case ConditionBuff.RAGE:
+                    amount += (amount / 4);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        TakeDamage(amount, damageType, isCrit);
+    }
+
+    //add cooldown
     public virtual void TakeDamage(int amount, SkillData.DamageType damageType, bool isCrit)
     {
         // Code inside here may actually be irrelevant. Actual characters (player/enemies) can use this function in their class which can call the other TakeDamage function in itself
@@ -281,6 +349,9 @@ public class Entity : MonoBehaviour
         {
             return;
         }
+
+        
+
 
         int damageTaken = Mathf.Clamp(amount - DamageNegated(amount, damageType), 0, int.MaxValue);
         if (isCrit)
@@ -309,32 +380,31 @@ public class Entity : MonoBehaviour
         isDead = true;
 
     }
+    public void AddCurrentEff(float dur,ConditionEffect effect,float damage)
+    {
+        currentEffConditions.Add(new Entity.ConditionEff(dur, effect, damage));
 
+    }
+    public void AddCurrentBuf(float dur, ConditionBuff effect, float Buff, string BuffStat)
+    {
+        currentBufConditions.Add(new Entity.ConditionBuf(dur, effect, Buff, BuffStat));
+
+    }
     public void UpdateAllConditions()
     {
+       
         if (currentEffConditions.Count != 0)
         {
             int conditionIndex = 0;
             foreach (ConditionEff condition in currentEffConditions)
             {
-                switch (condition.conditionType)
-                {
-                    case ConditionEffect.STUN:
-                        //entity can't do anything
-                        break;
-                    case ConditionEffect.SPIKED:
-                        //if move do damage
-                        break;
-                    default:
-                        break;
-                }
-
                 if (condition.duration > 0)
                 {
                     condition.ReduceDuration(Time.deltaTime);
                 }
                 else
                 {
+                    Debug.LogWarning("Stun edns");
                     currentEffConditions.RemoveAt(conditionIndex);
                 }
                 conditionIndex++;
@@ -346,7 +416,7 @@ public class Entity : MonoBehaviour
             int conditionIndex = 0;
             foreach (ConditionBuf condition in currentBufConditions)
             {
-                
+                Debug.Log(condition.conditionType);
 
                 if (condition.duration > 0)
                 {
@@ -354,24 +424,6 @@ public class Entity : MonoBehaviour
                 }
                 else
                 {
-                    //remove buff
-                    switch (condition.conditionType)
-                    {
-                        case ConditionBuff.DODGE:
-                            //remove dodge effect
-                            break;
-                        case ConditionBuff.FOCUS:
-                            //remove cooldown reduetion
-                            break;
-                        case ConditionBuff.RAGE:
-                            //reduce damage
-                            break;
-                        case ConditionBuff.UNSTABLE:
-                            //remove effect
-                            break;
-                        default:
-                            break;
-                    }
                     currentEffConditions.RemoveAt(conditionIndex);
                 }
                 conditionIndex++;

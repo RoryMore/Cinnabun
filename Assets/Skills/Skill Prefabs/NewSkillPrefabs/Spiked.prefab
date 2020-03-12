@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7427569580529763938
+--- !u!1 &396296665999342438
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,64 +8,61 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5966212132180696907}
-  - component: {fileID: 1516275380240458323}
+  - component: {fileID: 3506004803479609935}
+  - component: {fileID: 4798077186599188256}
   m_Layer: 0
-  m_Name: Charge
+  m_Name: Spiked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5966212132180696907
+--- !u!4 &3506004803479609935
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7427569580529763938}
+  m_GameObject: {fileID: 396296665999342438}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8945280185591741000}
+  - {fileID: 2184226537622964044}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1516275380240458323
+--- !u!114 &4798077186599188256
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7427569580529763938}
+  m_GameObject: {fileID: 396296665999342438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3988d805b8d164e4fb161d2ec5f6ec2c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9515cca2412fbee409c3034a5347a4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projector: {fileID: 8945280185591741003}
-  skillData: {fileID: 11400000, guid: 7435ade31a9fc8a4ba53ea4bae9816aa, type: 2}
+  projector: {fileID: 0}
+  skillData: {fileID: 0}
   skillState: 0
   shape: 0
-  fillType: 1
+  fillType: 0
   moveType: 0
   timeBeenOnCooldown: 10
   timeSpentOnWindUp: 0
   currentlyCasting: 0
   isAllowedToCast: 0
   casterSelf: {fileID: 0}
-  mainCookie: {fileID: 21300000, guid: 14643146a3b1130488e64610d90b0996, type: 3}
-  fillCookie: {fileID: 21300000, guid: 42b6de6bc0caab8479e801a943d0f819, type: 3}
+  mainCookie: {fileID: 0}
+  fillCookie: {fileID: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 0
   TargetPlayer: 0
   IgnorePlayer: 0
-  Timer: 5
-  TimerON: 0
-  Speed: 0
---- !u!1 &8945280185591741002
+--- !u!1 &2184226537622964046
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,9 +70,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8945280185591741000}
-  - component: {fileID: 8945280185591741003}
-  - component: {fileID: 1882306246301012498}
+  - component: {fileID: 2184226537622964044}
+  - component: {fileID: 2184226537622964047}
+  - component: {fileID: 8679739502076620566}
   m_Layer: 0
   m_Name: SkillIndicatorProjector
   m_TagString: Untagged
@@ -83,27 +80,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8945280185591741000
+--- !u!4 &2184226537622964044
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8945280185591741002}
+  m_GameObject: {fileID: 2184226537622964046}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5966212132180696907}
+  m_Father: {fileID: 3506004803479609935}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!119 &8945280185591741003
+--- !u!119 &2184226537622964047
 Projector:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8945280185591741002}
+  m_GameObject: {fileID: 2184226537622964046}
   m_Enabled: 0
   serializedVersion: 2
   m_NearClipPlane: -5
@@ -116,16 +113,16 @@ Projector:
   m_IgnoreLayers:
     serializedVersion: 2
     m_Bits: 769
---- !u!114 &1882306246301012498
+--- !u!114 &8679739502076620566
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8945280185591741002}
+  m_GameObject: {fileID: 2184226537622964046}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61897f3bfebc8c24a8ccc93398f7574f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill: {fileID: 1516275380240458323}
+  skill: {fileID: 1516275380240458323, guid: 2831b6f10edabaa449845657d0522710, type: 3}

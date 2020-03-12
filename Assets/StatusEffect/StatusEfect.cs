@@ -9,27 +9,34 @@ public class StatusEfect : MonoBehaviour
 
     public void applyEffects(Entity entity, Effects.EffectApplyType effectApply)
     {
+        
+        if (entity ==null)
+        {
+            return;
+        }  
         foreach (Effects item in StatusEffects)
         {
             //check to see if this is the right time to apply these condation to entity
             if (effectApply == item.EfectApplyWhen)
             {
-               //
                 if (CheckToContrion(entity, item))//enetity is already in that condition
                 {
                     //add condition to entity basiced on if it is percent damage
-                        if (item.BuffType == Effects.buffeType.Percent)
+                    if (item.BuffType == Effects.buffeType.Percent)
                         {
+                        Debug.LogWarning("Percent");
                         entity.currentEffConditions.Add(new Entity.ConditionEff(item.Duration, item.Effect, item.Damage));
-                        }
+                    }
                         else
                         {
-                        entity.currentEffConditions.Add(new Entity.ConditionEff(item.Duration, item.Effect, item.Damage, item.TickDamage));
-                        }             
+                        //entity.currentEffConditions.Add(new Entity.ConditionEff(item.Duration, item.Effect, item.Damage, item.TickDamage));
+                        entity.AddCurrentEff(item.Duration, item.Effect, item.Damage);
+                    }
                 }
                 else
                 {
                     //set duration to need effect duration if lower
+                  //  Debug.LogWarning("reset");
                     if (StatusEffects[checkLoctation].Duration< item.Duration)//Duration of the contration vs 
                     {
                         var temp = entity.currentEffConditions[checkLoctation];
@@ -45,16 +52,23 @@ public class StatusEfect : MonoBehaviour
     public bool CheckToContrion(Entity entity, Effects efect)
 {
         int Cyle=0;
-    foreach (var item in entity.currentEffConditions)
-    {
-        if (item.conditionType == efect.Effect)
+        if (entity)
         {
-                checkLoctation = Cyle;
-            return true;
+            if (entity.currentEffConditions.Count != 0)
+            {
+                foreach (var item in entity.currentEffConditions)
+                {
+                    if (item.conditionType == efect.Effect)
+                    {
+                        checkLoctation = Cyle;
+                        return false;
+                    }
+                    Cyle++;
+                }
+            }
         }
-            Cyle++;
-    }
-    return false; 
+       
+    return true; 
 }
     //public void RemoveEffect(Entity entity, Effects effectApply)
     //{
