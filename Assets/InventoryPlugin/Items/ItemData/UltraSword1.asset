@@ -15,7 +15,7 @@ MonoBehaviour:
   itemType: 0
   armourType: 0
   weaponType: 0
-  equipmentSlot: 0
+  equipmentSlot: 6
   applyRandomStats: 1
   strength: 0
   agility: 0
