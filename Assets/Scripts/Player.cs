@@ -493,7 +493,7 @@ public class Player : Entity
             selectedSkill.DisableProjector();
             selectedSkill.ResetSkillVars();
         }
-        selectedSkill = null;
+        //selectedSkill = null;
 
         if (inventory.activeSelf)
         {

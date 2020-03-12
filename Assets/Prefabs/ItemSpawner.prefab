@@ -61,6 +61,6 @@ MonoBehaviour:
   - {fileID: 4867941062328590087, guid: 5f60987a0709936449bd66d5bea84093, type: 3}
   noLootRatio: 45
   commonRatio: 35
-  uncommonRatio: 20
-  rareRatio: 12
+  uncommonRatio: 0
+  rareRatio: 0
   ultraRatio: 6
