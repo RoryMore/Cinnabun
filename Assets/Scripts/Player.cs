@@ -10,7 +10,7 @@ public class Player : Entity
     public float moveRaycastDistance;
     public CameraController cameraShake;
     TextSystem textSystem;
-
+    [HideInInspector] public bool triggerBox = false;
     public enum PlayerState
     {
         FREE,
@@ -51,6 +51,12 @@ public class Player : Entity
     void Start()
     {
         level = 1;
+
+        if (SaveManager.GetUpgradeList().playerMovespeed != null)
+        {
+            baseMovementSpeed += SaveManager.GetUpgradeList().playerMovespeed.GetUpgradedMagnitude();
+        }
+
         // Using base given stats, get derived stats
         InitialiseAll();
         currentHP = maxHP;
@@ -98,7 +104,7 @@ public class Player : Entity
                                 Move();
                             }
 
-                            if (Input.GetKeyDown(KeyCode.I))
+                            if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.toggleInventory))
                             {
                                 if (pause.states == PauseAbility.GameStates.PLAY)
                                 {
@@ -129,11 +135,14 @@ public class Player : Entity
                         Move();
                     }
 
-                    // Player can only select a skill to use if they have paused
-                    if (pause.states == PauseAbility.GameStates.TIMESTOP)
+                    if (pause != null)
                     {
-                        //Time.timeScale = 0.001f;
-                        EvaluateInputForSkillSelection();
+                        // Player can only select a skill to use if they have paused
+                        if (pause.states == PauseAbility.GameStates.TIMESTOP)
+                        {
+                            //Time.timeScale = 0.001f;
+                            EvaluateInputForSkillSelection();
+                        }
                     }
                     break;
 
@@ -301,11 +310,12 @@ public class Player : Entity
         }
     }
 
-    public override void TakeDamage(int amount)
+    public override void TakeDamage(int amount, SkillData.DamageType damageType)
     {
         animator.SetTrigger("gotHit");
         StartCoroutine(cameraShake.cShake(.3f, 1f));
-        base.TakeDamage(amount);
+        ParticleHit();
+        base.TakeDamage(Mathf.Clamp(amount - DamageNegated(amount, damageType), 0, int.MaxValue));
     }
 
     //void UpdateSkillCooldowns()
@@ -322,25 +332,33 @@ public class Player : Entity
 
     void Move()
     {
-
-        if (textSystem.novelActive == true)
+        if (textSystem != null)
         {
-
-            if (Input.GetMouseButton(0))
+            if (textSystem.novelActive == true)
             {
 
-                nav.speed = movementSpeed;
-
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit, moveRaycastDistance, groundLayerMask))
+                if (Input.GetMouseButton(0))
                 {
-                    if (hit.collider.tag.Contains("Item"))
-                    {
-                        nav.SetDestination(hit.collider.transform.position);
-                    }
-                    else
-                    {
-                        nav.SetDestination(hit.point);
+
+                    nav.speed = movementSpeed;
+
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out RaycastHit hit, moveRaycastDistance, groundLayerMask))
+                    {
+                        if (hit.collider.tag.Contains("Item"))
+
+                        {
+
+                            nav.SetDestination(hit.collider.transform.position);
+
+                        }
+                        else
+
+                        {
+
+                            nav.SetDestination(hit.point);
+
+                        }
                     }
                 }
             }
@@ -349,10 +367,8 @@ public class Player : Entity
 
     void EvaluateInputForSkillSelection()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.weaponAttack))
         {
-            //SelectSkill(SkillData.SkillList.TELEPORT);
-            //SelectSkill(0);
             if (weaponAttack != null)
             {
                 if (weaponAttack.isAllowedToCast)
@@ -362,22 +378,22 @@ public class Player : Entity
                 }
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.skillSlot2))
         {
             SelectSkill(1);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.skillSlot3))
         {
             SelectSkill(2);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        else if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.skillSlot4))
         {
             SelectSkill(3);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            SelectSkill(4);
-        }
+        //else if (Input.GetKeyDown(KeyCode.Alpha5))
+        //{
+        //    SelectSkill(4);
+        //}
     }
 
     public void SelectSkill(SkillData.SkillList skill)
@@ -506,9 +522,42 @@ public class Player : Entity
         playerState = PlayerState.DOINGSKILL;
     }
 
+    public void SelectBlastAttack()
+    {
+        SelectSkill(1);
+    }
+    public void SelectTeleport()
+    {
+        SelectSkill(2);
+    }
+    public void SelectRewind()
+    {
+        SelectSkill(3);
+    }
+
     //void OnDrawGizmos()
     //{
     //    Gizmos.color = Color.red;
     //    Gizmos.DrawLine(transform.position, transform.forward * 2.0f);
     //}
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (triggerBox == false)
+        {
+            if (other.tag == "TriggerBox")
+            {
+                Debug.Log("I walked through it");
+                triggerBox = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "TriggerBox")
+        {
+            Destroy(other);
+        }
+    }
 }

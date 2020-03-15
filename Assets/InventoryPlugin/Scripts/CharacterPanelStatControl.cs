@@ -57,6 +57,7 @@ public class CharacterPanelStatControl : MonoBehaviour
         statPhysicalArmour = physicalArmour;
         statMagicalArmour = magicalArmour;
 
+        characterEntity = FindObjectOfType<Player>();
         if (characterEntity != null)
         {
             statCharacterEntity = characterEntity;

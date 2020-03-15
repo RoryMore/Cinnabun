@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class CurrencyManager : MonoBehaviour
 {
-    public string nonStat_gameSceneName;
+    //public string nonStat_gameSceneName;
     public static string gameSceneName;
 
     [Header("Currencies")]
-    public UpgradeMoney upgradeMoney;
-    static UpgradeMoney staticUpgradeMoney;
+    //int upgradeMoney;
+    static int staticUpgradeMoney;
 
-    public int gold;
+    //int gold;
     static int staticGold;
 
     bool upgradeMoneyRewarded;
@@ -27,16 +28,18 @@ public class CurrencyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameSceneName = nonStat_gameSceneName;
-        staticUpgradeMoney = upgradeMoney;
+        gameSceneName = SaveManager.gameScene;
+
+        
+        //staticUpgradeMoney = upgradeMoney;
+
         // If we are in the game scene, set our gold to 0 because we always start with 0 gold.
         if (SceneManager.GetActiveScene().name == gameSceneName)
         {
-            gold = 0;
+            //gold = 0;
+            staticGold = 0;
             player = FindObjectOfType<Player>();
-            enemyManager = FindObjectOfType<EnemyManager>();
         }
-        staticGold = 0;
 
         upgradeMoneyRewarded = false;
     }
@@ -44,12 +47,12 @@ public class CurrencyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gold != staticGold)
-        {
-            gold = staticGold;
-        }
+        //if (gold != staticGold)
+        //{
+        //    gold = staticGold;
+        //}
         //Debug.Log("Gold: " + gold);
-        //Debug.Log("UpgradeMoney: " + upgradeMoney.GetAmount());
+        //Debug.Log("UpgradeMoney: " + staticUpgradeMoney);
         if (!upgradeMoneyRewarded)
         {
             if (enemyManager != null)
@@ -58,16 +61,9 @@ public class CurrencyManager : MonoBehaviour
                 {
                     if (player.isDead)
                     {
-                        int wavesCleared = 0;
-                        // Add an amount of upgrade money = wavesCompleted
-                        foreach (Encounter encounter in enemyManager.encounters)
-                        {
-                            if (encounter.cleared)
-                            {
-                                wavesCleared++;
-                            }
-                        }
-                        upgradeMoney.AddMoney(wavesCleared);
+                        
+                        
+                        
                         upgradeMoneyRewarded = true;
                     }
                 }
@@ -77,17 +73,27 @@ public class CurrencyManager : MonoBehaviour
 
     public static void AddUpgradeMoney(int value)
     {
-        staticUpgradeMoney.AddMoney(value);
+        staticUpgradeMoney += value;
+        Debug.Log("CurrencyManager: Money Rewarded = " + value);
+        staticUpgradeMoney = Mathf.Clamp(staticUpgradeMoney, 0, int.MaxValue);
+        Debug.Log("CurrencyManager: staticUpgradeMoney = " + staticUpgradeMoney);
     }
 
     public static void DeductUpgradeMoney(int value)
     {
-        staticUpgradeMoney.DeductMoney(value);
+        staticUpgradeMoney -= value;
+        staticUpgradeMoney = Mathf.Clamp(staticUpgradeMoney, 0, staticUpgradeMoney);
     }
 
     public static int GetUpgradeMoney()
     {
-        return staticUpgradeMoney.GetAmount();
+        return staticUpgradeMoney;
+    }
+
+    public static void SetUpgradeMoney(int amount)
+    {
+        staticUpgradeMoney = amount;
+        staticUpgradeMoney = Mathf.Clamp(staticUpgradeMoney, 0, int.MaxValue);
     }
 
     public static void AddGold(int value)

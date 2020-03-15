@@ -134,7 +134,7 @@ public class Entity : MonoBehaviour
     public int maxHP;
     public int currentHP;
     [SerializeField]
-    float baseMovementSpeed;
+    protected float baseMovementSpeed;
     public float movementSpeed;
     public int dodgeChance;
     public int physDamagePotential;
@@ -153,9 +153,11 @@ public class Entity : MonoBehaviour
     [Header("Encounter")]
     public static Encounter currentEncounter;
 
-    [Header("Damaged VFX")]
+    [Header("VFX")]
     [SerializeField]
     GameObject explosionParticles;
+    [SerializeField]
+    GameObject hitParticles;
 
     // Variables needed for enemies to function efficiently without additional list
     [HideInInspector]
@@ -212,9 +214,9 @@ public class Entity : MonoBehaviour
 
     //Function that is called when the player deals damage to you
     //Default condition format
-    public virtual void TakeDamage(int amount)
+    public virtual void TakeDamage(int amount, SkillData.DamageType damageType = SkillData.DamageType.PHYSICAL)
     {
-        Debug.Log("OOF x " + amount);
+        //Debug.Log("OOF x " + amount);
         if (isDead)
             return;
 
@@ -333,6 +335,7 @@ public class Entity : MonoBehaviour
 
         //movementSpeed = agility;
     }
+    // TODO: Implement function for Critical Chance
 
     void CalculateDodgeChance()
     {
@@ -374,7 +377,7 @@ public class Entity : MonoBehaviour
     /// <param name="originalDamage"></param>
     /// <param name="damageType"></param>
     /// <returns></returns>
-    int DamageNegated(int originalDamage, SkillData.DamageType damageType)
+    protected int DamageNegated(int originalDamage, SkillData.DamageType damageType)
     {
         // How effective armour is at 'armourPointThreshold' points of armour
         // 0.25f effectiveness && 100.0f threshold = 25% damage reduction at 100 points of armour
@@ -491,6 +494,15 @@ public class Entity : MonoBehaviour
         {
             explosionParticles.SetActive(false);
             explosionParticles.SetActive(true);
+        }
+    }
+
+    public void ParticleHit()
+    {
+        if (hitParticles != null)
+        {
+            hitParticles.SetActive(false);
+            hitParticles.SetActive(true);
         }
     }
 }

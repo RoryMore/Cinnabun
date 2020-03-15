@@ -7,12 +7,13 @@ public class MainMenuUI : MonoBehaviour
 
     public GameObject menuButtons;
     public GameObject credits;
+    public GameObject OptionsUI;
 
 
     public void OnClickPlay()
     {
         // This is often changed with each feedback build. Keep an eye
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(SaveManager.gameScene);
         Time.timeScale = 1;
     }
 
@@ -31,5 +32,14 @@ public class MainMenuUI : MonoBehaviour
     {
         menuButtons.SetActive(true);
         credits.SetActive(false);
+    }
+
+    public void Options()
+    {
+        OptionsUI.SetActive(true);
+        menuButtons.SetActive(false);
+       // SaveManager.GetSettings().musicVolume = 3f;
+
+     //   SaveManager.SaveSettings();
     }
 }

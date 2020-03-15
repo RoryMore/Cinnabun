@@ -119,16 +119,16 @@ public class ItemData : ScriptableObject
         magicalArmour = Random.Range(magicalArmourRangeMin, magicalArmourRangeMax);
     }
 
-    public InventoryItem.ItemInfoBlock GetRandomItemStats()
+    public InventoryItem.ItemInfoBlock GetRandomItemStats(float statScalar)
     {
         InventoryItem.ItemInfoBlock itemStatBlock = new InventoryItem.ItemInfoBlock
         {
-            strength = Random.Range(strengthRangeMin, strengthRangeMax),
-            agility = Random.Range(agilityRangeMin, agilityRangeMax),
-            constitution = Random.Range(constitutionRangeMin, constitutionRangeMax),
-            intellect = Random.Range(intellectRangeMin, intellectRangeMax),
-            physicalArmour = Random.Range(physicalArmourRangeMin, physicalArmourRangeMax),
-            magicalArmour = Random.Range(magicalArmourRangeMin, magicalArmourRangeMax),
+            strength = Random.Range(strengthRangeMin + Mathf.RoundToInt(statScalar * strengthRangeMin), strengthRangeMax + Mathf.RoundToInt(statScalar * strengthRangeMax)),
+            agility = Random.Range(agilityRangeMin + Mathf.RoundToInt(statScalar * agilityRangeMin), agilityRangeMax + Mathf.RoundToInt(statScalar * agilityRangeMax)),
+            constitution = Random.Range(constitutionRangeMin + Mathf.RoundToInt(statScalar * constitutionRangeMin), constitutionRangeMax + Mathf.RoundToInt(statScalar * constitutionRangeMax)),
+            intellect = Random.Range(intellectRangeMin + Mathf.RoundToInt(statScalar * intellectRangeMin), intellectRangeMax + Mathf.RoundToInt(statScalar * intellectRangeMax)),
+            physicalArmour = Random.Range(physicalArmourRangeMin + Mathf.RoundToInt(statScalar * physicalArmourRangeMin), physicalArmourRangeMax + Mathf.RoundToInt(statScalar * physicalArmourRangeMax)),
+            magicalArmour = Random.Range(magicalArmourRangeMin + Mathf.RoundToInt(statScalar * magicalArmourRangeMin), magicalArmourRangeMax + Mathf.RoundToInt(statScalar * magicalArmourRangeMax)),
 
             itemName = itemName.itemName,
             rarity = rarity
