@@ -448,6 +448,7 @@ public class SimpleEnemy : EnemyScript
     public override void TakeDamage(int amount, SkillData.DamageType damageType, bool isCrit)
     {
         base.TakeDamage(amount, damageType, isCrit);
+        ParticleHit();
         anim.SetTrigger("getHit");
     }
 

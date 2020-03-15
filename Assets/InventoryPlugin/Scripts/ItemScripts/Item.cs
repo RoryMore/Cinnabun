@@ -96,6 +96,7 @@ public class Item : MonoBehaviour
             case ItemData.ItemRarity.COMMON:
                 {
                     rarityLight.color = rarityColour.commonColour;
+                    rarityLight.enabled = false;
                     break;
                 }
             case ItemData.ItemRarity.UNCOMMON:
@@ -114,6 +115,7 @@ public class Item : MonoBehaviour
                     break;
                 }
         }
+        rarityLight.enabled = false;
     }
 
     /// <summary>

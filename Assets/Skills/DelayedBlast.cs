@@ -25,6 +25,7 @@ public class DelayedBlast : BaseSkill
 
     [SerializeField]
     GameObject explosionParticles;
+    Quaternion explosionRotation;
 
     private void Start()
     {
@@ -84,6 +85,7 @@ public class DelayedBlast : BaseSkill
         if (explosionParticles.activeSelf)
         {
             explosionParticles.transform.position = explosionLocation;
+            explosionParticles.transform.rotation = explosionRotation;
         }
     }
 
@@ -240,6 +242,7 @@ public class DelayedBlast : BaseSkill
         if (explosionParticles != null)
         {
             explosionParticles.transform.position = location;
+            explosionRotation = transform.rotation;
 
             explosionParticles.SetActive(false);
             explosionParticles.SetActive(true);

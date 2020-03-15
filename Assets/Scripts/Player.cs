@@ -488,6 +488,13 @@ public class Player : Entity
         animator.SetBool("isDead", isDead);
         nav.destination = transform.position;
 
+        if (selectedSkill != null)
+        {
+            selectedSkill.DisableProjector();
+            selectedSkill.ResetSkillVars();
+        }
+        //selectedSkill = null;
+
         if (inventory.activeSelf)
         {
             inventory.SetActive(false);
