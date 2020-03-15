@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.68235296}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 10
+  m_PixelsPerUnitMultiplier: 8
 --- !u!114 &6118928690006274335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,4 +87,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsed: 0
+  unusedColour: {r: 1, g: 1, b: 1, a: 0.03137255}
+  usedColour: {r: 0.9056604, g: 0.20932718, b: 0.20932718, a: 0.5019608}
   storedItem: {fileID: 0}

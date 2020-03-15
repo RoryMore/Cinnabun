@@ -6,7 +6,12 @@ using UnityEngine.UI;
 public class InventorySlot : MonoBehaviour
 {
     public bool isUsed;
-    public Item storedItem;
+    [SerializeField]
+    Color unusedColour;
+    [SerializeField]
+    Color usedColour;
+
+    public ItemData storedItem;
 
     public static float width;
     public static float height;
@@ -22,15 +27,30 @@ public class InventorySlot : MonoBehaviour
 
     InventoryBase invBase;
 
+    Image ownImage;
+
     private void Awake()
     {
-        
+        ownImage = GetComponent<Image>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (isUsed)
+        {
+            if (ownImage.color != usedColour)
+            {
+                ownImage.color = usedColour;
+            }
+        }
+        else
+        {
+            if (ownImage.color != unusedColour)
+            {
+                ownImage.color = unusedColour;
+            }
+        }
     }
 
     public void Initialise(GameObject slotParent, float _width, float _height, float offset, SlotID id)

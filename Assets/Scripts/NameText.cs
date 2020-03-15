@@ -29,6 +29,7 @@ public class NameText : MonoBehaviour
         changeFontSize();
     }
 
+    //updates the font to what the user wants
     void changeFontSize()
     {
         text.fontSize = wordSize;

@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &201353573743220987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 201353573743220985}
+  - component: {fileID: 201353573743220986}
+  - component: {fileID: 2063185482}
+  m_Layer: 0
+  m_Name: Save & Currency Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &201353573743220985
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201353573743220987}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 103.49192, y: 8.858766, z: 140.10909}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &201353573743220986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201353573743220987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7b92c052a67bf54e95700045ae9579e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2063185482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201353573743220987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e5e686b63c40342a33e434f6637144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeSaveFileName: /upgrades.CINNABUN
+  upgradeMoneyFileName: /permanentCurrency.CINNABUN
+  settingsFileName: /gameSettings.CINNABUN
+  upgradeShopSceneName: SunnyTest
+  gameSceneName: JasmineScene
+  defaultCharacterUpgrades:
+    teleportRange:
+      maxUpgrades: 3
+      upgradeCount: 0
+      upgradeMagnitude: 2
+      progressToUpgrade: 0
+      initialUpgradeCost: 8
+      upgradeCostIncrements: 0
+    playerMovespeed:
+      maxUpgrades: 4
+      upgradeCount: 0
+      upgradeMagnitude: 2
+      progressToUpgrade: 0
+      initialUpgradeCost: 6
+      upgradeCostIncrements: 0
+    bloodOrbEffectiveness:
+      maxUpgrades: 10
+      upgradeCount: 0
+      upgradeMagnitude: 2
+      progressToUpgrade: 0
+      initialUpgradeCost: 5
+      upgradeCostIncrements: 0
+    blastExplosionRadius:
+      maxUpgrades: 5
+      upgradeCount: 0
+      upgradeMagnitude: 2
+      progressToUpgrade: 0
+      initialUpgradeCost: 3
+      upgradeCostIncrements: 0
+  defaultSettings:
+    musicVolume: 1
+    sfxVolume: 1
+    cameraMoveSensitivity: 4
+    keybindings:
+      toggleInventory: 105
+      pauseAbility: 32
+      weaponAttack: 49
+      skillSlot2: 50
+      skillSlot3: 51
+      skillSlot4: 52

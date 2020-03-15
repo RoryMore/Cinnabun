@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerInGameUI : MonoBehaviour
 {
     PauseAbility pauseAbility;
+
     Player player;
 
     public Button PauseButton;
@@ -25,10 +26,15 @@ public class PlayerInGameUI : MonoBehaviour
 
     public Button WeaponAttackButtonBackground;
     public Image MeleeAttack;
+
+    public Image VHSimage;
+
+    public Text timeSinceStartUp;
     // Start is called before the first frame update
     void Start()
     {
         pauseAbility = FindObjectOfType<PauseAbility>();
+      
         player = FindObjectOfType<Player>();
     }
 
@@ -43,6 +49,9 @@ public class PlayerInGameUI : MonoBehaviour
             DelayedBlastButtonBackground.interactable = true;
             TeleportBackground.interactable = true;
             WeaponAttackButtonBackground.interactable = true;
+            VHSimage.gameObject.SetActive(true);
+           timeSinceStartUp.gameObject.SetActive(true);
+
    
 
         }
@@ -54,31 +63,34 @@ public class PlayerInGameUI : MonoBehaviour
             DelayedBlastButtonBackground.interactable = false;
             TeleportBackground.interactable = false;
             WeaponAttackButtonBackground.interactable = false;
-
+            VHSimage.gameObject.SetActive(false);
+           timeSinceStartUp.gameObject.SetActive(false);
         }
 
-        foreach (SkillData skill in player.skillList)
+
+        foreach (BaseSkill skill in player.skillList)
         {
-            if (skill.timeBeenOnCooldown < skill.cooldown)
+            //if (skill.timeBeenOnCooldown < skill.cooldown)
+            if (!skill.isAllowedToCast)
             {
-                switch (skill.skill)
+                switch (skill.skillData.skill)
                 {
                     case SkillData.SkillList.DELAYEDBLAST:
                         {
                             DelayedBlastButton.gameObject.SetActive(true);
-                            DelayedBlastButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.cooldown);
+                            DelayedBlastButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.skillData.cooldown);
                             break;
                         }
                     case SkillData.SkillList.REWIND:
                         {
                             RewindButton.gameObject.SetActive(true);
-                            RewindButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.cooldown);
+                            RewindButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.skillData.cooldown);
                             break;
                         }
                     case SkillData.SkillList.TELEPORT:
                         {
                             TeleportButton.gameObject.SetActive(true);
-                            TeleportButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.cooldown);
+                             TeleportButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.skillData.cooldown);
                             break;
                         }
                     default:
@@ -87,7 +99,7 @@ public class PlayerInGameUI : MonoBehaviour
             }
             else
             {
-                switch (skill.skill)
+                switch (skill.skillData.skill)
                 {
                     case SkillData.SkillList.DELAYEDBLAST:
                         {
@@ -112,10 +124,11 @@ public class PlayerInGameUI : MonoBehaviour
             
         }
 
-        if (player.weaponAttack.timeBeenOnCooldown < player.weaponAttack.cooldown)
+        //if (player.weaponAttack.timeBeenOnCooldown < player.weaponAttack.skillData.cooldown)
+        if (!player.weaponAttack.isAllowedToCast)
         {
             MeleeAttack.gameObject.SetActive(true);
-            MeleeAttack.fillAmount = 1.0f - (player.weaponAttack.timeBeenOnCooldown / player.weaponAttack.cooldown);
+            MeleeAttack.fillAmount = 1.0f - (player.weaponAttack.timeBeenOnCooldown / player.weaponAttack.skillData.cooldown);
         }
         else
         {
@@ -143,7 +156,9 @@ public class PlayerInGameUI : MonoBehaviour
 
     void UpdateTurnCounter()
     {
-         TurnCounter.fillAmount = 1.0f - ( (float)pauseAbility.timeStopCoolDown / 4.0f);
+        TurnCounter.fillAmount = 1.0f - ( (float)pauseAbility.timeStopCoolDown /2.0f);
 
     }
+
+  
 }

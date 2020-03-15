@@ -28,8 +28,6 @@ public class EnemyScript : Entity
     public Animator anim;
     //AudioSource enemyAudio;
     public ParticleSystem hitParticles;
-    
-    public List<SkillData> skillList;
 
     public EnemyManager enemyManager;
     public Encounter myEncounter;
@@ -57,7 +55,7 @@ public class EnemyScript : Entity
 
     }
 
-    public override void TakeDamage(int amount)
+    public override void TakeDamage(int amount, SkillData.DamageType damageType = SkillData.DamageType.PHYSICAL)
     {
         Debug.Log("OOF x " + amount);
         if (isDead)
@@ -70,14 +68,6 @@ public class EnemyScript : Entity
         if (currentHP <= 0)
         {
             Death();
-        }
-    }
-
-    public void UpdateAllSkillCooldowns()
-    {
-        foreach (SkillData skill in skillList)
-        {
-            skill.ProgressCooldown();
         }
     }
 

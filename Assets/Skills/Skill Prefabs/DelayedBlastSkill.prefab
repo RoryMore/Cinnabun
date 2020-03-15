@@ -1,0 +1,154 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5999755771509214122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1134917144968902676}
+  - component: {fileID: 1406524633984402994}
+  m_Layer: 0
+  m_Name: DelayedBlastSkill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1134917144968902676
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5999755771509214122}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6523188732633586615}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1406524633984402994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5999755771509214122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd7413e4c2eb77d4f8944d2d8efb12af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projector: {fileID: 6523188732633586612}
+  skillData: {fileID: 11400000, guid: e5f14c0a5c137f641a518796a9fe599a, type: 2}
+  skillState: 0
+  shape: 0
+  fillType: 1
+  moveType: 0
+  timeBeenOnCooldown: 10
+  currentlyCasting: 0
+  isAllowedToCast: 1
+  casterSelf: {fileID: 0}
+  mainCookie: {fileID: 21300000, guid: 86fdcda00d6ed354893ecc5b80e017e8, type: 3}
+  fillCookie: {fileID: 21300000, guid: 8415458c730a9e34b9667c9806adb970, type: 3}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  explosionRadius: 5
+  explosionDamageMultiplier: 0.4
+--- !u!1001 &4005502552263515046
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1134917144968902676}
+    m_Modifications:
+    - target: {fileID: 804505715399895115, guid: a4a61362fb3f16345a0a6e76f93d8530,
+        type: 3}
+      propertyPath: skill
+      value: 
+      objectReference: {fileID: 1406524633984402994}
+    - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859171462410846226, guid: a4a61362fb3f16345a0a6e76f93d8530,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859171462410846227, guid: a4a61362fb3f16345a0a6e76f93d8530,
+        type: 3}
+      propertyPath: m_Name
+      value: SkillIndicatorProjector
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a4a61362fb3f16345a0a6e76f93d8530, type: 3}
+--- !u!4 &6523188732633586615 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
+    type: 3}
+  m_PrefabInstance: {fileID: 4005502552263515046}
+  m_PrefabAsset: {fileID: 0}
+--- !u!119 &6523188732633586612 stripped
+Projector:
+  m_CorrespondingSourceObject: {fileID: 7859171462410846226, guid: a4a61362fb3f16345a0a6e76f93d8530,
+    type: 3}
+  m_PrefabInstance: {fileID: 4005502552263515046}
+  m_PrefabAsset: {fileID: 0}

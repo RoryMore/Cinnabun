@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform focusTransform;
+    //public CameraShake cameraShake;
 
     [Header("Speed")]
     float xSpeed = 60.0f;
@@ -30,7 +31,7 @@ public class CameraController : MonoBehaviour
     [Range(0.5f, 10)]
     public float mouseXSens = 2.0f;
 
-    float xAngle = 0.0f;
+    float xAngle = 90.0f;
 
     [SerializeField]
     [Range(35.0f, 85.0f)]
@@ -49,13 +50,13 @@ public class CameraController : MonoBehaviour
         targetDistance = Mathf.Clamp(targetDistance - Input.mouseScrollDelta.y * mouseScrollSens, minDistance, maxDistance);
 
         // Hide and lock cursor when RMB is pressed
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(2))
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Confined;
         }
         // Reveal and unlock cursor when RMB is released
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(2))
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -65,8 +66,10 @@ public class CameraController : MonoBehaviour
         Quaternion nextRotation = Quaternion.Euler(yAngle, xAngle, 0);
 
         // While RMB is held
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(2))
         {
+            mouseXSens = SaveManager.GetSettings().cameraMoveSensitivity;
+
             xAngle += Input.GetAxis("Mouse X") * xSpeed * mouseXSens * Time.unscaledDeltaTime * (invertMouseXAxis ? -1.0f : 1.0f);
 
             // If there is any object obstructing vision from the Camera to Focused Transform
@@ -99,5 +102,27 @@ public class CameraController : MonoBehaviour
         if (angle > 360F)
             angle -= 360F;
         return Mathf.Clamp(angle, min, max);
+    }
+
+    public IEnumerator cShake(float duration, float amount)
+    {
+      
+        float elapsed = 0.0f;
+
+        if (elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * amount;
+            float y = Random.Range(-1f, 1f) * amount;
+            Vector3 shakeVector = new Vector3(transform.position.x + x, transform.position.y + y, transform.position.z);
+           
+            transform.position = Vector3.Lerp(transform.position, shakeVector, 1f);
+           
+            elapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        //transform.localPosition = transform.position;
+
     }
 }

@@ -6,25 +6,31 @@ public class EnemyManager : MonoBehaviour
 {
     public GameObject player;
     public List<Encounter> encounters;
-    public float maxEncounterDistance;
 
     public bool weWon;
 
-    public bool isInBattle;
-
     public bool inBattle;
+
+    public int numOfClearedEncounters = 0;
+
+    public bool WaveActive;
+
+    [HideInInspector]
+    public Encounter enemyMangerCurrentEncounter;
+
+    float waveCooldownTimer;
+    public float timeBetweenWaves;
 
     /*Each group of enemies is handled by their own personal "Encounter" manager. The enemy manager handles the
     Global functions of managing the encounters themselves, disabling them and enabling them as required*/
-   
 
     //List all the types of enemies we want to be able to manage
 
-    
     // Start is called before the first frame update
     void Start()
     {
         weWon = false;
+        waveCooldownTimer = 0.0f;
 
         player = GameObject.Find("Player");
         foreach (Encounter encounter in encounters)
@@ -37,45 +43,40 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         UpdateActiveEncounters();
+        if (inBattle == false)
+        {
+            waveCooldownTimer -= Time.deltaTime;
+        }
+
+        if (Input.GetKeyDown("y"))
+        {
+            enemyMangerCurrentEncounter.SetActiveBehavior();
+        }
 
     }
 
     public void UpdateActiveEncounters()
     {
-        foreach (Encounter encounter in encounters)
+        if (inBattle == false && waveCooldownTimer <= 0.0f)
         {
-            float encounterDistance = Vector3.Distance(encounter.gameObject.transform.position, player.transform.position);
-            if (encounterDistance > maxEncounterDistance * 2) //Magic number, it really only needs to be the distance that covers the maximum zoo
+            foreach (Encounter encounter in encounters)
             {
-                if (encounter.gameObject.activeInHierarchy == true)
+                //If it's not cleared and we don't already have a wave going...
+                if (encounter.cleared == false && encounter.gameObject.activeInHierarchy == false)
                 {
-                    encounter.gameObject.SetActive(false);
-                    inBattle = false;
+                    //UI for "Wave" + encounter list.Count + 1
+                    ActivateWave(encounter);
+                    break;
                 }
-            }
-
-            else if (encounterDistance > maxEncounterDistance * 2)
-            {
-
-            }
-
-            else
-            {
-                if (encounter.gameObject.activeInHierarchy == false)
-                {
-                    encounter.gameObject.SetActive(true);
-                    inBattle = true;
-                    Entity.SetCurrentEncounter(encounter);
-                }
-
             }
         }
     }
 
     public void CheckVictory()
     {
-        int numOfClearedEncounters = 0;
+        
 
         foreach (Encounter encounter in encounters)
         {
@@ -84,15 +85,40 @@ public class EnemyManager : MonoBehaviour
                 numOfClearedEncounters++;
             }
         }
+        // If the player has beaten every wave
         if (numOfClearedEncounters == encounters.Count)
         {
-            //You Won!
-            Debug.Log("You win!");
-            weWon = true;
-        }
+           //We want an infinite loop, so reset the list
+           // If in future, we want to specifically alter some waves, we can do so here
 
+        foreach (Encounter encounter in encounters)
+            {
+                encounter.cleared = false;
+                encounter.gameObject.SetActive(false);
+            }
+            //Start at the beginning
+            ActivateWave(encounters[0]);
+
+            //You Won!
+            //Debug.Log("You win!");
+            //weWon = true;
+        }
     }
 
+    public void SetTimeToNextWave(float timer)
+    {
+        waveCooldownTimer = timer;
+    }
 
+    public void ActivateWave(Encounter encounter)
+    {
+        inBattle = true;
+        WaveActive = true;
+        encounter.gameObject.SetActive(true);
+        encounter.Initialise();
+        enemyMangerCurrentEncounter = encounter;
 
+        Entity.SetCurrentEncounter(encounter);
+        
+    }
 }
