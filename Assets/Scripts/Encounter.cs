@@ -172,6 +172,17 @@ public class Encounter : MonoBehaviour
 
         }
 
+        SimpleEnemy boss = initiativeList[0].GetComponent<SimpleEnemy>();
+
+        foreach (BaseSkill skill in boss.skillList)
+        {
+            skill.skillData.maxRange *= 5;
+            skill.skillData.farWidth *= 5;
+            //skill.skillData.baseMagnitude *= 5;
+            //skill.
+        }
+
+
         masterInitiativeList.AddRange(initiativeList);
 
         //Set up player inclusive
