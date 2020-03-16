@@ -28,6 +28,7 @@ public class SimpleEnemy : EnemyScript
 
     public List<EnemyScript> enemyForces;
 
+    TextSystem textSystem;
     PauseAbility pauseAbility;
     [SerializeField] private Transform damageNumbers;
 
@@ -80,7 +81,7 @@ public class SimpleEnemy : EnemyScript
 
         currentHP = maxHP;
 
-
+        textSystem = GetComponent<TextSystem>();
 
         target = GameObject.Find("Player").transform;
 
@@ -185,6 +186,10 @@ public class SimpleEnemy : EnemyScript
 
             }
 
+                    else
+                    {
+                        nav.enabled = false;
+                    }
 
 
 
@@ -435,8 +440,15 @@ public class SimpleEnemy : EnemyScript
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
-       Create(transform.position, amount, false);
-         
+        //Create(transform.position, amount, false);
+
+        anim.SetTrigger("getHit");
+    }
+
+    public override void TakeDamage(int amount, SkillData.DamageType damageType, bool isCrit)
+    {
+        base.TakeDamage(amount, damageType, isCrit);
+        ParticleHit();
         anim.SetTrigger("getHit");
     }
 
@@ -452,7 +464,7 @@ public class SimpleEnemy : EnemyScript
 
         GetComponent<BloodOrbDropControl>().DropItem(transform.position);
 
-        myEncounter.itemSpawner.SpawnItem(transform.position);
+        ItemSpawner.SpawnItem(transform.position);
     }
 
     public void Create(Vector3 position, int damageAmount, bool crit)

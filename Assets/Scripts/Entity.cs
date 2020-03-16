@@ -142,6 +142,7 @@ public class Entity : MonoBehaviour
     public int experienceRequiredToNextLevel;
     public int physDamageReduction;
     public int magDamageReduction;
+    protected float criticalStrikeMultiplier;
 
     [Header("Conditions and Immunities")]
     public List<Condition> currentConditions;
@@ -153,9 +154,10 @@ public class Entity : MonoBehaviour
     [Header("Encounter")]
     public static Encounter currentEncounter;
 
-    [Header("Damaged VFX")]
+    [Header("VFX")]
+    //GameObject explosionParticles;    // DelayedBlast handles the explosion now
     [SerializeField]
-    GameObject explosionParticles;
+    GameObject hitParticles;
 
     // Variables needed for enemies to function efficiently without additional list
     [HideInInspector]
@@ -167,6 +169,8 @@ public class Entity : MonoBehaviour
     [HideInInspector]
     public NavMeshAgent nav;
 
+    [SerializeField]
+    protected GameObject damageNumber;
 
     // Data for original values
     float originalMovementSpeed;
@@ -214,7 +218,7 @@ public class Entity : MonoBehaviour
     //Default condition format
     public virtual void TakeDamage(int amount)
     {
-        Debug.Log("OOF x " + amount);
+        //Debug.Log("OOF x " + amount);
         if (isDead)
             return;
 
@@ -224,6 +228,35 @@ public class Entity : MonoBehaviour
         {
             Death();
         }
+    }
+
+    public virtual void TakeDamage(int amount, SkillData.DamageType damageType, bool isCrit)
+    {
+        // Code inside here may actually be irrelevant. Actual characters (player/enemies) can use this function in their class which can call the other TakeDamage function in itself
+        if (isDead)
+        {
+            return;
+        }
+
+        int damageTaken = Mathf.Clamp(amount - DamageNegated(amount, damageType), 0, int.MaxValue);
+        if (isCrit)
+        {
+            damageTaken = Mathf.RoundToInt(damageTaken * criticalStrikeMultiplier);
+        }
+
+        Vector3 popUpSpawn = new Vector3(Random.Range(-0.9f, 0.3f), Random.Range(-0.9f, 0.3f) + 3, 0);
+
+        DamagePopUp damagePopUpNumber = Instantiate(damageNumber, transform.position + popUpSpawn, Quaternion.identity).GetComponent<DamagePopUp>();
+        damagePopUpNumber.SetUp(damageTaken, isCrit);
+
+        TakeDamage(damageTaken);
+
+        //currentHP -= amount;
+
+        //if (currentHP <= 0)
+        //{
+        //    Death();
+        //}
     }
 
 
@@ -333,6 +366,22 @@ public class Entity : MonoBehaviour
 
         //movementSpeed = agility;
     }
+    // TODO: Implement function for Critical Chance
+    public bool CalculateCriticalStrike()
+    {
+        float agilityEffectiveness = 0.1f;
+        float agilityPointThreshold = 15.0f;
+
+        // For every [agilityPointThreshold] points of agility, we gain [agilityEffectiveness * 100]% crit strike
+        float result = agilityEffectiveness * (agility / agilityPointThreshold);
+
+        if (Random.Range(0.0f, 1.0f) <= result)
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     void CalculateDodgeChance()
     {
@@ -374,7 +423,7 @@ public class Entity : MonoBehaviour
     /// <param name="originalDamage"></param>
     /// <param name="damageType"></param>
     /// <returns></returns>
-    int DamageNegated(int originalDamage, SkillData.DamageType damageType)
+    protected int DamageNegated(int originalDamage, SkillData.DamageType damageType)
     {
         // How effective armour is at 'armourPointThreshold' points of armour
         // 0.25f effectiveness && 100.0f threshold = 25% damage reduction at 100 points of armour
@@ -425,6 +474,8 @@ public class Entity : MonoBehaviour
         CalculateDodgeChance();
         CalculateMagDamagePotential();
         CalculatePhysDamagePotential();
+
+        criticalStrikeMultiplier = 1.5f;
     }
 
 
@@ -485,12 +536,12 @@ public class Entity : MonoBehaviour
 
     //End of Rewind Features
 
-    public void ParticleExplosion()
+    public void ParticleHit()
     {
-        if (explosionParticles != null)
+        if (hitParticles != null)
         {
-            explosionParticles.SetActive(false);
-            explosionParticles.SetActive(true);
+            hitParticles.SetActive(false);
+            hitParticles.SetActive(true);
         }
     }
 }

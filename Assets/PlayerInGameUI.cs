@@ -156,7 +156,7 @@ public class PlayerInGameUI : MonoBehaviour
 
     void UpdateTurnCounter()
     {
-        TurnCounter.fillAmount = 1.0f - ( (float)pauseAbility.timeStopCoolDown / 4.0f);
+        TurnCounter.fillAmount = 1.0f - ( (float)pauseAbility.timeStopCoolDown /2.0f);
 
     }
 

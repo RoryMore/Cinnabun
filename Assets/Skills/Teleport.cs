@@ -26,6 +26,17 @@ public class Teleport : BaseSkill
         }
     }
 
+    /// <summary>
+    /// Used when the player wishes to unSelect the skill
+    /// </summary>
+    public override void ResetSkillVars()
+    {
+        base.ResetSkillVars();
+        destination1Set = false;
+        entityTarget1 = null;
+        teleportLocation.Set(0, 0, 0);
+    }
+
     private void Update()
     {
         SkillDeltaUpdate();
@@ -141,7 +152,7 @@ public class Teleport : BaseSkill
         }
         //entityTarget1.transform.position = teleportLocation;
         
-        entityTarget1.TakeDamage(skillData.baseMagnitude);
+        entityTarget1.TakeDamage(skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus(), skillData.damageType, casterSelf.CalculateCriticalStrike());
 
         entityTarget1 = null;
         teleportLocation.Set(0, 0, 0);

@@ -10,7 +10,7 @@ public class Player : Entity
     public float moveRaycastDistance;
     public CameraController cameraShake;
     TextSystem textSystem;
-
+    [HideInInspector] public bool triggerBox = false;
     public enum PlayerState
     {
         FREE,
@@ -23,7 +23,8 @@ public class Player : Entity
     [Header("Skills & Casting")]
     public WeaponAttack weaponAttack;
     public List<BaseSkill> skillList;
-    [HideInInspector] public BaseSkill selectedSkill = null;
+    //[HideInInspector] 
+    public BaseSkill selectedSkill = null;
 
     public PauseAbility pause = null;
     PauseMenuUI pauseMenu = null;
@@ -295,8 +296,7 @@ public class Player : Entity
                             }
                         }
 
-
-                        if (Input.GetMouseButtonDown(1))
+                        if (Input.GetMouseButtonDown(1) && !selectedSkill.currentlyCasting)
                         {
                             CancelSkillSelection();
                         }
@@ -310,23 +310,41 @@ public class Player : Entity
         }
     }
 
+    public override void TakeDamage(int amount, SkillData.DamageType damageType, bool isCrit)
+    {
+        StartCoroutine(cameraShake.cShake(.3f, 1f));
+
+        base.TakeDamage(amount, damageType, isCrit);
+
+        animator.SetTrigger("gotHit");
+        ParticleHit();
+    }
+
     public override void TakeDamage(int amount)
     {
-        animator.SetTrigger("gotHit");
         StartCoroutine(cameraShake.cShake(.3f, 1f));
+
+        //Vector3 popUpSpawn = new Vector3(Random.Range(-0.9f, 0.3f), Random.Range(-0.9f, 0.3f) + 3, 0);
+
+        //DamagePopUp damagePopUpNumber = Instantiate(damageNumber, transform.position + popUpSpawn, Quaternion.identity).GetComponent<DamagePopUp>();
+        //damagePopUpNumber.SetUp(amount, false);
+
         base.TakeDamage(amount);
+
+        animator.SetTrigger("gotHit");
+        ParticleHit();
     }
 
     //void UpdateSkillCooldowns()
     //{
-        //if (weaponAttack != null)
-        //{
-            //weaponAttack.ProgressCooldown();
-        //}
-       // foreach (SkillData checkedSkill in skillList)
-        //{
-            //checkedSkill.ProgressCooldown();
-        //}
+    //if (weaponAttack != null)
+    //{
+    //weaponAttack.ProgressCooldown();
+    //}
+    // foreach (SkillData checkedSkill in skillList)
+    //{
+    //checkedSkill.ProgressCooldown();
+    //}
     //}
 
     void Move()
@@ -457,6 +475,7 @@ public class Player : Entity
     public void CancelSkillSelection()
     {
         selectedSkill.DisableProjector();
+        selectedSkill.ResetSkillVars();
         selectedSkill = null;
         playerState = PlayerState.FREE;
         nav.angularSpeed = turningSpeed;
@@ -468,6 +487,13 @@ public class Player : Entity
         isDead = true;
         animator.SetBool("isDead", isDead);
         nav.destination = transform.position;
+
+        if (selectedSkill != null)
+        {
+            selectedSkill.DisableProjector();
+            selectedSkill.ResetSkillVars();
+        }
+        //selectedSkill = null;
 
         if (inventory.activeSelf)
         {
@@ -539,4 +565,24 @@ public class Player : Entity
     //    Gizmos.color = Color.red;
     //    Gizmos.DrawLine(transform.position, transform.forward * 2.0f);
     //}
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (triggerBox == false)
+        {
+            if (other.tag == "TriggerBox")
+            {
+                Debug.Log("I walked through it");
+                triggerBox = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "TriggerBox")
+        {
+            Destroy(other);
+        }
+    }
 }
