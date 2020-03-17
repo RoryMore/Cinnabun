@@ -16,6 +16,7 @@ public class UpgradeShop : MonoBehaviour
         public Image buyButtonImage;
         public Sprite buyButtonSprite;
         public Sprite noBuyButtonSprite;
+        public Text currentPurchasesbyMaxText;
     }
 
     [System.Serializable]
@@ -24,6 +25,14 @@ public class UpgradeShop : MonoBehaviour
         public FunctionalUpgradeUI ui;
         [TextArea]
         public string tooltipDescription;
+    }
+
+    // Enum list for different skill categories. With the upgrades intended to be implemented this will come in handy to keep the shop interface clean rather than trying to shove all upgrades in one screen
+    public enum SelectedShopTab
+    {
+        SKILLS,
+        STATS,
+        ITEMS
     }
 
     [Header("Teleport Skill")]
@@ -52,11 +61,19 @@ public class UpgradeShop : MonoBehaviour
     float currentDelayPass;
 
     bool upgradesSaved = false;
+    SelectedShopTab selectedShopTab;
 
-    [Header("Upgrade Description Tooltip")]
+    [Header("Shop Tab Objects")]
+    public List<GameObject> skillUpgrades;
+    public List<GameObject> statUpgrades;
+    public List<GameObject> itemUpgrades;
+
+    
     EventSystem eventSystem;
     PointerEventData pointerEventData;
     GraphicRaycaster raycaster;
+
+    [Header("Upgrade Description Tooltip")]
     [SerializeField]
     Canvas shopCanvas;
 
@@ -73,6 +90,8 @@ public class UpgradeShop : MonoBehaviour
     {
         eventSystem = GetComponent<EventSystem>();
         raycaster = shopCanvas.GetComponent<GraphicRaycaster>();
+
+        selectedShopTab = SelectedShopTab.SKILLS;
     }
 
     // Start is called before the first frame update
@@ -85,6 +104,85 @@ public class UpgradeShop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Switch cases ready to implement shop tabs
+        switch (selectedShopTab)
+        {
+            case SelectedShopTab.SKILLS:
+                {
+                    foreach (GameObject obj in skillUpgrades)
+                    {
+                        if (!obj.activeSelf)
+                        {
+                            obj.SetActive(true);
+                        }
+                    }
+                    foreach (GameObject obj in statUpgrades)
+                    {
+                        if (obj.activeSelf)
+                        {
+                            obj.SetActive(false);
+                        }
+                    }
+                    foreach (GameObject obj in itemUpgrades)
+                    {
+                        if (obj.activeSelf)
+                        {
+                            obj.SetActive(false);
+                        }
+                    }
+                    break;
+                }
+            case SelectedShopTab.STATS:
+                {
+                    foreach (GameObject obj in statUpgrades)
+                    {
+                        if (!obj.activeSelf)
+                        {
+                            obj.SetActive(true);
+                        }
+                    }
+                    foreach (GameObject obj in skillUpgrades)
+                    {
+                        if (obj.activeSelf)
+                        {
+                            obj.SetActive(false);
+                        }
+                    }
+                    foreach (GameObject obj in itemUpgrades)
+                    {
+                        if (obj.activeSelf)
+                        {
+                            obj.SetActive(false);
+                        }
+                    }
+                    break;
+                }
+            case SelectedShopTab.ITEMS:
+                {
+                    foreach (GameObject obj in itemUpgrades)
+                    {
+                        if (!obj.activeSelf)
+                        {
+                            obj.SetActive(true);
+                        }
+                    }
+                    foreach (GameObject obj in statUpgrades)
+                    {
+                        if (obj.activeSelf)
+                        {
+                            obj.SetActive(false);
+                        }
+                    }
+                    foreach (GameObject obj in skillUpgrades)
+                    {
+                        if (obj.activeSelf)
+                        {
+                            obj.SetActive(false);
+                        }
+                    }
+                    break;
+                }
+        }
         ProcessPressedButton(teleportButtonPressed, SaveManager.GetUpgradeList().teleportRange);
         ProcessPressedButton(playerMovespeedButtonPressed, SaveManager.GetUpgradeList().playerMovespeed);
         ProcessPressedButton(bloodOrbEffectivenessButtonPressed, SaveManager.GetUpgradeList().bloodOrbEffectiveness);
@@ -209,6 +307,7 @@ public class UpgradeShop : MonoBehaviour
                                                                                                                                                     // Update Purchase Progress text
             upgradeUiElements.ui.progressText.text = characterUpgrade.progressToUpgrade.ToString() + "/" + characterUpgrade.GetUpgradeCost();
         }
+        upgradeUiElements.ui.currentPurchasesbyMaxText.text = characterUpgrade.upgradeCount.ToString() + "/" + characterUpgrade.maxUpgrades.ToString();
         
         // Update Buy Button with appropriate graphic if a purchase can be made here
         if (characterUpgrade.CanBuyUpgrade() && (CurrencyManager.GetUpgradeMoney() > 0))
@@ -283,6 +382,21 @@ public class UpgradeShop : MonoBehaviour
     public void PlayerMovespeedButtonUp()
     {
         playerMovespeedButtonPressed = false;
+    }
+
+    public void SkillTabClicked()
+    {
+        selectedShopTab = SelectedShopTab.SKILLS;
+    }
+
+    public void StatsTabClicked()
+    {
+        selectedShopTab = SelectedShopTab.STATS;
+    }
+
+    public void ItemsTabClicked()
+    {
+        selectedShopTab = SelectedShopTab.ITEMS;
     }
 
     public void LoadGameScene()

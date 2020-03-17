@@ -432,12 +432,12 @@ public class Entity : MonoBehaviour
 
         if (damageType == SkillData.DamageType.PHYSICAL)
         {
-            float percentReduced = armourEffectiveness * (physicalArmour / armourPointThreshold);
+            float percentReduced = Mathf.Clamp(armourEffectiveness * (physicalArmour / armourPointThreshold), 0, 0.95f);
             return Mathf.RoundToInt(originalDamage * percentReduced);
         }
         else
         {
-            float percentReduced = armourEffectiveness * (magicalArmour / armourPointThreshold);
+            float percentReduced = Mathf.Clamp(armourEffectiveness * (magicalArmour / armourPointThreshold), 0, 0.95f);
             return Mathf.RoundToInt(originalDamage * percentReduced);
         }
     }
