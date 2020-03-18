@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61897f3bfebc8c24a8ccc93398f7574f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill: {fileID: 1516275380240458323, guid: 2831b6f10edabaa449845657d0522710, type: 3}
+  skill: {fileID: 2354018301932174200}
 --- !u!1 &9187147089132114139
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,19 +123,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9515cca2412fbee409c3034a5347a4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projector: {fileID: 0}
-  skillData: {fileID: 0}
+  projector: {fileID: 7228082081506241778}
+  skillData: {fileID: 11400000, guid: 15cae5c7917f0184fb89adb492eb7a9e, type: 2}
   skillState: 0
   shape: 0
-  fillType: 0
+  fillType: 1
   moveType: 0
   timeBeenOnCooldown: 10
   timeSpentOnWindUp: 0
   currentlyCasting: 0
   isAllowedToCast: 0
   casterSelf: {fileID: 0}
-  mainCookie: {fileID: 0}
-  fillCookie: {fileID: 0}
+  mainCookie: {fileID: 21300000, guid: badd31562f3e04b4aa767e63fbad1825, type: 3}
+  fillCookie: {fileID: 21300000, guid: 04d016b7b17a9f943bc00da2618debad, type: 3}
   groundMask:
     serializedVersion: 2
     m_Bits: 0

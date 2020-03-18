@@ -17,6 +17,7 @@ public class BasicSkill : BaseSkill
     [Tooltip("if only not hiting player")] [SerializeField] private bool IgnorePlayer;
     //public Effects[] StatusEffects;
     private Entity Entity;
+    public Entity.BUffEFffect buf;
     //private Entity.Condition[] Conditions;
     // Start is called before the first frame update
     //void Start()
@@ -132,7 +133,9 @@ public class BasicSkill : BaseSkill
         // Intended effect here. Be it damage or otherwise
         // This includes checking if target is in range and such
 
-        ApplySkillProplys();
+        //apply buff
+        buf = casterSelf.ApplyBuffOff();
+
 
         foreach (Entity testedEntity in entityList)
         {
@@ -140,10 +143,11 @@ public class BasicSkill : BaseSkill
             {
                 if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                 {
-                    
-                        // testedEntity.TakeDamage((int)(skillData.baseMagnitude * DamageMult));
+                    testedEntity.TakeDamage(skillData.baseMagnitude+ (int)buf.damage, skillData.damageType, casterSelf.CalculateCriticalStrike());
 
-                        if (GetComponentInParent<StatusEfect>())
+                    // testedEntity.TakeDamage((int)(skillData.baseMagnitude * DamageMult));
+
+                    if (GetComponentInParent<StatusEfect>())
                         {
                             GetComponentInParent<StatusEfect>().applyEffects(testedEntity, Effects.EffectApplyType.OnHit);
                         }
@@ -164,14 +168,17 @@ public class BasicSkill : BaseSkill
         if (GetComponentInParent<BuffEffect>())
         {
             GetComponentInParent<BuffEffect>().applyEffects(Entity, Buff.EffectApplyType.EndSkill);
-        }//ApplySkillProplys(List<Entity> entityList)
+        }
+
+
+        ApplySkillProplys();
 
 
 
     }
     protected virtual void ApplySkillProplys()
     {
-        timeBeenOnCooldown = 0.0f;
+        timeBeenOnCooldown = 0.0f + buf.cooldown;
         timeSpentOnWindUp = 0.0f;
         currentlyCasting = false;
         skillState = SkillState.INACTIVE;

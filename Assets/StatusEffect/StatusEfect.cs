@@ -9,35 +9,42 @@ public class StatusEfect : MonoBehaviour
 
     public void applyEffects(Entity entity, Effects.EffectApplyType effectApply)
     {
-        
+        Debug.LogWarning("Effect");
         if (entity ==null)
         {
             return;
-        }  
+        }
         foreach (Effects item in StatusEffects)
         {
-            //check to see if this is the right time to apply these condation to entity
-            if (effectApply == item.EfectApplyWhen)
+
+            Debug.LogWarning(CheckToContrion(entity, item));
+            if (CheckToContrion(entity, item))//enetity is already in that condition
             {
-                if (CheckToContrion(entity, item))//enetity is already in that condition
+
+                //add condition to entity basiced on if it is percent damage
+                if (item.BuffType == Effects.buffeType.Percent)
                 {
-                    //add condition to entity basiced on if it is percent damage
-                    if (item.BuffType == Effects.buffeType.Percent)
-                        {
-                        Debug.LogWarning("Percent");
-                        entity.currentEffConditions.Add(new Entity.ConditionEff(item.Duration, item.Effect, item.Damage));
-                    }
-                        else
-                        {
-                        //entity.currentEffConditions.Add(new Entity.ConditionEff(item.Duration, item.Effect, item.Damage, item.TickDamage));
-                        entity.AddCurrentEff(item.Duration, item.Effect, item.Damage);
-                    }
+                    Debug.LogWarning("Percent");
+                    entity.currentEffConditions.Add(new Entity.ConditionEff(item.Duration, item.Effect, item.Damage));
                 }
                 else
                 {
+                    Debug.LogWarning("numbe");
+                    //entity.currentEffConditions.Add(new Entity.ConditionEff(item.Duration, item.Effect, item.Damage, item.TickDamage));
+                    entity.AddCurrentEff(item.Duration, item.Effect, item.TickDamage);
+                }
+            }
+            else
+            {
+
+                Debug.LogWarning(effectApply == item.EfectApplyWhen);
+                //check to see if this is the right time to apply these condation to entity
+                if (effectApply == item.EfectApplyWhen)
+                {
+
                     //set duration to need effect duration if lower
-                  //  Debug.LogWarning("reset");
-                    if (StatusEffects[checkLoctation].Duration< item.Duration)//Duration of the contration vs 
+                    Debug.LogWarning("reset");
+                    if (StatusEffects[checkLoctation].Duration < item.Duration)//Duration of the contration vs 
                     {
                         var temp = entity.currentEffConditions[checkLoctation];
                         temp.duration = item.Duration;

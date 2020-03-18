@@ -45,7 +45,7 @@ public class Charge1 : BasicSkill
     protected override void ApplySkillProplys()
     {
 
-        timeBeenOnCooldown = 0.0f;
+        timeBeenOnCooldown = 0.0f+buf.cooldown;
         timeSpentOnWindUp = 0.0f;
         currentlyCasting = false;
 

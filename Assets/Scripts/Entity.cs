@@ -78,12 +78,12 @@ public class Entity : MonoBehaviour
 
         public float timePassed;
         public bool begun;
-
+        public float delay;
        
         public ConditionEff(float _duration, ConditionEffect _conditionType, float Effectiveness)
         {
             damage = 0;
-            damageTickRate = 0;
+            damageTickRate = Effectiveness;
            
             duration = _duration;
             conditionType = _conditionType;
@@ -91,6 +91,7 @@ public class Entity : MonoBehaviour
             begun = false;
             
             effectivePercent = Effectiveness;
+            delay = 0;
         }
 
         public ConditionEff(float _duration, ConditionEffect _conditionType, float _damage, float _damageTickRate)
@@ -104,6 +105,7 @@ public class Entity : MonoBehaviour
             begun = false;
             
             effectivePercent = 1.0f;
+            delay = 0;
         }
 
        
@@ -111,11 +113,20 @@ public class Entity : MonoBehaviour
         public void ReduceDuration(float reducedBy)
         {
             duration -= reducedBy;
-
             timePassed += reducedBy;
-            Debug.LogWarning(duration);
-        }
 
+           
+        }
+        public void ReduceDelay(float reducedBy)
+        {
+            delay -= reducedBy;
+
+        }
+        public void ResetDelay(float reset)
+        {
+            delay = reset;
+
+        }
         public void ResetTimePassed()
         {
             timePassed = 0.0f;
@@ -282,21 +293,50 @@ public class Entity : MonoBehaviour
             Death();
         }
     }
-
-    public virtual bool IntendedAction(Action action)
-    {
+    public virtual bool CanAct() {
         foreach (var item in currentEffConditions)
         {
             switch (item.conditionType)
             {
                 case ConditionEffect.STUN:
+                    Debug.LogWarning("stuned");
                     return false;
-                    
+                case ConditionEffect.SPIKED:
+                    break;
+                    default:
+                    break;
+            }
+        }
+        return true;
+    }
+
+    public virtual bool IntendedAction(Action action)
+    {
+        int temp = 0;
+        foreach (var item in currentEffConditions)
+        {
+            switch (item.conditionType)
+            {
+                case ConditionEffect.STUN:
+                    break;
                 case ConditionEffect.SPIKED:
                     switch (action)
                     {
                         case Action.Move:
-                            TakeDamage((int)item.damageTickRate, SkillData.DamageType.PHYSICAL, false);
+                            if (item.delay <=0)
+                            {
+                                TakeDamage((int)item.damageTickRate, SkillData.DamageType.PHYSICAL, false);
+                                item.ResetDelay(0.5f);
+                                Debug.LogWarning(("delay reset" + item.delay));
+                                currentEffConditions[temp] = item;
+                            }
+                            else
+                            {
+                                item.ReduceDelay(Time.deltaTime);
+                                Debug.LogWarning(("delay" + item.delay));
+                                currentEffConditions[temp] = item;
+                               
+                            }
                             break;
                         default:
                             break;
@@ -305,6 +345,7 @@ public class Entity : MonoBehaviour
                 default:
                     break;
             }
+            temp++;
         }
         return true;
     }
@@ -313,33 +354,51 @@ public class Entity : MonoBehaviour
 
     //}
 
-    public virtual void ApplyBuff(int amount, SkillData.DamageType damageType, bool isCrit)
+    public struct BUffEFffect
     {
-        foreach (var item in currentBufConditions)
+        public int cooldown;
+        public float damage;
+
+        public void Init(){
+            cooldown = 0;
+            damage = 0;
+        }
+        public void CooldownMinus(int Minus){ cooldown -= Minus; }
+        public void DamagePlus(int Plus) { damage -= Plus; }
+    }
+
+    public BUffEFffect ApplyBuffOff()
+    {
+        BUffEFffect buff;
+        buff.cooldown = 0;
+        buff.damage = 0;
+        buff.Init();
+
+        buff.cooldown = 0;
+        if (currentBufConditions.Count != 0)
         {
-            switch (item.conditionType)
+            foreach (var item in currentBufConditions)
             {
-                case ConditionBuff.DODGE:
-                    if (Random.Range(0, 100) <= 50)
-                    {
-                        amount = 0;
-                    }
-                    break;
 
-                case ConditionBuff.FOCUS:
 
-                    break;
+                switch (item.conditionType)
+                {
+                    case ConditionBuff.FOCUS:
+                        buff.cooldown -= (int)item.Buff;
+                        break;
+                    case ConditionBuff.RAGE:
+                        buff.damage += (int)item.Buff;
+                        break;
 
-                case ConditionBuff.RAGE:
-                    amount += (amount / 4);
-                    break;
-
-                default:
-                    break;
+                    default:
+                        break;
+                }
             }
         }
-        TakeDamage(amount, damageType, isCrit);
+        return buff;
     }
+
+
 
     //add cooldown
     public virtual void TakeDamage(int amount, SkillData.DamageType damageType, bool isCrit)
@@ -350,8 +409,26 @@ public class Entity : MonoBehaviour
             return;
         }
 
-        
-
+        //apply defence Buff
+        if (currentBufConditions.Count != 0)
+        {
+            foreach (var item in currentBufConditions)
+            {
+                switch (item.conditionType)
+                {
+                    case ConditionBuff.DODGE:
+                       
+                        if (Random.Range(0, 100) <= 50) //<- needs to update this
+                        {
+                            amount = 0;
+                            return;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
         int damageTaken = Mathf.Clamp(amount - DamageNegated(amount, damageType), 0, int.MaxValue);
         if (isCrit)
@@ -383,7 +460,7 @@ public class Entity : MonoBehaviour
     public void AddCurrentEff(float dur,ConditionEffect effect,float damage)
     {
         currentEffConditions.Add(new Entity.ConditionEff(dur, effect, damage));
-
+       //Debug.LogWarning("numbe " + dur + " eff " + effect +" dam "+ damage);
     }
     public void AddCurrentBuf(float dur, ConditionBuff effect, float Buff, string BuffStat)
     {
@@ -396,15 +473,15 @@ public class Entity : MonoBehaviour
         if (currentEffConditions.Count != 0)
         {
             int conditionIndex = 0;
-            foreach (ConditionEff condition in currentEffConditions)
+            foreach (ConditionEff condition in currentEffConditions.ToArray())
             {
                 if (condition.duration > 0)
                 {
                     condition.ReduceDuration(Time.deltaTime);
+                    currentEffConditions[conditionIndex] = condition;
                 }
                 else
                 {
-                    Debug.LogWarning("Stun edns");
                     currentEffConditions.RemoveAt(conditionIndex);
                 }
                 conditionIndex++;
@@ -421,6 +498,8 @@ public class Entity : MonoBehaviour
                 if (condition.duration > 0)
                 {
                     condition.ReduceDuration(Time.deltaTime);
+                    currentBufConditions[conditionIndex] = condition;
+                    
                 }
                 else
                 {
@@ -431,23 +510,6 @@ public class Entity : MonoBehaviour
         }
 
         RecordRewind();
-    }
-
-    public void ApplyBuff()
-    {
-        switch (currentBufConditions[currentBufConditions.Count].BuffStat) {
-            case "Attack":
-                break;
-            case "Death":
-                break;
-            case "SkillCooldown":
-                break;
-            case "Dodge":
-                break;
-            default:
-                break;
-
-        };
     }
 
     public void CalculateMaxHP()

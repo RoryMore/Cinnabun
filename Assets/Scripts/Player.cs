@@ -92,6 +92,10 @@ public class Player : Entity
         //if () // Check if player is dead
         if (!isDead)
         {
+            if (!CanAct())
+            {
+                return;
+            }
             switch (playerState)
             {
                 case PlayerState.FREE:  // Player can move, and if in combat can receive input for selecting a skill
@@ -102,6 +106,10 @@ public class Player : Entity
                         {
                             if (!inventory.activeSelf)
                             {
+                                if ((nav.velocity.x !=0)&&(nav.velocity.z != 0))
+                                {
+                                    IntendedAction(Action.Move);
+                                }
                                 Move();
                             }
 
@@ -152,7 +160,8 @@ public class Player : Entity
 
                     if (!pauseMenu.isPaused)
                     {
-
+                        IntendedAction(Action.Move);
+                       
                         nav.speed = 0.0f;
                         nav.angularSpeed = 0.0f;
 
@@ -313,7 +322,7 @@ public class Player : Entity
     public override void TakeDamage(int amount, SkillData.DamageType damageType, bool isCrit)
     {
         StartCoroutine(cameraShake.cShake(.3f, 1f));
-
+        //changed from TakeDamage so buff are used
         base.TakeDamage(amount, damageType, isCrit);
 
         animator.SetTrigger("gotHit");

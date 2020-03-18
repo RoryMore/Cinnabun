@@ -15,7 +15,7 @@ public class Heal : BasicSkill
     protected override void ApplySkillProplys()
     {
 
-        timeBeenOnCooldown = 0.0f;
+        timeBeenOnCooldown = 0.0f + buf.cooldown;
         timeSpentOnWindUp = 0.0f;
         skillState = SkillState.INACTIVE;
         currentlyCasting = false;
