@@ -517,6 +517,23 @@ public class Player : Entity
         }
     }
 
+    public override bool CalculateCriticalStrike()
+    {
+        float agilityEffectiveness = 0.1f;
+        agilityEffectiveness += SaveManager.GetUpgradeList().bonusAgilityCrit.GetUpgradedMagnitude();
+        float agilityPointThreshold = 25.0f;
+
+        // For every [agilityPointThreshold] points of agility, we gain [agilityEffectiveness * 100]% crit strike
+        float result = agilityEffectiveness * (agility / agilityPointThreshold);
+
+        if (Random.Range(0.0f, 1.0f) <= result)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     void UpdateAnimator()
     {
         if (nav.velocity.magnitude > 0.01f)
@@ -527,7 +544,8 @@ public class Player : Entity
         {
             animator.SetBool("moving", false);
         }
-        animator.SetFloat("movementPlaybackMultiplier", nav.velocity.magnitude / movementSpeed);
+        float movePlaybackSpeed = movementSpeed / baseMovementSpeed;
+        animator.SetFloat("movementPlaybackMultiplier", movePlaybackSpeed);
 
         // This is a method to grab clip info to play with animation properties based on current clip
         //AnimatorClipInfo[] animInfo = animator.GetCurrentAnimatorClipInfo(0);

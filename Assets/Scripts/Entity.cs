@@ -367,10 +367,10 @@ public class Entity : MonoBehaviour
         //movementSpeed = agility;
     }
     // TODO: Implement function for Critical Chance
-    public bool CalculateCriticalStrike()
+    public virtual bool CalculateCriticalStrike()
     {
         float agilityEffectiveness = 0.1f;
-        float agilityPointThreshold = 15.0f;
+        float agilityPointThreshold = 25.0f;
 
         // For every [agilityPointThreshold] points of agility, we gain [agilityEffectiveness * 100]% crit strike
         float result = agilityEffectiveness * (agility / agilityPointThreshold);

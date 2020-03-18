@@ -187,18 +187,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &357130944 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5998483719019073117, guid: 8e0184fd60d2a894ca058fc8b10f4fa3,
-    type: 3}
-  m_PrefabInstance: {fileID: 5998483719178046848}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &420247626 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5998483719202660283, guid: 8e0184fd60d2a894ca058fc8b10f4fa3,
-    type: 3}
-  m_PrefabInstance: {fileID: 5998483719178046848}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &572662211
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,18 +270,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1666611044 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5998483719952540962, guid: 8e0184fd60d2a894ca058fc8b10f4fa3,
-    type: 3}
-  m_PrefabInstance: {fileID: 5998483719178046848}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2058384917 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5998483719294071794, guid: 8e0184fd60d2a894ca058fc8b10f4fa3,
-    type: 3}
-  m_PrefabInstance: {fileID: 5998483719178046848}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5998483719178046848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -301,41 +277,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5998483718411913911, guid: 8e0184fd60d2a894ca058fc8b10f4fa3,
-        type: 3}
-      propertyPath: skillUpgrades.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5998483718411913911, guid: 8e0184fd60d2a894ca058fc8b10f4fa3,
-        type: 3}
-      propertyPath: statUpgrades.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5998483718411913911, guid: 8e0184fd60d2a894ca058fc8b10f4fa3,
-        type: 3}
-      propertyPath: itemUpgrades.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5998483718411913911, guid: 8e0184fd60d2a894ca058fc8b10f4fa3,
-        type: 3}
-      propertyPath: skillUpgrades.Array.data[0]
-      value: 
-      objectReference: {fileID: 1666611044}
-    - target: {fileID: 5998483718411913911, guid: 8e0184fd60d2a894ca058fc8b10f4fa3,
-        type: 3}
-      propertyPath: skillUpgrades.Array.data[1]
-      value: 
-      objectReference: {fileID: 357130944}
-    - target: {fileID: 5998483718411913911, guid: 8e0184fd60d2a894ca058fc8b10f4fa3,
-        type: 3}
-      propertyPath: statUpgrades.Array.data[0]
-      value: 
-      objectReference: {fileID: 420247626}
-    - target: {fileID: 5998483718411913911, guid: 8e0184fd60d2a894ca058fc8b10f4fa3,
-        type: 3}
-      propertyPath: itemUpgrades.Array.data[0]
-      value: 
-      objectReference: {fileID: 2058384917}
     - target: {fileID: 5998483719409656297, guid: 8e0184fd60d2a894ca058fc8b10f4fa3,
         type: 3}
       propertyPath: m_Name
