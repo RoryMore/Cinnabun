@@ -15,6 +15,8 @@ public class SaveManager : MonoBehaviour
         public CharacterUpgrade playerMovespeed;
         public CharacterUpgrade bloodOrbEffectiveness;
         public CharacterUpgrade blastExplosionRadius;
+        public CharacterUpgrade extraPauseAction;
+        public CharacterUpgrade bonusAgilityCrit;
     }
 
     [Header("Save File Names")]
@@ -150,6 +152,8 @@ public class SaveManager : MonoBehaviour
         save.playerMovespeed = characterUpgrades.playerMovespeed;
         save.bloodOrbEffectiveness = characterUpgrades.bloodOrbEffectiveness;
         save.blastExplosionRadius = characterUpgrades.blastExplosionRadius;
+        save.extraPauseAction = characterUpgrades.extraPauseAction;
+        save.bonusAgilityCrit = characterUpgrades.bonusAgilityCrit;
 
         return save;
     }

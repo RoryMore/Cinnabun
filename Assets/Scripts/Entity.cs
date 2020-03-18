@@ -367,10 +367,10 @@ public class Entity : MonoBehaviour
         //movementSpeed = agility;
     }
     // TODO: Implement function for Critical Chance
-    public bool CalculateCriticalStrike()
+    public virtual bool CalculateCriticalStrike()
     {
         float agilityEffectiveness = 0.1f;
-        float agilityPointThreshold = 15.0f;
+        float agilityPointThreshold = 25.0f;
 
         // For every [agilityPointThreshold] points of agility, we gain [agilityEffectiveness * 100]% crit strike
         float result = agilityEffectiveness * (agility / agilityPointThreshold);
@@ -432,12 +432,12 @@ public class Entity : MonoBehaviour
 
         if (damageType == SkillData.DamageType.PHYSICAL)
         {
-            float percentReduced = armourEffectiveness * (physicalArmour / armourPointThreshold);
+            float percentReduced = Mathf.Clamp(armourEffectiveness * (physicalArmour / armourPointThreshold), 0, 0.95f);
             return Mathf.RoundToInt(originalDamage * percentReduced);
         }
         else
         {
-            float percentReduced = armourEffectiveness * (magicalArmour / armourPointThreshold);
+            float percentReduced = Mathf.Clamp(armourEffectiveness * (magicalArmour / armourPointThreshold), 0, 0.95f);
             return Mathf.RoundToInt(originalDamage * percentReduced);
         }
     }

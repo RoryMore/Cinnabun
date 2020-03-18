@@ -16,6 +16,7 @@ public class UpgradeShop : MonoBehaviour
         public Image buyButtonImage;
         public Sprite buyButtonSprite;
         public Sprite noBuyButtonSprite;
+        public Text currentPurchasesbyMaxText;
     }
 
     [System.Serializable]
@@ -24,6 +25,14 @@ public class UpgradeShop : MonoBehaviour
         public FunctionalUpgradeUI ui;
         [TextArea]
         public string tooltipDescription;
+    }
+
+    // Enum list for different skill categories. With the upgrades intended to be implemented this will come in handy to keep the shop interface clean rather than trying to shove all upgrades in one screen
+    public enum SelectedShopTab
+    {
+        SKILLS,
+        STATS,
+        ITEMS
     }
 
     [Header("Teleport Skill")]
@@ -35,6 +44,10 @@ public class UpgradeShop : MonoBehaviour
     bool explosionRadiusButtonPressed = false;
     public ShopUpgrade blastExplosionDmgMultiplier;
 
+    [Header("Extra Action")]
+    public ShopUpgrade extraActionUpgrade;
+    bool extraActionButtonPressed = false;
+
     [Header("Health Pickup")]
     public ShopUpgrade bloodOrbEffectiveness;
     bool bloodOrbEffectivenessButtonPressed = false;
@@ -42,6 +55,9 @@ public class UpgradeShop : MonoBehaviour
     [Header("Player Stats")]
     public ShopUpgrade playerBaseMovementSpeed;
     bool playerMovespeedButtonPressed = false;
+
+    public ShopUpgrade bonusAgilityCrit;
+    bool bonusAgilityCritButtonPressed = false;
 
     [Header("Upgrade Money Counter")]
     public Text upgradeMoneyCounter;
@@ -52,11 +68,19 @@ public class UpgradeShop : MonoBehaviour
     float currentDelayPass;
 
     bool upgradesSaved = false;
+    SelectedShopTab selectedShopTab;
 
-    [Header("Upgrade Description Tooltip")]
+    [Header("Shop Tab Objects")]
+    public GameObject skillTabObject;
+    public GameObject statTabObject;
+    public GameObject itemTabObject;
+
+    
     EventSystem eventSystem;
     PointerEventData pointerEventData;
     GraphicRaycaster raycaster;
+
+    [Header("Upgrade Description Tooltip")]
     [SerializeField]
     Canvas shopCanvas;
 
@@ -73,6 +97,8 @@ public class UpgradeShop : MonoBehaviour
     {
         eventSystem = GetComponent<EventSystem>();
         raycaster = shopCanvas.GetComponent<GraphicRaycaster>();
+
+        selectedShopTab = SelectedShopTab.SKILLS;
     }
 
     // Start is called before the first frame update
@@ -85,16 +111,45 @@ public class UpgradeShop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Switch cases ready to implement shop tabs
+        switch (selectedShopTab)
+        {
+            case SelectedShopTab.SKILLS:
+                {
+                    skillTabObject.SetActive(true);
+                    statTabObject.SetActive(false);
+                    itemTabObject.SetActive(false);
+                    break;
+                }
+            case SelectedShopTab.STATS:
+                {
+                    skillTabObject.SetActive(false);
+                    statTabObject.SetActive(true);
+                    itemTabObject.SetActive(false);
+                    break;
+                }
+            case SelectedShopTab.ITEMS:
+                {
+                    skillTabObject.SetActive(false);
+                    statTabObject.SetActive(false);
+                    itemTabObject.SetActive(true);
+                    break;
+                }
+        }
         ProcessPressedButton(teleportButtonPressed, SaveManager.GetUpgradeList().teleportRange);
         ProcessPressedButton(playerMovespeedButtonPressed, SaveManager.GetUpgradeList().playerMovespeed);
         ProcessPressedButton(bloodOrbEffectivenessButtonPressed, SaveManager.GetUpgradeList().bloodOrbEffectiveness);
         ProcessPressedButton(explosionRadiusButtonPressed, SaveManager.GetUpgradeList().blastExplosionRadius);
+        ProcessPressedButton(extraActionButtonPressed, SaveManager.GetUpgradeList().extraPauseAction);
+        ProcessPressedButton(bonusAgilityCritButtonPressed, SaveManager.GetUpgradeList().bonusAgilityCrit);
 
         ProcessUpgradeUI(teleportRange, SaveManager.GetUpgradeList().teleportRange);
         ProcessUpgradeUI(blastExplosionRadius, SaveManager.GetUpgradeList().blastExplosionRadius);
         //ProcessUpgradeUI(blastExplosionDmgMultiplier);
         ProcessUpgradeUI(bloodOrbEffectiveness, SaveManager.GetUpgradeList().bloodOrbEffectiveness);
         ProcessUpgradeUI(playerBaseMovementSpeed, SaveManager.GetUpgradeList().playerMovespeed);
+        ProcessUpgradeUI(extraActionUpgrade, SaveManager.GetUpgradeList().extraPauseAction);
+        ProcessUpgradeUI(bonusAgilityCrit, SaveManager.GetUpgradeList().bonusAgilityCrit);
 
         upgradeMoneyCounter.text = CurrencyManager.GetUpgradeMoney().ToString();
 
@@ -134,19 +189,19 @@ public class UpgradeShop : MonoBehaviour
             {
                 tooltipPosition.gameObject.SetActive(true);
 
-                UpdateTooltip(teleportRange, SaveManager.GetUpgradeList().teleportRange);
+                UpdateTooltip(teleportRange, SaveManager.GetUpgradeList().teleportRange, "range");
             }
             else if (result.gameObject.name.Contains("PlayerMovespeed"))
             {
                 tooltipPosition.gameObject.SetActive(true);
 
-                UpdateTooltip(playerBaseMovementSpeed, SaveManager.GetUpgradeList().playerMovespeed);
+                UpdateTooltip(playerBaseMovementSpeed, SaveManager.GetUpgradeList().playerMovespeed, "move speed");
             }
             else if (result.gameObject.name.Contains("BlastRadius"))
             {
                 tooltipPosition.gameObject.SetActive(true);
 
-                UpdateTooltip(blastExplosionRadius, SaveManager.GetUpgradeList().blastExplosionRadius);
+                UpdateTooltip(blastExplosionRadius, SaveManager.GetUpgradeList().blastExplosionRadius, "range");
             }
             else if (result.gameObject.name.Contains("BloodOrb"))
             {
@@ -158,12 +213,41 @@ public class UpgradeShop : MonoBehaviour
                 tooltipPosition.position = descriptionPosition;
 
                 tooltipDescription.text = bloodOrbEffectiveness.tooltipDescription;
-                tooltipCurrentBonus.text = "current bonus: <color=lime>+" + SaveManager.GetUpgradeList().bloodOrbEffectiveness.GetUpgradedMagnitude().ToString() + "%</color>";
+                tooltipCurrentBonus.text = "current bonus: <color=lime>+" + SaveManager.GetUpgradeList().bloodOrbEffectiveness.GetUpgradedMagnitude().ToString() + "%</color> bonus healing";
 
                 if (SaveManager.GetUpgradeList().bloodOrbEffectiveness.CanBuyUpgrade())
                 {
                     float nextBonus = SaveManager.GetUpgradeList().bloodOrbEffectiveness.GetUpgradedMagnitude() + SaveManager.GetUpgradeList().bloodOrbEffectiveness.upgradeMagnitude;
-                    tooltipNextBonus.text = "next bonus: <color=lime>+" + nextBonus.ToString() + "%</color>";
+                    tooltipNextBonus.text = "next bonus: <color=lime>+" + nextBonus.ToString() + "%</color> bonus healing";
+                }
+                else
+                {
+                    tooltipNextBonus.text = "next bonus: <color=white>MAXED</color>";
+                }
+            }
+            else if (result.gameObject.name.Contains("ExtraAction"))
+            {
+                tooltipPosition.gameObject.SetActive(true);
+
+                UpdateTooltip(extraActionUpgrade, SaveManager.GetUpgradeList().extraPauseAction, "action");
+            }
+            else if (result.gameObject.name.Contains("BonusAgilityCrit"))
+            {
+                tooltipPosition.gameObject.SetActive(true);
+
+                // Position the Description
+                Vector3 descriptionPosition = bonusAgilityCrit.ui.progressFillImage.transform.position;
+                descriptionPosition.y += 30;
+                tooltipPosition.position = descriptionPosition;
+
+                tooltipDescription.text = bonusAgilityCrit.tooltipDescription;
+                float critPercent = SaveManager.GetUpgradeList().bonusAgilityCrit.GetUpgradedMagnitude() * 100.0f;
+                tooltipCurrentBonus.text = "current bonus: <color=lime>+" + critPercent.ToString() + "%</color> critical chance";
+
+                if (SaveManager.GetUpgradeList().bonusAgilityCrit.CanBuyUpgrade())
+                {
+                    float nextBonus = (SaveManager.GetUpgradeList().bonusAgilityCrit.GetUpgradedMagnitude() + SaveManager.GetUpgradeList().bonusAgilityCrit.upgradeMagnitude) * 100.0f;
+                    tooltipNextBonus.text = "next bonus: <color=lime>+" + nextBonus.ToString() + "%</color> critical chance";
                 }
                 else
                 {
@@ -173,7 +257,7 @@ public class UpgradeShop : MonoBehaviour
         }
     }
 
-    void UpdateTooltip(ShopUpgrade shopUpgrade, CharacterUpgrade characterUpgrade)
+    void UpdateTooltip(ShopUpgrade shopUpgrade, CharacterUpgrade characterUpgrade, string bonusSuffix)
     {
         // Position the Description
         Vector3 descriptionPosition = shopUpgrade.ui.progressFillImage.transform.position;
@@ -181,12 +265,12 @@ public class UpgradeShop : MonoBehaviour
         tooltipPosition.position = descriptionPosition;
 
         tooltipDescription.text = shopUpgrade.tooltipDescription;
-        tooltipCurrentBonus.text = "current bonus: <color=lime>+" + characterUpgrade.GetUpgradedMagnitude().ToString() + "</color>";
+        tooltipCurrentBonus.text = "current bonus: <color=lime>+" + characterUpgrade.GetUpgradedMagnitude().ToString() + "</color> " + bonusSuffix;
 
         if (characterUpgrade.CanBuyUpgrade())
         {
             float nextBonus = characterUpgrade.GetUpgradedMagnitude() + characterUpgrade.upgradeMagnitude;
-            tooltipNextBonus.text = "next bonus: <color=lime>+" + nextBonus.ToString() + "</color>";
+            tooltipNextBonus.text = "next bonus: <color=lime>+" + nextBonus.ToString() + "</color> " + bonusSuffix;
         }
         else
         {
@@ -209,6 +293,7 @@ public class UpgradeShop : MonoBehaviour
                                                                                                                                                     // Update Purchase Progress text
             upgradeUiElements.ui.progressText.text = characterUpgrade.progressToUpgrade.ToString() + "/" + characterUpgrade.GetUpgradeCost();
         }
+        upgradeUiElements.ui.currentPurchasesbyMaxText.text = characterUpgrade.upgradeCount.ToString() + "/" + characterUpgrade.maxUpgrades.ToString();
         
         // Update Buy Button with appropriate graphic if a purchase can be made here
         if (characterUpgrade.CanBuyUpgrade() && (CurrencyManager.GetUpgradeMoney() > 0))
@@ -283,6 +368,41 @@ public class UpgradeShop : MonoBehaviour
     public void PlayerMovespeedButtonUp()
     {
         playerMovespeedButtonPressed = false;
+    }
+
+    public void ExtraActionButtonDown()
+    {
+        extraActionButtonPressed = true;
+        upgradesSaved = false;
+    }
+    public void ExtraActionButtonUp()
+    {
+        extraActionButtonPressed = false;
+    }
+
+    public void BonusAgilityCritButtonDown()
+    {
+        bonusAgilityCritButtonPressed = true;
+        upgradesSaved = false;
+    }
+    public void BonusAgilityCritButtonUp()
+    {
+        bonusAgilityCritButtonPressed = false;
+    }
+
+    public void SkillTabClicked()
+    {
+        selectedShopTab = SelectedShopTab.SKILLS;
+    }
+
+    public void StatsTabClicked()
+    {
+        selectedShopTab = SelectedShopTab.STATS;
+    }
+
+    public void ItemsTabClicked()
+    {
+        selectedShopTab = SelectedShopTab.ITEMS;
     }
 
     public void LoadGameScene()
