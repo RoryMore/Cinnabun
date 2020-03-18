@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1644617777856712543}
   - component: {fileID: 1459887702046426020}
+  - component: {fileID: 6177362545828425094}
   m_Layer: 0
   m_Name: Counter
   m_TagString: Untagged
@@ -62,6 +63,20 @@ MonoBehaviour:
     m_Bits: 0
   TargetPlayer: 0
   IgnorePlayer: 0
+--- !u!114 &6177362545828425094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2525079421946812022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c1d684c81016445916607fb528c120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuffEffects:
+  - {fileID: 11400000, guid: 7efdba2e612e4d84f8b94fddf5ca539a, type: 2}
 --- !u!1 &4051798868054616670
 GameObject:
   m_ObjectHideFlags: 0

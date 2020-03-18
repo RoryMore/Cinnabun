@@ -162,6 +162,10 @@ public class Entity : MonoBehaviour
         RAGE,
         [Tooltip("death cause Entity to explored")]
         UNSTABLE,
+        [Tooltip("if hit with counter on add damage buff and remove counter")]
+        COUNTER,
+        [Tooltip("Damage Buff")]
+        DAMAGEBUFF,
     }
     public struct RewindPoint
     {
@@ -389,7 +393,10 @@ public class Entity : MonoBehaviour
                     case ConditionBuff.RAGE:
                         buff.damage += (int)item.Buff;
                         break;
-
+                    case ConditionBuff.DAMAGEBUFF:
+                        buff.damage = (buff.damage * item.Buff);
+                        currentBufConditions.Remove(item);
+                        break;
                     default:
                         break;
                 }
@@ -418,11 +425,14 @@ public class Entity : MonoBehaviour
                 {
                     case ConditionBuff.DODGE:
                        
-                        if (Random.Range(0, 100) <= 50) //<- needs to update this
+                        if (Random.Range(0, 100) <= item.Buff) //<- needs to update this
                         {
                             amount = 0;
-                            return;
                         }
+                        break;
+                    case ConditionBuff.COUNTER:
+                        currentBufConditions.Add(new ConditionBuf(2, ConditionBuff.DAMAGEBUFF, 100,"Attack"));
+                        currentBufConditions.Remove(item);
                         break;
                     default:
                         break;
