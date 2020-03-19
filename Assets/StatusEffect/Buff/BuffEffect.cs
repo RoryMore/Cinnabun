@@ -12,6 +12,7 @@ public class BuffEffect: MonoBehaviour
     {
         foreach (Buff item in BuffEffects)
         {
+           
             //check to see if this is the right time to apply these condation to entity
             if (effectApply == item.EfectApplyWhen)
             {
@@ -40,15 +41,21 @@ public class BuffEffect: MonoBehaviour
     public bool CheckToContrion(Entity entity, Buff efect)
     {
         int StoreLoc = 0;
-        foreach (var item in entity.currentBufConditions)
+        if (entity)
         {
-            if (item.conditionType == efect.BuffType)
+            if (entity.currentEffConditions.Count != 0)
             {
-                checkLoctation = StoreLoc;
-                return true;
+                foreach (var item in entity.currentBufConditions)
+                {
+                    if (item.conditionType == efect.BuffType)
+                    {
+                        checkLoctation = StoreLoc;
+                        return false;
+                    }
+                    StoreLoc++;
+                }
             }
-            StoreLoc++;
         }
-        return false;
+        return true;
     }
 }

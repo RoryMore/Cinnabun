@@ -9,27 +9,25 @@ public class StatusEfect : MonoBehaviour
 
     public void applyEffects(Entity entity, Effects.EffectApplyType effectApply)
     {
-        Debug.LogWarning("Effect");
+       
         if (entity ==null)
         {
             return;
         }
         foreach (Effects item in StatusEffects)
         {
-
-            Debug.LogWarning(CheckToContrion(entity, item));
             if (CheckToContrion(entity, item))//enetity is already in that condition
             {
 
                 //add condition to entity basiced on if it is percent damage
                 if (item.BuffType == Effects.buffeType.Percent)
                 {
-                    Debug.LogWarning("Percent");
+                    //Debug.LogWarning("Percent");
                     entity.currentEffConditions.Add(new Entity.ConditionEff(item.Duration, item.Effect, item.Damage));
                 }
                 else
                 {
-                    Debug.LogWarning("numbe");
+                    //Debug.LogWarning("numbe");
                     //entity.currentEffConditions.Add(new Entity.ConditionEff(item.Duration, item.Effect, item.Damage, item.TickDamage));
                     entity.AddCurrentEff(item.Duration, item.Effect, item.TickDamage);
                 }
@@ -37,7 +35,7 @@ public class StatusEfect : MonoBehaviour
             else
             {
 
-                Debug.LogWarning(effectApply == item.EfectApplyWhen);
+                //Debug.LogWarning(effectApply == item.EfectApplyWhen);
                 //check to see if this is the right time to apply these condation to entity
                 if (effectApply == item.EfectApplyWhen)
                 {

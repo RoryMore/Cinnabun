@@ -53,7 +53,7 @@ public class Entity : MonoBehaviour
         public void ReduceDuration(float reducedBy)
         {
             duration -= reducedBy;
-
+            
             timePassed += reducedBy;
         }
 
@@ -404,7 +404,18 @@ public class Entity : MonoBehaviour
         }
         return buff;
     }
+    public virtual void TakeHealth(int amount)
+    {
+        if (currentHP <= 0)
+        {
+            Death();
+        }
 
+        Vector3 popUpSpawn = new Vector3(Random.Range(-0.9f, 0.3f), Random.Range(-0.9f, 0.3f) + 3, 0);
+
+        DamagePopUp damagePopUpNumber = Instantiate(damageNumber, transform.position + popUpSpawn, Quaternion.identity).GetComponent<DamagePopUp>();
+        damagePopUpNumber.SetUp(amount, false);
+    }
 
 
     //add cooldown
@@ -433,6 +444,7 @@ public class Entity : MonoBehaviour
                     case ConditionBuff.COUNTER:
                         currentBufConditions.Add(new ConditionBuf(2, ConditionBuff.DAMAGEBUFF, 100,"Attack"));
                         currentBufConditions.Remove(item);
+                        amount = 0;
                         break;
                     default:
                         break;
@@ -475,7 +487,6 @@ public class Entity : MonoBehaviour
     public void AddCurrentBuf(float dur, ConditionBuff effect, float Buff, string BuffStat)
     {
         currentBufConditions.Add(new Entity.ConditionBuf(dur, effect, Buff, BuffStat));
-
     }
     public void UpdateAllConditions()
     {
@@ -501,10 +512,9 @@ public class Entity : MonoBehaviour
         if (currentBufConditions.Count != 0)
         {
             int conditionIndex = 0;
-            foreach (ConditionBuf condition in currentBufConditions)
+            foreach (ConditionBuf condition in currentBufConditions.ToArray())
             {
-                Debug.Log(condition.conditionType);
-
+                
                 if (condition.duration > 0)
                 {
                     condition.ReduceDuration(Time.deltaTime);
@@ -513,7 +523,7 @@ public class Entity : MonoBehaviour
                 }
                 else
                 {
-                    currentEffConditions.RemoveAt(conditionIndex);
+                    currentBufConditions.RemoveAt(conditionIndex);
                 }
                 conditionIndex++;
             }

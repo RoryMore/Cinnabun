@@ -143,7 +143,14 @@ public class BasicSkill : BaseSkill
             {
                 if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                 {
-                    testedEntity.TakeDamage(skillData.baseMagnitude+ (int)buf.damage, skillData.damageType, casterSelf.CalculateCriticalStrike());
+                    if (skillData.skill != SkillData.SkillList.HEAL)
+                    {
+                        testedEntity.TakeDamage(skillData.baseMagnitude + (int)buf.damage, skillData.damageType, casterSelf.CalculateCriticalStrike());
+                    }
+                    else
+                    {
+                        testedEntity.TakeHealth(skillData.baseMagnitude);
+                    }
 
                     // testedEntity.TakeDamage((int)(skillData.baseMagnitude * DamageMult));
 
