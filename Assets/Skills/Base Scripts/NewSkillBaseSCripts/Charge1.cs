@@ -31,7 +31,7 @@ public class Charge1 : BasicSkill
                 Debug.Log("triger");
                 Box.enabled = false;
                 TimerON = false;
-
+                base.GetEnitiy().SetMovement(true);
                 skillState = SkillState.INACTIVE;
             }
             else
@@ -48,7 +48,7 @@ public class Charge1 : BasicSkill
         timeBeenOnCooldown = 0.0f+buf.cooldown;
         timeSpentOnWindUp = 0.0f;
         currentlyCasting = false;
-
+        base.GetEnitiy().SetMovement(false);
         Box.enabled = true;
         Timer = MaxTimer;
         TimerON = true;

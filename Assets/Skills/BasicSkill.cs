@@ -205,5 +205,7 @@ public class BasicSkill : BaseSkill
     {
 
     }
-    
+    public Entity GetEnitiy() {
+        return Entity;
+    }
 }

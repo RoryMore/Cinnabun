@@ -743,4 +743,6 @@ public class Entity : MonoBehaviour
             hitParticles.SetActive(true);
         }
     }
+
+    public virtual void SetMovement(bool move) { }
 }

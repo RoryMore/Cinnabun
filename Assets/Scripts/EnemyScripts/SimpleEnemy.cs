@@ -42,7 +42,7 @@ public class SimpleEnemy : EnemyScript
     //DecidingBools
     bool hasDecided;
     bool destinationLocked;
-
+    bool MovementEnable = true;
     public enum AGRESSION
     {
         AGRESSIVE,
@@ -159,16 +159,17 @@ public class SimpleEnemy : EnemyScript
                         nav.enabled = true;
                         //Provide evasive manouvres 
                         Evade();
-
-                        if (type == TYPE.MELEE)
+                        if (MovementEnable)
                         {
-                            Movement(player.transform.position);
+                            if (type == TYPE.MELEE)
+                            {
+                                Movement(player.transform.position);
+                            }
+                            else if (type == TYPE.RANGED)
+                            {
+                                Movement(destination);
+                            }
                         }
-                        else if (type == TYPE.RANGED)
-                        {
-                            Movement(destination);
-                        }
-
 
                     }
 
@@ -524,6 +525,9 @@ public class SimpleEnemy : EnemyScript
     }
 
 
+    public override void SetMovement(bool move)
+    {
+        MovementEnable = move;
+    }
 
 }
-
