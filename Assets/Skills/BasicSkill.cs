@@ -18,6 +18,8 @@ public class BasicSkill : BaseSkill
     //public Effects[] StatusEffects;
     private Entity Entity;
     public Entity.BUffEFffect buf;
+    [Tooltip("only put in here Entity.EntityType of the enemy which the skill want to hit")]
+    public List<string> TargetEntity;
     //private Entity.Condition[] Conditions;
     // Start is called before the first frame update
     //void Start()
@@ -139,32 +141,40 @@ public class BasicSkill : BaseSkill
 
         foreach (Entity testedEntity in entityList)
         {
+            //mutlplay checha to see if this is one of the skills target
             if (testedEntity != casterSelf)
             {
-                if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
+                for (int i = 0; i < TargetEntity.Count; i++)
                 {
-                    if (skillData.skill != SkillData.SkillList.HEAL)
+                    if (TargetEntity[i] == testedEntity.EntityTag.ToString())
                     {
-                        testedEntity.TakeDamage(skillData.baseMagnitude + (int)buf.damage, skillData.damageType, casterSelf.CalculateCriticalStrike());
-                    }
-                    else
-                    {
-                        testedEntity.TakeHealth(skillData.baseMagnitude);
-                    }
-
-                    // testedEntity.TakeDamage((int)(skillData.baseMagnitude * DamageMult));
-
-                    if (GetComponentInParent<StatusEfect>())
+                        //do skill effects
+                        if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                         {
-                            GetComponentInParent<StatusEfect>().applyEffects(testedEntity, Effects.EffectApplyType.OnHit);
-                        }
+                            if (skillData.skill != SkillData.SkillList.HEAL)
+                            {
+                                testedEntity.TakeDamage(skillData.baseMagnitude + (int)buf.damage, skillData.damageType, casterSelf.CalculateCriticalStrike());
+                            }
+                            else
+                            {
+                                testedEntity.TakeHealth(skillData.baseMagnitude);
+                            }
 
-                    if (GetComponentInParent<BuffEffect>())
-                    {
-                        GetComponentInParent<BuffEffect>().applyEffects(testedEntity, Buff.EffectApplyType.OnHit);
+                            // testedEntity.TakeDamage((int)(skillData.baseMagnitude * DamageMult));
+
+                            if (GetComponentInParent<StatusEfect>())
+                            {
+                                GetComponentInParent<StatusEfect>().applyEffects(testedEntity, Effects.EffectApplyType.OnHit);
+                            }
+
+                            if (GetComponentInParent<BuffEffect>())
+                            {
+                                GetComponentInParent<BuffEffect>().applyEffects(testedEntity, Buff.EffectApplyType.OnHit);
+                            }
+                        }
                     }
                 }
-            }  
+            }
         }
 
         if (GetComponentInParent<StatusEfect>())
@@ -195,4 +205,5 @@ public class BasicSkill : BaseSkill
     {
 
     }
+    
 }

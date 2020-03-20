@@ -7,7 +7,6 @@ public class Entity : MonoBehaviour
 {
     public struct ConditionBuf
     {
-        
         public float duration; //The duration of the condition
         public ConditionBuff conditionType; //Name of condition
 
@@ -182,6 +181,17 @@ public class Entity : MonoBehaviour
 
     [Header("Death")]
     public bool isDead;
+
+    public enum EntityType
+    {
+        Enemy1,
+        Enemy2,
+        Enemy3,
+        miniBoss,
+        Player,
+    }
+    [Header("Death")]
+    public EntityType EntityTag;
 
     [Header("Level")]
     public int level;
