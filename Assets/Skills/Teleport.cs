@@ -10,6 +10,9 @@ public class Teleport : BaseSkill
     Vector3 teleportLocation;
     bool destination1Set = false;
 
+    [Header("Damage")]
+    [SerializeField]
+    float damageMultiplier = 0.1f;
     
     private void Start()
     {
@@ -152,7 +155,7 @@ public class Teleport : BaseSkill
         }
         //entityTarget1.transform.position = teleportLocation;
         
-        entityTarget1.TakeDamage(skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus(), skillData.damageType, casterSelf.CalculateCriticalStrike());
+        entityTarget1.TakeDamage(Mathf.RoundToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * damageMultiplier), skillData.damageType, casterSelf.CalculateCriticalStrike());
 
         entityTarget1 = null;
         teleportLocation.Set(0, 0, 0);

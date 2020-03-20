@@ -90,6 +90,20 @@ MonoBehaviour:
       progressToUpgrade: 0
       initialUpgradeCost: 3
       upgradeCostIncrements: 2
+    extraPauseAction:
+      maxUpgrades: 1
+      upgradeCount: 0
+      upgradeMagnitude: 1
+      progressToUpgrade: 0
+      initialUpgradeCost: 50
+      upgradeCostIncrements: 0
+    bonusAgilityCrit:
+      maxUpgrades: 10
+      upgradeCount: 0
+      upgradeMagnitude: 0.025
+      progressToUpgrade: 0
+      initialUpgradeCost: 5
+      upgradeCostIncrements: 1
   defaultSettings:
     musicVolume: 1
     sfxVolume: 1
