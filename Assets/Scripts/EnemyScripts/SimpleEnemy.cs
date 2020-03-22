@@ -42,7 +42,7 @@ public class SimpleEnemy : EnemyScript
     //DecidingBools
     bool hasDecided;
     bool destinationLocked;
-    bool MovementEnable = true;
+
     public enum AGRESSION
     {
         AGRESSIVE,
@@ -106,7 +106,7 @@ public class SimpleEnemy : EnemyScript
     void Update()
     {
 
-        if (isActive)
+        if(isActive)
 
         {
             //If we arent Dead...
@@ -162,7 +162,8 @@ public class SimpleEnemy : EnemyScript
                         nav.enabled = true;
                         //Provide evasive manouvres 
                         Evade();
-                        if (MovementEnable)
+
+                        if (type == TYPE.MELEE)
                         {
                             IntendedAction(Action.Move);
                             if (type == TYPE.MELEE)
@@ -174,6 +175,11 @@ public class SimpleEnemy : EnemyScript
                                 Movement(destination);
                             }
                         }
+                        else if (type == TYPE.RANGED)
+                        {
+                            Movement(destination);
+                        }
+
 
                     }
 
@@ -191,10 +197,10 @@ public class SimpleEnemy : EnemyScript
 
             }
 
-            else
-            {
-                nav.enabled = false;
-            }
+                    else
+                    {
+                        nav.enabled = false;
+                    }
 
 
 
@@ -217,7 +223,7 @@ public class SimpleEnemy : EnemyScript
         float x = Random.Range(player.transform.position.x - (skill.skillData.maxRange * 0.5f), player.transform.position.x + (skill.skillData.maxRange * 0.5f));
         float z = Random.Range(player.transform.position.z - (skill.skillData.maxRange * 0.5f), player.transform.position.z + (skill.skillData.maxRange * 0.5f));
 
-
+        
 
 
         //Otherwise all good, move on!
@@ -291,7 +297,7 @@ public class SimpleEnemy : EnemyScript
             if (!isEvading)
             {
 
-
+            
                 if (!chosenSkill.currentlyCasting)
                 {
 
@@ -335,13 +341,20 @@ public class SimpleEnemy : EnemyScript
 
     public void Decide()
     {
-        if (enemyCooldown <= 0)
+        if(enemyCooldown <= 0)
         {
 
             //Choose how each enemy decides to take its actions
             //Later I would also want the skill cooldowns to come into effect
 
             //Step 1: If the turn is ready, begin the cycle
+          
+             //For each skill...
+             foreach (BaseSkill checkedSkill in skillList)
+             {
+                 //Check if the cooldown is complete...
+                 if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
+                 {
 
             //For each skill...
             foreach (BasicSkill checkedSkill in skillList)
@@ -431,33 +444,35 @@ public class SimpleEnemy : EnemyScript
 
     }
 
+    
 
 
 
+ 
 
 
     public Entity CheckAttackers()
     {
 
-        // Check all enemies
-        foreach (Entity enemy in myEncounter.initiativeList)
-        {
-            //If they are attacking... 
-            if (enemy.chosenSkill.currentlyCasting == true)
-            {
-                //If it isn't us...
-                if (enemy != this)
-                {
-                    //If we are in range
-                    if (enemy.chosenSkill.CheckLineSkillHit(target.position,
-                        chosenSkill.skillData.minRange,
-                        chosenSkill.skillData.maxRange,
-                        chosenSkill.skillData.nearWidth,
-                        chosenSkill.skillData.farWidth))
-                    {
-                        //Get out of dodge!
-                        return enemy;
-                    }
+      // Check all enemies
+      foreach (Entity enemy in myEncounter.initiativeList)
+      {
+          //If they are attacking... 
+          if (enemy.chosenSkill.currentlyCasting == true)
+          {
+             //If it isn't us...
+              if (enemy != this)
+              {
+                  //If we are in range
+                  if (enemy.chosenSkill.CheckLineSkillHit(target.position,
+                      chosenSkill.skillData.minRange,
+                      chosenSkill.skillData.maxRange,
+                      chosenSkill.skillData.nearWidth,
+                      chosenSkill.skillData.farWidth))
+                  {
+                      //Get out of dodge!
+                      return enemy;
+                  }
 
 
                 }
@@ -465,29 +480,29 @@ public class SimpleEnemy : EnemyScript
 
             }
 
-        }
+      }
 
 
 
-        return null;
+      return null;
 
     }
 
     public void Evade()
     {
-
-        if (CheckAttackers() != null)
-        {
-            isEvading = true;
-            anim.SetBool("isWalking", true);
-            nav.SetDestination(Vector3.MoveTowards(transform.position, CheckAttackers().transform.position, -nav.speed));
-        }
+      
+      if (CheckAttackers() != null)
+      {
+          isEvading = true;
+          anim.SetBool("isWalking", true);
+          nav.SetDestination(Vector3.MoveTowards(transform.position, CheckAttackers().transform.position, -nav.speed));
+      }
 
         else
         {
             isEvading = false;
         }
-
+      
     }
 
 
@@ -510,7 +525,7 @@ public class SimpleEnemy : EnemyScript
     {
         base.Death();
         anim.SetBool("isDead", true);
-        foreach (BaseSkill skill in skillList)
+        foreach(BaseSkill skill in skillList)
         {
             skill.DisableProjector();
         }
@@ -527,7 +542,7 @@ public class SimpleEnemy : EnemyScript
         float y = Random.Range(-0.9f, 0.3f);
         Vector3 numberVec = new Vector3(x, y + 3, 0.0f);
 
-        Transform damagePopUpTransfrom = Instantiate(damageNumbers, position + numberVec, Quaternion.identity);
+        Transform damagePopUpTransfrom = Instantiate(damageNumbers, position + numberVec, Quaternion.identity );
 
         DamagePopUp damagePopUp = damagePopUpTransfrom.GetComponent<DamagePopUp>();
         damagePopUp.SetUp(damageAmount, crit);
@@ -542,7 +557,7 @@ public class SimpleEnemy : EnemyScript
         if (distance <= chosenSkill.skillData.maxRange * 0.5f && chosenSkill.isAllowedToCast)
         {
             FaceTarget(target);
-            if (chosenSkill.CheckLineSkillHit(target.position,
+            if(chosenSkill.CheckLineSkillHit(target.position, 
                 chosenSkill.skillData.minRange,
                 chosenSkill.skillData.maxRange,
                 chosenSkill.skillData.nearWidth,
@@ -551,21 +566,21 @@ public class SimpleEnemy : EnemyScript
                 isAttacking = true;
                 nav.enabled = false;
                 anim.SetTrigger("attacking");
-
+                
             }
 
+ 
 
 
-
-
+            
         }
-        else if (chosenSkill.skillData.maxRange <= distance && enemyCooldown <= 0.0f)
-        {
-            HoldTurn();
-            Debug.Log("she's too far!");
+       else if (chosenSkill.skillData.maxRange <= distance && enemyCooldown <= 0.0f)
+       {
+           HoldTurn();
+           Debug.Log("she's too far!");
+           
 
-
-        }
+       }
 
 
 
@@ -578,9 +593,6 @@ public class SimpleEnemy : EnemyScript
     }
 
 
-    public override void SetMovement(bool move)
-    {
-        MovementEnable = move;
-    }
 
 }
+
