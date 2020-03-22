@@ -1,21 +1,44 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Charge : BaseSkill
+public class StatEffectAttack : BaseSkill
 {
-    BoxCollider Box;
-    [SerializeField] float Timer;
-    float MaxTimer;
-    [SerializeField]  bool TimerON = false;
-    public float Speed;
+    public enum buffeType
+    {
+        Percent,
+        number
+    }
+
+
+    [System.Serializable]
+    public struct BuffEffect
+    {
+        public Entity.ConditionEffect Effects;
+        public float Duration;
+        public buffeType BuffType;
+
+        [Tooltip("is buff type is percent strenth is the percent amount, if number then strength is a falt")]
+        public float Damage;
+        public float TickDamage;
+
+        public Entity.ConditionEffect GetEffect() { return Effects; }
+        public buffeType GetBuffType() { return BuffType; }
+        public float GetDuration() { return Duration; }
+        public float GetDamage() { return Damage; }
+        public float GetTickDamage() { return TickDamage; }
+
+    }
+
+
+    [Header("buff")]
+    [SerializeField] public BuffEffect[] BuffStats;
+    // Start is called before the first frame update
     void Start()
     {
         //Call init in start
         Initialise();
-        MaxTimer = skillData.maxRange/ (100 * Speed);
-        
-        Box = GetComponent<BoxCollider>();
     }
 
     protected override void Initialise()
@@ -29,23 +52,6 @@ public class Charge : BaseSkill
     {
         //Every skill uses this in their update, zero exceptions
         SkillDeltaUpdate();
-        if (TimerON)
-        {
-
-            if (Timer <= 0)
-            {
-                Debug.Log("triger");
-                Box.enabled = false;
-                TimerON = false;
-               
-                skillState = SkillState.INACTIVE;
-            }
-            else
-            { 
-                gameObject.transform.parent.transform.Translate(transform.forward* Speed);
-                Timer -= Time.deltaTime;
-            }
-        }
     }
 
     public override void TriggerSkill(List<Entity> entityList)
@@ -118,29 +124,47 @@ public class Charge : BaseSkill
     protected override void ActivateSkill(List<Entity> entityList)
     {
         base.ActivateSkill();
-        timeBeenOnCooldown = 0.0f;
-        timeSpentOnWindUp = 0.0f;
-        currentlyCasting = false;
 
 
         // Intended effect here. Be it damage or otherwise
         // This includes checking if target is in range and such
-
-        Box.enabled = true;
-        Timer = MaxTimer;
-        TimerON = true;
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
+        foreach (Entity testedEntity in entityList)
         {
-            collision.gameObject.GetComponent<Entity>().TakeDamage(skillData.baseMagnitude);
-        }
-        else
-        {
-            if (collision.gameObject.CompareTag("Enemy"))
+            if (testedEntity != casterSelf)
             {
-                collision.gameObject.GetComponent<Entity>().TakeDamage(skillData.baseMagnitude);
+                if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
+                {
+                    effectApllyed(testedEntity);
+
+                }
+            }
+
+        }
+
+
+        timeBeenOnCooldown = 0.0f;
+        timeSpentOnWindUp = 0.0f;
+        skillState = SkillState.INACTIVE;
+        currentlyCasting = false;
+
+
+    }
+    void effectApllyed(Entity entity)
+    {
+        Entity.ConditionEff Con;
+
+        for (int i = 0; i < BuffStats.Length; i++)
+        {
+
+
+            if (BuffStats[i].GetBuffType() == buffeType.number)
+            {
+                Con = new Entity.ConditionEff(
+                     BuffStats[i].GetDuration(),
+                     BuffStats[i].GetEffect(),
+                    (int)BuffStats[i].GetDamage(),
+                BuffStats[i].GetTickDamage());
+
             }
         }
     }

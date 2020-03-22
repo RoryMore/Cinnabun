@@ -44,7 +44,6 @@ public class LightingIntensity : MonoBehaviour
     //change what the ideal intensity it should be
     public void SetCurrentLight()
     {
-        Debug.Log(inensitys.Count-1);
         if (currentLight == inensitys.Count-1)
         {
             currentLight = 0;
