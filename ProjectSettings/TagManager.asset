@@ -13,6 +13,7 @@ TagManager:
   - PlayerUI
   - VisualNovel
   - TriggerBox
+  - SoundWater
   layers:
   - Default
   - TransparentFX

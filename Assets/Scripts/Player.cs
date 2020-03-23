@@ -551,6 +551,12 @@ public class Player : Entity
                 triggerBox = true;
             }
         }
+
+        if (other.tag == "SoundWater")
+        {
+            Debug.Log("I walked through it");
+            MusicTriggers.playWaterSound();
+        }
     }
 
     private void OnTriggerExit(Collider other)
