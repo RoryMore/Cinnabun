@@ -130,6 +130,8 @@ public class Entity : MonoBehaviour
     public int physicalArmour;
     public int magicalArmour;
 
+    public int baseHP;
+
     [Header("Derived Stats")]
     public int maxHP;
     public int currentHP;
@@ -351,9 +353,13 @@ public class Entity : MonoBehaviour
 
     public void CalculateMaxHP()
     {
-        // probably needs rebalancing imo
-        maxHP = ((5 + constitution) * level) * 10;
-        //currentHP = maxHP;
+        // maxHP = ((5 + constitution) * level) * 10;
+
+        float constitutionEffectiveness = 10;
+        float constititionPointThreshold = 6;
+        float bonusHP = constitutionEffectiveness * (constitution / constititionPointThreshold);
+
+        maxHP = baseHP + Mathf.RoundToInt(bonusHP);
     }
 
     void CalculateMovementSpeed()
@@ -403,7 +409,7 @@ public class Entity : MonoBehaviour
     // with these functions, idk what damagePotential is going to do for us as a stat. Those formulas above seem to snowball pretty hard
     public int GetStrengthDamageBonus()
     {
-        // We get 25% of our strength value as added damage to physical attacks
+        // We get 50% of our strength value as added damage to physical attacks
         float strengthEffectiveness = 0.5f;
         // Should we floor to an int, or round to nearest
         // Floor could be safe enough, for now this function means we get 1 extra damage every 2 strength
@@ -412,7 +418,7 @@ public class Entity : MonoBehaviour
 
     public int GetIntellectDamageBonus()
     {
-        // We get 25% of our intellect value as added damage to magical attacks
+        // We get 50% of our intellect value as added damage to magical attacks
         float intellectEffectiveness = 0.5f;
         return Mathf.FloorToInt(intellect * intellectEffectiveness);
     }
@@ -423,7 +429,7 @@ public class Entity : MonoBehaviour
     /// <param name="originalDamage"></param>
     /// <param name="damageType"></param>
     /// <returns></returns>
-    protected int DamageNegated(int originalDamage, SkillData.DamageType damageType)
+    protected virtual int DamageNegated(int originalDamage, SkillData.DamageType damageType)
     {
         // How effective armour is at 'armourPointThreshold' points of armour
         // 0.25f effectiveness && 100.0f threshold = 25% damage reduction at 100 points of armour

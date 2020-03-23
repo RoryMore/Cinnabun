@@ -5,8 +5,8 @@ using UnityEngine;
 public class PauseAbility : MonoBehaviour
 {
 
-    public int actionsLeft = 2;
-    [SerializeField] int maxActions = 2;
+    public int actionsLeft = 1;
+    [SerializeField] int maxActions = 1;
     public float timeStopCoolDown;
     public float abilityCastTime = 0;
     public bool inBattle;
@@ -33,6 +33,9 @@ public class PauseAbility : MonoBehaviour
        pauseMenu = FindObjectOfType<PauseMenuUI>();
         textSystem = FindObjectOfType<TextSystem>();
        states = GameStates.PLAY;
+
+        maxActions += (int)SaveManager.GetUpgradeList().extraPauseAction.GetUpgradedMagnitude();
+        actionsLeft = maxActions;
     }
 
     private void Awake()
@@ -41,7 +44,7 @@ public class PauseAbility : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
         entity.AddRange(GameObject.FindObjectsOfType<Entity>());
-
+        
     }
 
     // Update is called once per frame

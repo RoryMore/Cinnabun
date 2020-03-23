@@ -534,6 +534,26 @@ public class Player : Entity
         return false;
     }
 
+    protected override int DamageNegated(int originalDamage, SkillData.DamageType damageType)
+    {
+        // How effective armour is at 'armourPointThreshold' points of armour
+        // 0.25f effectiveness && 100.0f threshold = 25% damage reduction at 100 points of armour
+        float armourEffectiveness = 0.25f;
+        armourEffectiveness += SaveManager.GetUpgradeList().armourEffectiveness.GetUpgradedMagnitude();
+        float armourPointThreshold = 100.0f;
+
+        if (damageType == SkillData.DamageType.PHYSICAL)
+        {
+            float percentReduced = Mathf.Clamp(armourEffectiveness * (physicalArmour / armourPointThreshold), 0, 0.95f);
+            return Mathf.RoundToInt(originalDamage * percentReduced);
+        }
+        else
+        {
+            float percentReduced = Mathf.Clamp(armourEffectiveness * (magicalArmour / armourPointThreshold), 0, 0.95f);
+            return Mathf.RoundToInt(originalDamage * percentReduced);
+        }
+    }
+
     void UpdateAnimator()
     {
         if (nav.velocity.magnitude > 0.01f)
