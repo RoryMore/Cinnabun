@@ -307,6 +307,7 @@ public class Entity : MonoBehaviour
             Death();
         }
     }
+    //check to see if any possable actions can be made. if not the return fasle.
     public virtual bool CanAct() {
         foreach (var item in currentEffConditions)
         {
@@ -323,7 +324,7 @@ public class Entity : MonoBehaviour
         }
         return true;
     }
-
+    //determinated if the action the entity wants have any consequences
     public virtual bool IntendedAction(Action action)
     {
         int temp = 0;
