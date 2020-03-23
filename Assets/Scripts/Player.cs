@@ -160,7 +160,7 @@ public class Player : Entity
 
                     if (!pauseMenu.isPaused)
                     {
-                        IntendedAction(Action.Move);
+                        
                        
                         nav.speed = 0.0f;
                         nav.angularSpeed = 0.0f;
@@ -177,6 +177,7 @@ public class Player : Entity
                                 if (currentEncounter != null)
                                 {
                                     selectedSkill.TriggerSkill(currentEncounter.playerInclusiveInitiativeList);
+                                    IntendedAction(Action.Skill);
 
                                     if (selectedSkill.currentlyCasting)
                                     {
@@ -208,6 +209,7 @@ public class Player : Entity
 
                             case SkillData.SkillList.REWIND:
                                 selectedSkill.TriggerSkill();
+                                IntendedAction(Action.Skill);
 
                                 if (selectedSkill.currentlyCasting)
                                 {
@@ -222,6 +224,7 @@ public class Player : Entity
 
                             case SkillData.SkillList.TELEPORT:
                                 selectedSkill.TriggerSkill();
+                                IntendedAction(Action.Skill);
 
                                 if (selectedSkill.currentlyCasting)
                                 {
@@ -241,7 +244,7 @@ public class Player : Entity
                                     {
                                         // Need a current entity list to put into function parameter
                                         selectedSkill.TriggerSkill(currentEncounter.masterInitiativeList, groundLayerMask);
-
+                                        IntendedAction(Action.BasicAttack);
                                         if (selectedSkill.currentlyCasting)
                                         {
                                             // We are currently casting a skill

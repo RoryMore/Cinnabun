@@ -11,10 +11,6 @@ public class BasicSkill : BaseSkill
         End,
     }
 
-   
-    [Header("Targeting")]   
-   [Tooltip("if only hiting player")] [SerializeField] private bool TargetPlayer;
-    [Tooltip("if only not hiting player")] [SerializeField] private bool IgnorePlayer;
     //public Effects[] StatusEffects;
     private Entity Entity;
     public Entity.BUffEFffect buf;

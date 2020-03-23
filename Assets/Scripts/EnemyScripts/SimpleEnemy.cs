@@ -112,7 +112,10 @@ public class SimpleEnemy : EnemyScript
             //If we arent Dead...
             if (!isDead)
             {
-
+                if (!CanAct())
+                {
+                    return;
+                }
                 // Update turn cooldown
                 Turn();
 
@@ -161,6 +164,7 @@ public class SimpleEnemy : EnemyScript
                         Evade();
                         if (MovementEnable)
                         {
+                            IntendedAction(Action.Move);
                             if (type == TYPE.MELEE)
                             {
                                 Movement(player.transform.position);
@@ -340,23 +344,78 @@ public class SimpleEnemy : EnemyScript
             //Step 1: If the turn is ready, begin the cycle
 
             //For each skill...
-            foreach (BaseSkill checkedSkill in skillList)
+            foreach (BasicSkill checkedSkill in skillList)
             {
                 //Check if the cooldown is complete...
                 if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
                 {
-
-                    //Check if we are in range...
-                    if (checkedSkill.CheckInRange(transform.position, target.position))
+                    //if main target is player
+                    if (checkedSkill.TargetEntity[1] == "Player")
                     {
-                        //More performance intensive, check that the player would be hit if we used it now
-                        if (checkedSkill.CheckLineSkillHit(target.position,
-                                                            chosenSkill.skillData.minRange,
-                                                            chosenSkill.skillData.maxRange,
-                                                            chosenSkill.skillData.nearWidth,
-                                                            chosenSkill.skillData.farWidth))
-
+                        //target is player.
+                        //Check if we are in range...
+                        if (checkedSkill.CheckInRange(transform.position, target.position))
                         {
+                            basicSkillChecker(checkedSkill);
+                        }
+                    }
+                    else
+                    {
+                        //target any possable entity which is in the TargetEntity.
+                        for (int i = 0; i < checkedSkill.TargetEntity.Count; i++)
+                        {
+                            //find all posable target
+                            GameObject[] AllTargets = GameObject.FindGameObjectsWithTag(checkedSkill.TargetEntity[i]);
+                            foreach (var Target in AllTargets)
+                            {
+                                //check to see if the skill can hit a target
+                                if (Vector3.Distance(this.transform.position, Target.transform.position)
+                                    <= checkedSkill.skillData.maxRange)
+                                {
+                                    basicSkillChecker(checkedSkill);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void basicSkillChecker(BasicSkill checkedSkill)
+    {
+
+                        if (checkedSkill.fillType == BaseSkill.CastFillType.LINEAR)
+                        {
+                            //More performance intensive, check that the player would be hit if we used it now
+                            if (checkedSkill.CheckLineSkillHit(target.position,
+                                                                chosenSkill.skillData.minRange,
+                                                                chosenSkill.skillData.maxRange,
+                                                                chosenSkill.skillData.nearWidth,
+                                                                chosenSkill.skillData.farWidth))
+
+                            {
+                                //Check if damage of prior skill is greater than base damange
+                                if (chosenSkill.skillData.baseMagnitude <= checkedSkill.skillData.baseMagnitude)
+                                {
+                                    isAttacking = true;
+                                    hasDecided = true;
+                                    chosenSkill = checkedSkill;
+
+                                    //Reset the enemy turn
+                                    enemyCooldown = 6;
+
+
+
+                                }
+                            }
+                        }
+                        else
+                        {
+                        //if circle
+
                             //Check if damage of prior skill is greater than base damange
                             if (chosenSkill.skillData.baseMagnitude <= checkedSkill.skillData.baseMagnitude)
                             {
@@ -367,16 +426,10 @@ public class SimpleEnemy : EnemyScript
                                 //Reset the enemy turn
                                 enemyCooldown = 6;
 
-
-
                             }
                         }
-                    }
-                }
-            }
-        }
-    }
 
+    }
 
 
 
