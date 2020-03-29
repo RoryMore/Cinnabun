@@ -362,13 +362,13 @@ public class SoundManager : MonoBehaviour
             {
                 if (enemyManager.inBattle == true)
                 {
-                    Debug.Log("should be sounds yes yes");
+                   // Debug.Log("should be sounds yes yes");
                     inBattle = true;
                 }
 
                 if (enemyManager.inBattle == false)
                 {
-                    Debug.Log("no sounds reeeeee");
+                   // Debug.Log("no sounds reeeeee");
                     inBattle = false;
                 }
             }
