@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bfa12007796fa54791c802e4e8d1ecf, type: 3}
-  m_Name: Expolde
+  m_Script: {fileID: 11500000, guid: 037793d1d44247a48b965de18a8c291c, type: 3}
+  m_Name: Spiked
   m_EditorClassIdentifier: 
-  EfectApplyWhen: 2
+  EfectApplyWhen: 0
+  Effect: 1
+  permanent: 0
   Duration: 5
-  BuffType: 3
-  buffnumber: 500
-  BuffStat: 1
+  BuffType: 1
+  Damage: 10
+  TickDamage: 5
