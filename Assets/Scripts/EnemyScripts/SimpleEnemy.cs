@@ -359,16 +359,18 @@ public class SimpleEnemy : EnemyScript
             //For each skill...
             foreach (BasicSkill checkedSkill in skillList)
             {
+               
                 //Check if the cooldown is complete...
                 if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
                 {
                     //if main target is player
-                    if (checkedSkill.TargetEntity[1] == "Player")
+                    if (checkedSkill.TargetEntity[0] == "Player")
                     {
                         //target is player.
                         //Check if we are in range...
                         if (checkedSkill.CheckInRange(transform.position, target.position))
                         {
+                            Debug.LogWarning("skill");
                             basicSkillChecker(checkedSkill);
                         }
                     }

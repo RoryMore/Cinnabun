@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3110f89451f743848910c598af7ff19f, type: 3}
-  m_Name: Charge
+  m_Name: Spiked
   m_EditorClassIdentifier: 
-  maxRange: 10
-  minRange: 0
-  farWidth: 2
-  nearWidth: 2
-  verticalRange: 20
+  maxRange: 7
+  minRange: 4
+  farWidth: 7
+  nearWidth: 5
+  verticalRange: 1
   angle: 0
-  cooldown: 1
-  windUp: 5
+  cooldown: 10
+  windUp: 2
   skill: 3
   baseMagnitude: 10
   damageType: 0

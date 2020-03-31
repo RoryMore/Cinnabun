@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3110f89451f743848910c598af7ff19f, type: 3}
-  m_Name: Charge
+  m_Name: Heal
   m_EditorClassIdentifier: 
-  maxRange: 10
+  maxRange: 5
   minRange: 0
   farWidth: 2
-  nearWidth: 2
-  verticalRange: 20
+  nearWidth: 0
+  verticalRange: 2
   angle: 0
-  cooldown: 1
-  windUp: 5
-  skill: 3
-  baseMagnitude: 10
+  cooldown: 8
+  windUp: 3
+  skill: 5
+  baseMagnitude: 30
   damageType: 0
