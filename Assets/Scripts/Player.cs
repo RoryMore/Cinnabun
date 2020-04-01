@@ -568,7 +568,7 @@ public class Player : Entity
 			
 		}
 
-		if (other.tag == "Birds")
+		if (other.tag == "Forest")
 		{
 			Debug.Log("I walked through it");
 			BirdSounds = true;
