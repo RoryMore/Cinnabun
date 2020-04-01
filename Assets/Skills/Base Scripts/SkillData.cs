@@ -42,13 +42,15 @@ public class SkillData : ScriptableObject
     [Tooltip("The Width a line Skill will have, or the Angle a Radial skill will use")]
     public float angle;
 
+    [Header("Skill Delays")]
     [Tooltip("The time (in seconds) that needs to pass before the player is able to cast this skill again")]
     public float cooldown;
 
     [Tooltip("The time (in seconds) it will take to cast the skill before it does any effect")]
     public float windUp;
 
-    
+    [Tooltip("delay before next attack")]
+    public float DelayAttack;
 
     [Tooltip("Which skill this actually is")]
     public SkillList skill;
@@ -60,5 +62,7 @@ public class SkillData : ScriptableObject
     public int baseMagnitude;
 
     [Tooltip("Whether this skill deals Physical or Magical damage")]
-    public DamageType damageType;   
+    public DamageType damageType;
+
+    
 }

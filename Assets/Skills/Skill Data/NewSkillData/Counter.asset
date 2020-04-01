@@ -20,6 +20,7 @@ MonoBehaviour:
   angle: 0
   cooldown: 6
   windUp: 2
+  DelayAttack: 0.2
   skill: 4
   baseMagnitude: 0
   damageType: 0

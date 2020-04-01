@@ -13,6 +13,9 @@ TagManager:
   - PlayerUI
   - VisualNovel
   - TriggerBox
+  - Enemy1
+  - Enemy2
+  - Enemy3
   layers:
   - Default
   - TransparentFX

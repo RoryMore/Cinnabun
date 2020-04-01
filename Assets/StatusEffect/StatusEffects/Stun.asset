@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 037793d1d44247a48b965de18a8c291c, type: 3}
   m_Name: Stun
   m_EditorClassIdentifier: 
-  EfectApplyWhen: 0
+  EfectApplyWhen: 2
   Effect: 0
   permanent: 0
-  Duration: 5
+  Duration: 3
   BuffType: 1
   Damage: 0
   TickDamage: 0

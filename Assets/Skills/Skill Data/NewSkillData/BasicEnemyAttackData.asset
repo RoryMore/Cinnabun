@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3110f89451f743848910c598af7ff19f, type: 3}
-  m_Name: WeaponAttackData
+  m_Name: BasicEnemyAttackData
   m_EditorClassIdentifier: 
-  maxRange: 6
-  minRange: 0.2
-  farWidth: 4.5
-  nearWidth: 1.5
-  verticalRange: 6
-  angle: 30
-  cooldown: 0.001
+  maxRange: 5
+  minRange: 0
+  farWidth: 3
+  nearWidth: 1
+  verticalRange: 20
+  angle: 25
+  cooldown: 0
   windUp: 1
   DelayAttack: 0
-  skill: 3
-  baseMagnitude: 3
+  skill: 0
+  baseMagnitude: 5
   damageType: 0

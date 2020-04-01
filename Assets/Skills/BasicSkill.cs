@@ -10,9 +10,9 @@ public class BasicSkill : BaseSkill
         Hit,
         End,
     }
-
+    
     //public Effects[] StatusEffects;
-    private Entity Entity;
+   
     public Entity.BUffEFffect buf;
     [Tooltip("only put in here Entity.EntityType of the enemy which the skill want to hit")]
     public List<string> TargetEntity;
@@ -31,7 +31,7 @@ public class BasicSkill : BaseSkill
     protected virtual void Initialise(Entity _Entity)
     {
         //Init to make sure its clean
-        Entity = _Entity;
+        
         base.Initialise();
     }
 
@@ -109,12 +109,12 @@ public class BasicSkill : BaseSkill
           
             if (GetComponentInParent<StatusEfect>() != null)
             {
-                GetComponentInParent<StatusEfect>().applyEffects(Entity, Effects.EffectApplyType.StartSkill);
+                GetComponentInParent<StatusEfect>().applyEffects(base.casterSelf, Effects.EffectApplyType.StartSkill);
             }
 
             if (GetComponentInParent<BuffEffect>() != null)
             {
-                GetComponentInParent<BuffEffect>().applyEffects(Entity, Buff.EffectApplyType.StartSkill);
+                GetComponentInParent<BuffEffect>().applyEffects(base.casterSelf, Buff.EffectApplyType.StartSkill);
             }//ActivateSkill();
 
             DisableProjector();
@@ -142,7 +142,12 @@ public class BasicSkill : BaseSkill
             {
                 for (int i = 0; i < TargetEntity.Count; i++)
                 {
-                    if (TargetEntity[i] == testedEntity.EntityTag.ToString())
+                    
+                    if (TargetEntity[i] == "Self")
+                    {
+
+                    }
+                    else if (TargetEntity[i] == testedEntity.gameObject.tag)//testedEntity.EntityTag.ToString()
                     {
                         //do skill effects
                         if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
@@ -153,7 +158,11 @@ public class BasicSkill : BaseSkill
                             }
                             else
                             {
-                                testedEntity.TakeHealth(skillData.baseMagnitude);
+                                if (skillData.baseMagnitude != 0)
+                                {
+                                    testedEntity.TakeHealth(skillData.baseMagnitude);
+                                }
+                               
                             }
 
                             // testedEntity.TakeDamage((int)(skillData.baseMagnitude * DamageMult));
@@ -175,12 +184,12 @@ public class BasicSkill : BaseSkill
 
         if (GetComponentInParent<StatusEfect>())
         {
-            GetComponentInParent<StatusEfect>().applyEffects(Entity, Effects.EffectApplyType.EndSkill);
+            GetComponentInParent<StatusEfect>().applyEffects(base.casterSelf, Effects.EffectApplyType.EndSkill);
         }
 
         if (GetComponentInParent<BuffEffect>())
         {
-            GetComponentInParent<BuffEffect>().applyEffects(Entity, Buff.EffectApplyType.EndSkill);
+            GetComponentInParent<BuffEffect>().applyEffects(base.casterSelf, Buff.EffectApplyType.EndSkill);
         }
 
 
@@ -202,6 +211,6 @@ public class BasicSkill : BaseSkill
 
     }
     public Entity GetEnitiy() {
-        return Entity;
+        return base.casterSelf;
     }
 }
