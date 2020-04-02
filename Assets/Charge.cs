@@ -58,9 +58,9 @@ public class Charge : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //checks to see what it collide with
         switch (collision.gameObject.tag)
         {
-
             case "Player":
                 collision.gameObject.GetComponent<Entity>().TakeDamage(damage);
                 break;

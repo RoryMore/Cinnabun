@@ -304,7 +304,7 @@ public class Entity : MonoBehaviour
         public void DamagePlus(int Plus) { damage -= Plus; }
     }
 
-    public BUffEFffect ApplyBuffOff()
+    public BUffEFffect ApplyBuffOff(SkillData Data)
     {
         BUffEFffect buff;
         buff.cooldown = 0;
@@ -317,17 +317,17 @@ public class Entity : MonoBehaviour
             foreach (var item in currentBufConditions)
             {
 
-
+                //offences buff number change and 
                 switch (item.conditionType)
                 {
                     case ConditionBuff.FOCUS:
                         buff.cooldown -= (int)item.Buff;
                         break;
                     case ConditionBuff.RAGE:
-                        buff.damage += (int)item.Buff;
+                        buff.damage += (((int)item.Buff/100) * Data.baseMagnitude);
                         break;
                     case ConditionBuff.DAMAGEBUFF:
-                        buff.damage = (buff.damage * item.Buff);
+                        buff.damage = (Data.baseMagnitude * (item.Buff/100));
                         currentBufConditions.Remove(item);
                         break;
                     default:
@@ -368,6 +368,31 @@ public class Entity : MonoBehaviour
         if (isDead)
         {
             return;
+        }
+
+        //apply defence Buff
+        if (currentBufConditions.Count != 0)
+        {
+            foreach (var item in currentBufConditions)
+            {
+                switch (item.conditionType)
+                {
+                    case ConditionBuff.DODGE:
+                       
+                        if (Random.Range(0, 100) <= item.Buff) 
+                        {
+                            amount = 0;
+                        }
+                        break;
+                    case ConditionBuff.COUNTER:
+                        currentBufConditions.Add(new ConditionBuf(2, ConditionBuff.DAMAGEBUFF, item.Buff, "Attack"));
+                        currentBufConditions.Remove(item);
+                        amount = 0;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         int damageTaken = Mathf.Clamp(amount - DamageNegated(amount, damageType), 0, int.MaxValue);

@@ -139,8 +139,8 @@ public class BasicSkill : BaseSkill
         // Intended effect here. Be it damage or otherwise
         // This includes checking if target is in range and such
 
-        //apply buff
-        buf = casterSelf.ApplyBuffOff();
+        //check all buff on this entity and apply them to entity 
+        buf = casterSelf.ApplyBuffOff(skillData);
 
 
         foreach (Entity testedEntity in entityList)
@@ -157,7 +157,6 @@ public class BasicSkill : BaseSkill
                 {
                     for (int i = 0; i < TargetEntity.Count; i++)
                     {
-
                         if (TargetEntity[i] == testedEntity.gameObject.tag)//testedEntity.EntityTag.ToString()
                         {
                             if (fillType == CastFillType.LINEAR)
@@ -183,8 +182,8 @@ public class BasicSkill : BaseSkill
             {
                 if (TargetEntity[0] == "Self")
                 {
-                    skillHit(base.casterSelf);
                     //aply to self
+                    skillHit(base.casterSelf);
                 }
             }
         }
@@ -199,44 +198,40 @@ public class BasicSkill : BaseSkill
         {
             GetComponentInParent<BuffEffect>().applyEffects(base.casterSelf, Buff.EffectApplyType.EndSkill);
         }
-
-
         ApplySkillProplys();
-
-
-
     }
+
     protected virtual void ApplySkillProplys()
     {
         switch (ExtraSkillp)
         { case EXTRAPARTSKILL.Charge:
+                //
                 GetComponent<Charge>().ExtraSkillProplys(skillData.baseMagnitude+(int)buf.damage);
-                timeBeenOnCooldown = 0.0f + buf.cooldown;
-                timeSpentOnWindUp = 0.0f;
-                currentlyCasting = false;
                 GetEnitiy().SetMovement(false);
                 break;
 
             default:
-                timeBeenOnCooldown = 0.0f + buf.cooldown;
-                timeSpentOnWindUp = 0.0f;
-                currentlyCasting = false;
+                //standed stuff which need to set back
                 skillState = SkillState.INACTIVE;
                 break;
         }
+        timeBeenOnCooldown = 0 + buf.cooldown;
+        timeSpentOnWindUp = 0f;
+        currentlyCasting = false;
     }
 
     protected virtual void ApplyCastSkillProplys()
     {
 
     }
+
     public Entity GetEnitiy() {
         return base.casterSelf;
     }
 
     void skillHit(Entity testedEntity)
     {
-        
+        //apply skill effects on what type of skill they are
         switch (skillData.skill)
         {
             case SkillData.SkillList.HEAL:
