@@ -10,9 +10,9 @@ public class BasicSkill : BaseSkill
         Hit,
         End,
     }
-    
+
     //public Effects[] StatusEffects;
-   
+
     public Entity.BUffEFffect buf;
     [Tooltip("only put in here Entity.EntityType of the enemy which the skill want to hit")]
     public List<string> TargetEntity;
@@ -23,6 +23,14 @@ public class BasicSkill : BaseSkill
     //    //Call init in start
     //    Initialise();
     //}
+
+    //when thing other then just the skills normal effects happen 
+    public enum EXTRAPARTSKILL
+    {
+        NULL,
+        Charge
+    }
+    public EXTRAPARTSKILL ExtraSkillp;
 
     void Start()
     {
@@ -106,7 +114,7 @@ public class BasicSkill : BaseSkill
             skillState = SkillState.DOAFFECT;
 
            
-          
+          //apply all buff and effect to self which happen at the start of the skill
             if (GetComponentInParent<StatusEfect>() != null)
             {
                 GetComponentInParent<StatusEfect>().applyEffects(base.casterSelf, Effects.EffectApplyType.StartSkill);
@@ -140,48 +148,48 @@ public class BasicSkill : BaseSkill
             //mutlplay checha to see if this is one of the skills target
             if (testedEntity != casterSelf)
             {
-                for (int i = 0; i < TargetEntity.Count; i++)
+                //if the only target is self
+                if (TargetEntity[0] == "Self")
                 {
-                    
-                    if (TargetEntity[i] == "Self")
+
+                }
+                else
+                {
+                    for (int i = 0; i < TargetEntity.Count; i++)
                     {
 
-                    }
-                    else if (TargetEntity[i] == testedEntity.gameObject.tag)//testedEntity.EntityTag.ToString()
-                    {
-                        //do skill effects
-                        if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
+                        if (TargetEntity[i] == testedEntity.gameObject.tag)//testedEntity.EntityTag.ToString()
                         {
-                            if (skillData.skill != SkillData.SkillList.HEAL)
+                            if (fillType == CastFillType.LINEAR)
                             {
-                                testedEntity.TakeDamage(skillData.baseMagnitude + (int)buf.damage, skillData.damageType, casterSelf.CalculateCriticalStrike());
+                                //do skill effects
+                                if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
+                                {
+                                    skillHit(testedEntity);
+                                }
                             }
                             else
                             {
-                                if (skillData.baseMagnitude != 0)
+                                if (CheckInRange(transform.position, testedEntity.transform.position))
                                 {
-                                    testedEntity.TakeHealth(skillData.baseMagnitude);
+                                    skillHit(testedEntity);
                                 }
-                               
-                            }
-
-                            // testedEntity.TakeDamage((int)(skillData.baseMagnitude * DamageMult));
-
-                            if (GetComponentInParent<StatusEfect>())
-                            {
-                                GetComponentInParent<StatusEfect>().applyEffects(testedEntity, Effects.EffectApplyType.OnHit);
-                            }
-
-                            if (GetComponentInParent<BuffEffect>())
-                            {
-                                GetComponentInParent<BuffEffect>().applyEffects(testedEntity, Buff.EffectApplyType.OnHit);
                             }
                         }
                     }
+                }   
+            }
+            else
+            {
+                if (TargetEntity[0] == "Self")
+                {
+                    skillHit(base.casterSelf);
+                    //aply to self
                 }
             }
         }
 
+        //apply all buff and effect to self which happen at the end of the skill
         if (GetComponentInParent<StatusEfect>())
         {
             GetComponentInParent<StatusEfect>().applyEffects(base.casterSelf, Effects.EffectApplyType.EndSkill);
@@ -200,10 +208,22 @@ public class BasicSkill : BaseSkill
     }
     protected virtual void ApplySkillProplys()
     {
-        timeBeenOnCooldown = 0.0f + buf.cooldown;
-        timeSpentOnWindUp = 0.0f;
-        currentlyCasting = false;
-        skillState = SkillState.INACTIVE;
+        switch (ExtraSkillp)
+        { case EXTRAPARTSKILL.Charge:
+                GetComponent<Charge>().ExtraSkillProplys(skillData.baseMagnitude+(int)buf.damage);
+                timeBeenOnCooldown = 0.0f + buf.cooldown;
+                timeSpentOnWindUp = 0.0f;
+                currentlyCasting = false;
+                GetEnitiy().SetMovement(false);
+                break;
+
+            default:
+                timeBeenOnCooldown = 0.0f + buf.cooldown;
+                timeSpentOnWindUp = 0.0f;
+                currentlyCasting = false;
+                skillState = SkillState.INACTIVE;
+                break;
+        }
     }
 
     protected virtual void ApplyCastSkillProplys()
@@ -212,5 +232,36 @@ public class BasicSkill : BaseSkill
     }
     public Entity GetEnitiy() {
         return base.casterSelf;
+    }
+
+    void skillHit(Entity testedEntity)
+    {
+        
+        switch (skillData.skill)
+        {
+            case SkillData.SkillList.HEAL:
+                testedEntity.TakeHealth(skillData.baseMagnitude);
+                break;
+
+            case SkillData.SkillList.BUFF:
+                if (GetComponentInParent<BuffEffect>())
+                {
+                    GetComponentInParent<BuffEffect>().applyEffects(testedEntity, Buff.EffectApplyType.OnHit);
+                }
+                //apply no damage
+                break;
+            case SkillData.SkillList.STATUS:
+                if (GetComponentInParent<StatusEfect>())
+                {
+                    GetComponentInParent<StatusEfect>().applyEffects(testedEntity, Effects.EffectApplyType.OnHit);
+                }
+                testedEntity.TakeDamage(skillData.baseMagnitude + (int)buf.damage, skillData.damageType, false);
+                break;
+            default:
+                //all over cases do damage
+                testedEntity.TakeDamage(skillData.baseMagnitude + (int)buf.damage, skillData.damageType, casterSelf.CalculateCriticalStrike());
+               
+                break;
+        }
     }
 }

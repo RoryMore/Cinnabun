@@ -373,13 +373,13 @@ public class SimpleEnemy : EnemyScript
                             if (checkedSkill.CheckInRange(transform.position, target.position))
                             {
                                 //Debug.LogWarning("skill");
-                                basicSkillChecker(checkedSkill);
+                                basicSkillChecker(checkedSkill, target.gameObject);
                             }
                             break;
 
                         case "Self":
                             //no checks need as you are always in range
-                            basicSkillChecker(checkedSkill);
+                            basicSkillChecker(checkedSkill, gameObject);
                             break;
 
                         default:
@@ -394,7 +394,9 @@ public class SimpleEnemy : EnemyScript
                                     if (Vector3.Distance(this.transform.position, Target.transform.position)
                                         <= checkedSkill.skillData.maxRange)
                                     {
-                                        basicSkillChecker(checkedSkill);
+                                        
+
+                                        basicSkillChecker(checkedSkill, Target);
                                         break;
                                     }
                                 }
@@ -419,8 +421,8 @@ public class SimpleEnemy : EnemyScript
     }
 
 
-   
-    public void basicSkillChecker(BasicSkill checkedSkill)
+   //check to see if viable right now
+    public void basicSkillChecker(BasicSkill checkedSkill , GameObject Target)
     {
         //if linear do one more check
         if (checkedSkill.fillType == BaseSkill.CastFillType.LINEAR)
@@ -436,6 +438,14 @@ public class SimpleEnemy : EnemyScript
                 return;
             }
 
+        }
+        //if skill is healing check to see if they do need healing
+        if (checkedSkill.skillData.skill == SkillData.SkillList.HEAL)
+        {
+            if (Target.GetComponent<SimpleEnemy>().currentHP == Target.GetComponent<SimpleEnemy>().maxHP)
+            {
+                return;
+            }
         }
 
         //if their is no skill selected yet

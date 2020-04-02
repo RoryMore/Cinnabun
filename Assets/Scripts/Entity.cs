@@ -342,6 +342,16 @@ public class Entity : MonoBehaviour
         if (currentHP <= 0)
         {
             Death();
+            return;
+        }
+        if (currentHP+amount > maxHP)
+        {
+            amount = maxHP - currentHP;
+            currentHP = maxHP;
+        }
+        else
+        {
+            currentHP += amount;
         }
 
         Vector3 popUpSpawn = new Vector3(Random.Range(-0.9f, 0.3f), Random.Range(-0.9f, 0.3f) + 3, 0);
@@ -390,17 +400,17 @@ public class Entity : MonoBehaviour
 
     public void UpdateAllConditions()
     {
-        if (currentConditions.Count != 0)
+       //update all effects
+        if (currentEffConditions.Count != 0)
         {
             int conditionIndex = 0;
             foreach (Condition condition in currentConditions)
             {
                 if (condition.conditionType == ConditionEffect.DELAYEDBLAST)
                 {
-                    //Do the thing!
-                    //Wait for player input of kaboom
-                    //If have condition, detonate and remove condition
-
+                    //reduce condition duration
+                    condition.ReduceDuration(Time.deltaTime);
+                    currentEffConditions[conditionIndex] = condition;
                 }
                 else if (condition.conditionType == ConditionEffect.BURN)
                 {
@@ -410,21 +420,18 @@ public class Entity : MonoBehaviour
                         // Reduce the condition time
                         condition.ReduceDuration(Time.deltaTime);
 
-                        // After every second deal burn damage
-                        if (condition.timePassed >= condition.damageTickRate)
-                        {
-                            TakeDamage(condition.damage);
-
-                            // Reset the timePassed value
-                            condition.ResetTimePassed();
-                        }
-                    }
-                    else
-                    {
-                        // This condition has timed out
-                        // Remove it
-                        currentConditions.RemoveAt(conditionIndex);
-                    }
+        //update all buffs
+        if (currentBufConditions.Count != 0)
+        {
+            int conditionIndex = 0;
+            foreach (ConditionBuf condition in currentBufConditions.ToArray())
+            {
+                
+                if (condition.duration > 0)
+                {
+                    condition.ReduceDuration(Time.deltaTime);
+                    currentBufConditions[conditionIndex] = condition;
+                    
                 }
                 else if (condition.conditionType == ConditionEffect.POISON)
                 {
