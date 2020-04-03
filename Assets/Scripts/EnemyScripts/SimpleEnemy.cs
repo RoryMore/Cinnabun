@@ -42,7 +42,7 @@ public class SimpleEnemy : EnemyScript
     //DecidingBools
     bool hasDecided;
     bool destinationLocked;
-
+    bool MovementEnable = true;
     public enum AGRESSION
     {
         AGRESSIVE,
@@ -341,82 +341,77 @@ public class SimpleEnemy : EnemyScript
 
     public void Decide()
     {
-        if(enemyCooldown <= 0)
+        if (enemyCooldown <= 0)
         {
 
             //Choose how each enemy decides to take its actions
             //Later I would also want the skill cooldowns to come into effect
 
             //Step 1: If the turn is ready, begin the cycle
-          
-             //For each skill...
-             foreach (BaseSkill checkedSkill in skillList)
-             {
-                 //Check if the cooldown is complete...
-                 if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
-                 {
 
-            chosenSkill = null;
-            //For each skill...
-            foreach (BasicSkill checkedSkill in skillList)
-            {
+        
 
-                //Check if the cooldown is complete...
-                if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
-                {
-                    switch (checkedSkill.TargetEntity[0])
+                    chosenSkill = null;
+                    //For each skill...
+                    foreach (BasicSkill checkedSkill in skillList)
                     {
-                        //if main target is player
-                        case "Player":
-                            //target is player.
-                            //Check if we are in range...
-                            if (checkedSkill.CheckInRange(transform.position, target.position))
-                            {
-                                //Debug.LogWarning("skill");
-                                basicSkillChecker(checkedSkill, target.gameObject);
-                            }
-                            break;
 
-                        case "Self":
-                            //no checks need as you are always in range
-                            basicSkillChecker(checkedSkill, gameObject);
-                            break;
-
-                        default:
-                            //target any possable entity which is in the TargetEntity.
-                            for (int i = 0; i < checkedSkill.TargetEntity.Count; i++)
+                        //Check if the cooldown is complete...
+                        if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
+                        {
+                            switch (checkedSkill.TargetEntity[0])
                             {
-                                //find all posable target
-                                GameObject[] AllTargets = GameObject.FindGameObjectsWithTag(checkedSkill.TargetEntity[i]);
-                                foreach (var Target in AllTargets)
-                                {
-                                    //check to see if the skill can hit a target
-                                    if (Vector3.Distance(this.transform.position, Target.transform.position)
-                                        <= checkedSkill.skillData.maxRange)
+                                //if main target is player
+                                case "Player":
+                                    //target is player.
+                                    //Check if we are in range...
+                                    if (checkedSkill.CheckInRange(transform.position, target.position))
                                     {
-                                        
-
-                                        basicSkillChecker(checkedSkill, Target);
-                                        break;
+                                        //Debug.LogWarning("skill");
+                                        basicSkillChecker(checkedSkill, target.gameObject);
                                     }
-                                }
+                                    break;
+
+                                case "Self":
+                                    //no checks need as you are always in range
+                                    basicSkillChecker(checkedSkill, gameObject);
+                                    break;
+
+                                default:
+                                    //target any possable entity which is in the TargetEntity.
+                                    for (int i = 0; i < checkedSkill.TargetEntity.Count; i++)
+                                    {
+                                        //find all posable target
+                                        GameObject[] AllTargets = GameObject.FindGameObjectsWithTag(checkedSkill.TargetEntity[i]);
+                                        foreach (var Target in AllTargets)
+                                        {
+                                            //check to see if the skill can hit a target
+                                            if (Vector3.Distance(this.transform.position, Target.transform.position)
+                                                <= checkedSkill.skillData.maxRange)
+                                            {
+
+
+                                                basicSkillChecker(checkedSkill, Target);
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    //can still cast skill on self
+
+                                    break;
                             }
-
-                            //can still cast skill on self
-
-                            break;
+                        }
                     }
-                }
-            }
-            if (chosenSkill == null)
-            {
-                chosenSkill = basicAttack;
-                isAttacking = true;
-                hasDecided = true;
+                    if (chosenSkill == null)
+                    {
+                        chosenSkill = basicAttack;
+                        isAttacking = true;
+                        hasDecided = true;
 
-                enemyCooldown = 1.1f;
-            }
-            // Debug.LogWarning(chosenSkill.name);
+                        enemyCooldown = 1.1f;
+                    }
+                    // Debug.LogWarning(chosenSkill.name);
         }
     }
 
@@ -625,6 +620,9 @@ public class SimpleEnemy : EnemyScript
     }
 
 
-
+    public override void SetMovement(bool move)
+    {
+        MovementEnable = move;
+    }
 }
 

@@ -12,7 +12,7 @@ public class BasicSkill : BaseSkill
     }
 
     //public Effects[] StatusEffects;
-
+    private Entity Entity;
     public Entity.BUffEFffect buf;
     [Tooltip("only put in here Entity.EntityType of the enemy which the skill want to hit")]
     public List<string> TargetEntity;
@@ -39,7 +39,7 @@ public class BasicSkill : BaseSkill
     protected virtual void Initialise(Entity _Entity)
     {
         //Init to make sure its clean
-        
+        Entity = _Entity;
         base.Initialise();
     }
 

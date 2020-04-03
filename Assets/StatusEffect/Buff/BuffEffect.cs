@@ -22,7 +22,7 @@ public class BuffEffect: MonoBehaviour
                     //add condition to entity basiced on if it is percent damage
                     //entity.currentBufConditions.Add(new Entity.ConditionBuf(item.Duration, item.BuffType, item.buffnumber, item.BuffStat.ToString()));
                     Debug.LogWarning(entity.name + " was hit with a buff to " + item.BuffType);
-                    entity.AddCurrentBuf(item.Duration, item.BuffType, item.buffnumber, item.BuffStat.ToString());
+                    entity.AddCurrentBuf(item.Duration, item.BuffType, item.buffnumber);
                 }
                 else
                 {
