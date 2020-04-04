@@ -50,7 +50,8 @@ public class Entity : MonoBehaviour
 
     public void ReduceDuration(float reducedBy)
     {
-        duration -= reducedBy;
+
+            duration -= reducedBy;
 
         timePassed += reducedBy;
     }
@@ -110,6 +111,7 @@ public struct ConditionEff
 
     public void ReduceDuration(float reducedBy)
     {
+            Debug.LogWarning(conditionType);
         duration -= reducedBy;
         timePassed += reducedBy;
 
@@ -312,7 +314,7 @@ public struct RewindPoint
             switch (item.conditionType)
             {
                 case ConditionEffect.STUN:
-                    Debug.LogWarning("stuned");
+                    Debug.LogWarning("stuned"+ item.duration);
                     return false;
                 case ConditionEffect.SPIKED:
                     break;
@@ -336,17 +338,18 @@ public struct RewindPoint
                     switch (action)
                     {
                         case Action.Move:
+                            //apply damage ever tick(0.5 seconds)
                             if (item.delay <=0)
                             {
                                 TakeDamage((int)item.damageTickRate, SkillData.DamageType.PHYSICAL, false);
                                 item.ResetDelay(0.5f);
-                                Debug.LogWarning(("delay reset" + item.delay));
+                               // Debug.LogWarning(("delay reset" + item.delay));
                                 currentEffConditions[temp] = item;
                             }
                             else
                             {
                                 item.ReduceDelay(Time.deltaTime);
-                                Debug.LogWarning(("delay" + item.delay));
+                               // Debug.LogWarning(("delay" + item.delay));
                                 currentEffConditions[temp] = item;
                                
                             }
@@ -477,19 +480,13 @@ public struct RewindPoint
             damageTaken = Mathf.RoundToInt(damageTaken * criticalStrikeMultiplier);
         }
 
+        //text based pop ups
         Vector3 popUpSpawn = new Vector3(Random.Range(-0.9f, 0.3f), Random.Range(-0.9f, 0.3f) + 3, 0);
 
         DamagePopUp damagePopUpNumber = Instantiate(damageNumber, transform.position + popUpSpawn, Quaternion.identity).GetComponent<DamagePopUp>();
         damagePopUpNumber.SetUp(damageTaken, isCrit);
 
         TakeDamage(damageTaken);
-
-        //currentHP -= amount;
-
-        //if (currentHP <= 0)
-        //{
-        //    Death();
-        //}
     }
 
 
@@ -498,18 +495,19 @@ public struct RewindPoint
         isDead = true;
 
     }
+    //add effect to entity
     public void AddCurrentEff(float dur, ConditionEffect effect, float damage)
     {
         currentEffConditions.Add(new Entity.ConditionEff(dur, effect, damage));
-        //Debug.LogWarning("numbe " + dur + " eff " + effect +" dam "+ damage);
     }
+    //add buff to entity
     public void AddCurrentBuf(float dur, ConditionBuff effect, float Buff)
     {
         currentBufConditions.Add(new Entity.ConditionBuf(dur, effect, Buff));
     }
     public void UpdateAllConditions()
     {
-
+        //update effect condition
         if (currentEffConditions.Count != 0)
         {
             int conditionIndex = 0;
@@ -527,15 +525,15 @@ public struct RewindPoint
                 conditionIndex++;
             }
         }
-
+        //update buff condition
         if (currentBufConditions.Count != 0)
         {
             int conditionIndex = 0;
             foreach (ConditionBuf condition in currentBufConditions.ToArray())
             {
-
                 if (condition.duration > 0)
                 {
+                    
                     condition.ReduceDuration(Time.deltaTime);
                     currentBufConditions[conditionIndex] = condition;
 
@@ -755,5 +753,6 @@ public struct RewindPoint
         }
     }
 
+    //this is for charge skill and should only be called by enemys and skill
     public virtual void SetMovement(bool move) { }
 }

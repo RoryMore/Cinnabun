@@ -10,6 +10,10 @@ public class BuffEffect: MonoBehaviour
     // Start is called before the first frame update
     public void applyEffects(Entity entity, Buff.EffectApplyType effectApply)
     {
+        if (entity == null)
+        {
+            return;
+        }
         foreach (Buff item in BuffEffects)
         {
            
@@ -18,14 +22,7 @@ public class BuffEffect: MonoBehaviour
             {
                 //
                 if (CheckToContrion(entity, item))//enetity is already in that condition
-                {
-                    //add condition to entity basiced on if it is percent damage
-                    //entity.currentBufConditions.Add(new Entity.ConditionBuf(item.Duration, item.BuffType, item.buffnumber, item.BuffStat.ToString()));
-                    Debug.LogWarning(entity.name + " was hit with a buff to " + item.BuffType);
-                    entity.AddCurrentBuf(item.Duration, item.BuffType, item.buffnumber);
-                }
-                else
-                {
+                { 
                     //set duration to need effect duration if lower
                     if (entity.currentBufConditions[checkLoctation].duration < item.Duration)//Duration of the contration vs 
                     {
@@ -33,6 +30,14 @@ public class BuffEffect: MonoBehaviour
                         temp.duration = item.Duration;
                         entity.currentEffConditions[checkLoctation] = temp;
                     }
+                }
+                else
+                {//add condition to entity basiced on if it is percent damage
+                    //entity.currentBufConditions.Add(new Entity.ConditionBuf(item.Duration, item.BuffType, item.buffnumber, item.BuffStat.ToString()));
+                    Debug.LogWarning(entity.name + " was hit with a buff to " + item.BuffType);
+                    entity.AddCurrentBuf(item.Duration, item.BuffType, item.buffnumber);
+
+                   
                 }
             }
         }
@@ -51,12 +56,12 @@ public class BuffEffect: MonoBehaviour
                     if (item.conditionType == efect.BuffType)
                     {
                         checkLoctation = StoreLoc;
-                        return false;
+                        return true;
                     }
                     StoreLoc++;
                 }
             }
         }
-        return true;
+        return false;
     }
 }

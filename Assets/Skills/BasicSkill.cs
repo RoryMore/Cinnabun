@@ -142,21 +142,20 @@ public class BasicSkill : BaseSkill
         //check all buff on this entity and apply them to entity 
         buf = casterSelf.ApplyBuffOff(skillData);
 
-
-        foreach (Entity testedEntity in entityList)
+        //if the only target is self
+        if (TargetEntity[0] == "Self")
         {
-            //mutlplay checha to see if this is one of the skills target
-            if (testedEntity != casterSelf)
+            skillHit(base.casterSelf);
+        }
+        else { 
+            foreach (Entity testedEntity in entityList)
             {
-                //if the only target is self
-                if (TargetEntity[0] == "Self")
-                {
-
-                }
-                else
+            //mutlplay checha to see if this is one of the skills target
+                if (testedEntity != casterSelf)
                 {
                     for (int i = 0; i < TargetEntity.Count; i++)
                     {
+                        Debug.LogWarning(testedEntity.gameObject.tag);
                         if (TargetEntity[i] == testedEntity.gameObject.tag)//testedEntity.EntityTag.ToString()
                         {
                             if (fillType == CastFillType.LINEAR)
@@ -164,6 +163,7 @@ public class BasicSkill : BaseSkill
                                 //do skill effects
                                 if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                                 {
+                                    Debug.LogWarning("attack");
                                     skillHit(testedEntity);
                                 }
                             }
@@ -177,14 +177,6 @@ public class BasicSkill : BaseSkill
                         }
                     }
                 }   
-            }
-            else
-            {
-                if (TargetEntity[0] == "Self")
-                {
-                    //aply to self
-                    skillHit(base.casterSelf);
-                }
             }
         }
 

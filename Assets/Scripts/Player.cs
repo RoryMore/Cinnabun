@@ -92,6 +92,10 @@ public class Player : Entity
         //if () // Check if player is dead
         if (!isDead)
         {
+            if (!CanAct())
+            {
+                return;
+            }
             switch (playerState)
             {
                 case PlayerState.FREE:  // Player can move, and if in combat can receive input for selecting a skill
@@ -102,6 +106,10 @@ public class Player : Entity
                         {
                             if (!inventory.activeSelf)
                             {
+                                if ((nav.velocity.x != 0) && (nav.velocity.z != 0))
+                                {
+                                    IntendedAction(Action.Move);
+                                }
                                 Move();
                             }
 
@@ -133,6 +141,10 @@ public class Player : Entity
                     }
                     else
                     {
+                        if ((nav.velocity.x != 0) && (nav.velocity.z != 0))
+                        {
+                            IntendedAction(Action.Move);
+                        }
                         Move();
                     }
 
