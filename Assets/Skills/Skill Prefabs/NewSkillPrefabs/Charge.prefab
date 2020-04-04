@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5966212132180696907}
-  - component: {fileID: 1516275380240458323}
+  - component: {fileID: 255198622704983435}
+  - component: {fileID: 5924527789211274649}
   m_Layer: 0
   m_Name: Charge
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1516275380240458323
+--- !u!114 &255198622704983435
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +42,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 7427569580529763938}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3988d805b8d164e4fb161d2ec5f6ec2c, type: 3}
+  m_Script: {fileID: 11500000, guid: e7e9fec4d79821144acf9db965d61586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxTimer: 3.5
+  TimerON: 1
+  Speed: 0.05
+--- !u!114 &5924527789211274649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7427569580529763938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9515cca2412fbee409c3034a5347a4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   projector: {fileID: 8945280185591741003}
@@ -60,11 +76,12 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 0
-  TargetPlayer: 0
-  IgnorePlayer: 0
-  Timer: 5
-  TimerON: 0
-  Speed: 0
+  TargetEntity:
+  - Player
+  - Enemy1
+  - Enemy2
+  - Enemy3
+  ExtraSkillp: 1
 --- !u!1 &8945280185591741002
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,4 +145,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61897f3bfebc8c24a8ccc93398f7574f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill: {fileID: 1516275380240458323}
+  skill: {fileID: 5924527789211274649}

@@ -106,7 +106,7 @@ public class Player : Entity
                         {
                             if (!inventory.activeSelf)
                             {
-                                if ((nav.velocity.x !=0)&&(nav.velocity.z != 0))
+                                if ((nav.velocity.x != 0) && (nav.velocity.z != 0))
                                 {
                                     IntendedAction(Action.Move);
                                 }
@@ -141,6 +141,10 @@ public class Player : Entity
                     }
                     else
                     {
+                        if ((nav.velocity.x != 0) && (nav.velocity.z != 0))
+                        {
+                            IntendedAction(Action.Move);
+                        }
                         Move();
                     }
 
@@ -160,7 +164,7 @@ public class Player : Entity
 
                     if (!pauseMenu.isPaused)
                     {
-                        IntendedAction(Action.Move);
+                        
                        
                         nav.speed = 0.0f;
                         nav.angularSpeed = 0.0f;
@@ -177,6 +181,7 @@ public class Player : Entity
                                 if (currentEncounter != null)
                                 {
                                     selectedSkill.TriggerSkill(currentEncounter.playerInclusiveInitiativeList);
+                                    IntendedAction(Action.Skill);
 
                                     if (selectedSkill.currentlyCasting)
                                     {
@@ -208,6 +213,7 @@ public class Player : Entity
 
                             case SkillData.SkillList.REWIND:
                                 selectedSkill.TriggerSkill();
+                                IntendedAction(Action.Skill);
 
                                 if (selectedSkill.currentlyCasting)
                                 {
@@ -222,6 +228,7 @@ public class Player : Entity
 
                             case SkillData.SkillList.TELEPORT:
                                 selectedSkill.TriggerSkill();
+                                IntendedAction(Action.Skill);
 
                                 if (selectedSkill.currentlyCasting)
                                 {
@@ -241,7 +248,7 @@ public class Player : Entity
                                     {
                                         // Need a current entity list to put into function parameter
                                         selectedSkill.TriggerSkill(currentEncounter.masterInitiativeList, groundLayerMask);
-
+                                        IntendedAction(Action.BasicAttack);
                                         if (selectedSkill.currentlyCasting)
                                         {
                                             // We are currently casting a skill
@@ -322,7 +329,7 @@ public class Player : Entity
     public override void TakeDamage(int amount, SkillData.DamageType damageType, bool isCrit)
     {
         StartCoroutine(cameraShake.cShake(.3f, 1f));
-        //changed from TakeDamage so buff are used
+
         base.TakeDamage(amount, damageType, isCrit);
 
         animator.SetTrigger("gotHit");

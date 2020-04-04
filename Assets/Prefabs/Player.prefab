@@ -72,7 +72,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rewind: 0
   isDead: 0
-  EntityTag: 4
   level: 10
   experience: 0
   xpToNextLevel: 0
@@ -234,7 +233,6 @@ MonoBehaviour:
   fillType: 0
   moveType: 0
   timeBeenOnCooldown: 10
-  timeSpentOnWindUp: 0
   currentlyCasting: 0
   isAllowedToCast: 1
   casterSelf: {fileID: 819698099673919328}

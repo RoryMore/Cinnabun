@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3110f89451f743848910c598af7ff19f, type: 3}
-  m_Name: Charge
+  m_Name: BasicAttack
   m_EditorClassIdentifier: 
-  maxRange: 10
+  maxRange: 5
   minRange: 0
-  farWidth: 2
-  nearWidth: 2
+  farWidth: 3
+  nearWidth: 1
   verticalRange: 20
-  angle: 0
-  cooldown: 1
-  windUp: 2
-  DelayAttack: 0.4
+  angle: 25
+  cooldown: 0
+  windUp: 1
+  DelayAttack: 0
   skill: 3
-  baseMagnitude: 10
+  baseMagnitude: 5
   damageType: 0

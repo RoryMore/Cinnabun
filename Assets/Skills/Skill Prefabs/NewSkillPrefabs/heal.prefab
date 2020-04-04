@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5077662938153718855
+--- !u!1 &91025539550893644
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5077662938153718853}
-  - component: {fileID: 5077662938153718854}
-  - component: {fileID: 2327293293548665887}
+  - component: {fileID: 91025539550893646}
+  - component: {fileID: 91025539550893645}
+  - component: {fileID: 7455757971015286292}
   m_Layer: 0
   m_Name: SkillIndicatorProjector
   m_TagString: Untagged
@@ -18,27 +18,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5077662938153718853
+--- !u!4 &91025539550893646
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5077662938153718855}
+  m_GameObject: {fileID: 91025539550893644}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7538816008037413190}
+  m_Father: {fileID: 3434937561479639885}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!119 &5077662938153718854
+--- !u!119 &91025539550893645
 Projector:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5077662938153718855}
+  m_GameObject: {fileID: 91025539550893644}
   m_Enabled: 0
   serializedVersion: 2
   m_NearClipPlane: -5
@@ -51,20 +51,20 @@ Projector:
   m_IgnoreLayers:
     serializedVersion: 2
     m_Bits: 769
---- !u!114 &2327293293548665887
+--- !u!114 &7455757971015286292
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5077662938153718855}
+  m_GameObject: {fileID: 91025539550893644}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61897f3bfebc8c24a8ccc93398f7574f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill: {fileID: 7524206317486400404}
---- !u!1 &6721473233811531887
+  skill: {fileID: 3413519005573194143}
+--- !u!1 &1905973717907483236
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,44 +72,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7538816008037413190}
-  - component: {fileID: 7524206317486400404}
+  - component: {fileID: 3434937561479639885}
+  - component: {fileID: 3413519005573194143}
   m_Layer: 0
-  m_Name: Snipe
+  m_Name: heal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7538816008037413190
+--- !u!4 &3434937561479639885
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6721473233811531887}
+  m_GameObject: {fileID: 1905973717907483236}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5077662938153718853}
+  - {fileID: 91025539550893646}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7524206317486400404
+--- !u!114 &3413519005573194143
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6721473233811531887}
+  m_GameObject: {fileID: 1905973717907483236}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9515cca2412fbee409c3034a5347a4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projector: {fileID: 5077662938153718854}
-  skillData: {fileID: 11400000, guid: d11eb495d9ed5c84b97c7a25f4b460c8, type: 2}
+  projector: {fileID: 91025539550893645}
+  skillData: {fileID: 11400000, guid: ab033000aeaa2944b81f4dc16a6b88d7, type: 2}
   skillState: 0
   shape: 0
   fillType: 0
@@ -125,7 +125,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   TargetEntity:
-  - Player
   - Enemy1
   - Enemy2
   - Enemy3

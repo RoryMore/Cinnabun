@@ -23,12 +23,13 @@ public class Buff: ScriptableObject
         SkillCooldown,
         Dodge
     }
-
+    [Tooltip(" when buff is applyed")]
     public EffectApplyType EfectApplyWhen;
 
     public float Duration;
+    [Tooltip(" what type of buff is applyed. you can edit the list in 'Entity - ConditionEffect'")]
     public Entity.ConditionBuff BuffType;
-
+    [Tooltip(" how large of a buff to selected condition/stat")]
     public float buffnumber;
     public BuffStatType BuffStat;
 }

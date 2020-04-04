@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3110f89451f743848910c598af7ff19f, type: 3}
   m_Name: Counter
   m_EditorClassIdentifier: 
-  maxRange: 0
+  maxRange: 7
   minRange: 0
-  farWidth: 0
+  farWidth: 2
   nearWidth: 0
-  verticalRange: 0
+  verticalRange: 1
   angle: 0
-  cooldown: 0
-  windUp: 0
-  skill: 0
+  cooldown: 6
+  windUp: 2
+  DelayAttack: 0.2
+  skill: 4
   baseMagnitude: 0
   damageType: 0

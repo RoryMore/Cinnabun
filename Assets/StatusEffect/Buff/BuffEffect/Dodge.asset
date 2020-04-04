@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bfa12007796fa54791c802e4e8d1ecf, type: 3}
   m_Name: Dodge
   m_EditorClassIdentifier: 
-  EfectApplyWhen: 0
-  Duration: 0
+  EfectApplyWhen: 3
+  Duration: 5
   BuffType: 0
-  buffnumber: 0
-  BuffStat: 
+  buffnumber: 50
+  BuffStat: 3
