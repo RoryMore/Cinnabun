@@ -3804,6 +3804,7 @@ GameObject:
   - component: {fileID: 1013049788}
   - component: {fileID: 1013049790}
   - component: {fileID: 1013049789}
+  - component: {fileID: 1013049791}
   m_Layer: 0
   m_Name: TriggerBoxs
   m_TagString: Untagged
@@ -3933,6 +3934,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5898a5dbf56574143bda9849036686ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1013049791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013049787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d4508fc68695e64f9b7337f277c9124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1036134708
@@ -7531,7 +7544,7 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[4].text.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -7650,18 +7663,25 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[4].text.Array.data[0]
-      value: 
+      value: 'Wow, Im suprised that you can follow simple instructions.  '
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[4].text.Array.data[1]
-      value: 
+      value: While it was good that you got your health back you still need to kill
+        that thing. I say a bit more fire power is in order. Use the big blast attack.
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[3].text.Array.data[1]
       value: We both know you suck at killing these things so I would suggest using
         rewind.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[4].text.Array.data[2]
+      value: Make sure you are not in the range of blast because this can sting you
+        as well. So go pause again and use the blast attack.
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782395, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
