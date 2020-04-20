@@ -48,6 +48,10 @@ public class Player : Entity
     public GameObject inventory;
     bool inventoryBeginShit = false;
 
+	public bool WaterSounds = false;
+	public bool BirdSounds = false;
+	public bool checkInventory = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -121,12 +125,14 @@ public class Player : Entity
                                     {
                                         pause.ButtonPaused();
                                         inventory.SetActive(true);
-                                    }
+										
+									}
                                     else
                                     {
                                         pause.ButtonPlay();
                                         inventory.SetActive(false);
-                                    }
+										
+									}
                                 }
                                 else
                                 {
@@ -134,7 +140,8 @@ public class Player : Entity
                                     {
                                         pause.ButtonPlay();
                                         inventory.SetActive(false);
-                                    }
+										checkInventory = true;
+									}
                                 }
                             }
                         }
@@ -188,14 +195,17 @@ public class Player : Entity
                                         if (!delayedBlastCastParticles.activeSelf)
                                         {
                                             delayedBlastCastParticles.SetActive(true);
-                                        }
+											
+										}
                                         animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
                                         animator.SetBool("skillCast", true);
-                                    }
+										
+									}
                                 }
                                 else
                                 {
-                                    nav.angularSpeed = turningSpeed;
+									
+									nav.angularSpeed = turningSpeed;
 
                                     selectedSkill = null;
                                     playerState = PlayerState.FREE;
@@ -205,9 +215,12 @@ public class Player : Entity
                                     animator.SetBool("skillCast", false);
 
                                     // Deactivate any active cast particles
+									
                                     delayedBlastCastParticles.SetActive(false);
                                     rewindCastParticles.SetActive(false);
                                     teleportCastParticles.SetActive(false);
+
+									
                                 }
                                 break;
 
@@ -610,7 +623,21 @@ public class Player : Entity
                 triggerBox = true;
             }
         }
-    }
+
+		if (other.tag == "Water")
+		{
+			Debug.Log("I walked through it");
+			WaterSounds = true;
+			
+		}
+
+		if (other.tag == "Forest")
+		{
+			Debug.Log("I walked through it");
+			BirdSounds = true;
+
+		}
+	}
 
     private void OnTriggerExit(Collider other)
     {
