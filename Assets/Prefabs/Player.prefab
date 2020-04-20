@@ -81,6 +81,7 @@ MonoBehaviour:
   intellect: 5
   physicalArmour: 0
   magicalArmour: 0
+  baseHP: 32
   maxHP: 0
   currentHP: 0
   baseMovementSpeed: 7
@@ -233,6 +234,7 @@ MonoBehaviour:
   fillType: 0
   moveType: 0
   timeBeenOnCooldown: 10
+  timeSpentOnWindUp: 0
   currentlyCasting: 0
   isAllowedToCast: 1
   casterSelf: {fileID: 819698099673919328}

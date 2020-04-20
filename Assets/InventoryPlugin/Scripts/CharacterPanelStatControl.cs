@@ -62,6 +62,7 @@ public class CharacterPanelStatControl : MonoBehaviour
         {
             statCharacterEntity = characterEntity;
         }
+
     }
 
     // Update is called once per frame
@@ -106,26 +107,26 @@ public class CharacterPanelStatControl : MonoBehaviour
         updatedField.text = baseText + realValue;
     }
 
-    public static void OnItemEquip(InventoryItem.ItemInfoBlock itemStats)
+    public static void OnItemEquip(InventoryItem item)
     {
-        IncreaseStatValue(statStrength, itemStats.strength);
-        IncreaseStatValue(statAgility, itemStats.agility);
-        IncreaseStatValue(statConstitution, itemStats.constitution);
+        IncreaseStatValue(statStrength, item.itemInfoBlock.strength);
+        IncreaseStatValue(statAgility, item.itemInfoBlock.agility);
+        IncreaseStatValue(statConstitution, item.itemInfoBlock.constitution);
         statCharacterEntity.CalculateMaxHP();
-        IncreaseStatValue(statIntellect, itemStats.intellect);
-        IncreaseStatValue(statPhysicalArmour, itemStats.physicalArmour);
-        IncreaseStatValue(statMagicalArmour, itemStats.magicalArmour);
+        IncreaseStatValue(statIntellect, item.itemInfoBlock.intellect);
+        IncreaseStatValue(statPhysicalArmour, item.itemInfoBlock.physicalArmour);
+        IncreaseStatValue(statMagicalArmour, item.itemInfoBlock.magicalArmour);
     }
 
-    public static void OnItemRemove(InventoryItem.ItemInfoBlock itemStats)
+    public static void OnItemRemove(InventoryItem item)
     {
-        DecreaseStatValue(statStrength, itemStats.strength);
-        DecreaseStatValue(statAgility, itemStats.agility);
-        DecreaseStatValue(statConstitution, itemStats.constitution);
+        DecreaseStatValue(statStrength, item.itemInfoBlock.strength);
+        DecreaseStatValue(statAgility, item.itemInfoBlock.agility);
+        DecreaseStatValue(statConstitution, item.itemInfoBlock.constitution);
         statCharacterEntity.CalculateMaxHP();
-        DecreaseStatValue(statIntellect, itemStats.intellect);
-        DecreaseStatValue(statPhysicalArmour, itemStats.physicalArmour);
-        DecreaseStatValue(statMagicalArmour, itemStats.magicalArmour);
+        DecreaseStatValue(statIntellect, item.itemInfoBlock.intellect);
+        DecreaseStatValue(statPhysicalArmour, item.itemInfoBlock.physicalArmour);
+        DecreaseStatValue(statMagicalArmour, item.itemInfoBlock.magicalArmour);
     }
 
     static void IncreaseStatValue(string statToChange, int increaseBy)

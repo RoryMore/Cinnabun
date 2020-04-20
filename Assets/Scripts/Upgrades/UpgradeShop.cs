@@ -43,6 +43,7 @@ public class UpgradeShop : MonoBehaviour
     public ShopUpgrade blastExplosionRadius;
     bool explosionRadiusButtonPressed = false;
     public ShopUpgrade blastExplosionDmgMultiplier;
+    bool blastDamageButtonPressed = false;
 
     [Header("Extra Action")]
     public ShopUpgrade extraActionUpgrade;
@@ -58,6 +59,9 @@ public class UpgradeShop : MonoBehaviour
 
     public ShopUpgrade bonusAgilityCrit;
     bool bonusAgilityCritButtonPressed = false;
+
+    public ShopUpgrade armourEffectiveness;
+    bool armourEffectivenessButtonPressed = false;
 
     [Header("Upgrade Money Counter")]
     public Text upgradeMoneyCounter;
@@ -142,6 +146,8 @@ public class UpgradeShop : MonoBehaviour
         ProcessPressedButton(explosionRadiusButtonPressed, SaveManager.GetUpgradeList().blastExplosionRadius);
         ProcessPressedButton(extraActionButtonPressed, SaveManager.GetUpgradeList().extraPauseAction);
         ProcessPressedButton(bonusAgilityCritButtonPressed, SaveManager.GetUpgradeList().bonusAgilityCrit);
+        ProcessPressedButton(armourEffectivenessButtonPressed, SaveManager.GetUpgradeList().armourEffectiveness);
+        ProcessPressedButton(blastDamageButtonPressed, SaveManager.GetUpgradeList().blastExplosionDamage);
 
         ProcessUpgradeUI(teleportRange, SaveManager.GetUpgradeList().teleportRange);
         ProcessUpgradeUI(blastExplosionRadius, SaveManager.GetUpgradeList().blastExplosionRadius);
@@ -150,6 +156,8 @@ public class UpgradeShop : MonoBehaviour
         ProcessUpgradeUI(playerBaseMovementSpeed, SaveManager.GetUpgradeList().playerMovespeed);
         ProcessUpgradeUI(extraActionUpgrade, SaveManager.GetUpgradeList().extraPauseAction);
         ProcessUpgradeUI(bonusAgilityCrit, SaveManager.GetUpgradeList().bonusAgilityCrit);
+        ProcessUpgradeUI(armourEffectiveness, SaveManager.GetUpgradeList().armourEffectiveness);
+        ProcessUpgradeUI(blastExplosionDmgMultiplier, SaveManager.GetUpgradeList().blastExplosionDamage);
 
         upgradeMoneyCounter.text = CurrencyManager.GetUpgradeMoney().ToString();
 
@@ -254,6 +262,35 @@ public class UpgradeShop : MonoBehaviour
                     tooltipNextBonus.text = "next bonus: <color=white>MAXED</color>";
                 }
             }
+            else if (result.gameObject.name.Contains("ArmourEffectiveness"))
+            {
+                tooltipPosition.gameObject.SetActive(true);
+
+                // Position the Description
+                Vector3 descriptionPosition = armourEffectiveness.ui.progressFillImage.transform.position;
+                descriptionPosition.y += 30;
+                tooltipPosition.position = descriptionPosition;
+
+                tooltipDescription.text = armourEffectiveness.tooltipDescription;
+                float critPercent = SaveManager.GetUpgradeList().armourEffectiveness.GetUpgradedMagnitude() * 100.0f;
+                tooltipCurrentBonus.text = "current bonus: <color=lime>+" + critPercent.ToString() + "%</color> effectiveness";
+
+                if (SaveManager.GetUpgradeList().bonusAgilityCrit.CanBuyUpgrade())
+                {
+                    float nextBonus = (SaveManager.GetUpgradeList().armourEffectiveness.GetUpgradedMagnitude() + SaveManager.GetUpgradeList().armourEffectiveness.upgradeMagnitude) * 100.0f;
+                    tooltipNextBonus.text = "next bonus: <color=lime>+" + nextBonus.ToString() + "%</color> effectiveness";
+                }
+                else
+                {
+                    tooltipNextBonus.text = "next bonus: <color=white>MAXED</color>";
+                }
+            }
+            else if (result.gameObject.name.Contains("BlastDamage"))
+            {
+                tooltipPosition.gameObject.SetActive(true);
+
+                UpdateTooltip(blastExplosionDmgMultiplier, SaveManager.GetUpgradeList().blastExplosionDamage, "");
+            }
         }
     }
 
@@ -338,16 +375,6 @@ public class UpgradeShop : MonoBehaviour
         explosionRadiusButtonPressed = false;
     }
 
-    public void BlastExplDmgMultipierButtonDown()
-    {
-        upgradesSaved = false;
-    }
-    
-    public void BlastExplDmgMultiplierButtonUp()
-    {
-
-    }
-
     public void BloodOrbEffectivenessButtonDown()
     {
         bloodOrbEffectivenessButtonPressed = true;
@@ -388,6 +415,26 @@ public class UpgradeShop : MonoBehaviour
     public void BonusAgilityCritButtonUp()
     {
         bonusAgilityCritButtonPressed = false;
+    }
+
+    public void ArmourEffectivenessButtonDown()
+    {
+        armourEffectivenessButtonPressed = true;
+        upgradesSaved = false;
+    }
+    public void ArmourEffectivenessButtonUp()
+    {
+        armourEffectivenessButtonPressed = false;
+    }
+
+    public void BlastDamageButtonDown()
+    {
+        blastDamageButtonPressed = true;
+        upgradesSaved = false;
+    }
+    public void BlastDamageButtonUp()
+    {
+        blastDamageButtonPressed = false;
     }
 
     public void SkillTabClicked()

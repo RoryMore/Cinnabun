@@ -118,14 +118,17 @@ public class MouseItemControl : MonoBehaviour
                         // Item was equipped - unequipping now
                         if (checkedResult.isEquipped)
                         {
+                            //invBase.playerEquippedItems.Remove(checkedResult);
+                            CharacterPanelStatControl.OnItemRemove(mouseItem);
+
                             checkedResult.usedEquipSlot.isUsed = false;
                             checkedResult.usedEquipSlot.equippedItem = null;
 
                             mouseItem.isEquipped = true;
                             mouseItem.usedEquipSlot = checkedResult.usedEquipSlot;
                             //checkedResult.usedEquipSlot = null;
-                            CharacterPanelStatControl.OnItemRemove(mouseItem.itemInfoBlock);
-                            //invBase.playerEquippedItems.Remove(checkedResult);
+                            
+                            //
                         }
                         else // Item was in inventory
                         {
@@ -214,7 +217,7 @@ public class MouseItemControl : MonoBehaviour
                         
 
                         Item droppedItem = Instantiate(itemDrop, dropLocation, Quaternion.identity).GetComponent<Item>();
-                        droppedItem.Initialise(mouseItem.itemData, mouseItem.itemInfoBlock, 30.0f);
+                        droppedItem.Initialise(mouseItem.itemData, mouseItem.itemInfoBlock, droppedItem.equipmentTrait, 30.0f);
 
                         itemDroppedToGround = true;
                         mouseItem.ClearItem();

@@ -7,6 +7,7 @@ public class Item : MonoBehaviour
 {
     public ItemData itemData;
     public InventoryItem.ItemInfoBlock itemStatBlock;
+    public EquipmentTrait equipmentTrait;
 
     [Header("Item World-Object Settings")]
     [SerializeField]
@@ -88,6 +89,9 @@ public class Item : MonoBehaviour
                 material.SetTexture("_MainTex", itemData.equippedSprite.texture);
                 meshRenderer.material = material;
             }
+
+            //equipmentTrait = equipmentTrait.GetRandomTraitType();
+            //equipmentTrait.Initialise();
         }
 
         rarityLight = GetComponent<Light>();
@@ -121,7 +125,7 @@ public class Item : MonoBehaviour
     /// <summary>
     /// This Initialise method will only need to be called if an Item is being created not directly from the prefab; i.e when the player is dropping an item from their inventory
     /// </summary>
-    public void Initialise(ItemData data, InventoryItem.ItemInfoBlock stats, float setLifetime, bool isNew = false)
+    public void Initialise(ItemData data, InventoryItem.ItemInfoBlock stats, EquipmentTrait trait, float setLifetime, bool isNew = false)
     {
         isNewItem = isNew;
 
@@ -136,6 +140,7 @@ public class Item : MonoBehaviour
 
         itemData = data;
         itemStatBlock = stats;
+        equipmentTrait = trait;
 
         meshRenderer = GetComponent<MeshRenderer>();
         material = new Material(Shader.Find("Standard"));

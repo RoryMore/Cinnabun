@@ -27,16 +27,19 @@ public class ItemSpawner : MonoBehaviour
 
     [Header("Rarity Ratios | Must have a value <= the previous")]
     // Ratio Value  | Chance to Hit Rarity Table (Roughly rounded)
-    [SerializeField] int noLootRatio;     // 50           | 46.3  %
+    [SerializeField] int noLootRatio;     // 50           | 45.45  %
     static int noLootRatioStatic;
-    [SerializeField] int commonRatio;     // 35           | 32.4  %
+    [SerializeField] int commonRatio;     // 35           | 31.8  %
     static int commonRatioStatic;
-    [SerializeField] int uncommonRatio;   // 18           | 16.667%
+    [SerializeField] int uncommonRatio;   // 18           | 16.36%
     static int uncommonRatioStatic;
-    [SerializeField] int rareRatio;       // 5            | 4.63  %
+    [SerializeField] int rareRatio;       // 5            | 4.54  %
     static int rareRatioStatic;
-    [SerializeField] int ultraRatio;
+    [SerializeField] int ultraRatio;      // 2            | 1.8
     static int ultraRatioStatic;
+
+    // The chance of hitting a specific rarity table is: 100 / ((SumOfAllRatioCoefficients) / SpecificRatio) = ChanceForRarity
+    // The chance of getting a specific item from a rarity is: 1 / NumberOfItemsInRarity * ChanceForRarity
 
     private void Awake()
     {
@@ -63,8 +66,7 @@ public class ItemSpawner : MonoBehaviour
         firstSetIndex = 0;
     }
 
-    // The chance of hitting a specific rarity table is: 100 / ((SumOfAllRatioCoefficients) / SpecificRatio) = ChanceForRarity
-    // The chance of getting a specific item from a rarity is: 1 / NumberOfItemsInRarity * ChanceForRarity
+    
     public static void SpawnItem(Vector3 position)
     {
         if (!firstSetDropped)
