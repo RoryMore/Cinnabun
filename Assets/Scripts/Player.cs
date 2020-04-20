@@ -49,6 +49,7 @@ public class Player : Entity
 
 	public bool WaterSounds = false;
 	public bool BirdSounds = false;
+	public bool checkInventory = false;
 
     // Start is called before the first frame update
     void Start()
@@ -115,12 +116,14 @@ public class Player : Entity
                                     {
                                         pause.ButtonPaused();
                                         inventory.SetActive(true);
-                                    }
+										
+									}
                                     else
                                     {
                                         pause.ButtonPlay();
                                         inventory.SetActive(false);
-                                    }
+										
+									}
                                 }
                                 else
                                 {
@@ -128,7 +131,8 @@ public class Player : Entity
                                     {
                                         pause.ButtonPlay();
                                         inventory.SetActive(false);
-                                    }
+										checkInventory = true;
+									}
                                 }
                             }
                         }

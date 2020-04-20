@@ -18,6 +18,7 @@ public class PauseMenuUI : MonoBehaviour
     bool pause;
    public bool novel;
  public bool skipText = false;
+	
 
     public bool isPaused;
 
@@ -114,6 +115,7 @@ public class PauseMenuUI : MonoBehaviour
         if (InventoryUI.activeSelf == true)
         {
             InventoryUI.SetActive(false);
+			
             inventory = true;
         }
     }

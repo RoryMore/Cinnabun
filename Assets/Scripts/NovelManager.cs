@@ -7,14 +7,16 @@ public class NovelManager : MonoBehaviour
     TextSystem textSystem;
     Player player;
 	PauseAbility pause = null;
-	Encounter encounter;
+	EnemyManager enemyManager;
 	PlayerInGameUI playerUI;
+	PauseMenuUI pauseMenu;
 	public GameObject visualNovel;
 	public bool didPause = false;
 	public bool wentAcrossBridge = false;
 	public bool doOnce = false;
-	bool checkHealthDown = false;
+	bool inventoryCheck = false;
 	bool didheal = false;
+	bool battleDone = false;
 
 	// Start is called before the first frame update
 	void Start()
@@ -23,7 +25,8 @@ public class NovelManager : MonoBehaviour
         player = FindObjectOfType<Player>();
 		pause = FindObjectOfType<PauseAbility>();
 		playerUI = FindObjectOfType<PlayerInGameUI>();
-		encounter = FindObjectOfType<Encounter>();
+		enemyManager = FindObjectOfType<EnemyManager>();
+		pauseMenu = FindObjectOfType<PauseMenuUI>();
 
 	}
 
@@ -61,10 +64,32 @@ public class NovelManager : MonoBehaviour
 			}
 		}
 
-		if (encounter.cleared == true)
+
+		if (didheal == true)
 		{
-			PopUpBox();
+			if (enemyManager.inBattle == false)
+			{
+				if (battleDone == false)
+				{
+					PopUpBox();
+					battleDone = true;
+				}
+			}
 		}
+
+		if (battleDone == true)
+		{
+
+			if (inventoryCheck == false)
+			{
+				if (player.checkInventory == true)
+				{
+					PopUpBox();
+					inventoryCheck = true;
+				}
+			}
+		} 
+
 
 	}
 

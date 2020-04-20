@@ -7519,7 +7519,7 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.size
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -7548,8 +7548,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
+      propertyPath: text.Array.data[5].text.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[6].text.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
       propertyPath: text.Array.data[1].CharacterName
-      value: Cinnabun
+      value: Cupcake
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -7604,7 +7614,7 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[2].CharacterName
-      value: Cinnabun
+      value: Cupcake
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -7637,7 +7647,7 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[3].CharacterName
-      value: Cinnabun
+      value: Cupcake
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -7653,7 +7663,7 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[4].CharacterName
-      value: Cinnabun
+      value: Cupcake
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -7682,6 +7692,61 @@ PrefabInstance:
       propertyPath: text.Array.data[4].text.Array.data[2]
       value: Make sure you are not in the range of blast because this can sting you
         as well. So go pause again and use the blast attack.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[5].CharacterName
+      value: Cinnabun
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[5].BackgroundName
+      value: Cafe
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[5].text.Array.data[0]
+      value: 'Ok, well. I did not think you would be able to kill it. Nice work?
+        I suppose. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[5].text.Array.data[1]
+      value: Since you are still alive grab what that monster dropped on the ground,
+        looks like it could be useful.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[5].text.Array.data[2]
+      value: Press I and then drag what ever you got on to your self and this should
+        equip it. If not well then I dont know.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[6].CharacterName
+      value: Cupcake
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[6].BackgroundName
+      value: Cafe
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[6].text.Array.data[0]
+      value: Dam that looks so cute. I wish I got that. No matter what matters is
+        that I think you could actaully help which was the main goal.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[6].text.Array.data[1]
+      value: Teleport.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[6].text.Array.data[2]
+      value: Press I and then drag what ever you got on to your self and this should
+        equip it. If not well then I dont know.
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782395, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -8252,6 +8317,10 @@ PrefabInstance:
     - target: {fileID: 1919330310, guid: fb54e2a727e82a04a9af8bd552a44527, type: 3}
       propertyPath: actionsLeft
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1919330310, guid: fb54e2a727e82a04a9af8bd552a44527, type: 3}
+      propertyPath: inBattle
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 383053373075780368, guid: fb54e2a727e82a04a9af8bd552a44527,
         type: 3}
