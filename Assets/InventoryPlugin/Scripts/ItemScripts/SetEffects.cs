@@ -16,4 +16,7 @@ public class SetEffects
     private bool isActive;
 
     public bool IsActive { get => isActive; }
+
+    // TODO: Write methods for having set effects that can be called outside
+    // Set Effect Content
 }
