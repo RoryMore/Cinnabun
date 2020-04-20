@@ -12,8 +12,6 @@ public class SkillData : ScriptableObject
         MAGICAL
     }
 
-    
-
     public enum SkillList
     {
         TELEPORT,
@@ -47,18 +45,15 @@ public class SkillData : ScriptableObject
 
     [Tooltip("The time (in seconds) it will take to cast the skill before it does any effect")]
     public float windUp;
-
     
 
     [Tooltip("Which skill this actually is")]
     public SkillList skill;
-
-    
 
     [Header("Damage Variables")]
     [Tooltip("The base amount before any additional calculations for how much damage/heal/etc. this skill may deal")]
     public int baseMagnitude;
 
     [Tooltip("Whether this skill deals Physical or Magical damage")]
-    public DamageType damageType;   
+    public DamageType damageType;
 }
