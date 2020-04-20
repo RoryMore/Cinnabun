@@ -90,8 +90,8 @@ public class Item : MonoBehaviour
                 meshRenderer.material = material;
             }
 
-            equipmentTrait = equipmentTrait.GetRandomTraitType();
-            equipmentTrait.Initialise();
+            //equipmentTrait = equipmentTrait.GetRandomTraitType();
+            //equipmentTrait.Initialise();
         }
 
         rarityLight = GetComponent<Light>();

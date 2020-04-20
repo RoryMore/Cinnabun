@@ -42,7 +42,7 @@ public class SimpleEnemy : EnemyScript
     //DecidingBools
     bool hasDecided;
     bool destinationLocked;
-
+    bool MovementEnable = true;
     public enum AGRESSION
     {
         AGRESSIVE,
@@ -89,11 +89,11 @@ public class SimpleEnemy : EnemyScript
 
         pauseAbility = GameObject.Find("PauseMenuUI").GetComponent<PauseAbility>();
 
-        basicAttack = GetComponentInChildren<BaseSkill>();
+        // basicAttack = GetComponentInChildren<BaseSkill>();
 
 
 
-        skillList = GetComponentsInChildren<BaseSkill>();
+        // skillList = GetComponentsInChildren<BaseSkill>();
 
         chosenSkill = skillList[0];
 
@@ -112,7 +112,10 @@ public class SimpleEnemy : EnemyScript
             //If we arent Dead...
             if (!isDead)
             {
-
+                if (!CanAct())
+                {
+                    return;
+                }
                 // Update turn cooldown
                 Turn();
 
@@ -162,7 +165,15 @@ public class SimpleEnemy : EnemyScript
 
                         if (type == TYPE.MELEE)
                         {
-                            Movement(player.transform.position);
+                            IntendedAction(Action.Move);
+                            if (type == TYPE.MELEE)
+                            {
+                                Movement(player.transform.position);
+                            }
+                            else if (type == TYPE.RANGED)
+                            {
+                                Movement(destination);
+                            }
                         }
                         else if (type == TYPE.RANGED)
                         {
@@ -330,50 +341,134 @@ public class SimpleEnemy : EnemyScript
 
     public void Decide()
     {
-        if(enemyCooldown <= 0)
+        if (enemyCooldown <= 0)
         {
 
             //Choose how each enemy decides to take its actions
             //Later I would also want the skill cooldowns to come into effect
 
             //Step 1: If the turn is ready, begin the cycle
-          
-             //For each skill...
-             foreach (BaseSkill checkedSkill in skillList)
-             {
-                 //Check if the cooldown is complete...
-                 if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
-                 {
 
-                     //Check if we are in range...
-                     if (checkedSkill.CheckInRange(transform.position, target.position))
-                     {
-                        //More performance intensive, check that the player would be hit if we used it now
-                        if (checkedSkill.CheckLineSkillHit(target.position,
-                                                            chosenSkill.skillData.minRange,
-                                                            chosenSkill.skillData.maxRange,
-                                                            chosenSkill.skillData.nearWidth,
-                                                            chosenSkill.skillData.farWidth)) 
+        
 
+                    chosenSkill = null;
+                    //For each skill...
+                    foreach (BasicSkill checkedSkill in skillList)
+                    {
+
+                        //Check if the cooldown is complete...
+                        if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
                         {
-                            //Check if damage of prior skill is greater than base damange
-                            if (chosenSkill.skillData.baseMagnitude <= checkedSkill.skillData.baseMagnitude)
+                            switch (checkedSkill.TargetEntity[0])
                             {
-                                isAttacking = true;
-                                hasDecided = true;
-                                chosenSkill = checkedSkill;
+                                //if main target is player
+                                case "Player":
+                                    //target is player.
+                                    //Check if we are in range...
+                                    if (checkedSkill.CheckInRange(transform.position, target.position))
+                                    {
+                                        //Debug.LogWarning("skill");
+                                        basicSkillChecker(checkedSkill, target.gameObject);
+                                    }
+                                    break;
 
-                                //Reset the enemy turn
-                                enemyCooldown = 6;
+                                case "Self":
+                                    //no checks need as you are always in range
+                                    basicSkillChecker(checkedSkill, gameObject);
+                                    break;
+
+                                default:
+                                    //target any possable entity which is in the TargetEntity.
+                                    for (int i = 0; i < checkedSkill.TargetEntity.Count; i++)
+                                    {
+                                        //find all posable target
+                                        GameObject[] AllTargets = GameObject.FindGameObjectsWithTag(checkedSkill.TargetEntity[i]);
+                                        foreach (var Target in AllTargets)
+                                        {
+                                            //check to see if the skill can hit a target
+                                            if (Vector3.Distance(this.transform.position, Target.transform.position)
+                                                <= checkedSkill.skillData.maxRange)
+                                            {
 
 
+                                                basicSkillChecker(checkedSkill, Target);
+                                                break;
+                                            }
+                                        }
+                                    }
 
+                                    //can still cast skill on self
+
+                                    break;
                             }
                         }
-                     }
-                 }
-             }
+                    }
+                    if (chosenSkill == null)
+                    {
+                        chosenSkill = basicAttack;
+                        isAttacking = true;
+                        hasDecided = true;
+
+                        enemyCooldown = 1.1f;
+                    }
+                    // Debug.LogWarning(chosenSkill.name);
         }
+    }
+
+
+   //check to see if viable right now
+    public void basicSkillChecker(BasicSkill checkedSkill , GameObject Target)
+    {
+        //if linear do one more check
+        if (checkedSkill.fillType == BaseSkill.CastFillType.LINEAR)
+        {
+            //More performance intensive, check that the player would be hit if we used it now
+            if (!checkedSkill.CheckLineSkillHit(target.position,
+                                                checkedSkill.skillData.minRange,
+                                                checkedSkill.skillData.maxRange,
+                                                checkedSkill.skillData.nearWidth,
+                                                checkedSkill.skillData.farWidth))
+
+            {
+                return;
+            }
+
+        }
+        //if skill is healing check to see if they do need healing
+        if (checkedSkill.skillData.skill == SkillData.SkillList.HEAL)
+        {
+            if (Target.GetComponent<SimpleEnemy>().currentHP == Target.GetComponent<SimpleEnemy>().maxHP)
+            {
+                return;
+            }
+        }
+
+        //if their is no skill selected yet
+        if ((chosenSkill == null))
+        {
+            isAttacking = true;
+            hasDecided = true;
+            chosenSkill = checkedSkill;
+
+            //Reset the enemy turn
+            enemyCooldown = chosenSkill.skillData.windUp + chosenSkill.skillData.DelayAttack;
+
+            return;
+        }
+
+        //Check if damage of prior skill is greater than base damange
+        if (chosenSkill.skillData.baseMagnitude <= checkedSkill.skillData.baseMagnitude)
+            {
+                isAttacking = true;
+                hasDecided = true;
+                chosenSkill = checkedSkill;
+
+            //Reset the enemy turn
+            enemyCooldown = chosenSkill.skillData.windUp + chosenSkill.skillData.DelayAttack;
+
+        }
+        
+
     }
 
     
@@ -381,6 +476,7 @@ public class SimpleEnemy : EnemyScript
 
 
  
+
 
     public Entity CheckAttackers()
     {
@@ -524,6 +620,9 @@ public class SimpleEnemy : EnemyScript
     }
 
 
-
+    public override void SetMovement(bool move)
+    {
+        MovementEnable = move;
+    }
 }
 

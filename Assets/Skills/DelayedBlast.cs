@@ -29,6 +29,7 @@ public class DelayedBlast : BaseSkill
 
     private void Start()
     {
+	
         Initialise();
     }
 
