@@ -9,6 +9,8 @@ public class Encounter : MonoBehaviour
     public Entity enemy1;
     public Entity enemy2;
 
+    public HoldPoint holdPoint;
+
 
     public List<Entity> masterInitiativeList; //Unchanging list of encounter made at its initilization
     public List<Entity> initiativeList; //List that updates and changes as enemies die. Used for enemy manager, not for skills
@@ -18,11 +20,12 @@ public class Encounter : MonoBehaviour
     //NIK___List of skill which each enemy is going to use
 
     public List<EnemyScript> enemies;
-    //public List<Transform> spawnPoints;
     public Transform[] spawnPoints;
     public EnemyManager enemyManager;
 
     public bool cleared = false;
+    //Used for "Hold the point"
+    public bool playerInArea = false; 
     
     [Header("Wave Variables")]
     public WaveType waveType;
@@ -44,7 +47,8 @@ public class Encounter : MonoBehaviour
         SLAUGHTER, //Kill all enemies who spawn to progress
         ENDLESS, //Enemies keep coming until a timer ends
         MINIBOSS, // One large enemy randomly spawns at one of the spawnpoints
-        SHOP // Wave with no enemies
+        SHOP, // Wave with no enemies
+        HOLDTHELINE, //Like Endless, except the timer only ticks down while in a certain area
 
 
     }
@@ -54,14 +58,7 @@ public class Encounter : MonoBehaviour
     void Start()
     {
         cleared = false;
-
-        //spawnPoints
-
-        
-        //spawnPoints = GetComponentsInChildren<Transform>();
-
-        
-
+        playerInArea = false;
     }
 
     public void Initialise()
@@ -80,6 +77,7 @@ public class Encounter : MonoBehaviour
 
                 break;
 
+            //Keep killing until the timer hits 0
             case (WaveType.ENDLESS):
                 SpawnEnemies();
 
@@ -94,14 +92,36 @@ public class Encounter : MonoBehaviour
 
                 break;
 
+
+            //Fight a big boi!
             case (WaveType.MINIBOSS):
                 //We don't need the normal spawn enemies function since we only have one enemy 
-                SpawnBoss();
+                SpawnBoss(0);
 
                 if (milestone)
                 {
                     //Need to rewrite from using Init 0 if I want it to spawn double boss instead of stronger boss
-                    //SpawnBoss();
+                    SpawnBoss(1);
+                }
+
+                break;
+            
+            //Endless but a specific point
+            case (WaveType.HOLDTHELINE):
+
+                if (holdPoint != null)
+                {
+                    HoldPoint holdpoint = Instantiate(holdPoint, transform);
+                    holdpoint.encounter = this;
+                }
+
+
+                respawnTicker = countdownToNextRespawn;
+                waveOverTicker = waveOverTimer;
+
+                if (milestone)
+                {
+                    holdPoint.transform.localScale *= 0.5f;
                 }
 
                 break;
@@ -145,7 +165,7 @@ public class Encounter : MonoBehaviour
         playerInclusiveInitiativeList.Add(GameObject.Find("Player").GetComponent<Entity>());
     }
 
-    public void SpawnBoss()
+    public void SpawnBoss(int countMinus1)
     {
         int randomNum = Random.Range(0, spawnPoints.Length);
 
@@ -153,31 +173,35 @@ public class Encounter : MonoBehaviour
         if (spawnPoints[randomNum].name.Contains("Enemy1"))
         {
             initiativeList.Add(Instantiate(enemy1, spawnPoints[randomNum]));
-            initiativeList[0].gameObject.transform.localScale = initiativeList[0].gameObject.transform.localScale * 2;
+            initiativeList[countMinus1].gameObject.transform.localScale = initiativeList[countMinus1].gameObject.transform.localScale * 2;
 
         }
         else if (spawnPoints[randomNum].name.Contains("Enemy2"))
         {
             initiativeList.Add(Instantiate(enemy2, spawnPoints[randomNum]));
-            initiativeList[0].gameObject.transform.localScale = initiativeList[0].gameObject.transform.localScale * 2;
+            initiativeList[countMinus1].gameObject.transform.localScale = initiativeList[countMinus1].gameObject.transform.localScale * 2;
         }
         else if (spawnPoints[randomNum].name.Contains("Enemy3"))
         {
 
         }
 
-        SimpleEnemy boss = initiativeList[0].GetComponent<SimpleEnemy>();
+        SimpleEnemy boss = initiativeList[countMinus1].GetComponent<SimpleEnemy>();
 
         foreach (BaseSkill skill in boss.skillList)
         {
-            skill.skillData.maxRange *= 5;
-            skill.skillData.farWidth *= 5;
-            //skill.skillData.baseMagnitude *= 5;
-            //skill.
+            skill.skillData.maxRange *= 2.5f;
+            skill.skillData.farWidth *= 2.5f;
+
         }
 
 
         masterInitiativeList.AddRange(initiativeList);
+
+        boss.transform.position = new Vector3(Random.Range(boss.transform.position.x - 5, boss.transform.position.x + 5), //x
+                                              boss.transform.position.y,                                                  //y
+                                              Random.Range(boss.transform.position.z - 5, boss.transform.position.z + 5)  //Z
+                                               );
 
         //Set up player inclusive
         playerInclusiveInitiativeList.AddRange(masterInitiativeList);
@@ -246,6 +270,42 @@ public class Encounter : MonoBehaviour
 
             }
             break;
+
+
+            /// Hold the line
+            case WaveType.HOLDTHELINE:
+                respawnTicker -= Time.deltaTime;
+
+                if (playerInArea == true)
+                {
+                    waveOverTicker -= Time.deltaTime;
+                    
+                }
+                
+
+                if (respawnTicker <= 0)
+                {
+                    SpawnEnemies();
+                    respawnTicker = countdownToNextRespawn;
+                }
+
+                if (waveOverTicker <= 0)
+                {
+                    if (!cleared)
+                    {
+                        Debug.Log("The Endless encounter has been cleared!");
+                        if (isActiveAndEnabled)
+                        {
+                            foreach (Entity enemy in masterInitiativeList)
+                            {
+
+                                enemy.TakeDamage(enemy.maxHP);
+                            }
+                        }
+                        Cleared();
+                    }
+                }
+                break;
 
 
 

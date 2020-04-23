@@ -4486,6 +4486,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
+        type: 3}
+      propertyPath: holdPoint
+      value: 
+      objectReference: {fileID: 3192975652582851594, guid: 5c515eb938708c6498a5902391f70454,
+        type: 3}
+    - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
+        type: 3}
+      propertyPath: milestone
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
+        type: 3}
+      propertyPath: waveType
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7901061491977365521, guid: 3439b444dacb43f4aa477ee2f85d6f78,
         type: 3}
       propertyPath: m_Name
