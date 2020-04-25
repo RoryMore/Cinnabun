@@ -1999,6 +1999,7 @@ MonoBehaviour:
   physicalArmour: physicalArmour
   magicalArmour: magicalArmour
   characterEntity: {fileID: 0}
+  inventory: {fileID: 6531685089125968590}
 --- !u!114 &6531685088700490655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2283,6 +2284,7 @@ MonoBehaviour:
   inventorySlotsWide: 8
   inventorySlotsHigh: 10
   playerOwnedItems: []
+  playerEquippedItems: []
   backgroundBorderWidth: 16
   isItemOnMouse: 0
   mouseItemControl: {fileID: 0}

@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2911154769267179869
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2143228170426521716}
+  - component: {fileID: 2110603116058364582}
+  - component: {fileID: 3052113724185533981}
+  m_Layer: 0
+  m_Name: Stun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2143228170426521716
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2911154769267179869}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 3699280585465445751}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2110603116058364582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2911154769267179869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9515cca2412fbee409c3034a5347a4e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projector: {fileID: 3699280585465445748}
+  skillData: {fileID: 11400000, guid: f75cc060cfd520c4a80100644fe73407, type: 2}
+  skillState: 0
+  shape: 0
+  fillType: 0
+  moveType: 0
+  timeBeenOnCooldown: 10
+  timeSpentOnWindUp: 0
+  currentlyCasting: 0
+  isAllowedToCast: 0
+  casterSelf: {fileID: 0}
+  mainCookie: {fileID: 21300000, guid: 10b4f3a94f40ba048b3dcbf4ebeeb239, type: 3}
+  fillCookie: {fileID: 21300000, guid: 4a53cdcdbf6b57a4791e9c0235fea4fb, type: 3}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  TargetEntity:
+  - Player
+  - Enemy1
+  - Enemy2
+  - Enemy3
+  ExtraSkillp: 0
+--- !u!114 &3052113724185533981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2911154769267179869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1148225fb30bd7345b082d2f5f09558e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StatusEffects:
+  - {fileID: 11400000, guid: 67cc86132813ffb47af061a8ec35fb4a, type: 2}
+--- !u!1 &3699280585465445749
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3699280585465445751}
+  - component: {fileID: 3699280585465445748}
+  - component: {fileID: 6155632849243788589}
+  m_Layer: 0
+  m_Name: SkillIndicatorProjector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3699280585465445751
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3699280585465445749}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2143228170426521716}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!119 &3699280585465445748
+Projector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3699280585465445749}
+  m_Enabled: 0
+  serializedVersion: 2
+  m_NearClipPlane: -5
+  m_FarClipPlane: 5.01
+  m_FieldOfView: 30
+  m_AspectRatio: 1
+  m_Orthographic: 1
+  m_OrthographicSize: 3
+  m_Material: {fileID: 2100000, guid: 244fcdc9a24a72f4e8162dc7060f889a, type: 2}
+  m_IgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 769
+--- !u!114 &6155632849243788589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3699280585465445749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61897f3bfebc8c24a8ccc93398f7574f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skill: {fileID: 2110603116058364582}

@@ -25,14 +25,18 @@ public class SoundManager : MonoBehaviour
     //public AudioSource meeleeSwing;
     [SerializeField]
     AudioSource meeleSwing;
-    [HideInInspector] public static AudioSource meleeSwing;
+	[HideInInspector] public static AudioSource meleeSwing;
+
+	[SerializeField]
+	//AudioSource blast;
+	//[HideInInspector] public static AudioSource blast;
+
+    AudioSource footStepLeft;
+	[HideInInspector] public static AudioSource leftFootstep;
 
     [SerializeField]
-    AudioSource footStepLeft;
-    public static AudioSource leftFootstep;
-    [SerializeField]
     AudioSource footstepRight;
-    public static AudioSource rightFootstep;
+	[HideInInspector] public static AudioSource rightFootstep;
 
     [Header(" EnemyFoot")]
     [SerializeField] AudioSource EnemyFoot1;
@@ -63,7 +67,7 @@ public class SoundManager : MonoBehaviour
     EnemyManager enemyManager;
     public GameObject playerUI;
     public GameObject visualNovel;
-
+	Player player;
     int songs;
     float setVolume;
     [Header("Other")] public int random;
@@ -91,8 +95,8 @@ public class SoundManager : MonoBehaviour
     {
         pauseAbility = FindObjectOfType<PauseAbility>();
         enemyManager = FindObjectOfType<EnemyManager>();
-   
-        setVolume = 0.7f;
+		player = FindObjectOfType<Player>();
+		setVolume = 0.7f;
         float timeNow = Time.realtimeSinceStartup;
 
     }
@@ -133,7 +137,7 @@ public class SoundManager : MonoBehaviour
    //     MuteAllAudio();
         CheckInBattle();
         checkState();
-
+		//Blast();
 
         switch (state)
         {
@@ -358,13 +362,13 @@ public class SoundManager : MonoBehaviour
             {
                 if (enemyManager.inBattle == true)
                 {
-                    Debug.Log("should be sounds yes yes");
+                   // Debug.Log("should be sounds yes yes");
                     inBattle = true;
                 }
 
                 if (enemyManager.inBattle == false)
                 {
-                    Debug.Log("no sounds reeeeee");
+                   // Debug.Log("no sounds reeeeee");
                     inBattle = false;
                 }
             }
@@ -429,6 +433,12 @@ public class SoundManager : MonoBehaviour
            IdleMusic[i].Stop();
         }
     }
+
+	/*public void Blast()
+	{
+
+		blast[Random.Range(0, blast.Length)].Play();
+	}*/
 
     
 }

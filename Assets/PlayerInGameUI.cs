@@ -30,6 +30,14 @@ public class PlayerInGameUI : MonoBehaviour
     public Image VHSimage;
 
     public Text timeSinceStartUp;
+
+	public bool healthDown = false;
+
+	public bool novelManager = false;
+
+	public bool checkRewind = false;
+	bool rewindOnce = false;
+	bool doOnce = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +49,8 @@ public class PlayerInGameUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		CHeckHealthForNovel();
+
         if (pauseAbility.states == PauseAbility.GameStates.TIMESTOP)
         {
             PauseButton.gameObject.SetActive(false);
@@ -83,7 +93,12 @@ public class PlayerInGameUI : MonoBehaviour
                         }
                     case SkillData.SkillList.REWIND:
                         {
-                            RewindButton.gameObject.SetActive(true);
+							if (rewindOnce == false)
+							{
+								checkRewind = true;
+								rewindOnce = true;
+							}
+							RewindButton.gameObject.SetActive(true);
                             RewindButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.skillData.cooldown);
                             break;
                         }
@@ -109,6 +124,7 @@ public class PlayerInGameUI : MonoBehaviour
                         }
                     case SkillData.SkillList.REWIND:
                         {
+							
                             RewindButton.gameObject.SetActive(false);
                             break;
                         }
@@ -127,6 +143,11 @@ public class PlayerInGameUI : MonoBehaviour
         //if (player.weaponAttack.timeBeenOnCooldown < player.weaponAttack.skillData.cooldown)
         if (!player.weaponAttack.isAllowedToCast)
         {
+			if (doOnce == false)
+			{
+				novelManager = true;
+				doOnce = true;
+			}
             MeleeAttack.gameObject.SetActive(true);
             MeleeAttack.fillAmount = 1.0f - (player.weaponAttack.timeBeenOnCooldown / player.weaponAttack.skillData.cooldown);
         }
@@ -159,6 +180,14 @@ public class PlayerInGameUI : MonoBehaviour
         TurnCounter.fillAmount = 1.0f - ( (float)pauseAbility.timeStopCoolDown /2.0f);
 
     }
+
+	void CHeckHealthForNovel()
+	{
+		if (player.currentHP < player.maxHP)
+		{
+			healthDown = true;
+		}
+	}
 
   
 }
