@@ -1080,7 +1080,7 @@ Transform:
   - {fileID: 965822722}
   - {fileID: 25426102}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &204828912
 AudioSource:
@@ -3826,7 +3826,7 @@ Transform:
   - {fileID: 987135788}
   - {fileID: 1838868164}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1013049789
 AudioSource:
@@ -5227,7 +5227,7 @@ PrefabInstance:
     - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
         type: 3}
       propertyPath: waveType
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7901061491977365521, guid: 3439b444dacb43f4aa477ee2f85d6f78,
         type: 3}

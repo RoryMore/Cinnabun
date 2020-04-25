@@ -130,11 +130,27 @@ public class SimpleEnemy : EnemyScript
                 //Choose where we want to go, unless we're melee because we will always want to rush the player
                 if (!destinationLocked && type != TYPE.MELEE)
                 {
-                    ChooseDestination(chosenSkill);
+                    if (chosenSkill != null)
+                    {
+                        ChooseDestination(chosenSkill);
+                    }
+                    else
+                    {
+                        ChooseDestination(basicAttack);
+                    }
+
+                    
                 }
 
 
-
+                if (chosenSkill == null)
+                {
+                    Attack(basicAttack);
+                }
+                else
+                {
+                    Attack(chosenSkill);
+                }
 
                 Attack(chosenSkill);
                 //Initiate the attack//skill at their earliest convenience
@@ -403,14 +419,14 @@ public class SimpleEnemy : EnemyScript
                             }
                         }
                     }
-                    if (chosenSkill == null)
-                    {
-                        chosenSkill = basicAttack;
-                        isAttacking = true;
-                        hasDecided = true;
+                    //if (chosenSkill == null)
+                    //{
+                    //    chosenSkill = basicAttack;
+                    //    isAttacking = true;
+                    //    hasDecided = true;
 
-                        enemyCooldown = 1.1f;
-                    }
+                    //    enemyCooldown = 1.1f;
+                    //}
                     // Debug.LogWarning(chosenSkill.name);
         }
     }
