@@ -20,7 +20,6 @@ public class SimpleEnemy : EnemyScript
     [SerializeField]
     bool isEvading = false;
 
-    public bool skillIsCasting;
 
     List<Entity> fakeList = new List<Entity>();
 
@@ -37,6 +36,8 @@ public class SimpleEnemy : EnemyScript
 
     public TYPE type;
     public AGRESSION agression;
+
+    public BaseSkill viewCurrentSkill;
 
 
     //DecidingBools
@@ -106,6 +107,8 @@ public class SimpleEnemy : EnemyScript
     void Update()
     {
 
+        viewCurrentSkill = chosenSkill;
+
         if(isActive)
 
         {
@@ -130,13 +133,38 @@ public class SimpleEnemy : EnemyScript
                 //Choose where we want to go, unless we're melee because we will always want to rush the player
                 if (!destinationLocked && type != TYPE.MELEE)
                 {
-                    ChooseDestination(chosenSkill);
+                    if (chosenSkill != null)
+                    {
+                        ChooseDestination(chosenSkill);
+                    }
+                    else
+                    {
+                        //ChooseDestination(basicAttack);
+                        Movement(player.transform.position);
+
+                    }
+
+                    
                 }
 
+                /// SECTION #1
+                if (viewCurrentSkill == null)
+                {
+                    //Attack(basicAttack);
+                    
+                    nav.SetDestination(player.transform.position);
+                    FaceTarget(player.transform);
 
+                }
+                else
+                {
+                    Attack(chosenSkill);
+                }
+                /// SECTION END
 
+            
 
-                Attack(chosenSkill);
+                //Attack(chosenSkill);
                 //Initiate the attack//skill at their earliest convenience
 
                 ///Only call the attack function once because repreated calls stall the enemy
@@ -153,6 +181,9 @@ public class SimpleEnemy : EnemyScript
                 }
 
                 //at every frame where we AREN'T attacking or using a skill, do the following
+
+
+                ///SECTION #2
 
                 foreach (BaseSkill skill in skillList)
                 {
@@ -190,11 +221,6 @@ public class SimpleEnemy : EnemyScript
 
                 }
 
-
-
-
-                skillIsCasting = chosenSkill.currentlyCasting;
-
             }
 
                     else
@@ -204,7 +230,7 @@ public class SimpleEnemy : EnemyScript
 
 
 
-
+            /// SECTION #2 End
 
         }
 
@@ -230,7 +256,6 @@ public class SimpleEnemy : EnemyScript
         return destination = new Vector3(x, player.transform.position.y, z);
 
     }
-
 
     public void Movement()
     {
@@ -338,7 +363,6 @@ public class SimpleEnemy : EnemyScript
 
     }
 
-
     public void Decide()
     {
         if (enemyCooldown <= 0)
@@ -403,14 +427,14 @@ public class SimpleEnemy : EnemyScript
                             }
                         }
                     }
-                    if (chosenSkill == null)
-                    {
-                        chosenSkill = basicAttack;
-                        isAttacking = true;
-                        hasDecided = true;
+                    //if (chosenSkill == null)
+                    //{
+                    //    chosenSkill = basicAttack;
+                    //    isAttacking = true;
+                    //    hasDecided = true;
 
-                        enemyCooldown = 1.1f;
-                    }
+                    //    enemyCooldown = 1.1f;
+                    //}
                     // Debug.LogWarning(chosenSkill.name);
         }
     }
