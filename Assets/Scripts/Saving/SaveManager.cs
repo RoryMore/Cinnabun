@@ -15,8 +15,10 @@ public class SaveManager : MonoBehaviour
         public CharacterUpgrade playerMovespeed;
         public CharacterUpgrade bloodOrbEffectiveness;
         public CharacterUpgrade blastExplosionRadius;
+        public CharacterUpgrade blastExplosionDamage;
         public CharacterUpgrade extraPauseAction;
         public CharacterUpgrade bonusAgilityCrit;
+        public CharacterUpgrade armourEffectiveness;
     }
 
     [Header("Save File Names")]
@@ -152,8 +154,10 @@ public class SaveManager : MonoBehaviour
         save.playerMovespeed = characterUpgrades.playerMovespeed;
         save.bloodOrbEffectiveness = characterUpgrades.bloodOrbEffectiveness;
         save.blastExplosionRadius = characterUpgrades.blastExplosionRadius;
+        save.blastExplosionDamage = characterUpgrades.blastExplosionDamage;
         save.extraPauseAction = characterUpgrades.extraPauseAction;
         save.bonusAgilityCrit = characterUpgrades.bonusAgilityCrit;
+        save.armourEffectiveness = characterUpgrades.armourEffectiveness;
 
         return save;
     }
@@ -162,7 +166,7 @@ public class SaveManager : MonoBehaviour
     {
         BinaryFormatter bf = new BinaryFormatter();
         
-        //Debug.Log("Game Saved: New File Created");
+        //Debug.Log("SaveManager: Upgrades saved");
         UpgradeSave save = CreateUpgradeSave();
 
         // Save file does not exist. We are creating one and saving it
@@ -184,6 +188,10 @@ public class SaveManager : MonoBehaviour
             characterUpgrades.playerMovespeed = save.playerMovespeed;
             characterUpgrades.bloodOrbEffectiveness = save.bloodOrbEffectiveness;
             characterUpgrades.blastExplosionRadius = save.blastExplosionRadius;
+            characterUpgrades.blastExplosionDamage = save.blastExplosionDamage;
+            characterUpgrades.extraPauseAction = save.extraPauseAction;
+            characterUpgrades.bonusAgilityCrit = save.bonusAgilityCrit;
+            characterUpgrades.armourEffectiveness = save.armourEffectiveness;
 
             //Debug.Log("Game Loaded from existing file");
             file.Close();

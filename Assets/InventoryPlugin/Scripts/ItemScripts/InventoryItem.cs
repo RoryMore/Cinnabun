@@ -36,6 +36,8 @@ public class InventoryItem : MonoBehaviour
 
     Image image;
 
+    public EquipmentTrait equipmentTrait = null;
+
     // Update is called once per frame
     void Update()
     {
@@ -121,6 +123,7 @@ public class InventoryItem : MonoBehaviour
     {
         itemData = givenItem.itemData;
         itemInfoBlock = givenItem.itemStatBlock;
+        equipmentTrait = givenItem.equipmentTrait;
 
         if (itemData != null)
         {

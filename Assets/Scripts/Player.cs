@@ -48,6 +48,10 @@ public class Player : Entity
     public GameObject inventory;
     bool inventoryBeginShit = false;
 
+	public bool WaterSounds = false;
+	public bool BirdSounds = false;
+	public bool checkInventory = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -121,12 +125,14 @@ public class Player : Entity
                                     {
                                         pause.ButtonPaused();
                                         inventory.SetActive(true);
-                                    }
+										
+									}
                                     else
                                     {
                                         pause.ButtonPlay();
                                         inventory.SetActive(false);
-                                    }
+										
+									}
                                 }
                                 else
                                 {
@@ -134,7 +140,8 @@ public class Player : Entity
                                     {
                                         pause.ButtonPlay();
                                         inventory.SetActive(false);
-                                    }
+										checkInventory = true;
+									}
                                 }
                             }
                         }
@@ -188,14 +195,17 @@ public class Player : Entity
                                         if (!delayedBlastCastParticles.activeSelf)
                                         {
                                             delayedBlastCastParticles.SetActive(true);
-                                        }
+											
+										}
                                         animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
                                         animator.SetBool("skillCast", true);
-                                    }
+										
+									}
                                 }
                                 else
                                 {
-                                    nav.angularSpeed = turningSpeed;
+									
+									nav.angularSpeed = turningSpeed;
 
                                     selectedSkill = null;
                                     playerState = PlayerState.FREE;
@@ -205,9 +215,12 @@ public class Player : Entity
                                     animator.SetBool("skillCast", false);
 
                                     // Deactivate any active cast particles
+									
                                     delayedBlastCastParticles.SetActive(false);
                                     rewindCastParticles.SetActive(false);
                                     teleportCastParticles.SetActive(false);
+
+									
                                 }
                                 break;
 
@@ -550,6 +563,26 @@ public class Player : Entity
         return false;
     }
 
+    protected override int DamageNegated(int originalDamage, SkillData.DamageType damageType)
+    {
+        // How effective armour is at 'armourPointThreshold' points of armour
+        // 0.25f effectiveness && 100.0f threshold = 25% damage reduction at 100 points of armour
+        float armourEffectiveness = 0.25f;
+        armourEffectiveness += SaveManager.GetUpgradeList().armourEffectiveness.GetUpgradedMagnitude();
+        float armourPointThreshold = 100.0f;
+
+        if (damageType == SkillData.DamageType.PHYSICAL)
+        {
+            float percentReduced = Mathf.Clamp(armourEffectiveness * (physicalArmour / armourPointThreshold), 0, 0.95f);
+            return Mathf.RoundToInt(originalDamage * percentReduced);
+        }
+        else
+        {
+            float percentReduced = Mathf.Clamp(armourEffectiveness * (magicalArmour / armourPointThreshold), 0, 0.95f);
+            return Mathf.RoundToInt(originalDamage * percentReduced);
+        }
+    }
+
     void UpdateAnimator()
     {
         if (nav.velocity.magnitude > 0.01f)
@@ -610,7 +643,21 @@ public class Player : Entity
                 triggerBox = true;
             }
         }
-    }
+
+		if (other.tag == "Water")
+		{
+			Debug.Log("I walked through it");
+			WaterSounds = true;
+			
+		}
+
+		if (other.tag == "Forest")
+		{
+			Debug.Log("I walked through it");
+			BirdSounds = true;
+
+		}
+	}
 
     private void OnTriggerExit(Collider other)
     {
