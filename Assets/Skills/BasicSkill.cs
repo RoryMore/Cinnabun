@@ -190,6 +190,8 @@ public class BasicSkill : BaseSkill
         {
             GetComponentInParent<BuffEffect>().applyEffects(base.casterSelf, Buff.EffectApplyType.EndSkill);
         }
+        casterSelf.acttackdelay = skillData.DelayAttack;
+
         ApplySkillProplys();
     }
 

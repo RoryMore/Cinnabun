@@ -128,41 +128,58 @@ public class SimpleEnemy : EnemyScript
                 //Choose what attack it want's to make this turn assuming we haven't already chosen.
                 if (!hasDecided)
                 {
-                    Decide();
-                }
-                //Choose where we want to go, unless we're melee because we will always want to rush the player
-                if (!destinationLocked && type != TYPE.MELEE)
-                {
-                    if (chosenSkill != null)
+                    if (acttackdelay <= 0)
                     {
-                        ChooseDestination(chosenSkill);
+                        Decide();
                     }
                     else
                     {
-                        //ChooseDestination(basicAttack);
-                        Movement(player.transform.position);
+                        Debug.LogWarning("enemy is on a break");
+                        acttackdelay -= Time.deltaTime;
+                    } 
+                }
+
+                if (acttackdelay <= 0)
+                {
+
+
+                    //Choose where we want to go, unless we're melee because we will always want to rush the player
+                    if (!destinationLocked && type != TYPE.MELEE)
+                    {
+                        if (chosenSkill != null)
+                        {
+                            ChooseDestination(chosenSkill);
+                        }
+                        else
+                        {
+                            //ChooseDestination(basicAttack);
+                            Movement(player.transform.position);
+
+                        }
+
 
                     }
 
-                    
-                }
+                    /// SECTION #1
+                    if (viewCurrentSkill == null)
+                    {
+                        //Attack(basicAttack);
 
-                /// SECTION #1
-                if (viewCurrentSkill == null)
-                {
-                    //Attack(basicAttack);
-                    
-                    nav.SetDestination(player.transform.position);
-                    FaceTarget(player.transform);
+                        nav.SetDestination(player.transform.position);
+                        FaceTarget(player.transform);
+
+                    }
+                    else
+                    {
+                        if (chosenSkill != null)
+                        {
+                            Attack(chosenSkill);
+                        }
+                        
+                    }
+                    /// SECTION END
 
                 }
-                else
-                {
-                    Attack(chosenSkill);
-                }
-                /// SECTION END
-
-            
 
                 //Attack(chosenSkill);
                 //Initiate the attack//skill at their earliest convenience

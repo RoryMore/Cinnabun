@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3110f89451f743848910c598af7ff19f, type: 3}
-  m_Name: Enraged
+  m_Name: BossStun
   m_EditorClassIdentifier: 
-  maxRange: 7
+  maxRange: 10
   minRange: 0
-  farWidth: 7
+  farWidth: 5
   nearWidth: 0
-  verticalRange: 0
+  verticalRange: 1
   angle: 0
-  cooldown: 7
-  windUp: 2
+  cooldown: 10
+  windUp: 0.2
   DelayAttack: 0.2
-  skill: 4
-  baseMagnitude: 0
+  skill: 7
+  baseMagnitude: 5
   damageType: 0

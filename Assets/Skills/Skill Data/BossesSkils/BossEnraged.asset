@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3110f89451f743848910c598af7ff19f, type: 3}
-  m_Name: Enraged
+  m_Name: BossEnraged
   m_EditorClassIdentifier: 
   maxRange: 7
   minRange: 0
-  farWidth: 7
+  farWidth: 2
   nearWidth: 0
   verticalRange: 0
   angle: 0
