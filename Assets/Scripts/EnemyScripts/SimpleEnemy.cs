@@ -20,7 +20,6 @@ public class SimpleEnemy : EnemyScript
     [SerializeField]
     bool isEvading = false;
 
-    public bool skillIsCasting;
 
     List<Entity> fakeList = new List<Entity>();
 
@@ -37,6 +36,8 @@ public class SimpleEnemy : EnemyScript
 
     public TYPE type;
     public AGRESSION agression;
+
+    public BaseSkill viewCurrentSkill;
 
 
     //DecidingBools
@@ -106,6 +107,8 @@ public class SimpleEnemy : EnemyScript
     void Update()
     {
 
+        viewCurrentSkill = chosenSkill;
+
         if(isActive)
 
         {
@@ -136,23 +139,28 @@ public class SimpleEnemy : EnemyScript
                     }
                     else
                     {
-                        ChooseDestination(basicAttack);
+                        //ChooseDestination(basicAttack);
+                        Movement(player.transform.position);
+
                     }
 
                     
                 }
 
 
-                if (chosenSkill == null)
+                if (viewCurrentSkill == null)
                 {
-                    Attack(basicAttack);
+                    //Attack(basicAttack);
+                    
+                    nav.SetDestination(player.transform.position);
+                    FaceTarget(player.transform);
                 }
                 else
                 {
                     Attack(chosenSkill);
                 }
 
-                Attack(chosenSkill);
+                //Attack(chosenSkill);
                 //Initiate the attack//skill at their earliest convenience
 
                 ///Only call the attack function once because repreated calls stall the enemy
@@ -169,6 +177,9 @@ public class SimpleEnemy : EnemyScript
                 }
 
                 //at every frame where we AREN'T attacking or using a skill, do the following
+
+
+
 
                 foreach (BaseSkill skill in skillList)
                 {
@@ -205,11 +216,6 @@ public class SimpleEnemy : EnemyScript
                     }
 
                 }
-
-
-
-
-                skillIsCasting = chosenSkill.currentlyCasting;
 
             }
 
