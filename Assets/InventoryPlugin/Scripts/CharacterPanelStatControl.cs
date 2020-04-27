@@ -116,6 +116,8 @@ public class CharacterPanelStatControl : MonoBehaviour
         IncreaseStatValue(statIntellect, item.itemInfoBlock.intellect);
         IncreaseStatValue(statPhysicalArmour, item.itemInfoBlock.physicalArmour);
         IncreaseStatValue(statMagicalArmour, item.itemInfoBlock.magicalArmour);
+
+        item.itemInfoBlock.equipmentTrait.OnEquip();
     }
 
     public static void OnItemRemove(InventoryItem item)
@@ -127,6 +129,8 @@ public class CharacterPanelStatControl : MonoBehaviour
         DecreaseStatValue(statIntellect, item.itemInfoBlock.intellect);
         DecreaseStatValue(statPhysicalArmour, item.itemInfoBlock.physicalArmour);
         DecreaseStatValue(statMagicalArmour, item.itemInfoBlock.magicalArmour);
+
+        item.itemInfoBlock.equipmentTrait.OnRemove();
     }
 
     static void IncreaseStatValue(string statToChange, int increaseBy)

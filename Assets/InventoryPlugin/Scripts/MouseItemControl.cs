@@ -217,7 +217,7 @@ public class MouseItemControl : MonoBehaviour
                         
 
                         Item droppedItem = Instantiate(itemDrop, dropLocation, Quaternion.identity).GetComponent<Item>();
-                        droppedItem.Initialise(mouseItem.itemData, mouseItem.itemInfoBlock, droppedItem.equipmentTrait, 30.0f);
+                        droppedItem.Initialise(mouseItem.itemData, mouseItem.itemInfoBlock, 30.0f);
 
                         itemDroppedToGround = true;
                         mouseItem.ClearItem();

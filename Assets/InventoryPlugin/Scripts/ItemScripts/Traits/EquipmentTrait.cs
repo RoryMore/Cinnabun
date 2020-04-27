@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class EquipmentTrait
 {
     // The EquipmentTrait class will hold all relevant data and methods related to Traits.
@@ -16,11 +17,20 @@ public class EquipmentTrait
         SkillCDR
     }
 
+    protected Trait trait;
+
     protected string description;
 
     protected float magnitude;
 
+    public Trait Trait1 { get => trait;}
+    public string Description { get => description; }
+
     public virtual void Initialise() { }
+
+    public virtual void OnEquip() { }
+
+    public virtual void OnRemove() { }
 
     public EquipmentTrait GetRandomTraitType()
     {
@@ -31,10 +41,12 @@ public class EquipmentTrait
         {
             case Trait.None:
                 {
+                    Debug.Log("RandomTrait Type set as None");
                     break;
                 }
             case Trait.SkillCDR:
                 {
+                    Debug.Log("RandomTrait Type set as SkillCDRTrait");
                     return new SkillCDRTrait();
                 }
         }

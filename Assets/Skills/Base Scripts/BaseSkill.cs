@@ -49,6 +49,7 @@ public class BaseSkill : MonoBehaviour
 
     //[HideInInspector]
     public float timeBeenOnCooldown = 10.0f;
+    public float cooldownReduction = 0.0f;
     [SerializeField]
     protected float timeSpentOnWindUp = 0;
     //[HideInInspector]
@@ -205,7 +206,7 @@ public class BaseSkill : MonoBehaviour
     void UpdateCooldownTime()
     {
         // If the time this skill has been on cooldown is less than the cooldown time
-        if (timeBeenOnCooldown < skillData.cooldown)
+        if (timeBeenOnCooldown < (skillData.cooldown - cooldownReduction))
         {
             isAllowedToCast = false;
             // Increment timeBeenOnCooldown

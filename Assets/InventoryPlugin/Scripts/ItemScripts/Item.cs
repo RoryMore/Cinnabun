@@ -78,10 +78,12 @@ public class Item : MonoBehaviour
                 {
                     float statScalar = enemyManager.numOfClearedEncounters * 0.1f;
                     itemStatBlock = itemData.GetRandomItemStats(statScalar);
+                    //itemStatBlock.equipmentTrait = itemStatBlock.equipmentTrait.GetRandomTraitType();
                 }
                 else
                 {
                     itemStatBlock = itemData.GetSetItemStats();
+                    //itemStatBlock.equipmentTrait = itemStatBlock.equipmentTrait.GetRandomTraitType();
                 }
 
                 meshRenderer = GetComponent<MeshRenderer>();
@@ -92,6 +94,7 @@ public class Item : MonoBehaviour
 
             //equipmentTrait = equipmentTrait.GetRandomTraitType();
             //equipmentTrait.Initialise();
+            //itemStatBlock.equipmentTrait.Initialise();
         }
 
         rarityLight = GetComponent<Light>();
@@ -125,7 +128,7 @@ public class Item : MonoBehaviour
     /// <summary>
     /// This Initialise method will only need to be called if an Item is being created not directly from the prefab; i.e when the player is dropping an item from their inventory
     /// </summary>
-    public void Initialise(ItemData data, InventoryItem.ItemInfoBlock stats, EquipmentTrait trait, float setLifetime, bool isNew = false)
+    public void Initialise(ItemData data, InventoryItem.ItemInfoBlock stats, float setLifetime, bool isNew = false)
     {
         isNewItem = isNew;
 
@@ -140,7 +143,7 @@ public class Item : MonoBehaviour
 
         itemData = data;
         itemStatBlock = stats;
-        equipmentTrait = trait;
+        //equipmentTrait = trait;
 
         meshRenderer = GetComponent<MeshRenderer>();
         material = new Material(Shader.Find("Standard"));
