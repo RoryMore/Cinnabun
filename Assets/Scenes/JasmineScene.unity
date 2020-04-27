@@ -7493,8 +7493,17 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 200714618, guid: 579f3cb34635a9440a2a49db9077f0fb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 200714618, guid: 579f3cb34635a9440a2a49db9077f0fb, type: 3}
+      propertyPath: m_Name
+      value: Character2
+      objectReference: {fileID: 0}
+    - target: {fileID: 316336473, guid: 579f3cb34635a9440a2a49db9077f0fb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 17081df8a9a852a4cb172a9c021e8172,
+        type: 3}
     - target: {fileID: 695921240, guid: 579f3cb34635a9440a2a49db9077f0fb, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -7511,10 +7520,20 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1318357931, guid: 579f3cb34635a9440a2a49db9077f0fb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bc3f526087dec4f41a0a1780a32757db,
+        type: 3}
     - target: {fileID: 1685014597, guid: 579f3cb34635a9440a2a49db9077f0fb, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: ab495798df5f09c4484c9a8ffa850a79,
+        type: 3}
+    - target: {fileID: 2039257689, guid: 579f3cb34635a9440a2a49db9077f0fb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 32c19807b09754c4e98ff9b0df4043ca,
         type: 3}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -7554,7 +7573,7 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[6].text.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -7564,7 +7583,7 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[1].emotion
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -7740,13 +7759,33 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[6].text.Array.data[1]
-      value: Teleport.
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[6].text.Array.data[2]
       value: Press I and then drag what ever you got on to your self and this should
         equip it. If not well then I dont know.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: characters.Array.data[1].characterName
+      value: Cupcake
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[2].emotion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: GoToNextScene
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: sceneNumber
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782395, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}

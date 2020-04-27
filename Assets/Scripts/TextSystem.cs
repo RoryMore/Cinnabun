@@ -10,6 +10,7 @@ public class TextSystem : MonoBehaviour
     SpeechText speechText;
     DialogueSystem dialogue;
 	EnemyManager enemyManager;
+	NovelManager novelManager;
 	GameObject[] playerUI;
 
 	[Header("Text Settings")]
@@ -106,6 +107,7 @@ public class TextSystem : MonoBehaviour
 	{
 		dialogue = DialogueSystem.instance;
 		speechText = GetComponent<SpeechText>();
+		novelManager = GetComponent<NovelManager>();
 		playerUI = GameObject.FindGameObjectsWithTag("PlayerUI");
 		enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
 		dialogue.waitfor = textSpeed;
@@ -149,9 +151,9 @@ public class TextSystem : MonoBehaviour
 
                     Say(text[wordIndex].text[index]);
 				
-					//checkIfNull();
-				//getBackGroundName();
-				//	checkBackground();
+					checkIfNull();
+				getBackGroundName();
+					checkBackground();
 
                 }
 
@@ -351,10 +353,13 @@ public class TextSystem : MonoBehaviour
     //this checks if the user wants to load the scene or not then goes to that scene
 	void LoadScene(int sceneNumber)
 	{
-        if (GoToNextScene == true)
-        {
-            SceneManager.LoadScene(sceneNumber);
-        }
+	//	if (novelManager.Trigger6 == true)
+	//	{
+			if (GoToNextScene == true)
+			{
+				SceneManager.LoadScene(sceneNumber);
+			}
+		//}
 			
 	}
 

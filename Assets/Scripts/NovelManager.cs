@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NovelManager : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class NovelManager : MonoBehaviour
 	bool Trigger3 = false;
 	bool Trigger4 = false;
 	bool Trigger5 = false;
-	bool Trigger6 = false;
+	public bool Trigger6 = false;
 	bool Trigger7 = false;
 	bool Trigger8 = false;
 
@@ -108,7 +109,7 @@ public class NovelManager : MonoBehaviour
 
 	void UsedRewind()
 	{
-		if (Trigger3 == true)
+		if (Trigger3 == true )
 		{
 			if (playerUI.checkRewind == true)
 			{
@@ -135,6 +136,8 @@ public class NovelManager : MonoBehaviour
 		}
 
 	}
+
+
 
 	void PopUpBox()
 	{
