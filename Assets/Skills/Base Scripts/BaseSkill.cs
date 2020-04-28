@@ -49,6 +49,7 @@ public class BaseSkill : MonoBehaviour
 
     //[HideInInspector]
     public float timeBeenOnCooldown = 10.0f;
+    [Tooltip("Cooldown reduction makes a skill take less time to come off of cooldown \nCalculated by multiplying 'cooldown' with this value. 'cooldown * (1-CDR)' \nTherefore this should be a value between 0-1 for normal affects")]
     public float cooldownReduction = 0.0f;
     [SerializeField]
     protected float timeSpentOnWindUp = 0;
@@ -206,7 +207,7 @@ public class BaseSkill : MonoBehaviour
     void UpdateCooldownTime()
     {
         // If the time this skill has been on cooldown is less than the cooldown time
-        if (timeBeenOnCooldown < (skillData.cooldown - cooldownReduction))
+        if (timeBeenOnCooldown < (Mathf.Clamp(skillData.cooldown * (1.0f - cooldownReduction), 0.001f, float.MaxValue)))
         {
             isAllowedToCast = false;
             // Increment timeBeenOnCooldown
@@ -236,84 +237,156 @@ public class BaseSkill : MonoBehaviour
     /// <param name="farWidth"></param>
     /// <returns>Returns TRUE if given Vector3 is within bounds and can can be damaged</returns>
     public bool CheckLineSkillHit(Vector3 hitCheckPosition, float minLength, float maxLength, float nearWidth, float farWidth)
-    {
-        float angleLookAt = GetForwardAngle(casterSelf.transform);
-
-        float halfFarWidth = farWidth * 0.5f;
-        float halfNearWidth = nearWidth * 0.5f;
-
-        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
-
-        posCurrentMin = casterSelf.transform.position;
-        posCurrentMin.x += minLength;
-        posCurrentMin.z -= halfNearWidth;
-
-        posCurrentMax = casterSelf.transform.position;
-        posCurrentMax.x += maxLength;
-        posCurrentMax.z -= halfFarWidth;
-
-        posNextMin = casterSelf.transform.position;
-        posNextMin.x += minLength;
-        posNextMin.z += halfNearWidth;
-
-        posNextMax = casterSelf.transform.position;
-        posNextMax.z += halfFarWidth;
-
-        posNextMax.x += maxLength;
-
-        Vector3[] hitCheckBounds = new Vector3[4];
-
-        hitCheckBounds[0] = posCurrentMin;
-        hitCheckBounds[1] = posCurrentMax;
-        hitCheckBounds[2] = posNextMax;
-        hitCheckBounds[3] = posNextMin;
-
-        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
-
-        for (int i = 0; i < hitCheckBounds.Length; i++)
-        {
-            hitCheckBounds[i] -= casterSelf.transform.position;
-            hitCheckBounds[i] = qAngle * hitCheckBounds[i];
-            hitCheckBounds[i] += casterSelf.transform.position;
-        }
-
-        // hitCheckBounds holds the 4 coordinates of where an enemy has to be standing within to be hit
-        // continue to calculate if the target location is within given rectangle
-        //Debug.Log("WeaponAttack Hit Results: " + CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition));
-        if (CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition))
-        {
-            return true;
+    {
+
+        float angleLookAt = GetForwardAngle(casterSelf.transform);
+
+
+
+        float halfFarWidth = farWidth * 0.5f;
+
+        float halfNearWidth = nearWidth * 0.5f;
+
+
+
+        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
+
+
+
+        posCurrentMin = casterSelf.transform.position;
+
+        posCurrentMin.x += minLength;
+
+        posCurrentMin.z -= halfNearWidth;
+
+
+
+        posCurrentMax = casterSelf.transform.position;
+
+        posCurrentMax.x += maxLength;
+
+        posCurrentMax.z -= halfFarWidth;
+
+
+
+        posNextMin = casterSelf.transform.position;
+
+        posNextMin.x += minLength;
+
+        posNextMin.z += halfNearWidth;
+
+
+
+        posNextMax = casterSelf.transform.position;
+
+        posNextMax.z += halfFarWidth;
+
+
+
+        posNextMax.x += maxLength;
+
+
+
+        Vector3[] hitCheckBounds = new Vector3[4];
+
+
+
+        hitCheckBounds[0] = posCurrentMin;
+
+        hitCheckBounds[1] = posCurrentMax;
+
+        hitCheckBounds[2] = posNextMax;
+
+        hitCheckBounds[3] = posNextMin;
+
+
+
+        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
+
+
+
+        for (int i = 0; i < hitCheckBounds.Length; i++)
+
+        {
+
+            hitCheckBounds[i] -= casterSelf.transform.position;
+
+            hitCheckBounds[i] = qAngle * hitCheckBounds[i];
+
+            hitCheckBounds[i] += casterSelf.transform.position;
+
         }
-        else
-        {
-            return false;
+
+
+
+        // hitCheckBounds holds the 4 coordinates of where an enemy has to be standing within to be hit
+
+        // continue to calculate if the target location is within given rectangle
+
+        //Debug.Log("WeaponAttack Hit Results: " + CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition));
+        if (CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition))
+
+        {
+
+            return true;
+
+        }
+        else
+
+        {
+
+            return false;
+
         }
     }
 
     protected Mesh GenerateRectHitboxMesh()
     {
-        float angleLookAt = GetForwardAngle(casterSelf.transform);
+        float angleLookAt = GetForwardAngle(casterSelf.transform);
+
         float halfFarWidth = skillData.farWidth * 0.5f;
-        float halfNearWidth = skillData.nearWidth * 0.5f;
-        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
+        float halfNearWidth = skillData.nearWidth * 0.5f;
+
+        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
+
         posCurrentMin = Vector3.zero;// casterSelf.transform.position;
         posCurrentMin.x += skillData.minRange;
-        posCurrentMin.z -= halfNearWidth;        posCurrentMin.y += skillData.verticalRange;
+        posCurrentMin.z -= halfNearWidth;
+        posCurrentMin.y += skillData.verticalRange;
+
         posCurrentMax = Vector3.zero;// casterSelf.transform.position;
         posCurrentMax.x += skillData.maxRange;
-        posCurrentMax.z -= halfFarWidth;        posCurrentMax.y += skillData.verticalRange;
+        posCurrentMax.z -= halfFarWidth;
+        posCurrentMax.y += skillData.verticalRange;
+
         posNextMin = Vector3.zero; //casterSelf.transform.position;
         posNextMin.x += skillData.minRange;
-        posNextMin.z += halfNearWidth;        posNextMin.y += skillData.verticalRange;
+        posNextMin.z += halfNearWidth;
+        posNextMin.y += skillData.verticalRange;
+
         posNextMax = Vector3.zero; //casterSelf.transform.position;
         posNextMax.z += halfFarWidth;
-        posNextMax.x += skillData.maxRange;        posNextMax.y += skillData.verticalRange;
+        posNextMax.x += skillData.maxRange;
+        posNextMax.y += skillData.verticalRange;
+
         Vector3[] hitCheckBounds = new Vector3[8];
         hitCheckBounds[0] = posCurrentMin;
         hitCheckBounds[1] = posCurrentMax;
         hitCheckBounds[2] = posNextMax;
-        hitCheckBounds[3] = posNextMin;        posCurrentMin.y -= skillData.verticalRange * 2.0f;        posCurrentMax.y -= skillData.verticalRange * 2.0f;        posNextMax.y -= skillData.verticalRange * 2.0f;        posNextMin.y -= skillData.verticalRange * 2.0f;        hitCheckBounds[4] = posNextMin;        hitCheckBounds[5] = posNextMax;        hitCheckBounds[6] = posCurrentMax;        hitCheckBounds[7] = posCurrentMin;
-        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
+        hitCheckBounds[3] = posNextMin;
+
+        posCurrentMin.y -= skillData.verticalRange * 2.0f;
+        posCurrentMax.y -= skillData.verticalRange * 2.0f;
+        posNextMax.y -= skillData.verticalRange * 2.0f;
+        posNextMin.y -= skillData.verticalRange * 2.0f;
+
+        hitCheckBounds[4] = posNextMin;
+        hitCheckBounds[5] = posNextMax;
+        hitCheckBounds[6] = posCurrentMax;
+        hitCheckBounds[7] = posCurrentMin;
+
+        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
+
         for (int i = 0; i < hitCheckBounds.Length; i++)
         {
             //hitCheckBounds[i] -= casterSelf.transform.position;
@@ -469,14 +542,22 @@ public class BaseSkill : MonoBehaviour
         return false;
     }
 
-    public bool CheckInVerticalRange(Vector3 targetPosition)
-    {
-        // Basic distance check with 2 floats from caster and target positions to see if they are near eachother enough of the Y axis to damage one another
-        if (Mathf.Abs(casterSelf.transform.position.y - targetPosition.y) <= skillData.verticalRange)
-        {
-            return true;
-        }
-        return false;
+    public bool CheckInVerticalRange(Vector3 targetPosition)
+
+    {
+
+        // Basic distance check with 2 floats from caster and target positions to see if they are near eachother enough of the Y axis to damage one another
+
+        if (Mathf.Abs(casterSelf.transform.position.y - targetPosition.y) <= skillData.verticalRange)
+
+        {
+
+            return true;
+
+        }
+
+        return false;
+
     }
 
     protected void SelectTargetRay(ref Entity entityToSet, bool checkInRange = false)

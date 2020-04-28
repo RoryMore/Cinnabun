@@ -111,6 +111,7 @@ public class CharacterPanelStatControl : MonoBehaviour
     {
         IncreaseStatValue(statStrength, item.itemInfoBlock.strength);
         IncreaseStatValue(statAgility, item.itemInfoBlock.agility);
+        statCharacterEntity.CalculateMovementSpeed();
         IncreaseStatValue(statConstitution, item.itemInfoBlock.constitution);
         statCharacterEntity.CalculateMaxHP();
         IncreaseStatValue(statIntellect, item.itemInfoBlock.intellect);
@@ -124,6 +125,7 @@ public class CharacterPanelStatControl : MonoBehaviour
     {
         DecreaseStatValue(statStrength, item.itemInfoBlock.strength);
         DecreaseStatValue(statAgility, item.itemInfoBlock.agility);
+        statCharacterEntity.CalculateMovementSpeed();
         DecreaseStatValue(statConstitution, item.itemInfoBlock.constitution);
         statCharacterEntity.CalculateMaxHP();
         DecreaseStatValue(statIntellect, item.itemInfoBlock.intellect);

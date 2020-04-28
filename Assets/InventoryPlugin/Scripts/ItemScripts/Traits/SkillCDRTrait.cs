@@ -12,7 +12,7 @@ public class SkillCDRTrait : EquipmentTrait
                                                                                 SkillData.SkillList.DELAYEDBLAST};
 
     
-    public override void Initialise()
+    public override void Initialise(ItemData.ItemRarity rarity)
     {
         Debug.Log("SkillCDRTrait Initialised");
 
@@ -20,26 +20,47 @@ public class SkillCDRTrait : EquipmentTrait
 
         effectedSkill = possibleSkillsEffected[Random.Range(0, possibleSkillsEffected.Length)];
 
-        // TODO: Get proper random magnitude
-        magnitude = Random.Range(0.05f, 1.5f);
-        magnitude = Mathf.Round(magnitude * 10.0f) / 10.0f;
+        switch (rarity)
+        {
+            case ItemData.ItemRarity.COMMON:
+                {
+                    magnitude = Random.Range(0.01f, 0.15f);
+                    break;
+                }
+            case ItemData.ItemRarity.UNCOMMON:
+                {
+                    magnitude = Random.Range(0.05f, 0.25f);
+                    break;
+                }
+            case ItemData.ItemRarity.RARE:
+                {
+                    magnitude = Random.Range(0.15f, 0.40f);
+                    break;
+                }
+            case ItemData.ItemRarity.ULTRA:
+                {
+                    magnitude = Random.Range(0.30f, 0.70f);
+                    break;
+                }
+        }
+        magnitude = Mathf.Round(magnitude * 100.0f) / 100.0f;
 
         description = "";
         switch (effectedSkill)
         {
             case SkillData.SkillList.TELEPORT:
                 {
-                    description = "your cooldown for Teleport is <color=cyan>" + magnitude.ToString() + "s</color> shorter";
+                    description = "your cooldown for Teleport is <color=cyan>" + (magnitude * 100.0f) + "%</color> shorter";
                     break;
                 }
             case SkillData.SkillList.REWIND:
                 {
-                    description = "your cooldown for Rewind is <color=cyan>" + magnitude.ToString() + "s</color> shorter";
+                    description = "your cooldown for Rewind is <color=cyan>" + (magnitude * 100.0f) + "%</color> shorter";
                     break;
                 }
             case SkillData.SkillList.DELAYEDBLAST:
                 {
-                    description = "your cooldown for Blast is <color=cyan>" + magnitude.ToString() + "s</color> shorter";
+                    description = "your cooldown for Blast is <color=cyan>" + (magnitude * 100.0f) + "%</color> shorter";
                     break;
                 }
         }

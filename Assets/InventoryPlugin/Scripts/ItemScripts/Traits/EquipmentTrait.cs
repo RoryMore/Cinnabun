@@ -26,7 +26,7 @@ public class EquipmentTrait
     public Trait Trait1 { get => trait;}
     public string Description { get => description; }
 
-    public virtual void Initialise() { }
+    public virtual void Initialise(ItemData.ItemRarity rarity) { }
 
     public virtual void OnEquip() { }
 
@@ -41,6 +41,7 @@ public class EquipmentTrait
         {
             case Trait.None:
                 {
+                    description = "this item seems to be mundane";
                     Debug.Log("RandomTrait Type set as None");
                     break;
                 }
