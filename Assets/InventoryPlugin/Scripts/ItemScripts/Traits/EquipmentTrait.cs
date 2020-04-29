@@ -11,19 +11,20 @@ public class EquipmentTrait
     // Different Classes will be made for each different Trait, inheriting from this Class.
     // Do the Trait initialisation outside of the Item Class, instead where the item gets created.
 
-    public enum Trait
+    public enum TraitType
     {
         None,
-        SkillCDR
+        SkillCDR,
+        SkillWUR
     }
 
-    protected Trait trait;
+    protected TraitType trait;
 
     protected string description;
 
     protected float magnitude;
 
-    public Trait Trait1 { get => trait;}
+    public TraitType Trait { get => trait;}
     public string Description { get => description; }
 
     public virtual void Initialise(ItemData.ItemRarity rarity) { }
@@ -32,23 +33,58 @@ public class EquipmentTrait
 
     public virtual void OnRemove() { }
 
-    public EquipmentTrait GetRandomTraitType()
+    public EquipmentTrait GetRandomTraitType(ItemData.ItemType itemType)
     {
-        Trait[] traitRange = new Trait[] { Trait.None, Trait.SkillCDR };
-        Trait randomTraitType = traitRange[Random.Range(0, traitRange.Length)];
+        List<TraitType> traitRange = new List<TraitType>();
+        switch (itemType)
+        {
+            case ItemData.ItemType.Weapon:
+                {
+                    traitRange.AddRange(new TraitType[] { TraitType.None, TraitType.SkillCDR });
+                   // traitRange = new Trait[] { Trait.None, Trait.SkillCDR };
+                    break;
+                }
+            case ItemData.ItemType.Armour:
+                {
+                    traitRange.AddRange(new TraitType[] { TraitType.None, TraitType.SkillCDR });
+                    break;
+                }
+        }
+        TraitType randomTraitType = traitRange[Random.Range(0, traitRange.Count - 1)];
 
         switch(randomTraitType)
         {
-            case Trait.None:
+            case TraitType.None:
                 {
                     description = "this item seems to be mundane";
                     Debug.Log("RandomTrait Type set as None");
                     break;
                 }
-            case Trait.SkillCDR:
+            case TraitType.SkillCDR:
                 {
                     Debug.Log("RandomTrait Type set as SkillCDRTrait");
                     return new SkillCDRTrait();
+                }
+            case TraitType.SkillWUR:
+                {
+                    Debug.Log("RandomTrait Type set as SkillCTRTrait");
+                    return new SkillWURTrait();
+                }
+        }
+        return this;
+    }
+
+    public EquipmentTrait GetSpecificTrait(TraitType traitType)
+    {
+        switch (traitType)
+        {
+            case TraitType.SkillCDR:
+                {
+                    break;
+                }
+            case TraitType.SkillWUR:
+                {
+                    break;
                 }
         }
         return this;

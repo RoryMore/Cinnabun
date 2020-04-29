@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillCDRTrait : EquipmentTrait
+public class SkillWURTrait : EquipmentTrait
 {
+    // has Trait trait
+    // has string description
+    // has float magnitude
+
     private SkillData.SkillList effectedSkill;
     public SkillData.SkillList EffectedSkill { get => effectedSkill; }
 
-    SkillData.SkillList[] possibleSkillsEffected = new SkillData.SkillList[] {  SkillData.SkillList.TELEPORT,
+    SkillData.SkillList[] possibleSkillsEffected = new SkillData.SkillList[] {  SkillData.SkillList.WEAPONATTACK,
+                                                                                SkillData.SkillList.TELEPORT,
                                                                                 SkillData.SkillList.REWIND,
                                                                                 SkillData.SkillList.DELAYEDBLAST};
 
-    
     public override void Initialise(ItemData.ItemRarity rarity)
     {
-        trait = TraitType.SkillCDR;
-
+        trait = TraitType.SkillWUR;
         effectedSkill = possibleSkillsEffected[Random.Range(0, possibleSkillsEffected.Length)];
 
         switch (rarity)
@@ -46,30 +49,35 @@ public class SkillCDRTrait : EquipmentTrait
         description = "";
         switch (effectedSkill)
         {
+            case SkillData.SkillList.WEAPONATTACK:
+                {
+                    description = "your cast time for Attack is <color=cyan>" + (magnitude * 100.0f) + "%</color> shorter";
+                    break;
+                }
             case SkillData.SkillList.TELEPORT:
                 {
-                    description = "your cooldown for Teleport is <color=cyan>" + (magnitude * 100.0f) + "%</color> shorter";
+                    description = "your cast time for Teleport is <color=cyan>" + (magnitude * 100.0f) + "%</color> shorter";
                     break;
                 }
             case SkillData.SkillList.REWIND:
                 {
-                    description = "your cooldown for Rewind is <color=cyan>" + (magnitude * 100.0f) + "%</color> shorter";
+                    description = "your cast time for Rewind is <color=cyan>" + (magnitude * 100.0f) + "%</color> shorter";
                     break;
                 }
             case SkillData.SkillList.DELAYEDBLAST:
                 {
-                    description = "your cooldown for Blast is <color=cyan>" + (magnitude * 100.0f) + "%</color> shorter";
+                    description = "your cast time for Blast is <color=cyan>" + (magnitude * 100.0f) + "%</color> shorter";
                     break;
                 }
         }
 
-        Debug.Log("SkillCDRTrait Initialised");
+        Debug.Log("SkillCTRTrait Initialised");
     }
 
     public override void OnEquip()
     {
         Player player = Object.FindObjectOfType<Player>();
-        Debug.Log("SkillCDR EquipmentTrait OnEquip");
+        Debug.Log("SkillCTR EquipmentTrait OnEquip");
         if (player != null)
         {
             //Debug.Log("EquipmentTrait OnEquip Player is NOT null");
@@ -78,8 +86,8 @@ public class SkillCDRTrait : EquipmentTrait
                 //Debug.Log("Trait OnEquip checking skill");
                 if (skill.skillData.skill == effectedSkill)
                 {
-                    skill.cooldownReduction += magnitude;
-                    Debug.Log("Skill CDR increased");
+                    skill.windUpReduction += magnitude;
+                    Debug.Log("Skill CTR increased");
                 }
             }
         }
@@ -88,17 +96,17 @@ public class SkillCDRTrait : EquipmentTrait
     public override void OnRemove()
     {
         Player player = Object.FindObjectOfType<Player>();
-        Debug.Log("EquipmentTrait OnRemove");
+        Debug.Log("SkillCTR EquipmentTrait OnRemove");
         if (player != null)
         {
-            Debug.Log("EquipmentTrait OnRemove Player is NOT null");
+            //Debug.Log("EquipmentTrait OnEquip Player is NOT null");
             foreach (BaseSkill skill in player.skillList)
             {
-                Debug.Log("Trait OnRemove checking skill");
+                //Debug.Log("Trait OnEquip checking skill");
                 if (skill.skillData.skill == effectedSkill)
                 {
-                    skill.cooldownReduction -= magnitude;
-                    Debug.Log("Skill CDR decreased");
+                    skill.windUpReduction -= magnitude;
+                    Debug.Log("Skill CTR decreased");
                 }
             }
         }

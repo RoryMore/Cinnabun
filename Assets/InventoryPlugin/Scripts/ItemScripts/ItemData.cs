@@ -135,7 +135,7 @@ public class ItemData : ScriptableObject
             rarity = rarity,
             equipmentTrait = new EquipmentTrait()
         };
-        itemStatBlock.equipmentTrait = itemStatBlock.equipmentTrait.GetRandomTraitType();
+        itemStatBlock.equipmentTrait = itemStatBlock.equipmentTrait.GetRandomTraitType(itemType);
         itemStatBlock.equipmentTrait.Initialise(rarity);
 
         return itemStatBlock;
@@ -156,7 +156,7 @@ public class ItemData : ScriptableObject
             rarity = rarity,
             equipmentTrait = new EquipmentTrait()
         };
-        itemStatBlock.equipmentTrait = itemStatBlock.equipmentTrait.GetRandomTraitType();
+        itemStatBlock.equipmentTrait = itemStatBlock.equipmentTrait.GetRandomTraitType(itemType);
         itemStatBlock.equipmentTrait.Initialise(rarity);
 
         return itemStatBlock;

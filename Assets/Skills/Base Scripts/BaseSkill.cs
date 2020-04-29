@@ -49,10 +49,13 @@ public class BaseSkill : MonoBehaviour
 
     //[HideInInspector]
     public float timeBeenOnCooldown = 10.0f;
-    [Tooltip("Cooldown reduction makes a skill take less time to come off of cooldown \nCalculated by multiplying 'cooldown' with this value. 'cooldown * (1-CDR)' \nTherefore this should be a value between 0-1 for normal affects")]
+    [Tooltip("Cooldown reduction makes a skill take less time to come off of cooldown \nCalculated by multiplying 'cooldown' with this value. 'cooldown * (1-CDR)' \nTherefore this should be a value between 0-1 for normal affects \nSome items in the game will increase this stat themselves")]
     public float cooldownReduction = 0.0f;
     [SerializeField]
     protected float timeSpentOnWindUp = 0;
+    [Tooltip("WindUp reduction makes a skill take less time to cast \nCalculated by multiplying 'windUp' with this value. 'windUp * (1-WUR)' \nTherefore this should be a value between 0-1 for normal affects \nSome items in the game will increase this stat themselves")]
+    public float windUpReduction = 0.0f;
+
     //[HideInInspector]
     public bool currentlyCasting;
 
@@ -611,6 +614,12 @@ public class BaseSkill : MonoBehaviour
             }
         }
         return false;
+    }
+
+    protected float GetCalculatedWindUp()
+    {
+        float effectiveWindUp = skillData.windUp * (1 - windUpReduction);
+        return effectiveWindUp;
     }
 
     protected virtual void CastSkill() { }
