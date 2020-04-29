@@ -165,7 +165,7 @@ public class Teleport : BaseSkill
         skillState = SkillState.INACTIVE;
 
         //Target position is remade every time the skill is activated so no need to reset/null
-        Debug.Log("Activated!");
+        //Debug.Log("Activated!");
 
     }
 }
