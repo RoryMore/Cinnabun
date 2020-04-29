@@ -40,13 +40,13 @@ public class EquipmentTrait
         {
             case ItemData.ItemType.Weapon:
                 {
-                    traitRange.AddRange(new TraitType[] { TraitType.None, TraitType.SkillCDR });
+                    traitRange.AddRange(new TraitType[] { TraitType.None, TraitType.SkillCDR, TraitType.SkillWUR });
                    // traitRange = new Trait[] { Trait.None, Trait.SkillCDR };
                     break;
                 }
             case ItemData.ItemType.Armour:
                 {
-                    traitRange.AddRange(new TraitType[] { TraitType.None, TraitType.SkillCDR });
+                    traitRange.AddRange(new TraitType[] { TraitType.None, TraitType.SkillCDR, TraitType.SkillWUR });
                     break;
                 }
         }
@@ -80,11 +80,11 @@ public class EquipmentTrait
         {
             case TraitType.SkillCDR:
                 {
-                    break;
+                    return new SkillCDRTrait();
                 }
             case TraitType.SkillWUR:
                 {
-                    break;
+                    return new SkillWURTrait();
                 }
         }
         return this;
