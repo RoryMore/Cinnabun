@@ -170,8 +170,8 @@ public class Encounter : MonoBehaviour
 
         foreach (BaseSkill skill in boss.skillList)
         {
-            skill.skillData.maxRange *= 5;
-            skill.skillData.farWidth *= 5;
+            //skill.skillData.maxRange *= 5;
+           // skill.skillData.farWidth *= 5;
             //skill.skillData.baseMagnitude *= 5;
             //skill.
         }

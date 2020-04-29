@@ -31,7 +31,7 @@ public class SimpleEnemy : EnemyScript
     PauseAbility pauseAbility;
     [SerializeField] private Transform damageNumbers;
 
-    public BaseSkill basicAttack;
+    //public BaseSkill basicAttack;
     public BaseSkill[] skillList;
 
     public TYPE type;
