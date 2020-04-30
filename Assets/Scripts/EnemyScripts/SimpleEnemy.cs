@@ -161,6 +161,7 @@ public class SimpleEnemy : EnemyScript
                     }
 
                     /// SECTION #1
+                    /// //if no skills can be used get closer to the player so when a skill can be used we are in range already
                     if (viewCurrentSkill == null)
                     {
                         //Attack(basicAttack);
@@ -400,6 +401,7 @@ public class SimpleEnemy : EnemyScript
                         //Check if the cooldown is complete...
                         if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
                         {
+                            //check to see if the people target by the skills are inrange
                             switch (checkedSkill.TargetEntity[0])
                             {
                                 //if main target is player
