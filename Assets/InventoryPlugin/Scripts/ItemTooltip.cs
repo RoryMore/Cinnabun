@@ -32,9 +32,12 @@ public class ItemTooltip : MonoBehaviour
     Player player;
     bool hoveredItemEquipped;
 
+    [HideInInspector] public RectTransform rectTransform = null;
+
     // Start is called before the first frame update
     void Start()
     {
+        rectTransform = GetComponent<RectTransform>();
         hoveredItemInfo = new InventoryItem.ItemInfoBlock();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
