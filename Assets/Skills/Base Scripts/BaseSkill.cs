@@ -174,7 +174,7 @@ public class BaseSkill : MonoBehaviour
         {
             case SkillState.CASTING:
                 {
-                    Debug.Log("SkillUpdate: Casting windUp being incremented");
+                    //Debug.Log("SkillUpdate: Casting windUp being incremented");
                     // Increment the delta value for time spent casting ability
                     timeSpentOnWindUp += Time.deltaTime;
                     //Debug.Log("Cast time for Windup being calculated and passed to shader");
@@ -640,57 +640,57 @@ public class BaseSkill : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        //Gizmos.color = Color.red;
 
-        float farWidth = skillData.farWidth;
-        float nearWidth = skillData.nearWidth;
-        float maxLength = skillData.maxRange;
-        float minLength = skillData.minRange;
+        //float farWidth = skillData.farWidth;
+        //float nearWidth = skillData.nearWidth;
+        //float maxLength = skillData.maxRange;
+        //float minLength = skillData.minRange;
 
-        float angleLookAt = GetForwardAngle(casterSelf.transform);
+        //float angleLookAt = GetForwardAngle(casterSelf.transform);
 
-        float halfFarWidth = farWidth * 0.5f;
-        float halfNearWidth = nearWidth * 0.5f;
+        //float halfFarWidth = farWidth * 0.5f;
+        //float halfNearWidth = nearWidth * 0.5f;
 
-        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
+        //Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
 
-        posCurrentMin = casterSelf.transform.position;
-        posCurrentMin.x += minLength;
-        posCurrentMin.z -= halfNearWidth;
+        //posCurrentMin = casterSelf.transform.position;
+        //posCurrentMin.x += minLength;
+        //posCurrentMin.z -= halfNearWidth;
 
-        posCurrentMax = casterSelf.transform.position;
-        posCurrentMax.z -= halfFarWidth;
+        //posCurrentMax = casterSelf.transform.position;
+        //posCurrentMax.z -= halfFarWidth;
 
-        posCurrentMax.x += maxLength;
+        //posCurrentMax.x += maxLength;
 
-        posNextMin = casterSelf.transform.position;
-        posNextMin.x += minLength;
-        posNextMin.z += halfNearWidth;
+        //posNextMin = casterSelf.transform.position;
+        //posNextMin.x += minLength;
+        //posNextMin.z += halfNearWidth;
 
-        posNextMax = casterSelf.transform.position;
-        posNextMax.z += halfFarWidth;
+        //posNextMax = casterSelf.transform.position;
+        //posNextMax.z += halfFarWidth;
 
-        posNextMax.x += maxLength;
+        //posNextMax.x += maxLength;
 
-        Vector3[] hitCheckBounds = new Vector3[4];
+        //Vector3[] hitCheckBounds = new Vector3[4];
 
-        hitCheckBounds[0] = posCurrentMin;
-        hitCheckBounds[1] = posCurrentMax;
-        hitCheckBounds[2] = posNextMax;
-        hitCheckBounds[3] = posNextMin;
+        //hitCheckBounds[0] = posCurrentMin;
+        //hitCheckBounds[1] = posCurrentMax;
+        //hitCheckBounds[2] = posNextMax;
+        //hitCheckBounds[3] = posNextMin;
 
-        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
+        //Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
 
-        for (int i = 0; i < hitCheckBounds.Length; i++)
-        {
-            hitCheckBounds[i] -= casterSelf.transform.position;
-            hitCheckBounds[i] = qAngle * hitCheckBounds[i];
-            hitCheckBounds[i] += casterSelf.transform.position;
-        }
+        //for (int i = 0; i < hitCheckBounds.Length; i++)
+        //{
+        //    hitCheckBounds[i] -= casterSelf.transform.position;
+        //    hitCheckBounds[i] = qAngle * hitCheckBounds[i];
+        //    hitCheckBounds[i] += casterSelf.transform.position;
+        //}
 
-        Gizmos.DrawLine(hitCheckBounds[0], hitCheckBounds[1]);
-        Gizmos.DrawLine(hitCheckBounds[1], hitCheckBounds[2]);
-        Gizmos.DrawLine(hitCheckBounds[2], hitCheckBounds[3]);
-        Gizmos.DrawLine(hitCheckBounds[3], hitCheckBounds[0]);
+        //Gizmos.DrawLine(hitCheckBounds[0], hitCheckBounds[1]);
+        //Gizmos.DrawLine(hitCheckBounds[1], hitCheckBounds[2]);
+        //Gizmos.DrawLine(hitCheckBounds[2], hitCheckBounds[3]);
+        //Gizmos.DrawLine(hitCheckBounds[3], hitCheckBounds[0]);
     }
 }

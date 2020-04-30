@@ -63,13 +63,13 @@ public class SkillCDRTrait : EquipmentTrait
                 }
         }
 
-        Debug.Log("SkillCDRTrait Initialised");
+        //Debug.Log("SkillCDRTrait Initialised");
     }
 
     public override void OnEquip()
     {
         Player player = Object.FindObjectOfType<Player>();
-        Debug.Log("SkillCDR EquipmentTrait OnEquip");
+        //Debug.Log("SkillCDR EquipmentTrait OnEquip");
         if (player != null)
         {
             //Debug.Log("EquipmentTrait OnEquip Player is NOT null");
@@ -79,7 +79,7 @@ public class SkillCDRTrait : EquipmentTrait
                 if (skill.skillData.skill == effectedSkill)
                 {
                     skill.cooldownReduction += magnitude;
-                    Debug.Log("Skill CDR increased");
+                    //Debug.Log("Skill CDR increased");
                 }
             }
         }
@@ -88,17 +88,17 @@ public class SkillCDRTrait : EquipmentTrait
     public override void OnRemove()
     {
         Player player = Object.FindObjectOfType<Player>();
-        Debug.Log("EquipmentTrait OnRemove");
+        //Debug.Log("EquipmentTrait OnRemove");
         if (player != null)
         {
-            Debug.Log("EquipmentTrait OnRemove Player is NOT null");
+            //Debug.Log("EquipmentTrait OnRemove Player is NOT null");
             foreach (BaseSkill skill in player.skillList)
             {
-                Debug.Log("Trait OnRemove checking skill");
+                //Debug.Log("Trait OnRemove checking skill");
                 if (skill.skillData.skill == effectedSkill)
                 {
                     skill.cooldownReduction -= magnitude;
-                    Debug.Log("Skill CDR decreased");
+                    //Debug.Log("Skill CDR decreased");
                 }
             }
         }

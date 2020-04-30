@@ -71,13 +71,13 @@ public class SkillWURTrait : EquipmentTrait
                 }
         }
 
-        Debug.Log("SkillCTRTrait Initialised");
+        //Debug.Log("SkillCTRTrait Initialised");
     }
 
     public override void OnEquip()
     {
         Player player = Object.FindObjectOfType<Player>();
-        Debug.Log("SkillCTR EquipmentTrait OnEquip");
+        //Debug.Log("SkillCTR EquipmentTrait OnEquip");
         if (player != null)
         {
             //Debug.Log("EquipmentTrait OnEquip Player is NOT null");
@@ -87,7 +87,7 @@ public class SkillWURTrait : EquipmentTrait
                 if (skill.skillData.skill == effectedSkill)
                 {
                     skill.windUpReduction += magnitude;
-                    Debug.Log("Skill CTR increased");
+                    //Debug.Log("Skill CTR increased");
                 }
             }
         }
@@ -96,7 +96,7 @@ public class SkillWURTrait : EquipmentTrait
     public override void OnRemove()
     {
         Player player = Object.FindObjectOfType<Player>();
-        Debug.Log("SkillCTR EquipmentTrait OnRemove");
+        //Debug.Log("SkillCTR EquipmentTrait OnRemove");
         if (player != null)
         {
             //Debug.Log("EquipmentTrait OnEquip Player is NOT null");
@@ -106,7 +106,7 @@ public class SkillWURTrait : EquipmentTrait
                 if (skill.skillData.skill == effectedSkill)
                 {
                     skill.windUpReduction -= magnitude;
-                    Debug.Log("Skill CTR decreased");
+                    //Debug.Log("Skill CTR decreased");
                 }
             }
         }

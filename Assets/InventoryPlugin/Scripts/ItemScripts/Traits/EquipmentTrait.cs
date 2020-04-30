@@ -57,17 +57,17 @@ public class EquipmentTrait
             case TraitType.None:
                 {
                     description = "this item seems to be mundane";
-                    Debug.Log("RandomTrait Type set as None");
+                    //Debug.Log("RandomTrait Type set as None");
                     break;
                 }
             case TraitType.SkillCDR:
                 {
-                    Debug.Log("RandomTrait Type set as SkillCDRTrait");
+                    //Debug.Log("RandomTrait Type set as SkillCDRTrait");
                     return new SkillCDRTrait();
                 }
             case TraitType.SkillWUR:
                 {
-                    Debug.Log("RandomTrait Type set as SkillCTRTrait");
+                    //Debug.Log("RandomTrait Type set as SkillCTRTrait");
                     return new SkillWURTrait();
                 }
         }
