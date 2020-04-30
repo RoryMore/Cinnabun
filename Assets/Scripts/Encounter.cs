@@ -170,7 +170,7 @@ public class Encounter : MonoBehaviour
 
         foreach (BaseSkill skill in boss.skillList)
         {
-            skill.skillData.maxRange *= 5;
+            skill.skillData.maxRange *= 5;  // This is so scuffed. You are changing a value of a scriptable object, so whatever skill the 'boss' uses that is the same as any other enemy, any other enemy is going to use the changed values as well. lmao
             skill.skillData.farWidth *= 5;
             //skill.skillData.baseMagnitude *= 5;
             //skill.
