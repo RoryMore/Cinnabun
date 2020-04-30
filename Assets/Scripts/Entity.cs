@@ -562,14 +562,17 @@ public struct RewindPoint
         maxHP = baseHP + Mathf.RoundToInt(bonusHP);
     }
 
-    void CalculateMovementSpeed()
+    public void CalculateMovementSpeed()
     {
         // I believe each unit should equal something along the lines of
         float agilityEffectiveness = 0.1f;
         float agilityPointThreshold = 10.0f;
         movementSpeed = baseMovementSpeed + (baseMovementSpeed * ((agility * agilityEffectiveness) / agilityPointThreshold));
         // for each 10 points of agility you move 10% faster with this formula.
-
+        if (nav != null)
+        {
+            nav.speed = movementSpeed;
+        }
         //movementSpeed = agility;
     }
     // TODO: Implement function for Critical Chance

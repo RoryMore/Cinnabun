@@ -16,6 +16,7 @@ public class InventoryItem : MonoBehaviour
 
         public string itemName;
         public ItemData.ItemRarity rarity;
+        public EquipmentTrait equipmentTrait;
     }
 
     public ItemInfoBlock itemInfoBlock;
@@ -36,7 +37,7 @@ public class InventoryItem : MonoBehaviour
 
     Image image;
 
-    public EquipmentTrait equipmentTrait = null;
+    //public EquipmentTrait equipmentTrait = null;
 
     // Update is called once per frame
     void Update()
@@ -123,7 +124,7 @@ public class InventoryItem : MonoBehaviour
     {
         itemData = givenItem.itemData;
         itemInfoBlock = givenItem.itemStatBlock;
-        equipmentTrait = givenItem.equipmentTrait;
+        //equipmentTrait = givenItem.equipmentTrait;
 
         if (itemData != null)
         {
@@ -141,11 +142,11 @@ public class InventoryItem : MonoBehaviour
         if (givenItem != null)
         {
             itemData = givenItem.itemData;
+            itemInfoBlock = givenItem.itemInfoBlock;
         }
 
         if (itemData != null)
         {
-            itemInfoBlock = givenItem.itemInfoBlock;
 
             if (isEquipping)
             {

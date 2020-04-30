@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NovelManager : MonoBehaviour
 {
@@ -11,12 +12,18 @@ public class NovelManager : MonoBehaviour
 	PlayerInGameUI playerUI;
 	PauseMenuUI pauseMenu;
 	public GameObject visualNovel;
-	public bool didPause = false;
-	public bool wentAcrossBridge = false;
-	public bool doOnce = false;
-	bool inventoryCheck = false;
-	bool didheal = false;
-	bool battleDone = false;
+
+
+
+	//Triggers
+	bool Trigger1 = false;
+	bool Trigger2 = false;
+	bool Trigger3 = false;
+	bool Trigger4 = false;
+	bool Trigger5 = false;
+	public bool Trigger6 = false;
+	bool Trigger7 = false;
+	bool Trigger8 = false;
 
 	// Start is called before the first frame update
 	void Start()
@@ -33,75 +40,104 @@ public class NovelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        test();
+        TriggerBox();
+		AcrossBridge();
+		DidGetHit();
+		NoMoreBattle();
+		UsedRewind();
+		UsedInventory();
+		
+	}
 
-		if (wentAcrossBridge == true)
+	void AcrossBridge()
+	{
+		if (Trigger1 == true)
 		{
 			if (playerUI.novelManager == true)
 			{
 				PopUpBox();
 				playerUI.novelManager = false;
+				Trigger7 = true;
 			}
 		}
-
-		
-		if (playerUI.healthDown == true)
-		{
-			if (doOnce == false)
-			{
-				PopUpBox();
-				doOnce = true;
-				didheal = true;
-			}
-		}
-
-		if (didheal == true)
-		{
-			if (playerUI.checkRewind == true)
-			{
-				PopUpBox();
-				playerUI.checkRewind = false;
-			}
-		}
-
-
-		if (didheal == true)
-		{
-			if (enemyManager.inBattle == false)
-			{
-				if (battleDone == false)
-				{
-					PopUpBox();
-					battleDone = true;
-				}
-			}
-		}
-
-		if (battleDone == true)
-		{
-
-			if (inventoryCheck == false)
-			{
-				if (player.checkInventory == true)
-				{
-					PopUpBox();
-					inventoryCheck = true;
-				}
-			}
-		} 
-
-
 	}
 
-    void test()
+    void TriggerBox()
     {
         if (player.triggerBox == true || Input.GetKeyDown(KeyCode.L))
         {
 			
 			PopUpBox();
-			wentAcrossBridge = true;
+			Trigger1 = true;
         }
     }
+
+	void DidGetHit()
+	{
+		if (Trigger7 == true)
+		{
+			//textSystem.novelActive = false;
+			
+			if (playerUI.healthDown == true)
+			{
+				if (Trigger2 == false)
+				{
+					PopUpBox();
+					Trigger2 = true;
+					Trigger3 = true;
+				
+				}
+			}
+		}
+
+	}
+
+	void NoMoreBattle()
+	{
+		if (Trigger4 == true)
+		{
+			if (enemyManager.inBattle == false)
+			{
+				if (Trigger5 == false)
+				{
+					PopUpBox();
+					Trigger5 = true;
+				}
+			}
+		}
+	}
+
+	void UsedRewind()
+	{
+		if (Trigger3 == true )
+		{
+			if (playerUI.checkRewind == true)
+			{
+				PopUpBox();
+				playerUI.checkRewind = false;
+				Trigger4 = true;
+			}
+		}
+
+	}
+
+	void UsedInventory()
+	{
+		if (Trigger5 == true)
+		{
+			if (Trigger6 == false)
+			{
+				if (player.checkInventory == true)
+				{
+					PopUpBox();
+					Trigger6 = true;
+				}
+			}
+		}
+
+	}
+
+
 
 	void PopUpBox()
 	{

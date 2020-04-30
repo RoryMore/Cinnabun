@@ -374,7 +374,7 @@ public class SoundManager : MonoBehaviour
             }
             else
             {
-                state = MusicState.START;
+                state = MusicState.BATTLE;
             }
 		}
 		else

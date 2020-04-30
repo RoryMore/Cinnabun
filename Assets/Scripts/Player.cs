@@ -8,6 +8,7 @@ public class Player : Entity
     [Header("Movement Raycasting Settings")]
     public LayerMask groundLayerMask;
     public float moveRaycastDistance;
+    public LayerMask itemInteractLayerMask;
     public CameraController cameraShake;
     TextSystem textSystem;
     [HideInInspector] public bool triggerBox = false;
@@ -389,23 +390,20 @@ public class Player : Entity
                     nav.speed = movementSpeed;
 
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    // Set player movement destination based on where they clicked on the ground
                     if (Physics.Raycast(ray, out RaycastHit hit, moveRaycastDistance, groundLayerMask))
                     {
-                        if (hit.collider.tag.Contains("Item"))
-
+                        nav.SetDestination(hit.point);
+                    }
+                    // If they clicked on an item, set their destination to be the items location
+                    if (Physics.Raycast(ray, out RaycastHit hit2, moveRaycastDistance, itemInteractLayerMask))
+                    {
+                        if (hit2.collider.tag.Contains("Item"))
                         {
-
-                            nav.SetDestination(hit.collider.transform.position);
-
-                        }
-                        else
-
-                        {
-
-                            nav.SetDestination(hit.point);
-
+                            nav.SetDestination(hit2.collider.transform.position);
                         }
                     }
+                    // Note: This is done with two Raycasts due to the fact that we want to use the ground layer for movement and items have an item layer for more interactions
                 }
             }
         }

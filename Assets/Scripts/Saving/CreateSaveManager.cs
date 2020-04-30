@@ -18,7 +18,7 @@ public class CreateSaveManager : MonoBehaviour
         SaveManager saveCheck = FindObjectOfType<SaveManager>();
         if (saveCheck == null)
         {
-            Debug.Log("SaveManager created");
+            //Debug.Log("SaveManager created");
             Instantiate(saveManagerPrefab);
         }
     }
