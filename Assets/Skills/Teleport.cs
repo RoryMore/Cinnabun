@@ -133,7 +133,7 @@ public class Teleport : BaseSkill
 
         //timeSpentOnWindUp += Time.deltaTime;
 
-        if (timeSpentOnWindUp >= skillData.windUp)
+        if (timeSpentOnWindUp >= GetCalculatedWindUp())
         {
             skillState = SkillState.DOAFFECT;
             currentlyCasting = false;

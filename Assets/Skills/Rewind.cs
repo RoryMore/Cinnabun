@@ -107,7 +107,7 @@ public class Rewind : BaseSkill
         //timeSpentOnWindUp += Time.deltaTime;
 
         // When the skill can be activated
-        if (timeSpentOnWindUp >= skillData.windUp)
+        if (timeSpentOnWindUp >= GetCalculatedWindUp())
         {
             //ActivateSkill();
             skillState = SkillState.DOAFFECT;

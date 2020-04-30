@@ -78,12 +78,10 @@ public class Item : MonoBehaviour
                 {
                     float statScalar = enemyManager.numOfClearedEncounters * 0.1f;
                     itemStatBlock = itemData.GetRandomItemStats(statScalar);
-                    //itemStatBlock.equipmentTrait = itemStatBlock.equipmentTrait.GetRandomTraitType();
                 }
                 else
                 {
                     itemStatBlock = itemData.GetSetItemStats();
-                    //itemStatBlock.equipmentTrait = itemStatBlock.equipmentTrait.GetRandomTraitType();
                 }
 
                 meshRenderer = GetComponent<MeshRenderer>();
@@ -91,10 +89,6 @@ public class Item : MonoBehaviour
                 material.SetTexture("_MainTex", itemData.equippedSprite.texture);
                 meshRenderer.material = material;
             }
-
-            //equipmentTrait = equipmentTrait.GetRandomTraitType();
-            //equipmentTrait.Initialise();
-            //itemStatBlock.equipmentTrait.Initialise();
         }
 
         rarityLight = GetComponent<Light>();

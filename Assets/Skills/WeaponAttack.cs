@@ -328,7 +328,7 @@ public class WeaponAttack : BaseSkill
         }
 
         // When the skill can be activated
-        if (timeSpentOnWindUp >= skillData.windUp)
+        if (timeSpentOnWindUp >= GetCalculatedWindUp())
         {
             skillState = SkillState.DOAFFECT;
             //ActivateSkill(entityList);
