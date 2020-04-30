@@ -290,7 +290,7 @@ MonoBehaviour:
   - {fileID: 2136554458910486597}
   - {fileID: 7589354209212262080}
   - {fileID: 4759044740098488117}
-  - {fileID: 8764019194018521374}
+  - {fileID: 8325580231575693914}
   type: 0
   agression: 0
   viewCurrentSkill: {fileID: 0}
@@ -339,6 +339,40 @@ MonoBehaviour:
   drop: {fileID: 5146304953416599106, guid: e9315ab268eee1c4eada0cee7df62616, type: 3}
   dropChance: 100
   randomOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &8325580231575693914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8040269561989417469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9515cca2412fbee409c3034a5347a4e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projector: {fileID: 8405059752869213652}
+  skillData: {fileID: 11400000, guid: 81e93f8cb6846cb4090ec4ffd615f9d6, type: 2}
+  skillState: 2
+  shape: 0
+  fillType: 0
+  moveType: 0
+  timeBeenOnCooldown: 10
+  timeSpentOnWindUp: 0
+  currentlyCasting: 0
+  isAllowedToCast: 0
+  casterSelf: {fileID: 7732105370794740942}
+  mainCookie: {fileID: 21300000, guid: 42b6de6bc0caab8479e801a943d0f819, type: 3}
+  fillCookie: {fileID: 21300000, guid: 14643146a3b1130488e64610d90b0996, type: 3}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  TargetEntity:
+  - Player
+  - Enemy1
+  - Enemy2
+  - Enemy3
+  ExtraSkillp: 0
 --- !u!1 &8978683674975449041
 GameObject:
   m_ObjectHideFlags: 0
@@ -865,6 +899,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8688108529850181967}
     m_Modifications:
+    - target: {fileID: 4231344931865673568, guid: b1b510e7e6d3d2a4c936daa02ed5d1cf,
+        type: 3}
+      propertyPath: skill
+      value: 
+      objectReference: {fileID: 8325580231575693914}
     - target: {fileID: 5874742271509955571, guid: b1b510e7e6d3d2a4c936daa02ed5d1cf,
         type: 3}
       propertyPath: casterSelf
@@ -970,26 +1009,27 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5874742271509955571, guid: b1b510e7e6d3d2a4c936daa02ed5d1cf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b1b510e7e6d3d2a4c936daa02ed5d1cf, type: 3}
+--- !u!1 &8040269561989417469 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5166628696089209616, guid: b1b510e7e6d3d2a4c936daa02ed5d1cf,
+    type: 3}
+  m_PrefabInstance: {fileID: 2893364838031909613}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6506856957607612628 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8244881523812364857, guid: b1b510e7e6d3d2a4c936daa02ed5d1cf,
     type: 3}
   m_PrefabInstance: {fileID: 2893364838031909613}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8764019194018521374 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5874742271509955571, guid: b1b510e7e6d3d2a4c936daa02ed5d1cf,
+--- !u!119 &8405059752869213652 stripped
+Projector:
+  m_CorrespondingSourceObject: {fileID: 6666328749900617529, guid: b1b510e7e6d3d2a4c936daa02ed5d1cf,
     type: 3}
   m_PrefabInstance: {fileID: 2893364838031909613}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 674781fb8e607874bbddbad1ed306383, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5328091404880521464
 PrefabInstance:
   m_ObjectHideFlags: 0

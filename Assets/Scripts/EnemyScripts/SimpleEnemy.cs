@@ -525,27 +525,29 @@ public class SimpleEnemy : EnemyScript
       // Check all enemies
       foreach (Entity enemy in myEncounter.initiativeList)
       {
-          //If they are attacking... 
-          if (enemy.chosenSkill.currentlyCasting == true)
-          {
-             //If it isn't us...
-              if (enemy != this)
-              {
-                  //If we are in range
-                  if (enemy.chosenSkill.CheckLineSkillHit(target.position,
-                      chosenSkill.skillData.minRange,
-                      chosenSkill.skillData.maxRange,
-                      chosenSkill.skillData.nearWidth,
-                      chosenSkill.skillData.farWidth))
-                  {
-                      //Get out of dodge!
-                      return enemy;
-                  }
+            //If they are attacking... 
+            if (enemy.chosenSkill != null)
+            {
+                if (enemy.chosenSkill.currentlyCasting == true)
+                {
+                    //If it isn't us...
+                    if (enemy != this)
+                    {
+                        //If we are in range
+                        if (enemy.chosenSkill.CheckLineSkillHit(target.position,
+                            chosenSkill.skillData.minRange,
+                            chosenSkill.skillData.maxRange,
+                            chosenSkill.skillData.nearWidth,
+                            chosenSkill.skillData.farWidth))
+                        {
+                            //Get out of dodge!
+                            return enemy;
+                        }
 
+
+                    }
 
                 }
-
-
             }
 
       }
