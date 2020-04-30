@@ -190,7 +190,7 @@ public class DelayedBlast : BaseSkill
         //timeSpentOnWindUp += Time.deltaTime;
 
         // When the skill can be activated
-        if (timeSpentOnWindUp >= skillData.windUp)
+        if (timeSpentOnWindUp >= GetCalculatedWindUp())
         {
             currentlyCasting = false;
 

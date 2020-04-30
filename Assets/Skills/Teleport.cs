@@ -133,7 +133,7 @@ public class Teleport : BaseSkill
 
         //timeSpentOnWindUp += Time.deltaTime;
 
-        if (timeSpentOnWindUp >= skillData.windUp)
+        if (timeSpentOnWindUp >= GetCalculatedWindUp())
         {
             skillState = SkillState.DOAFFECT;
             currentlyCasting = false;
@@ -165,7 +165,7 @@ public class Teleport : BaseSkill
         skillState = SkillState.INACTIVE;
 
         //Target position is remade every time the skill is activated so no need to reset/null
-        Debug.Log("Activated!");
+        //Debug.Log("Activated!");
 
     }
 }

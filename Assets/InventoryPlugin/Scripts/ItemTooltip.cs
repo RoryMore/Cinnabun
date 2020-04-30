@@ -23,6 +23,8 @@ public class ItemTooltip : MonoBehaviour
     Text itemPhysicalArm;
     [SerializeField]
     Text itemMagicalArm;
+    [SerializeField]
+    Text traitDescription;
 
     InventoryItem.ItemInfoBlock hoveredItemInfo;
     InventoryItem.ItemInfoBlock equippedItemInfo;
@@ -30,9 +32,12 @@ public class ItemTooltip : MonoBehaviour
     Player player;
     bool hoveredItemEquipped;
 
+    [HideInInspector] public RectTransform rectTransform = null;
+
     // Start is called before the first frame update
     void Start()
     {
+        rectTransform = GetComponent<RectTransform>();
         hoveredItemInfo = new InventoryItem.ItemInfoBlock();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
@@ -77,6 +82,11 @@ public class ItemTooltip : MonoBehaviour
         SetStatText(itemIntellect, hoveredItemInfo.intellect, equippedItemInfo.intellect, player.intellect, "int: ");
         SetStatText(itemPhysicalArm, hoveredItemInfo.physicalArmour, equippedItemInfo.physicalArmour, player.physicalArmour, "phyzikal armour: ");
         SetStatText(itemMagicalArm, hoveredItemInfo.magicalArmour, equippedItemInfo.magicalArmour, player.magicalArmour, "majikal armour: ");
+
+        //if (hoveredItemInfo.equipmentTrait.Trait1 != EquipmentTrait.Trait.None)
+        //{
+        traitDescription.text = hoveredItemInfo.equipmentTrait.Description;
+        //}
     }
 
     void SetStatText(Text field, int itemStat, int equippedStat, int samePlayerStat, string statField)

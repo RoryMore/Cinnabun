@@ -170,7 +170,7 @@ public class Encounter : MonoBehaviour
 
         foreach (BaseSkill skill in boss.skillList)
         {
-            skill.skillData.maxRange *= 5;
+            skill.skillData.maxRange *= 5;  // This is so scuffed. You are changing a value of a scriptable object, so whatever skill the 'boss' uses that is the same as any other enemy, any other enemy is going to use the changed values as well. lmao
             skill.skillData.farWidth *= 5;
             //skill.skillData.baseMagnitude *= 5;
             //skill.
@@ -264,7 +264,7 @@ public class Encounter : MonoBehaviour
         
         foreach (SimpleEnemy enemy in masterInitiativeList)
         {
-            Destroy(enemy);
+            Destroy(enemy); // Why is the enemy script being destroyed and the gameObject being left alone. Anything that was attached to the enemy still attempting to reference the enemy is obviously throwing errors. This is a strange thing to do in my opinion instead of having the enemy entity be dead if you don't want to just remove the gameObject
             initiativeList.Clear();
             masterInitiativeList.Clear();
             playerInclusiveInitiativeList.Clear();
