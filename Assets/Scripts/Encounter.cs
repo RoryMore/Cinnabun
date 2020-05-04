@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Encounter : MonoBehaviour
 {
@@ -17,7 +18,8 @@ public class Encounter : MonoBehaviour
     //NIK___List of skill which each enemy is going to use
 
     public List<EnemyScript> enemies;
-    public List<GameObject> spawnPoints;
+    //public List<Transform> spawnPoints;
+    public Transform[] spawnPoints;
     public EnemyManager enemyManager;
 
     public bool cleared = false;
@@ -37,12 +39,6 @@ public class Encounter : MonoBehaviour
     [SerializeField]
     private float waveOverTicker;
 
-    
-
-    // Inventory to add item to
-    [Header("LootSystem")]
-    public ItemSpawner.ItemSpawnerStruct itemSpawner;
-
     public enum WaveType
     {
         SLAUGHTER, //Kill all enemies who spawn to progress
@@ -58,11 +54,21 @@ public class Encounter : MonoBehaviour
     void Start()
     {
         cleared = false;
+
+        //spawnPoints
+
+        
+        //spawnPoints = GetComponentsInChildren<Transform>();
+
+        
+
     }
 
     public void Initialise()
     {
-        switch(waveType)
+        spawnPoints = transform.Cast<Transform>().ToArray();
+
+        switch (waveType)
         {
             //Kill a set number of People
             case (WaveType.SLAUGHTER):
@@ -113,17 +119,17 @@ public class Encounter : MonoBehaviour
 
         //Spawn enemies
         //WARNING: If more spawn points are open than prefabs to fill them, this function breaks
-        foreach (GameObject location in spawnPoints)
+        foreach (Transform location in spawnPoints)
         {
 
             if (location.name.Contains("Enemy1"))
             {
-                initiativeList.Add(Instantiate(enemy1, location.transform));
+                initiativeList.Add(Instantiate(enemy1, location));
 
             }
             else if (location.name.Contains("Enemy2"))
             {
-                initiativeList.Add(Instantiate(enemy2, location.transform));
+                initiativeList.Add(Instantiate(enemy2, location));
             }
             else if (location.name.Contains("Enemy3"))
             {
@@ -141,24 +147,35 @@ public class Encounter : MonoBehaviour
 
     public void SpawnBoss()
     {
-        int randomNum = Random.Range(0, spawnPoints.Count);
+        int randomNum = Random.Range(0, spawnPoints.Length);
 
 
         if (spawnPoints[randomNum].name.Contains("Enemy1"))
         {
-            initiativeList.Add(Instantiate(enemy1, spawnPoints[randomNum].transform));
+            initiativeList.Add(Instantiate(enemy1, spawnPoints[randomNum]));
             initiativeList[0].gameObject.transform.localScale = initiativeList[0].gameObject.transform.localScale * 2;
 
         }
         else if (spawnPoints[randomNum].name.Contains("Enemy2"))
         {
-            initiativeList.Add(Instantiate(enemy2, spawnPoints[randomNum].transform));
+            initiativeList.Add(Instantiate(enemy2, spawnPoints[randomNum]));
             initiativeList[0].gameObject.transform.localScale = initiativeList[0].gameObject.transform.localScale * 2;
         }
         else if (spawnPoints[randomNum].name.Contains("Enemy3"))
         {
 
         }
+
+        SimpleEnemy boss = initiativeList[0].GetComponent<SimpleEnemy>();
+
+        foreach (BaseSkill skill in boss.skillList)
+        {
+            //skill.skillData.maxRange *= 5;  // This is so scuffed. You are changing a value of a scriptable object, so whatever skill the 'boss' uses that is the same as any other enemy, any other enemy is going to use the changed values as well. lmao
+            //skill.skillData.farWidth *= 5;
+            //skill.skillData.baseMagnitude *= 5;
+            //skill.
+        }
+
 
         masterInitiativeList.AddRange(initiativeList);
 
@@ -245,7 +262,17 @@ public class Encounter : MonoBehaviour
         enemyManager.inBattle = false;
         enemyManager.SetTimeToNextWave(enemyManager.timeBetweenWaves);
         
+        foreach (SimpleEnemy enemy in masterInitiativeList)
+        {
+            Destroy(enemy); // Why is the enemy script being destroyed and the gameObject being left alone. Anything that was attached to the enemy still attempting to reference the enemy is obviously throwing errors. This is a strange thing to do in my opinion instead of having the enemy entity be dead if you don't want to just remove the gameObject
+            initiativeList.Clear();
+            masterInitiativeList.Clear();
+            playerInclusiveInitiativeList.Clear();
+        }
+        
         enemyManager.CheckVictory();
+
+        //gameObject.SetActive(false);
         
     }
 

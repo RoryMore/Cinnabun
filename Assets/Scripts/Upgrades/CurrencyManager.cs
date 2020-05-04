@@ -74,9 +74,9 @@ public class CurrencyManager : MonoBehaviour
     public static void AddUpgradeMoney(int value)
     {
         staticUpgradeMoney += value;
-        Debug.Log("CurrencyManager: Money Rewarded = " + value);
+        //Debug.Log("CurrencyManager: Money Rewarded = " + value);
         staticUpgradeMoney = Mathf.Clamp(staticUpgradeMoney, 0, int.MaxValue);
-        Debug.Log("CurrencyManager: staticUpgradeMoney = " + staticUpgradeMoney);
+        //Debug.Log("CurrencyManager: staticUpgradeMoney = " + staticUpgradeMoney);
     }
 
     public static void DeductUpgradeMoney(int value)

@@ -102,7 +102,8 @@ public class ItemData : ScriptableObject
 
     public ItemRarity rarity;
     [SerializeField]
-    ItemName itemName;
+    //ItemName itemName;
+    string itemName;
 
     // TODO: Add a section for Tooltip on mouseover.
 
@@ -123,16 +124,20 @@ public class ItemData : ScriptableObject
     {
         InventoryItem.ItemInfoBlock itemStatBlock = new InventoryItem.ItemInfoBlock
         {
-            strength = Random.Range(strengthRangeMin + Mathf.RoundToInt(statScalar * strengthRangeMin), strengthRangeMax + Mathf.RoundToInt(statScalar * strengthRangeMax)),
-            agility = Random.Range(agilityRangeMin + Mathf.RoundToInt(statScalar * agilityRangeMin), agilityRangeMax + Mathf.RoundToInt(statScalar * agilityRangeMax)),
-            constitution = Random.Range(constitutionRangeMin + Mathf.RoundToInt(statScalar * constitutionRangeMin), constitutionRangeMax + Mathf.RoundToInt(statScalar * constitutionRangeMax)),
-            intellect = Random.Range(intellectRangeMin + Mathf.RoundToInt(statScalar * intellectRangeMin), intellectRangeMax + Mathf.RoundToInt(statScalar * intellectRangeMax)),
-            physicalArmour = Random.Range(physicalArmourRangeMin + Mathf.RoundToInt(statScalar * physicalArmourRangeMin), physicalArmourRangeMax + Mathf.RoundToInt(statScalar * physicalArmourRangeMax)),
-            magicalArmour = Random.Range(magicalArmourRangeMin + Mathf.RoundToInt(statScalar * magicalArmourRangeMin), magicalArmourRangeMax + Mathf.RoundToInt(statScalar * magicalArmourRangeMax)),
+            strength = Random.Range(strengthRangeMin + Mathf.RoundToInt(statScalar * strengthRangeMax), strengthRangeMax + Mathf.RoundToInt(statScalar * strengthRangeMax)),
+            agility = Random.Range(agilityRangeMin + Mathf.RoundToInt(statScalar * agilityRangeMax), agilityRangeMax + Mathf.RoundToInt(statScalar * agilityRangeMax)),
+            constitution = Random.Range(constitutionRangeMin + Mathf.RoundToInt(statScalar * constitutionRangeMax), constitutionRangeMax + Mathf.RoundToInt(statScalar * constitutionRangeMax)),
+            intellect = Random.Range(intellectRangeMin + Mathf.RoundToInt(statScalar * intellectRangeMax), intellectRangeMax + Mathf.RoundToInt(statScalar * intellectRangeMax)),
+            physicalArmour = Random.Range(physicalArmourRangeMin + Mathf.RoundToInt(statScalar * physicalArmourRangeMax), physicalArmourRangeMax + Mathf.RoundToInt(statScalar * physicalArmourRangeMax)),
+            magicalArmour = Random.Range(magicalArmourRangeMin + Mathf.RoundToInt(statScalar * magicalArmourRangeMax), magicalArmourRangeMax + Mathf.RoundToInt(statScalar * magicalArmourRangeMax)),
 
-            itemName = itemName.itemName,
-            rarity = rarity
+            itemName = itemName,
+            rarity = rarity,
+            equipmentTrait = new EquipmentTrait()
         };
+        itemStatBlock.equipmentTrait = itemStatBlock.equipmentTrait.GetRandomTraitType(itemType);
+        //itemStatBlock.equipmentTrait = itemStatBlock.equipmentTrait.GetSpecificTrait(EquipmentTrait.TraitType.SkillWUR);
+        itemStatBlock.equipmentTrait.Initialise(rarity);
 
         return itemStatBlock;
     }
@@ -148,9 +153,13 @@ public class ItemData : ScriptableObject
             physicalArmour = physicalArmour,
             magicalArmour = magicalArmour,
 
-            itemName = itemName.itemName,
-            rarity = rarity
+            itemName = itemName,
+            rarity = rarity,
+            equipmentTrait = new EquipmentTrait()
         };
+        itemStatBlock.equipmentTrait = itemStatBlock.equipmentTrait.GetRandomTraitType(itemType);
+        //itemStatBlock.equipmentTrait = itemStatBlock.equipmentTrait.GetSpecificTrait(EquipmentTrait.TraitType.SkillWUR);
+        itemStatBlock.equipmentTrait.Initialise(rarity);
 
         return itemStatBlock;
     }
