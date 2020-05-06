@@ -1080,7 +1080,7 @@ Transform:
   - {fileID: 965822722}
   - {fileID: 25426102}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &204828912
 AudioSource:
@@ -3826,7 +3826,7 @@ Transform:
   - {fileID: 987135788}
   - {fileID: 1838868164}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1013049789
 AudioSource:
@@ -6159,11 +6159,6 @@ PrefabInstance:
       propertyPath: targetObject
       value: 
       objectReference: {fileID: 1062068217}
-    - target: {fileID: 6531685088066879969, guid: ce4bdc152542dff48aeece5e87082805,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6531685088700490648, guid: ce4bdc152542dff48aeece5e87082805,
         type: 3}
       propertyPath: characterEntity
@@ -6278,16 +6273,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Inventory&CharacterPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 6531685088700490650, guid: ce4bdc152542dff48aeece5e87082805,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 6531685088700490650, guid: ce4bdc152542dff48aeece5e87082805,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce4bdc152542dff48aeece5e87082805, type: 3}
@@ -8633,7 +8618,7 @@ PrefabInstance:
     - target: {fileID: 2864995974969312777, guid: 6cf350161fa52a345a39d1bf9f86839f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 2864995974969312777, guid: 6cf350161fa52a345a39d1bf9f86839f,
         type: 3}
