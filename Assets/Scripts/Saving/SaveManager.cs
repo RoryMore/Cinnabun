@@ -52,6 +52,7 @@ public class SaveManager : MonoBehaviour
     [SerializeField]
     SavedSettings defaultSettings;
     static SavedSettings savedSettings;
+    static SavedSettings staticDefaultSettings;
 
     static int savedUpgradeMoney;
 
@@ -71,6 +72,7 @@ public class SaveManager : MonoBehaviour
 
         characterUpgrades = defaultCharacterUpgrades;
         savedSettings = defaultSettings;
+        staticDefaultSettings = defaultSettings;
 
         upgradeShopScene = upgradeShopSceneName;
         gameScene = gameSceneName;
@@ -253,5 +255,10 @@ public class SaveManager : MonoBehaviour
     public static UpgradeList GetUpgradeList()
     {
         return characterUpgrades;
+    }
+
+    public static SavedSettings GetDefaultSettings()
+    {
+        return staticDefaultSettings;
     }
 }
