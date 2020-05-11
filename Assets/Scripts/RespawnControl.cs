@@ -54,7 +54,7 @@ public class RespawnControl : MonoBehaviour
                         }
                         if (item.isEquipped)
                         {
-                            CharacterPanelStatControl.OnItemRemove(item.itemInfoBlock);
+                            CharacterPanelStatControl.OnItemRemove(item);
 
                             item.usedEquipSlot.equippedItem = null;
                             item.usedEquipSlot.isUsed = false;
@@ -85,7 +85,8 @@ public class RespawnControl : MonoBehaviour
                 }
                 if (!moneyRewarded)
                 {
-                    CurrencyManager.AddUpgradeMoney(enemyManager.numOfClearedEncounters);
+                    //CurrencyManager.AddUpgradeMoney(enemyManager.numOfClearedEncounters);
+                    CurrencyManager.AddUpgradeMoney(wavesCleared);
                     SaveManager.SaveUpgradeMoney();
                     moneyRewarded = true;
                 }

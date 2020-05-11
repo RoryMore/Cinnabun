@@ -12,8 +12,6 @@ public class SkillData : ScriptableObject
         MAGICAL
     }
 
-    
-
     public enum SkillList
     {
         TELEPORT,
@@ -42,18 +40,18 @@ public class SkillData : ScriptableObject
     [Tooltip("The Width a line Skill will have, or the Angle a Radial skill will use")]
     public float angle;
 
+    [Header("Skill Delays")]
     [Tooltip("The time (in seconds) that needs to pass before the player is able to cast this skill again")]
     public float cooldown;
 
     [Tooltip("The time (in seconds) it will take to cast the skill before it does any effect")]
     public float windUp;
 
-    
+    [Tooltip("delay before next attack")]
+    public float DelayAttack;
 
     [Tooltip("Which skill this actually is")]
     public SkillList skill;
-
-    
 
     [Header("Damage Variables")]
     [Tooltip("The base amount before any additional calculations for how much damage/heal/etc. this skill may deal")]

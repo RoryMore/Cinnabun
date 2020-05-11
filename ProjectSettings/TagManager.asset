@@ -13,6 +13,8 @@ TagManager:
   - PlayerUI
   - VisualNovel
   - TriggerBox
+  - Water
+  - Forest
   layers:
   - Default
   - TransparentFX
@@ -25,7 +27,7 @@ TagManager:
   - CharacterRender
   - EquipmentPanelRender
   - Ground
-  - 
+  - ItemDrops
   - 
   - 
   - 

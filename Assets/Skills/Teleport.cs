@@ -10,6 +10,9 @@ public class Teleport : BaseSkill
     Vector3 teleportLocation;
     bool destination1Set = false;
 
+    [Header("Damage")]
+    [SerializeField]
+    float damageMultiplier = 0.1f;
     
     private void Start()
     {
@@ -24,6 +27,17 @@ public class Teleport : BaseSkill
         {
             skillData.maxRange += SaveManager.GetUpgradeList().teleportRange.GetUpgradedMagnitude();
         }
+    }
+
+    /// <summary>
+    /// Used when the player wishes to unSelect the skill
+    /// </summary>
+    public override void ResetSkillVars()
+    {
+        base.ResetSkillVars();
+        destination1Set = false;
+        entityTarget1 = null;
+        teleportLocation.Set(0, 0, 0);
     }
 
     private void Update()
@@ -119,7 +133,7 @@ public class Teleport : BaseSkill
 
         //timeSpentOnWindUp += Time.deltaTime;
 
-        if (timeSpentOnWindUp >= skillData.windUp)
+        if (timeSpentOnWindUp >= GetCalculatedWindUp())
         {
             skillState = SkillState.DOAFFECT;
             currentlyCasting = false;
@@ -141,7 +155,7 @@ public class Teleport : BaseSkill
         }
         //entityTarget1.transform.position = teleportLocation;
         
-        entityTarget1.TakeDamage(skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus(), skillData.damageType);
+        entityTarget1.TakeDamage(Mathf.RoundToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * damageMultiplier), skillData.damageType, casterSelf.CalculateCriticalStrike());
 
         entityTarget1 = null;
         teleportLocation.Set(0, 0, 0);
@@ -151,7 +165,7 @@ public class Teleport : BaseSkill
         skillState = SkillState.INACTIVE;
 
         //Target position is remade every time the skill is activated so no need to reset/null
-        Debug.Log("Activated!");
+        //Debug.Log("Activated!");
 
     }
 }

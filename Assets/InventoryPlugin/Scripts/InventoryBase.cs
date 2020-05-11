@@ -55,11 +55,12 @@ public class InventoryBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
     }
 
     public InventoryItem GetEquippedItem(ItemData.EquipmentSlot slotToFindItem)
     {
-        Debug.Log("Equipped Item List Length: " + playerOwnedItems.Count);
+        //Debug.Log("Owned Item List Length: " + playerOwnedItems.Count);
         for (int i = 0; i < playerOwnedItems.Count; i++)
         {
             if (playerOwnedItems[i].isEquipped)

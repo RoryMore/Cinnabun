@@ -7,6 +7,7 @@ public class Item : MonoBehaviour
 {
     public ItemData itemData;
     public InventoryItem.ItemInfoBlock itemStatBlock;
+    public EquipmentTrait equipmentTrait;
 
     [Header("Item World-Object Settings")]
     [SerializeField]
@@ -30,6 +31,10 @@ public class Item : MonoBehaviour
 
     Material material;
     MeshRenderer meshRenderer;
+
+    Light rarityLight;
+    [SerializeField]
+    RarityColour rarityColour;
 
     private void Awake()
     {
@@ -71,7 +76,7 @@ public class Item : MonoBehaviour
             {
                 if (itemData.applyRandomStats)
                 {
-                    float statScalar = enemyManager.numOfClearedEncounters * 0.2f;
+                    float statScalar = enemyManager.numOfClearedEncounters * 0.1f;
                     itemStatBlock = itemData.GetRandomItemStats(statScalar);
                 }
                 else
@@ -85,6 +90,33 @@ public class Item : MonoBehaviour
                 meshRenderer.material = material;
             }
         }
+
+        rarityLight = GetComponent<Light>();
+        switch (itemStatBlock.rarity)
+        {
+            case ItemData.ItemRarity.COMMON:
+                {
+                    rarityLight.color = rarityColour.commonColour;
+                    rarityLight.enabled = false;
+                    break;
+                }
+            case ItemData.ItemRarity.UNCOMMON:
+                {
+                    rarityLight.color = rarityColour.uncommonColour;
+                    break;
+                }
+            case ItemData.ItemRarity.RARE:
+                {
+                    rarityLight.color = rarityColour.rareColour;
+                    break;
+                }
+            case ItemData.ItemRarity.ULTRA:
+                {
+                    rarityLight.color = rarityColour.ultraColour;
+                    break;
+                }
+        }
+        rarityLight.enabled = false;
     }
 
     /// <summary>
@@ -105,6 +137,7 @@ public class Item : MonoBehaviour
 
         itemData = data;
         itemStatBlock = stats;
+        //equipmentTrait = trait;
 
         meshRenderer = GetComponent<MeshRenderer>();
         material = new Material(Shader.Find("Standard"));
