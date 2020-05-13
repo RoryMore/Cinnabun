@@ -166,6 +166,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 548f9f9763628864fbe963c055863c0c,
         type: 2}
+    - target: {fileID: 3048246519386114707, guid: 890f816d83a2e0342be5ac8e67da2dcd,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 3657038167667389043, guid: 890f816d83a2e0342be5ac8e67da2dcd,
         type: 3}
       propertyPath: skillData

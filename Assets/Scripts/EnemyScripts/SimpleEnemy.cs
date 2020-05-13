@@ -37,13 +37,14 @@ public class SimpleEnemy : EnemyScript
     public TYPE type;
     public AGRESSION agression;
 
-    public BaseSkill viewCurrentSkill;
-
-
+    // public BaseSkill viewCurrentSkill;
+    public bool CurrentlyCasting = false;// true is casting skill
+    Vector3 offset;
     //DecidingBools
     bool hasDecided;
     bool destinationLocked;
     bool MovementEnable = true;
+    bool canMove = true;
     public enum AGRESSION
     {
         AGRESSIVE,
@@ -96,7 +97,7 @@ public class SimpleEnemy : EnemyScript
 
         // skillList = GetComponentsInChildren<BaseSkill>();
 
-        chosenSkill = skillList[0];
+        chosenSkill = skillList[3];
 
         isActive = true;
 
@@ -107,154 +108,239 @@ public class SimpleEnemy : EnemyScript
     void Update()
     {
 
-        viewCurrentSkill = chosenSkill;
+        //viewCurrentSkill = chosenSkill;
 
-        if(isActive)
+        /* if(isActive)
 
+         {
+             //If we arent Dead...
+             if (!isDead)
+             {
+                 if (!CanAct())
+                 {
+                     return;
+                 }
+                 // Update turn cooldown
+                 Turn();
+
+                 //Update all cooldowns and conditons
+                 UpdateAllConditions();
+
+                 //Choose what attack it want's to make this turn assuming we haven't already chosen.
+                 if (!hasDecided)
+                 {
+                     if (acttackdelay <= 0)
+                     {
+                         Decide();
+                     }
+                     else
+                     {
+                         Debug.LogWarning("enemy is on a break");
+                         acttackdelay -= Time.deltaTime;
+                     } 
+                 }
+
+                 if (acttackdelay <= 0)
+                 {
+
+
+                     //Choose where we want to go, unless we're melee because we will always want to rush the player
+                     if (!destinationLocked && type != TYPE.MELEE)
+                     {
+                         if (chosenSkill != null)
+                         {
+                             ChooseDestination(chosenSkill);
+                         }
+                         else
+                         {
+                             //ChooseDestination(basicAttack);
+                             Movement(player.transform.position);
+
+                         }
+
+
+                     }
+
+                     /// SECTION #1
+                     /// //if no skills can be used get closer to the player so when a skill can be used we are in range already
+                     if (viewCurrentSkill == null)
+                     {
+                         //Attack(basicAttack);
+
+                         nav.SetDestination(player.transform.position);
+                         FaceTarget(player.transform);
+
+                     }
+                     else
+                     {
+                         if (chosenSkill != null)
+                         {
+                             Attack(chosenSkill);
+                         }
+
+                     }
+                     /// SECTION END
+
+                 }
+
+                 //Attack(chosenSkill);
+                 //Initiate the attack//skill at their earliest convenience
+
+                 ///Only call the attack function once because repreated calls stall the enemy
+                 if (isAttacking)
+                 {
+                     //Trigger the skill!
+                     chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
+                     if (!chosenSkill.currentlyCasting)
+                     {
+                         isAttacking = false;
+                         hasDecided = false;
+
+                     }
+                 }
+
+                 //at every frame where we AREN'T attacking or using a skill, do the following
+
+
+                 ///SECTION #2
+
+                 foreach (BaseSkill skill in skillList)
+                 {
+                     if (!skill.currentlyCasting)
+                     {
+                         //Make sure we are able to move as we disable movement while attacking
+                         nav.enabled = true;
+                         //Provide evasive manouvres 
+                         Evade();
+
+                         if (type == TYPE.MELEE)
+                         {
+                             IntendedAction(Action.Move);
+                             if (type == TYPE.MELEE)
+                             {
+                                 Movement(player.transform.position);
+                             }
+                             else if (type == TYPE.RANGED)
+                             {
+                                 Movement(destination);
+                             }
+                         }
+                         else if (type == TYPE.RANGED)
+                         {
+                             Movement(destination);
+                         }
+
+
+                     }
+
+                     else
+                     {
+                         nav.enabled = false;
+                     }
+
+                 }
+
+             }
+
+                     else
+                     {
+                         nav.enabled = false;
+                     }
+
+
+
+             /// SECTION #2 End
+
+         }*/
+
+        ///new set of desiotions
+        /*if not currently using skill {
+            //if not on action cooldown {
+                 //if range 
+                    //basicAttack?
+                        //which skills can it use
+                            //if skill list has one or more skills
+                                //decide from skill list
+                            //esle
+                                //move
+                    //else
+                        //if basic attack is in range
+                            //basic attack
+                        //else
+                            //move
+                        //
+
+                //new functhion skills decide
+                    //for each skill
+                        //if in range max and min range
+                            //do skill
+//}
+}*/
+    
+        
+        if (Vector3.Distance(transform.position, player.transform.position) < (chosenSkill.skillData.maxRange - 1) / 2)
         {
-            //If we arent Dead...
-            if (!isDead)
-            {
-                if (!CanAct())
-                {
-                    return;
-                }
-                // Update turn cooldown
-                Turn();
-
-                //Update all cooldowns and conditons
-                UpdateAllConditions();
-
-                //Choose what attack it want's to make this turn assuming we haven't already chosen.
-                if (!hasDecided)
-                {
-                    if (acttackdelay <= 0)
-                    {
-                        Decide();
-                    }
-                    else
-                    {
-                        Debug.LogWarning("enemy is on a break");
-                        acttackdelay -= Time.deltaTime;
-                    } 
-                }
-
-                if (acttackdelay <= 0)
-                {
-
-
-                    //Choose where we want to go, unless we're melee because we will always want to rush the player
-                    if (!destinationLocked && type != TYPE.MELEE)
-                    {
-                        if (chosenSkill != null)
-                        {
-                            ChooseDestination(chosenSkill);
-                        }
-                        else
-                        {
-                            //ChooseDestination(basicAttack);
-                            Movement(player.transform.position);
-
-                        }
-
-
-                    }
-
-                    /// SECTION #1
-                    /// //if no skills can be used get closer to the player so when a skill can be used we are in range already
-                    if (viewCurrentSkill == null)
-                    {
-                        //Attack(basicAttack);
-
-                        nav.SetDestination(player.transform.position);
-                        FaceTarget(player.transform);
-
-                    }
-                    else
-                    {
-                        if (chosenSkill != null)
-                        {
-                            Attack(chosenSkill);
-                        }
-                        
-                    }
-                    /// SECTION END
-
-                }
-
-                //Attack(chosenSkill);
-                //Initiate the attack//skill at their earliest convenience
-
-                ///Only call the attack function once because repreated calls stall the enemy
-                if (isAttacking)
-                {
-                    //Trigger the skill!
-                    chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
-                    if (!chosenSkill.currentlyCasting)
-                    {
-                        isAttacking = false;
-                        hasDecided = false;
-
-                    }
-                }
-
-                //at every frame where we AREN'T attacking or using a skill, do the following
-
-
-                ///SECTION #2
-
-                foreach (BaseSkill skill in skillList)
-                {
-                    if (!skill.currentlyCasting)
-                    {
-                        //Make sure we are able to move as we disable movement while attacking
-                        nav.enabled = true;
-                        //Provide evasive manouvres 
-                        Evade();
-
-                        if (type == TYPE.MELEE)
-                        {
-                            IntendedAction(Action.Move);
-                            if (type == TYPE.MELEE)
-                            {
-                                Movement(player.transform.position);
-                            }
-                            else if (type == TYPE.RANGED)
-                            {
-                                Movement(destination);
-                            }
-                        }
-                        else if (type == TYPE.RANGED)
-                        {
-                            Movement(destination);
-                        }
-
-
-                    }
-
-                    else
-                    {
-                        nav.enabled = false;
-                    }
-
-                }
-
-            }
-
-                    else
-                    {
-                        nav.enabled = false;
-                    }
-
-
-
-            /// SECTION #2 End
-
+            //nav.enabled = false;
+           // Attack(chosenSkill);
+        }
+        else
+        {
+            move();
         }
 
+        if (!CurrentlyCasting)
+        {
+            
+        }
 
+        else
+        {
+            
+        }
 
     }
+
+    void move()
+    {
+        //Make sure we are able to move as we disable movement while attacking
+        nav.enabled = true;
+        //Provide evasive manouvres 
+        // Evade();
+        if (canMove)
+        {
+            IntendedAction(Action.Move);
+            if (type == TYPE.MELEE)
+            {
+                Movement(player.transform.position);
+            }
+            else if (type == TYPE.RANGED)
+            {
+                if (Vector3.Distance(transform.position, player.transform.position) > (chosenSkill.skillData.maxRange - 1) / 2)
+                {
+                    ChooseDestination(chosenSkill);
+
+                    Movement(destination);
+                }
+                else
+                {
+                    nav.isStopped = true;
+                }
+            }
+        }
+        else
+        {
+            nav.SetDestination(Vector3.MoveTowards(transform.position, offset + transform.position, -nav.speed));
+            
+            canMove = true;
+           // nav.SetDestination(Vector3.MoveTowards(transform.position, player.transform.position, nav.speed));
+
+        }
+       
+    }
+
+   
+    
+
 
     void EnemyScaling()
     {
@@ -263,15 +349,29 @@ public class SimpleEnemy : EnemyScript
 
     public Vector3 ChooseDestination(BaseSkill skill)
     {
-        //Pick a random point near the player well within range
-        float x = Random.Range(player.transform.position.x - (skill.skillData.maxRange * 0.5f), player.transform.position.x + (skill.skillData.maxRange * 0.5f));
-        float z = Random.Range(player.transform.position.z - (skill.skillData.maxRange * 0.5f), player.transform.position.z + (skill.skillData.maxRange * 0.5f));
+        //find the derction enemy needs to go in
 
         
+        
+        Vector3 diretion = (this.transform.position - player.transform.position).normalized;
+       
+        //debug to show line
+        //Debug.DrawLine(player.transform.position, player.transform.position + diretion * skill.skillData.minRange, Color.red, Mathf.Infinity);
 
+        //find closes spot to player
+        float x1 = player.transform.position.x+ offset.x + diretion.x * (skill.skillData.maxRange-1)/2;
+        float z1 = player.transform.position.z + offset.x+ diretion.z * (skill.skillData.maxRange-1)/2;
+        offset = Vector3.zero;
 
         //Otherwise all good, move on!
-        return destination = new Vector3(x, player.transform.position.y, z);
+        return destination = new Vector3(x1, player.transform.position.y, z1);
+
+
+        float radis = Random.Range(0, 360);
+
+        new Vector3(skill.skillData.maxRange - 1 * Mathf.Cos(radis), 
+            transform.position.y, 
+            skill.skillData.maxRange - 1 * Mathf.Sin(radis));
 
     }
 
@@ -332,7 +432,7 @@ public class SimpleEnemy : EnemyScript
         // If the enemy health is low
 
         // If dead, stop moving towards the player
-
+        
         if (!isDead)
         {
             //Fetch distance betweeen self and the player
@@ -668,6 +768,19 @@ public class SimpleEnemy : EnemyScript
     public override void SetMovement(bool move)
     {
         MovementEnable = move;
+    }
+
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy1"))
+        {
+           // Debug.LogWarning("BUMP");
+           
+            Vector3 diretion = (this.transform.position - other.transform.position).normalized;
+          
+           gameObject.transform.parent.transform.Translate(diretion/10);
+        }  
     }
 }
 
