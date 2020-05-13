@@ -45,6 +45,9 @@ public class SimpleEnemy : EnemyScript
     bool destinationLocked;
     bool MovementEnable = true;
     bool canMove = true;
+
+    bool goalset = false;
+    public float radis = 0;
     public enum AGRESSION
     {
         AGRESSIVE,
@@ -281,11 +284,16 @@ public class SimpleEnemy : EnemyScript
         if (Vector3.Distance(transform.position, player.transform.position) < (chosenSkill.skillData.maxRange - 1) / 2)
         {
             //nav.enabled = false;
-           // Attack(chosenSkill);
+            // Attack(chosenSkill);
+            goalset = false;
         }
         else
         {
-            move();
+           
+                move();
+                goalset = true;
+           
+           
         }
 
         if (!CurrentlyCasting)
@@ -351,28 +359,43 @@ public class SimpleEnemy : EnemyScript
     {
         //find the derction enemy needs to go in
 
-        
-        
+        bool smarterAI = true;
+
+        if (!goalset)
+        {
+            radis = Random.Range(0, 360);
+            Debug.LogWarning(radis);
+        }
+
         Vector3 diretion = (this.transform.position - player.transform.position).normalized;
-       
-        //debug to show line
-        //Debug.DrawLine(player.transform.position, player.transform.position + diretion * skill.skillData.minRange, Color.red, Mathf.Infinity);
 
-        //find closes spot to player
-        float x1 = player.transform.position.x+ offset.x + diretion.x * (skill.skillData.maxRange-1)/2;
-        float z1 = player.transform.position.z + offset.x+ diretion.z * (skill.skillData.maxRange-1)/2;
-        offset = Vector3.zero;
+        if (smarterAI)
+        {
+             destination = new Vector3((((skill.skillData.maxRange -1)/2) * Mathf.Cos(radis)),
+                transform.position.y,
+                ((skill.skillData.maxRange -1)/2) * Mathf.Sin(radis));
 
-        //Otherwise all good, move on!
-        return destination = new Vector3(x1, player.transform.position.y, z1);
+            float x1 = player.transform.position.x + destination.x;
+            float z1 = player.transform.position.z  + destination.z;
 
 
-        float radis = Random.Range(0, 360);
+            return destination = new Vector3(x1, player.transform.position.y, z1);
+        }
+        else
+        {
+            
 
-        new Vector3(skill.skillData.maxRange - 1 * Mathf.Cos(radis), 
-            transform.position.y, 
-            skill.skillData.maxRange - 1 * Mathf.Sin(radis));
+            //debug to show line
+            //Debug.DrawLine(player.transform.position, player.transform.position + diretion * skill.skillData.minRange, Color.red, Mathf.Infinity);
 
+            //find closes spot to player
+            float x1 = player.transform.position.x + offset.x + diretion.x * (skill.skillData.maxRange - 1) / 2;
+            float z1 = player.transform.position.z + offset.x + diretion.z * (skill.skillData.maxRange - 1) / 2;
+            offset = Vector3.zero;
+
+            //Otherwise all good, move on!
+            return destination = new Vector3(x1, player.transform.position.y, z1);
+        }
     }
 
     public void Movement()
