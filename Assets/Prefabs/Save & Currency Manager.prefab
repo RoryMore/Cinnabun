@@ -61,6 +61,7 @@ MonoBehaviour:
   settingsFileName: /gameSettings.CINNABUN
   upgradeShopSceneName: SunnyTest
   gameSceneName: UpdatedLevel_V2
+  tutorialSceneName: JasmineScene
   defaultCharacterUpgrades:
     teleportRange:
       maxUpgrades: 3

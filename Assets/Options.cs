@@ -19,10 +19,6 @@ public class Options : MonoBehaviour
     public Slider sfxVolumeSlider = null;
     public Slider cameraMoveSensSlider = null;
 
-    Text musicVolumeText = null;
-    Text sfxVolumeText = null;
-    Text cameraMoveSensText = null;
-
     // Text elements for displaying keybinds
     public Text kbInventoryToggle = null;
     public Text kbPauseAbility = null;
@@ -37,6 +33,26 @@ public class Options : MonoBehaviour
 
     KeybindChange keybindChange;
     KeyCode newKey = KeyCode.None;
+
+    [SerializeField]
+    Sprite applyHoverSprite = null;
+    [SerializeField]
+    Sprite applySprite = null;
+    [SerializeField]
+    Sprite mainMenuHoverSprite = null;
+    [SerializeField]
+    Sprite mainMenuSprite = null;
+    [SerializeField]
+    Sprite resetHoverSprite = null;
+    [SerializeField]
+    Sprite resetSprite = null;
+
+    [SerializeField]
+    Image mainMenuImage = null;
+    [SerializeField]
+    Image applyImage = null;
+    [SerializeField]
+    Image resetImage = null;
 
     private void Awake()
     {
@@ -96,7 +112,7 @@ public class Options : MonoBehaviour
                 case KeybindChange.PauseAbility:
                     {
                         ChangeKeybind(ref optionsSettings.keybindings.pauseAbility);
-                        kbPauseAbility.text = "Press Any Key";
+                        kbPauseAbility.text = "- - -";
 
                         if (newKey != KeyCode.None)
                         {
@@ -128,7 +144,7 @@ public class Options : MonoBehaviour
                 case KeybindChange.Inventory:
                     {
                         ChangeKeybind(ref optionsSettings.keybindings.toggleInventory);
-                        kbInventoryToggle.text = "Press Any Key";
+                        kbInventoryToggle.text = "- - -";
 
                         if (newKey != KeyCode.None)
                         {
@@ -158,7 +174,7 @@ public class Options : MonoBehaviour
                 case KeybindChange.Skill1:
                     {
                         ChangeKeybind(ref optionsSettings.keybindings.weaponAttack);
-                        kbWeaponAttack.text = "Press Any Key";
+                        kbWeaponAttack.text = "- - -";
 
                         if (newKey != KeyCode.None)
                         {
@@ -188,7 +204,7 @@ public class Options : MonoBehaviour
                 case KeybindChange.Skill2:
                     {
                         ChangeKeybind(ref optionsSettings.keybindings.skillSlot2);
-                        kbBlast.text = "Press Any Key";
+                        kbBlast.text = "- - -";
 
                         if (newKey != KeyCode.None)
                         {
@@ -218,7 +234,7 @@ public class Options : MonoBehaviour
                 case KeybindChange.Skill3:
                     {
                         ChangeKeybind(ref optionsSettings.keybindings.skillSlot3);
-                        kbTeleport.text = "Press Any Key";
+                        kbTeleport.text = "- - -";
 
                         if (newKey != KeyCode.None)
                         {
@@ -248,7 +264,7 @@ public class Options : MonoBehaviour
                 case KeybindChange.Skill4:
                     {
                         ChangeKeybind(ref optionsSettings.keybindings.skillSlot4);
-                        kbRewind.text = "Press Any Key";
+                        kbRewind.text = "- - -";
 
                         if (newKey != KeyCode.None)
                         {
@@ -453,7 +469,7 @@ public class Options : MonoBehaviour
             {
                // if (Input.GetKeyDown(Event.current.keyCode))
                 //{
-                    Debug.Log("Key Pressed: " + Event.current.keyCode.ToString());
+                    //Debug.Log("Key Pressed: " + Event.current.keyCode.ToString());
                     newKey = Event.current.keyCode;
                 //}
             }
@@ -462,5 +478,35 @@ public class Options : MonoBehaviour
         {
             newKey = KeyCode.None;
         }
+    }
+
+    public void OnMainMenuEnter()
+    {
+        mainMenuImage.sprite = mainMenuHoverSprite;
+    }
+
+    public void OnMainMenuExit()
+    {
+        mainMenuImage.sprite = mainMenuSprite;
+    }
+
+    public void OnResetEnter()
+    {
+        resetImage.sprite = resetHoverSprite;
+    }
+
+    public void OnResetExit()
+    {
+        resetImage.sprite = resetSprite;
+    }
+
+    public void OnApplyEnter()
+    {
+        applyImage.sprite = applyHoverSprite;
+    }
+
+    public void OnApplyExit()
+    {
+        applyImage.sprite = applySprite;
     }
 }
