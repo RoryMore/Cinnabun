@@ -16,14 +16,16 @@ public class NovelManager : MonoBehaviour
 
 
 	//Triggers
-	bool Trigger1 = false;
-	bool Trigger2 = false;
-	bool Trigger3 = false;
-	bool Trigger4 = false;
-	bool Trigger5 = false;
+	public bool Trigger1 = false;
+	public bool Trigger2 = false;
+	public bool Trigger3 = false;
+	public bool Trigger4 = false;
+	public bool Trigger5 = false;
 	public bool Trigger6 = false;
-	bool Trigger7 = false;
-	bool Trigger8 = false;
+	public bool Trigger7 = false;
+	public bool Trigger8 = false;
+
+	bool on = false;
 
 	// Start is called before the first frame update
 	void Start()
@@ -46,8 +48,10 @@ public class NovelManager : MonoBehaviour
 		NoMoreBattle();
 		UsedRewind();
 		UsedInventory();
-		
+		//PlayerDead();
 	}
+
+
 
 	void AcrossBridge()
 	{
@@ -76,18 +80,43 @@ public class NovelManager : MonoBehaviour
 	{
 		if (Trigger7 == true)
 		{
-			//textSystem.novelActive = false;
+			TurnWalkOff();
 			
 			if (playerUI.healthDown == true)
 			{
 				if (Trigger2 == false)
 				{
+					//textSystem.novelActive = true;
+					on = true;
+					//TurnWalkOn();
 					PopUpBox();
 					Trigger2 = true;
 					Trigger3 = true;
+					//TurnWalkOn();
 				
 				}
 			}
+		}
+
+	}
+
+	void TurnWalkOff()
+	{
+		
+		if (on == false)
+		{
+			textSystem.novelActive = false;
+			
+		}
+	}
+
+	void TurnWalkOn()
+	{
+		bool off = false;
+		if (off == false)
+		{
+			textSystem.novelActive = true;
+			off = true;
 		}
 
 	}
@@ -136,6 +165,7 @@ public class NovelManager : MonoBehaviour
 		}
 
 	}
+
 
 
 

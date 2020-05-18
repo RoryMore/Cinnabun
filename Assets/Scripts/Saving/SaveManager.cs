@@ -41,6 +41,8 @@ public class SaveManager : MonoBehaviour
     public static string upgradeShopScene;
     public string gameSceneName;
     public static string gameScene;
+    public string tutorialSceneName;
+    public static string tutorialScene;
     // Inspector values of this list are default values.
     // Defaults will be used on first time playing. Future times, access the save file
     [Tooltip("The values in this List will be the default starting values for the upgrades")]
@@ -52,6 +54,7 @@ public class SaveManager : MonoBehaviour
     [SerializeField]
     SavedSettings defaultSettings;
     static SavedSettings savedSettings;
+    static SavedSettings staticDefaultSettings;
 
     static int savedUpgradeMoney;
 
@@ -69,11 +72,29 @@ public class SaveManager : MonoBehaviour
         staticUpgradeMoneyFileName = upgradeMoneyFileName;
         staticSettingsFileName = settingsFileName;
 
-        characterUpgrades = defaultCharacterUpgrades;
-        savedSettings = defaultSettings;
+        //characterUpgrades = defaultCharacterUpgrades;
+        characterUpgrades = new UpgradeList();
+        characterUpgrades.armourEffectiveness = defaultCharacterUpgrades.armourEffectiveness;
+        characterUpgrades.blastExplosionDamage = defaultCharacterUpgrades.blastExplosionDamage;
+        characterUpgrades.blastExplosionRadius = defaultCharacterUpgrades.blastExplosionRadius;
+        characterUpgrades.bloodOrbEffectiveness = defaultCharacterUpgrades.bloodOrbEffectiveness;
+        characterUpgrades.bonusAgilityCrit = defaultCharacterUpgrades.bonusAgilityCrit;
+        characterUpgrades.extraPauseAction = defaultCharacterUpgrades.extraPauseAction;
+        characterUpgrades.playerMovespeed = defaultCharacterUpgrades.playerMovespeed;
+        characterUpgrades.teleportRange = defaultCharacterUpgrades.teleportRange;
+
+        //savedSettings = defaultSettings;
+        savedSettings = new SavedSettings();
+        savedSettings.cameraMoveSensitivity = defaultSettings.cameraMoveSensitivity;
+        savedSettings.keybindings = defaultSettings.keybindings;
+        savedSettings.musicVolume = defaultSettings.musicVolume;
+        savedSettings.sfxVolume = defaultSettings.sfxVolume;
+
+        staticDefaultSettings = defaultSettings;
 
         upgradeShopScene = upgradeShopSceneName;
         gameScene = gameSceneName;
+        tutorialScene = tutorialSceneName;
 
         if (LoadUpgradeSave())
         {
@@ -253,5 +274,10 @@ public class SaveManager : MonoBehaviour
     public static UpgradeList GetUpgradeList()
     {
         return characterUpgrades;
+    }
+
+    public static SavedSettings GetDefaultSettings()
+    {
+        return staticDefaultSettings;
     }
 }
