@@ -70,8 +70,24 @@ public class SaveManager : MonoBehaviour
         staticUpgradeMoneyFileName = upgradeMoneyFileName;
         staticSettingsFileName = settingsFileName;
 
-        characterUpgrades = defaultCharacterUpgrades;
-        savedSettings = defaultSettings;
+        //characterUpgrades = defaultCharacterUpgrades;
+        characterUpgrades = new UpgradeList();
+        characterUpgrades.armourEffectiveness = defaultCharacterUpgrades.armourEffectiveness;
+        characterUpgrades.blastExplosionDamage = defaultCharacterUpgrades.blastExplosionDamage;
+        characterUpgrades.blastExplosionRadius = defaultCharacterUpgrades.blastExplosionRadius;
+        characterUpgrades.bloodOrbEffectiveness = defaultCharacterUpgrades.bloodOrbEffectiveness;
+        characterUpgrades.bonusAgilityCrit = defaultCharacterUpgrades.bonusAgilityCrit;
+        characterUpgrades.extraPauseAction = defaultCharacterUpgrades.extraPauseAction;
+        characterUpgrades.playerMovespeed = defaultCharacterUpgrades.playerMovespeed;
+        characterUpgrades.teleportRange = defaultCharacterUpgrades.teleportRange;
+
+        //savedSettings = defaultSettings;
+        savedSettings = new SavedSettings();
+        savedSettings.cameraMoveSensitivity = defaultSettings.cameraMoveSensitivity;
+        savedSettings.keybindings = defaultSettings.keybindings;
+        savedSettings.musicVolume = defaultSettings.musicVolume;
+        savedSettings.sfxVolume = defaultSettings.sfxVolume;
+
         staticDefaultSettings = defaultSettings;
 
         upgradeShopScene = upgradeShopSceneName;
