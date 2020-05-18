@@ -49,13 +49,13 @@ public class CameraController : MonoBehaviour
         // Change and set Camera targetDistance from focused point if mouse wheel Input is recieved
         targetDistance = Mathf.Clamp(targetDistance - Input.mouseScrollDelta.y * mouseScrollSens, minDistance, maxDistance);
 
-        // Hide and lock cursor when RMB is pressed
+        // Hide and lock cursor when MMB is pressed
         if (Input.GetMouseButtonDown(2))
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Confined;
         }
-        // Reveal and unlock cursor when RMB is released
+        // Reveal and unlock cursor when MMB is released
         if (Input.GetMouseButtonUp(2))
         {
             Cursor.visible = true;
@@ -65,25 +65,24 @@ public class CameraController : MonoBehaviour
         float dist = targetDistance;
         Quaternion nextRotation = Quaternion.Euler(yAngle, xAngle, 0);
 
-        // While RMB is held
+        // While MMB is held
         if (Input.GetMouseButton(2))
         {
             mouseXSens = SaveManager.GetSettings().cameraMoveSensitivity;
 
             xAngle += Input.GetAxis("Mouse X") * xSpeed * mouseXSens * Time.unscaledDeltaTime * (invertMouseXAxis ? -1.0f : 1.0f);
-
-            // If there is any object obstructing vision from the Camera to Focused Transform
-            if (Physics.Linecast(focusTransform.position, transform.position, out RaycastHit hit))
-            {
-                // Make an extra check here to see if it is an entity, instead of a building or something
-                // Entities aren't "obstructing" to the camera, as buildings and terrain are
-                // Example code
-                //if (!hit.collider.gameObject.tag.Contains("Entity"))
-                //{
-                //    dist -= hit.distance;
-                //}
-            }
         }
+
+        //if (Physics.Linecast(focusTransform.position, transform.position, out RaycastHit hit))
+        //{
+        //    // Make an extra check here to see if it is an entity, instead of a building or something
+        //    // Entities aren't "obstructing" to the camera, as buildings and terrain are
+        //    // Example code
+        //    if (!hit.collider.gameObject.tag.Contains("Entity"))
+        //    {
+        //        dist -= hit.distance;
+        //    }
+        //}
 
         yAngle = ClampAngle(yAngle, 35.0f, 85.0f);
         xAngle = ClampAngle(xAngle, -360.0f, 360.0f);

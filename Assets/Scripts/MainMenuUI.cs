@@ -32,6 +32,7 @@ public class MainMenuUI : MonoBehaviour
     {
         menuButtons.SetActive(true);
         credits.SetActive(false);
+        OptionsUI.SetActive(false);
     }
 
     public void Options()
