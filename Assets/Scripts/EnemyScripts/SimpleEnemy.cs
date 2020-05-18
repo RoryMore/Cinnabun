@@ -288,14 +288,26 @@ public class SimpleEnemy : EnemyScript
         //basic attack is casting
         if (chosenSkill.currentlyCasting)
         {
-            
+            chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
+            if (!chosenSkill.currentlyCasting)
+            {
+                isAttacking = false;
+                hasDecided = false;
+
+            }
         }
         else
         {
             //choosen skill is casting
             if (chosenSkill.currentlyCasting)
             {
+                chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
+                if (!chosenSkill.currentlyCasting)
+                {
+                    isAttacking = false;
+                    hasDecided = false;
 
+                }
             }
             else
             {
