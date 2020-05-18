@@ -103,6 +103,7 @@ MonoBehaviour:
   itemPhysicalArm: {fileID: 7919763582893602510}
   itemMagicalArm: {fileID: 4153826723359601732}
   traitDescription: {fileID: 3378651660094287247}
+  rectTransform: {fileID: 0}
 --- !u!1 &2076658647
 GameObject:
   m_ObjectHideFlags: 0
@@ -2739,7 +2740,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: c2f4a2e3cf782664fa3a336f2c22c736, type: 3}
-    m_FontSize: 250
+    m_FontSize: 245
     m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 2
@@ -2750,7 +2751,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: you feel like this item could have been better
+  m_Text: main Attack <color=orange>dmg -55.5%</color>, but <color=cyan>+55.5%</color>
+    of target <color=maroon>maximum HP</color> as extra dmg
 --- !u!1001 &6531685089056031718
 PrefabInstance:
   m_ObjectHideFlags: 0

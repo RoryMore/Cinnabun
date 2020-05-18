@@ -7506,11 +7506,6 @@ PrefabInstance:
       propertyPath: targetObject
       value: 
       objectReference: {fileID: 1062068217}
-    - target: {fileID: 6531685088066879969, guid: ce4bdc152542dff48aeece5e87082805,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6531685088700490648, guid: ce4bdc152542dff48aeece5e87082805,
         type: 3}
       propertyPath: characterEntity
@@ -7625,16 +7620,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Inventory&CharacterPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 6531685088700490650, guid: ce4bdc152542dff48aeece5e87082805,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 6531685088700490650, guid: ce4bdc152542dff48aeece5e87082805,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce4bdc152542dff48aeece5e87082805, type: 3}
