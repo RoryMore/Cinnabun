@@ -254,7 +254,7 @@ public struct RewindPoint
 
     // Data for original values
     float originalMovementSpeed;
-
+    public float acttackdelay = 0;
     // Start is called before the first frame update
     void Start()
     {

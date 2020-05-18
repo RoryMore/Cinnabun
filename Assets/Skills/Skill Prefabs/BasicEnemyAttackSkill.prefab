@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8244881523812364857}
-  - component: {fileID: 5874742271509955571}
+  - component: {fileID: 8847265500792767442}
   m_Layer: 0
   m_Name: BasicEnemyAttackSkill
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5874742271509955571
+--- !u!114 &8847265500792767442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5166628696089209616}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 674781fb8e607874bbddbad1ed306383, type: 3}
+  m_Script: {fileID: 11500000, guid: 9515cca2412fbee409c3034a5347a4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   projector: {fileID: 6666328749900617529}
@@ -51,11 +51,19 @@ MonoBehaviour:
   fillType: 0
   moveType: 0
   timeBeenOnCooldown: 10
-  currentlyCasting: 1
-  isAllowedToCast: 1
+  cooldownReduction: 0
+  timeSpentOnWindUp: 0
+  windUpReduction: 0
+  currentlyCasting: 0
+  isAllowedToCast: 0
   casterSelf: {fileID: 0}
   mainCookie: {fileID: 21300000, guid: 42b6de6bc0caab8479e801a943d0f819, type: 3}
   fillCookie: {fileID: 21300000, guid: 14643146a3b1130488e64610d90b0996, type: 3}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  TargetEntity: []
+  ExtraSkillp: 0
 --- !u!1001 &3572177366688864043
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -67,7 +75,7 @@ PrefabInstance:
         type: 3}
       propertyPath: skill
       value: 
-      objectReference: {fileID: 5874742271509955571}
+      objectReference: {fileID: 8847265500792767442}
     - target: {fileID: 7859171462410846225, guid: a4a61362fb3f16345a0a6e76f93d8530,
         type: 3}
       propertyPath: m_LocalPosition.x
