@@ -188,6 +188,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeleeBasicEnemyAttackSkill
       objectReference: {fileID: 0}
+    - target: {fileID: 3704631508122960628, guid: 7e93f9ae2053794449ab133e4c39e7f8,
+        type: 3}
+      propertyPath: TargetEntity.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3704631508122960628, guid: 7e93f9ae2053794449ab133e4c39e7f8,
+        type: 3}
+      propertyPath: TargetEntity.Array.data[0]
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3704631508122960628, guid: 7e93f9ae2053794449ab133e4c39e7f8,
+        type: 3}
+      propertyPath: TargetEntity.Array.data[1]
+      value: Enemy1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3704631508122960628, guid: 7e93f9ae2053794449ab133e4c39e7f8,
+        type: 3}
+      propertyPath: TargetEntity.Array.data[2]
+      value: Enemy2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3704631508122960628, guid: 7e93f9ae2053794449ab133e4c39e7f8,
+        type: 3}
+      propertyPath: TargetEntity.Array.data[3]
+      value: Enemy3
+      objectReference: {fileID: 0}
     - target: {fileID: 6966222782785489016, guid: 7e93f9ae2053794449ab133e4c39e7f8,
         type: 3}
       propertyPath: skill

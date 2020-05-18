@@ -279,33 +279,78 @@ public class SimpleEnemy : EnemyScript
                             //do skill
 //}
 }*/
-    
-        
-        if (Vector3.Distance(transform.position, player.transform.position) < (chosenSkill.skillData.maxRange - 1) / 2)
+        // Update turn cooldown
+        Turn();
+
+        //Update all cooldowns and conditons
+        UpdateAllConditions();
+
+        //basic attack is casting
+        if (chosenSkill.currentlyCasting)
         {
-            //nav.enabled = false;
-            // Attack(chosenSkill);
-            goalset = false;
+            
         }
         else
         {
-           
-                move();
-                goalset = true;
-           
-           
+            //choosen skill is casting
+            if (chosenSkill.currentlyCasting)
+            {
+
+            }
+            else
+            {
+                if (Vector3.Distance(transform.position, player.transform.position) > (chosenSkill.skillData.maxRange - 2 / 2))
+                {
+                    move();
+                    goalset = true;
+                    HoldTurn();
+                }
+                else
+                {
+                    //nav.enabled = false;
+                    Debug.LogWarning("attack");
+
+                    if (nav.enabled != false)
+                    {
+                        nav.isStopped = true;
+                        goalset = false;
+
+                        Debug.LogWarning("stop walking");
+                        anim.SetBool("isWalking", false);
+                        nav.enabled = false;
+                    }
+
+                    FaceTarget(player.transform);
+                    basicAttack();
+                    //Attack(chosenSkill);
+                    //goalset = false;
+                }
+            }
         }
+
+       
 
         if (!CurrentlyCasting)
         {
             
         }
-
         else
         {
             
         }
 
+    }
+
+    void basicAttack()
+    {
+       
+        if (!isAttacking)
+        {
+            isAttacking = true;
+            anim.SetTrigger("attacking");
+        }
+        //trigger choosen skill
+        chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
     }
 
     void move()
@@ -323,16 +368,16 @@ public class SimpleEnemy : EnemyScript
             }
             else if (type == TYPE.RANGED)
             {
-                if (Vector3.Distance(transform.position, player.transform.position) > (chosenSkill.skillData.maxRange - 1) / 2)
-                {
+               // if (Vector3.Distance(transform.position, player.transform.position) > (chosenSkill.skillData.maxRange - 1) / 2)
+               // {
                     ChooseDestination(chosenSkill);
 
                     Movement(destination);
-                }
-                else
-                {
-                    nav.isStopped = true;
-                }
+               //}
+               // else
+               // {
+                    
+               // }
             }
         }
         else
@@ -364,16 +409,16 @@ public class SimpleEnemy : EnemyScript
         if (!goalset)
         {
             radis = Random.Range(0, 360);
-            Debug.LogWarning(radis);
+          //  Debug.LogWarning(radis);
         }
 
         Vector3 diretion = (this.transform.position - player.transform.position).normalized;
 
         if (smarterAI)
         {
-             destination = new Vector3((((skill.skillData.maxRange -1)/2) * Mathf.Cos(radis)),
+             destination = new Vector3((((skill.skillData.maxRange -2)/2) * Mathf.Cos(radis)),
                 transform.position.y,
-                ((skill.skillData.maxRange -1)/2) * Mathf.Sin(radis));
+                ((skill.skillData.maxRange -2)/2) * Mathf.Sin(radis));
 
             float x1 = player.transform.position.x + destination.x;
             float z1 = player.transform.position.z  + destination.z;
@@ -389,8 +434,8 @@ public class SimpleEnemy : EnemyScript
             //Debug.DrawLine(player.transform.position, player.transform.position + diretion * skill.skillData.minRange, Color.red, Mathf.Infinity);
 
             //find closes spot to player
-            float x1 = player.transform.position.x + offset.x + diretion.x * (skill.skillData.maxRange - 1) / 2;
-            float z1 = player.transform.position.z + offset.x + diretion.z * (skill.skillData.maxRange - 1) / 2;
+            float x1 = player.transform.position.x + offset.x + diretion.x * (skill.skillData.maxRange - 2) / 2;
+            float z1 = player.transform.position.z + offset.x + diretion.z * (skill.skillData.maxRange - 2) / 2;
             offset = Vector3.zero;
 
             //Otherwise all good, move on!
@@ -464,21 +509,23 @@ public class SimpleEnemy : EnemyScript
             {
 
             
-                if (!chosenSkill.currentlyCasting)
-                {
+               // if (!chosenSkill.currentlyCasting)
+               // {
 
-                    //If the player is using an attack and we're close to death, retreat!
-                    if (player.playerState == Player.PlayerState.DOINGSKILL && currentHP <= maxHP * 0.25f)
-                    {
-                        nav.enabled = true;
-                        nav.SetDestination(Vector3.MoveTowards(transform.position, destination, -nav.speed));
-                    }
+                    ////If the player is using an attack and we're close to death, retreat!
+                    //if (player.playerState == Player.PlayerState.DOINGSKILL && currentHP <= maxHP * 0.25f)
+                    //{
+                    //    nav.enabled = true;
+                    //    nav.SetDestination(Vector3.MoveTowards(transform.position, destination, -nav.speed));
+                    //}
 
 
 
                     //If we are well within attack range, stop moving towards player
-                    else if (distance <= chosenSkill.skillData.maxRange * 0.5f)
+                    //else 
+                        if (distance <= (chosenSkill.skillData.maxRange-2) * 0.5f)
                     {
+                        Debug.LogWarning("stop walking");
                         anim.SetBool("isWalking", false);
                         nav.enabled = false;
                     }
@@ -492,7 +539,7 @@ public class SimpleEnemy : EnemyScript
                     }
 
 
-                }
+                //}
 
             }
 
