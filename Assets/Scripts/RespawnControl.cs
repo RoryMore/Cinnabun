@@ -85,7 +85,8 @@ public class RespawnControl : MonoBehaviour
                 }
                 if (!moneyRewarded)
                 {
-                    CurrencyManager.AddUpgradeMoney(enemyManager.numOfClearedEncounters);
+                    //CurrencyManager.AddUpgradeMoney(enemyManager.numOfClearedEncounters);
+                    CurrencyManager.AddUpgradeMoney(wavesCleared);
                     SaveManager.SaveUpgradeMoney();
                     moneyRewarded = true;
                 }

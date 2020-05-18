@@ -147,18 +147,22 @@ public class SimpleEnemy : EnemyScript
                     
                 }
 
-
+                /// SECTION #1
                 if (viewCurrentSkill == null)
                 {
                     //Attack(basicAttack);
                     
                     nav.SetDestination(player.transform.position);
                     FaceTarget(player.transform);
+
                 }
                 else
                 {
                     Attack(chosenSkill);
                 }
+                /// SECTION END
+
+            
 
                 //Attack(chosenSkill);
                 //Initiate the attack//skill at their earliest convenience
@@ -179,7 +183,7 @@ public class SimpleEnemy : EnemyScript
                 //at every frame where we AREN'T attacking or using a skill, do the following
 
 
-
+                ///SECTION #2
 
                 foreach (BaseSkill skill in skillList)
                 {
@@ -226,7 +230,7 @@ public class SimpleEnemy : EnemyScript
 
 
 
-
+            /// SECTION #2 End
 
         }
 
@@ -252,7 +256,6 @@ public class SimpleEnemy : EnemyScript
         return destination = new Vector3(x, player.transform.position.y, z);
 
     }
-
 
     public void Movement()
     {
@@ -359,7 +362,6 @@ public class SimpleEnemy : EnemyScript
         }
 
     }
-
 
     public void Decide()
     {

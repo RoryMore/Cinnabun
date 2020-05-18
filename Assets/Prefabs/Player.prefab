@@ -103,6 +103,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   moveRaycastDistance: 60
+  itemInteractLayerMask:
+    serializedVersion: 2
+    m_Bits: 2048
   cameraShake: {fileID: 0}
   triggerBox: 0
   playerState: 0
@@ -119,6 +122,9 @@ MonoBehaviour:
   rewindCastParticles: {fileID: 8599359530676669933}
   delayedBlastCastParticles: {fileID: 8885068271733408840}
   inventory: {fileID: 0}
+  WaterSounds: 0
+  BirdSounds: 0
+  checkInventory: 0
 --- !u!195 &819698099673919329
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -234,7 +240,9 @@ MonoBehaviour:
   fillType: 0
   moveType: 0
   timeBeenOnCooldown: 10
+  cooldownReduction: 0
   timeSpentOnWindUp: 0
+  windUpReduction: 0
   currentlyCasting: 0
   isAllowedToCast: 1
   casterSelf: {fileID: 819698099673919328}

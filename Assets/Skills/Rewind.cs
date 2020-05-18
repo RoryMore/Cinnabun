@@ -107,7 +107,7 @@ public class Rewind : BaseSkill
         //timeSpentOnWindUp += Time.deltaTime;
 
         // When the skill can be activated
-        if (timeSpentOnWindUp >= skillData.windUp)
+        if (timeSpentOnWindUp >= GetCalculatedWindUp())
         {
             //ActivateSkill();
             skillState = SkillState.DOAFFECT;
@@ -120,8 +120,17 @@ public class Rewind : BaseSkill
     protected override void ActivateSkill()
     {
         timeBeenOnCooldown = 0.0f;
-        entity.RewindBack();
+        if (entity != null)
+        {
+            entity.RewindBack();
+        }
+        else
+        {
+            Debug.LogWarning("Rewind Entity == null");
+        }
         timeSpentOnWindUp = 0.0f;
         entity = null;
+
+        skillState = SkillState.INACTIVE;
     }
 }
