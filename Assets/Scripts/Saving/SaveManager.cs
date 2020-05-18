@@ -41,6 +41,8 @@ public class SaveManager : MonoBehaviour
     public static string upgradeShopScene;
     public string gameSceneName;
     public static string gameScene;
+    public string tutorialSceneName;
+    public static string tutorialScene;
     // Inspector values of this list are default values.
     // Defaults will be used on first time playing. Future times, access the save file
     [Tooltip("The values in this List will be the default starting values for the upgrades")]
@@ -92,6 +94,7 @@ public class SaveManager : MonoBehaviour
 
         upgradeShopScene = upgradeShopSceneName;
         gameScene = gameSceneName;
+        tutorialScene = tutorialSceneName;
 
         if (LoadUpgradeSave())
         {
