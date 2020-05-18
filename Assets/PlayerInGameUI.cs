@@ -224,6 +224,13 @@ public class PlayerInGameUI : MonoBehaviour
 				}
 			}
 		}
+		if (sceneName != "JasmineScene")
+		{
+			player.attackSkill = true;
+			player.bombSkill = true;
+			player.rewindSkill = true;
+			player.telepotSkill = true;
+		}
 	}
   
 }
