@@ -68,7 +68,7 @@ public class SimpleEnemy : EnemyScript
 
     void Awake()
     {
-
+        baseHP = 35;
         InitialiseAll();
 
 
