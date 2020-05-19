@@ -99,6 +99,7 @@ MonoBehaviour:
   nav: {fileID: 0}
   damageNumber: {fileID: 8057154830621439696, guid: aefb4825a32499e40a5dfd55fcf983d7,
     type: 3}
+  acttackdelay: 0
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -107,6 +108,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   cameraShake: {fileID: 0}
+  attackSkill: 0
+  telepotSkill: 0
+  bombSkill: 0
+  rewindSkill: 0
   triggerBox: 0
   playerState: 0
   weaponAttack: {fileID: 1759311214}
@@ -251,6 +256,9 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 1024
+  entityMask:
+    serializedVersion: 2
+    m_Bits: 0
   usedWeapon: 1
   unarmedRange: 2
   swordRange: 6
@@ -260,6 +268,7 @@ MonoBehaviour:
   swordDamageMultiplier: 1.45
   staffDamageMultiplier: 2
   bowDamageMultiplier: 1.2
+  traitPercentDmg: 0
   meshCollider: {fileID: 6211071506982483612}
   unarmedCookie: {fileID: 0}
   unarmedFillCookie: {fileID: 0}
@@ -467,6 +476,11 @@ PrefabInstance:
       propertyPath: casterSelf
       value: 
       objectReference: {fileID: 819698099673919328}
+    - target: {fileID: 3988066503401798220, guid: e311cfb5cd3fee046a81df616b123beb,
+        type: 3}
+      propertyPath: entityMask.m_Bits
+      value: 4352
+      objectReference: {fileID: 0}
     - target: {fileID: 6830044947395607282, guid: e311cfb5cd3fee046a81df616b123beb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1666,6 +1680,11 @@ PrefabInstance:
       propertyPath: casterSelf
       value: 
       objectReference: {fileID: 819698099673919328}
+    - target: {fileID: 5974050460636721124, guid: 08cabbf81e9bc1641aed89e4e5b54176,
+        type: 3}
+      propertyPath: entityMask.m_Bits
+      value: 4352
+      objectReference: {fileID: 0}
     - target: {fileID: 9206032091944406960, guid: 08cabbf81e9bc1641aed89e4e5b54176,
         type: 3}
       propertyPath: m_Name

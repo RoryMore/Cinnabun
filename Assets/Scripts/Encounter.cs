@@ -212,7 +212,7 @@ public class Encounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        KillCode();
+        //KillCode();
 
         //Each wave has its own update function to determine if you have completed it
         switch(waveType)
@@ -221,11 +221,11 @@ public class Encounter : MonoBehaviour
             case WaveType.SLAUGHTER:
             if (initiativeList.Count == 0)
             {
-                if (!cleared)
-                {
+                //if (!cleared)
+                //{
                     Debug.Log("The Slaughter encounter has been cleared!");
                     Cleared();
-                }
+                //}
 
             }
             break;
@@ -322,18 +322,21 @@ public class Encounter : MonoBehaviour
         enemyManager.WaveActive = false;
         enemyManager.inBattle = false;
         enemyManager.SetTimeToNextWave(enemyManager.timeBetweenWaves);
-        
-        foreach (SimpleEnemy enemy in masterInitiativeList)
-        {
-            Destroy(enemy); // Why is the enemy script being destroyed and the gameObject being left alone. Anything that was attached to the enemy still attempting to reference the enemy is obviously throwing errors. This is a strange thing to do in my opinion instead of having the enemy entity be dead if you don't want to just remove the gameObject
-            initiativeList.Clear();
-            masterInitiativeList.Clear();
-            playerInclusiveInitiativeList.Clear();
-        }
-        
-        enemyManager.CheckVictory();
 
-        //gameObject.SetActive(false);
+        //foreach (SimpleEnemy enemy in masterInitiativeList)
+        //{
+        //    // FUCKING REEEEEEEEEEE
+        //    Destroy(enemy.gameObject); // Why is the enemy script being destroyed and the gameObject being left alone. Anything that was attached to the enemy still attempting to reference the enemy is obviously throwing errors. This is a strange thing to do in my opinion instead of having the enemy entity be dead if you don't want to just remove the gameObject
+        //    initiativeList.Clear();
+        //    masterInitiativeList.Clear();
+        //    playerInclusiveInitiativeList.Clear();
+        //}
+
+        enemyManager.CheckVictory();
+        enemyManager.numOfClearedEncounters++;
+
+        // THIS IS BACK BABYY
+        gameObject.SetActive(false);
         
     }
 

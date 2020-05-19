@@ -72,8 +72,9 @@ public class BaseSkill : MonoBehaviour
     [SerializeField]
     protected Sprite fillCookie;
 
-    [Header("Ground Layer Mask if necessary to use")]
+    [Header("Layer Masks if necessary to use")]
     public LayerMask groundMask;
+    public LayerMask entityMask;
 
     protected virtual void Initialise()
     {
@@ -570,7 +571,7 @@ public class BaseSkill : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, entityMask))
                 {
                     //Debug.Log("Skill is raycasting");
                     if (checkInRange)
@@ -595,7 +596,7 @@ public class BaseSkill : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(ray, out RaycastHit hit, raycastMask))
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, raycastMask))
             {
                 if (checkInRange)
                 {

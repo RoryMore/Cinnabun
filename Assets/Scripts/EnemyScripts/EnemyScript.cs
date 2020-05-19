@@ -79,7 +79,12 @@ public class EnemyScript : Entity
         //Ensure that the target is no longer in the initiative 
         myEncounter.initiativeList.Remove(this);
         myEncounter.healList.Remove(this);
+        //myEncounter.masterInitiativeList.Remove(this);
+        //myEncounter.playerInclusiveInitiativeList.Remove(this);
         nav.enabled = false;
+
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 
 

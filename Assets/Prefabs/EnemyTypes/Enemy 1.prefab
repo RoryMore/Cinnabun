@@ -65,6 +65,9 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 0
+  entityMask:
+    serializedVersion: 2
+    m_Bits: 0
   TargetEntity:
   - Player
   - Enemy1
@@ -89,7 +92,7 @@ GameObject:
   - component: {fileID: 6848728790401618761}
   - component: {fileID: 1156643650323473895}
   - component: {fileID: 9092658765055848247}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Enemy 1
   m_TagString: Enemy1
   m_Icon: {fileID: 0}
@@ -159,7 +162,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: de4567cd19ba0a54a95ccaf8c4d10d5e, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
