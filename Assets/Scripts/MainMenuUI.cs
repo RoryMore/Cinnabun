@@ -43,4 +43,10 @@ public class MainMenuUI : MonoBehaviour
 
      //   SaveManager.SaveSettings();
     }
+
+	public void Tutorial()
+	{
+		SceneManager.LoadScene(1);
+		Time.timeScale = 1;
+	}
 }
