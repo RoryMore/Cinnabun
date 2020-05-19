@@ -140,6 +140,7 @@ public class TextSystem : MonoBehaviour
 						{
 							g.SetActive(true);
 						}
+					
 						LoadScene(sceneNumber);
 						visualNovel.SetActive(false);						
 					
@@ -162,6 +163,7 @@ public class TextSystem : MonoBehaviour
             if (index <= text.Length)
             {
                 stopSay(text[wordIndex].text[index]);
+			
             }
         }
         Delay();

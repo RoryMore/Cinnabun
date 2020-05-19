@@ -48,7 +48,7 @@ public class NovelManager : MonoBehaviour
 		NoMoreBattle();
 		UsedRewind();
 		UsedInventory();
-		//PlayerDead();
+		endTutorial();
 	}
 
 
@@ -166,6 +166,16 @@ public class NovelManager : MonoBehaviour
 
 	}
 
+	void endTutorial()
+	{
+		if (Trigger6 == true)
+		{
+			if (!visualNovel.activeSelf)
+			{
+				SceneManager.LoadScene(0);
+			}
+		}
+	}
 
 
 
