@@ -430,7 +430,7 @@ public class SoundManager : MonoBehaviour
             else
             {
                 state = MusicState.START;
-				inBattle = true;
+				//inBattle = true;
             }
 		}
 		else
