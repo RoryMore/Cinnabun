@@ -12,12 +12,29 @@ public class DamagePopUp : MonoBehaviour
     private float disappearTimer;
     private Color textColor;
     //[SerializeField] private Transform damageNumbers;
+    MeshRenderer meshRenderer;
+    Material materialInstance;
 
+    [System.Serializable]
+    public struct MaterialColours
+    {
+        public Color faceColour;
+        public Color outlineColour;
+    }
+    [SerializeField]
+    MaterialColours normalColours;
+    [SerializeField]
+    MaterialColours critColours;
 
     private void Awake()
     {
         textMesh = transform.GetComponent<TextMeshPro>();
+
+        meshRenderer = GetComponent<MeshRenderer>();
+
+        materialInstance = meshRenderer.material;
     }
+
     public void SetUp(int damageAmount, bool isCrit)
     {
         textMesh.SetText(damageAmount.ToString());
@@ -27,15 +44,20 @@ public class DamagePopUp : MonoBehaviour
             //Normal hit
             textMesh.fontSize = 20;
             textColor = Color.white;
+
+            materialInstance.SetColor("_FaceColor", normalColours.faceColour);
+            materialInstance.SetColor("_OutlineColor", normalColours.outlineColour);
         }
         else
         {
             // Critical Hit
-            textMesh.fontSize = 45;
-            textColor = Color.red;
+            textMesh.fontSize = 37.5f;
+            textColor = Color.white;
+            materialInstance.SetColor("_FaceColor", critColours.faceColour);
+            materialInstance.SetColor("_OutlineColor", critColours.outlineColour);
         }
 
-        
+
         textMesh.color = textColor;
         disappearTimer = DISAPPEAR_TIMER_MAX;
 
@@ -47,6 +69,8 @@ public class DamagePopUp : MonoBehaviour
     {
         float moveYSPeed = 2f;
         transform.position += new Vector3(0, moveYSPeed) * Time.unscaledDeltaTime;
+
+        transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
 
         if (disappearTimer > DISAPPEAR_TIMER_MAX * 0.9f)
         {
@@ -66,6 +90,8 @@ public class DamagePopUp : MonoBehaviour
             textMesh.color = textColor;
             if (textColor.a < 0)
             {
+                //materialInstance.SetColor("_FaceColor", normalColours.faceColour);
+                //materialInstance.SetColor("_OutlineColor", normalColours.outlineColour);
                 Destroy(gameObject);
             }
         }

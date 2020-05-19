@@ -151,7 +151,7 @@ public class StatEffectAttack : BaseSkill
     }
     void effectApllyed(Entity entity)
     {
-        Entity.Condition Con;
+        Entity.ConditionEff Con;
 
         for (int i = 0; i < BuffStats.Length; i++)
         {
@@ -159,7 +159,7 @@ public class StatEffectAttack : BaseSkill
 
             if (BuffStats[i].GetBuffType() == buffeType.number)
             {
-                Con = new Entity.Condition(
+                Con = new Entity.ConditionEff(
                      BuffStats[i].GetDuration(),
                      BuffStats[i].GetEffect(),
                     (int)BuffStats[i].GetDamage(),

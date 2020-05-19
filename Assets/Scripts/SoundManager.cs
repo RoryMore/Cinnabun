@@ -13,9 +13,12 @@ public class SoundManager : MonoBehaviour
   //[Space(10)]
     public AudioSource mainMenuMusic;
 
-    [Header("Battle Music")]
-    public AudioSource[] BattleMusic;    public AudioSource testSong;
-
+    [Header("Battle Music")]
+
+    public AudioSource[] BattleMusic;
+    public AudioSource testSong;
+
+
     [Header("Idle Music")]
 
     public AudioSource[] IdleMusic;
@@ -25,14 +28,18 @@ public class SoundManager : MonoBehaviour
     //public AudioSource meeleeSwing;
     [SerializeField]
     AudioSource meeleSwing;
-    [HideInInspector] public static AudioSource meleeSwing;
+	[HideInInspector] public static AudioSource meleeSwing;
+
+	[SerializeField]
+	//AudioSource blast;
+	//[HideInInspector] public static AudioSource blast;
+
+    AudioSource footStepLeft;
+	[HideInInspector] public static AudioSource leftFootstep;
 
     [SerializeField]
-    AudioSource footStepLeft;
-    public static AudioSource leftFootstep;
-    [SerializeField]
     AudioSource footstepRight;
-    public static AudioSource rightFootstep;
+	[HideInInspector] public static AudioSource rightFootstep;
 
     [Header(" EnemyFoot")]
     [SerializeField] AudioSource EnemyFoot1;
@@ -63,7 +70,7 @@ public class SoundManager : MonoBehaviour
     EnemyManager enemyManager;
     public GameObject playerUI;
     public GameObject visualNovel;
-
+	Player player;
     int songs;
     float setVolume;
     [Header("Other")] public int random;
@@ -91,8 +98,9 @@ public class SoundManager : MonoBehaviour
     {
         pauseAbility = FindObjectOfType<PauseAbility>();
         enemyManager = FindObjectOfType<EnemyManager>();
-   
-        setVolume = 0.7f;
+		player = FindObjectOfType<Player>();
+		setVolume = 0.7f;
+
         float timeNow = Time.realtimeSinceStartup;
 
     }
@@ -133,7 +141,7 @@ public class SoundManager : MonoBehaviour
    //     MuteAllAudio();
         CheckInBattle();
         checkState();
-
+		//Blast();
 
         switch (state)
         {
@@ -151,35 +159,55 @@ public class SoundManager : MonoBehaviour
                     
 
                     if (playBattleMusic == true)
-                    {
-                        MuteAllAudio();
-                        BattleMusicVolumeUp();
-                        //Timeholder = Time.realtimeSinceStartup;
-                        timer = 5;
-                        songs = 0;
+                    {
+
+                        MuteAllAudio();
+
+                        BattleMusicVolumeUp();
+
+                        //Timeholder = Time.realtimeSinceStartup;
+
+                        timer = 5;
+
+                        songs = 0;
+
                         for (int i = 0; i < BattleMusic.Length; i++)
                         {
                             if (BattleMusic[i].isPlaying)
                             {
                                 songs++;
-                            }
-                        }
+                            }
+
+                        }
+
                         if (songs == 0)
                        {
                             BattleMusic[Random.Range(0, BattleMusic.Length)].Play();
-                        }                        
-                    }
-                    songs = 0;
-
+                        }
+                        
+                    }
+
+                    songs = 0;
+
+
+
                     for (int i = 0; i < BattleMusic.Length; i++)
                     {
-                        if (!BattleMusic[i].isPlaying)                        {
-                            songs++;
-                        }                    }
-                    if (songs == BattleMusic.Length)                    {                        BattleMusic[Random.Range(0, BattleMusic.Length)].Play();
+                        if (!BattleMusic[i].isPlaying)
+                        {
+                            songs++;
+
+                        }
                     }
-                    IdleMusicVolumeGone();
-                    MuteTimer();
+
+                    if (songs == BattleMusic.Length)
+                    {
+                        BattleMusic[Random.Range(0, BattleMusic.Length)].Play();
+                    }
+                    IdleMusicVolumeGone();
+
+                    MuteTimer();
+
                     playBattleMusic = false;
 
                     break;
@@ -187,13 +215,16 @@ public class SoundManager : MonoBehaviour
             case MusicState.PAUSEDSKILL:
                 {
                     BattleMusicVolumeDown();
-                    IdleMusicVolumeDown();
-                    if (inBattle == true)
+                    IdleMusicVolumeDown();
+
+                    if (inBattle == true)
+
                     {
                         MuteIdle();
                     }
 
-                    if (inBattle == false)
+                    if (inBattle == false)
+
                     {
                          MuteBattle();
                     }
@@ -201,14 +232,20 @@ public class SoundManager : MonoBehaviour
                     break;
                 }
             case MusicState.IDLE:
-                {
+                {
+
                    if (playIdleMusic == true)
                     {
-                         MuteAllAudio();
-                        timer = 5;
-                        songs = 0;
-                        //Timeholder = Time.realtimeSinceStartup;
-                        IdleMusicVolumeUp();
+                         MuteAllAudio();
+
+                        timer = 5;
+
+                        songs = 0;
+
+                        //Timeholder = Time.realtimeSinceStartup;
+
+                        IdleMusicVolumeUp();
+
                         for (int i = 0; i < IdleMusic.Length; i++)
                         {
                             if (IdleMusic[i].isPlaying)
@@ -217,25 +254,31 @@ public class SoundManager : MonoBehaviour
                             }
                         }
                         if (songs == 0)
-                        {                            IdleMusic[Random.Range(0, IdleMusic.Length)].Play();
+                        {
+                            IdleMusic[Random.Range(0, IdleMusic.Length)].Play();
                         }
-                    }
-                    songs = 0;
+                    }
+
+                    songs = 0;
+
                     for (int i = 0; i < IdleMusic.Length; i++)
                     {
                         if (!IdleMusic[i].isPlaying)
                         {
                             songs++;
                         }
-                    }
-
+                    }
+
+
+
                     if (songs == IdleMusic.Length)
                     {
                         IdleMusic[Random.Range(0, IdleMusic.Length)].Play();
                     }
 
                     MuteTimer();
-                    BattleMusicVolumeGone();
+                    BattleMusicVolumeGone();
+
                     playIdleMusic = false;
 
                     break;
@@ -253,56 +296,72 @@ public class SoundManager : MonoBehaviour
         }
 
     
-    }
+    }
+
+
     void BattleMusicVolumeDown()
-    {
+    {
+
         for (int i = 0; i < BattleMusic.Length; i++)
         {
             BattleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, 0.2f, Time.unscaledDeltaTime / 0.2f);
         }
-    }
-
+    }
+
+
+
     void IdleMusicVolumeDown()
     {
        for (int i = 0; i < IdleMusic.Length; i++)
         {
             IdleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, 0.2f, Time.unscaledDeltaTime / 0.2f);
         }
-    }
-
+    }
+
+
+
     void BattleMusicVolumeUp()
     {
         for (int i = 0; i < BattleMusic.Length; i++)
         {
             BattleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, setVolume, Time.unscaledDeltaTime / 2f); 
         }
-    }
-
+    }
+
+
+
     void IdleMusicVolumeUp()
     {
         for (int i = 0; i < IdleMusic.Length; i++)
         {
            IdleMusic[i].volume = Mathf.Lerp(IdleMusic[i].volume, setVolume, Time.unscaledDeltaTime / 2f); 
         }
-    }
-
+    }
+
+
+
     void BattleMusicVolumeGone()
     {
         for (int i = 0; i < BattleMusic.Length; i++)
         {
             BattleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, 0.0f, Time.unscaledDeltaTime / 1f);
         }
-    }
-
+    }
+
+
+
     void IdleMusicVolumeGone()
     {
         for (int i = 0; i < IdleMusic.Length; i++)
         {
             IdleMusic[i].volume = Mathf.Lerp(IdleMusic[i].volume, 0.0f, Time.unscaledDeltaTime / 1f);
         }
-    }
-
-
+    }
+
+
+
+
+
     void checkState()
     {
         if (pauseAbility != null)
@@ -358,19 +417,20 @@ public class SoundManager : MonoBehaviour
             {
                 if (enemyManager.inBattle == true)
                 {
-                    Debug.Log("should be sounds yes yes");
+                   // Debug.Log("should be sounds yes yes");
                     inBattle = true;
                 }
 
                 if (enemyManager.inBattle == false)
                 {
-                    Debug.Log("no sounds reeeeee");
+                   // Debug.Log("no sounds reeeeee");
                     inBattle = false;
                 }
             }
             else
             {
                 state = MusicState.START;
+				//inBattle = true;
             }
 		}
 		else
@@ -384,7 +444,8 @@ public class SoundManager : MonoBehaviour
     {
         if (timer > -1)
         {
-            timer -= Time.unscaledDeltaTime;
+            timer -= Time.unscaledDeltaTime;
+
             if (timer < 0)
             {
                 if (state == MusicState.IDLE)
@@ -402,12 +463,15 @@ public class SoundManager : MonoBehaviour
 
     void MuteAllAudio()
     {
-        mainMenuMusic.volume = 0.0f;
+        mainMenuMusic.volume = 0.0f;
+
         for (int i = 0; i < BattleMusic.Length; i++)
        {
             BattleMusic[i].Stop();
-        }
-
+        }
+
+
+
         for (int i = 0; i < IdleMusic.Length; i++)
         {
             IdleMusic[i].Stop();
@@ -429,6 +493,12 @@ public class SoundManager : MonoBehaviour
            IdleMusic[i].Stop();
         }
     }
+
+	/*public void Blast()
+	{
+
+		blast[Random.Range(0, blast.Length)].Play();
+	}*/
 
     
 }

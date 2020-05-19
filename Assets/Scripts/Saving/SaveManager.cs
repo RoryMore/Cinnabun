@@ -15,6 +15,10 @@ public class SaveManager : MonoBehaviour
         public CharacterUpgrade playerMovespeed;
         public CharacterUpgrade bloodOrbEffectiveness;
         public CharacterUpgrade blastExplosionRadius;
+        public CharacterUpgrade blastExplosionDamage;
+        public CharacterUpgrade extraPauseAction;
+        public CharacterUpgrade bonusAgilityCrit;
+        public CharacterUpgrade armourEffectiveness;
     }
 
     [Header("Save File Names")]
@@ -31,8 +35,14 @@ public class SaveManager : MonoBehaviour
     string settingsFileName;
     static string staticSettingsFileName;
 
-    [Space][Space]
+    [Space]
+    [Space]
+    public string upgradeShopSceneName;
+    public static string upgradeShopScene;
     public string gameSceneName;
+    public static string gameScene;
+    public string tutorialSceneName;
+    public static string tutorialScene;
     // Inspector values of this list are default values.
     // Defaults will be used on first time playing. Future times, access the save file
     [Tooltip("The values in this List will be the default starting values for the upgrades")]
@@ -44,6 +54,7 @@ public class SaveManager : MonoBehaviour
     [SerializeField]
     SavedSettings defaultSettings;
     static SavedSettings savedSettings;
+    static SavedSettings staticDefaultSettings;
 
     static int savedUpgradeMoney;
 
@@ -61,8 +72,29 @@ public class SaveManager : MonoBehaviour
         staticUpgradeMoneyFileName = upgradeMoneyFileName;
         staticSettingsFileName = settingsFileName;
 
-        characterUpgrades = defaultCharacterUpgrades;
-        savedSettings = defaultSettings;
+        //characterUpgrades = defaultCharacterUpgrades;
+        characterUpgrades = new UpgradeList();
+        characterUpgrades.armourEffectiveness = defaultCharacterUpgrades.armourEffectiveness;
+        characterUpgrades.blastExplosionDamage = defaultCharacterUpgrades.blastExplosionDamage;
+        characterUpgrades.blastExplosionRadius = defaultCharacterUpgrades.blastExplosionRadius;
+        characterUpgrades.bloodOrbEffectiveness = defaultCharacterUpgrades.bloodOrbEffectiveness;
+        characterUpgrades.bonusAgilityCrit = defaultCharacterUpgrades.bonusAgilityCrit;
+        characterUpgrades.extraPauseAction = defaultCharacterUpgrades.extraPauseAction;
+        characterUpgrades.playerMovespeed = defaultCharacterUpgrades.playerMovespeed;
+        characterUpgrades.teleportRange = defaultCharacterUpgrades.teleportRange;
+
+        //savedSettings = defaultSettings;
+        savedSettings = new SavedSettings();
+        savedSettings.cameraMoveSensitivity = defaultSettings.cameraMoveSensitivity;
+        savedSettings.keybindings = defaultSettings.keybindings;
+        savedSettings.musicVolume = defaultSettings.musicVolume;
+        savedSettings.sfxVolume = defaultSettings.sfxVolume;
+
+        staticDefaultSettings = defaultSettings;
+
+        upgradeShopScene = upgradeShopSceneName;
+        gameScene = gameSceneName;
+        tutorialScene = tutorialSceneName;
 
         if (LoadUpgradeSave())
         {
@@ -93,10 +125,10 @@ public class SaveManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Period))
-        {
-            CurrencyManager.AddUpgradeMoney(1);
-        }
+        //if (Input.GetKeyDown(KeyCode.Period))
+        //{
+        //    CurrencyManager.AddUpgradeMoney(1);
+        //}
         //else if (Input.GetKeyDown(KeyCode.Comma))
         //{
         //    CurrencyManager.DeductUpgradeMoney(1);
@@ -143,6 +175,10 @@ public class SaveManager : MonoBehaviour
         save.playerMovespeed = characterUpgrades.playerMovespeed;
         save.bloodOrbEffectiveness = characterUpgrades.bloodOrbEffectiveness;
         save.blastExplosionRadius = characterUpgrades.blastExplosionRadius;
+        save.blastExplosionDamage = characterUpgrades.blastExplosionDamage;
+        save.extraPauseAction = characterUpgrades.extraPauseAction;
+        save.bonusAgilityCrit = characterUpgrades.bonusAgilityCrit;
+        save.armourEffectiveness = characterUpgrades.armourEffectiveness;
 
         return save;
     }
@@ -151,7 +187,7 @@ public class SaveManager : MonoBehaviour
     {
         BinaryFormatter bf = new BinaryFormatter();
         
-        //Debug.Log("Game Saved: New File Created");
+        //Debug.Log("SaveManager: Upgrades saved");
         UpgradeSave save = CreateUpgradeSave();
 
         // Save file does not exist. We are creating one and saving it
@@ -173,6 +209,10 @@ public class SaveManager : MonoBehaviour
             characterUpgrades.playerMovespeed = save.playerMovespeed;
             characterUpgrades.bloodOrbEffectiveness = save.bloodOrbEffectiveness;
             characterUpgrades.blastExplosionRadius = save.blastExplosionRadius;
+            characterUpgrades.blastExplosionDamage = save.blastExplosionDamage;
+            characterUpgrades.extraPauseAction = save.extraPauseAction;
+            characterUpgrades.bonusAgilityCrit = save.bonusAgilityCrit;
+            characterUpgrades.armourEffectiveness = save.armourEffectiveness;
 
             //Debug.Log("Game Loaded from existing file");
             file.Close();
@@ -234,5 +274,10 @@ public class SaveManager : MonoBehaviour
     public static UpgradeList GetUpgradeList()
     {
         return characterUpgrades;
+    }
+
+    public static SavedSettings GetDefaultSettings()
+    {
+        return staticDefaultSettings;
     }
 }

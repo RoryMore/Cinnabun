@@ -12,10 +12,13 @@ public class PauseMenuUI : MonoBehaviour
     TextSystem textSystem;
     public GameObject visualNovel;
     public GameObject VHSimage;
+    public GameObject InventoryUI;
     bool inventory;
+    bool player;
     bool pause;
    public bool novel;
-    public bool skipText = false;
+ public bool skipText = false;
+	
 
     public bool isPaused;
 
@@ -54,7 +57,33 @@ public class PauseMenuUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
         {
             onPaused();
-        }    
+        }
+
+        if (InventoryUI.activeSelf == true)
+        {
+            foreach (GameObject g in playerUI)
+            {
+                g.SetActive(false);
+            }
+            player = true;
+        }
+
+        if (InventoryUI.activeSelf == false && player == true)
+        {
+            foreach (GameObject g in playerUI)
+            {
+                g.SetActive(true);
+            }
+            player = false;
+        }
+        if (isPaused == true)
+        {
+            foreach (GameObject g in playerUI)
+            {
+                g.SetActive(false);
+            }
+        }
+
     }
 
     public void showPaused()
@@ -82,6 +111,13 @@ public class PauseMenuUI : MonoBehaviour
         {
             novel = false;
         }
+
+        if (InventoryUI.activeSelf == true)
+        {
+            InventoryUI.SetActive(false);
+			
+            inventory = true;
+        }
     }
 
     public void hidePaused()
@@ -101,10 +137,16 @@ public class PauseMenuUI : MonoBehaviour
         }
 
      
-            if (novel == true)
-            {
-                visualNovel.SetActive(true);
-            }
+        if (novel == true)
+        {
+           visualNovel.SetActive(true);
+        }
+
+        if (inventory == true)
+        {
+            InventoryUI.SetActive(true);
+            inventory = false;
+        }
      
     }
 
@@ -121,6 +163,7 @@ public class PauseMenuUI : MonoBehaviour
             hidePaused();
         }
     }
+
 
     
 

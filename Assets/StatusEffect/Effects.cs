@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new stats", menuName = "ScriptableObjects/StatusEffect", order = 4) ]
 public class Effects : ScriptableObject
 {
-    public enum buffeType
+    public enum EffecteType
     {
-        Percent,
+        Percent,//not imputated yet
         Number
     }
     public enum EffectApplyType 
@@ -15,24 +15,27 @@ public class Effects : ScriptableObject
         StartSkill,//trigger on BaseSkill
         OnDamage,
         OnHit,//trigger on BaseSkill
-        OnSkill,
+       // OnSkill,
         EndSkill,//trigger on BaseSkill
         Death
     }
+    [Header("Effect appucation")]
+    [Tooltip(" when Effect is applyed")]
     public EffectApplyType EfectApplyWhen;
 
-#if EfectApplyWhen == OnSkill
-    [Tooltip("Name of the skill which causes this effect")] public string Skill;
-#endif
-
+    public EffecteType EffectType;
+    [Tooltip("what type of effect is applyed. you can edit the list in 'Entity - ConditionEffect'")]
     public Entity.ConditionEffect Effect;
-    [Tooltip("Effect that don't get removed, if they do then ")]
+
+    [Header("duration")]
+    [Tooltip("Effect that don't get removed, if they do then (currently not impulated) ")]
     public bool permanent;
     [Tooltip("How Long it effect last for")] 
     public float Duration;
-    public buffeType BuffType;
+    
 
-    [Tooltip("is buff type is percent strength is the percent amount, if number then strength is a falt. - heals intsead")]
+    [Header("Damage")]
+    [Tooltip("is buff type is percent strength is the percent amount, if number then strength is a falt. if 'Skill' is 'HEAL' heals intsead")]
     public float Damage;
-    [Tooltip(" - heals intsead")]public float TickDamage;
+    [Tooltip("damage which happens every second. if 'Skill' is 'HEAL' heals intsead")]public float TickDamage;
 }

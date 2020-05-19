@@ -9,7 +9,8 @@ public class TextSystem : MonoBehaviour
     public static TextSystem instance;
     SpeechText speechText;
     DialogueSystem dialogue;
-	
+	EnemyManager enemyManager;
+	NovelManager novelManager;
 	GameObject[] playerUI;
 
 	[Header("Text Settings")]
@@ -106,8 +107,9 @@ public class TextSystem : MonoBehaviour
 	{
 		dialogue = DialogueSystem.instance;
 		speechText = GetComponent<SpeechText>();
+		novelManager = GetComponent<NovelManager>();
 		playerUI = GameObject.FindGameObjectsWithTag("PlayerUI");
-
+		enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
 		dialogue.waitfor = textSpeed;
 	}
 
@@ -128,6 +130,7 @@ public class TextSystem : MonoBehaviour
                 {
                     if (index >= text[wordIndex].text.Length)
                     {
+						enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior();
 						hideNovel = true;
 						Debug.Log("Text,Done");
 						novelActive = true;
@@ -137,6 +140,7 @@ public class TextSystem : MonoBehaviour
 						{
 							g.SetActive(true);
 						}
+					
 						LoadScene(sceneNumber);
 						visualNovel.SetActive(false);						
 					
@@ -159,6 +163,7 @@ public class TextSystem : MonoBehaviour
             if (index <= text.Length)
             {
                 stopSay(text[wordIndex].text[index]);
+			
             }
         }
         Delay();
@@ -227,7 +232,8 @@ public class TextSystem : MonoBehaviour
     {
         if (GameStart == true)
         {
-			getBackGroundName();
+			//getBackGroundName();
+			enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior();
 			Say(text[wordIndex].text[index]);
 			//checkIfNull();
 			//checkBackground();
@@ -349,10 +355,13 @@ public class TextSystem : MonoBehaviour
     //this checks if the user wants to load the scene or not then goes to that scene
 	void LoadScene(int sceneNumber)
 	{
-        if (GoToNextScene == true)
-        {
-            SceneManager.LoadScene(sceneNumber);
-        }
+	//	if (novelManager.Trigger6 == true)
+	//	{
+			if (GoToNextScene == true)
+			{
+				SceneManager.LoadScene(sceneNumber);
+			}
+		//}
 			
 	}
 

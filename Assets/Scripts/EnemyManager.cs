@@ -11,15 +11,18 @@ public class EnemyManager : MonoBehaviour
 
     public bool inBattle;
 
-    public int numOfClearedEncounters = 0;
+    public int numOfClearedEncounters;
 
     public bool WaveActive;
 
-    [HideInInspector]
+    //[HideInInspector]
     public Encounter enemyMangerCurrentEncounter;
 
+    [SerializeField]
     float waveCooldownTimer;
     public float timeBetweenWaves;
+
+    public float WaveCooldownTimer { get => waveCooldownTimer; }
 
     /*Each group of enemies is handled by their own personal "Encounter" manager. The enemy manager handles the
     Global functions of managing the encounters themselves, disabling them and enabling them as required*/
@@ -31,12 +34,16 @@ public class EnemyManager : MonoBehaviour
     {
         weWon = false;
         waveCooldownTimer = 0.0f;
+        numOfClearedEncounters = 0;
 
         player = GameObject.Find("Player");
         foreach (Encounter encounter in encounters)
         {
             encounter.enemyManager = this;
         }
+
+        //Start with First basic wave
+        ActivateWave(encounters[0]);
         
     }
 
@@ -50,27 +57,29 @@ public class EnemyManager : MonoBehaviour
             waveCooldownTimer -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown("y"))
-        {
-            enemyMangerCurrentEncounter.SetActiveBehavior();
-        }
-
     }
 
     public void UpdateActiveEncounters()
     {
         if (inBattle == false && waveCooldownTimer <= 0.0f)
         {
-            foreach (Encounter encounter in encounters)
-            {
-                //If it's not cleared and we don't already have a wave going...
-                if (encounter.cleared == false && encounter.gameObject.activeInHierarchy == false)
-                {
-                    //UI for "Wave" + encounter list.Count + 1
-                    ActivateWave(encounter);
-                    break;
-                }
-            }
+            int randNum = Random.Range(0, encounters.Count);
+
+            //if (encounters[randNum].gameObject.activeInHierarchy == false)
+            //{
+                ActivateWave(encounters[randNum]);
+            //}
+
+            //foreach (Encounter encounter in encounters)
+            //{
+            //    //If it's not cleared and we don't already have a wave going...
+            //    if (encounter.cleared == false && encounter.gameObject.activeInHierarchy == false)
+            //    {
+            //        //UI for "Wave" + encounter list.Count + 1
+            //        ActivateWave(encounter);
+            //        break;
+            //    }
+            //}
         }
     }
 
@@ -82,27 +91,27 @@ public class EnemyManager : MonoBehaviour
         {
             if (encounter.cleared == true)
             {
-                numOfClearedEncounters++;
+                //numOfClearedEncounters++;
             }
         }
         // If the player has beaten every wave
-        if (numOfClearedEncounters == encounters.Count)
-        {
-           //We want an infinite loop, so reset the list
-           // If in future, we want to specifically alter some waves, we can do so here
+        //if (numOfClearedEncounters >= encounters.Count)
+        //{
+        //   //We want an infinite loop, so reset the list
+        //   // If in future, we want to specifically alter some waves, we can do so here
 
-        foreach (Encounter encounter in encounters)
-            {
-                encounter.cleared = false;
-                encounter.gameObject.SetActive(false);
-            }
-            //Start at the beginning
-            ActivateWave(encounters[0]);
+        //    foreach (Encounter encounter in encounters)
+        //    {
+        //        encounter.cleared = false;
+        //        encounter.gameObject.SetActive(false);
+        //    }
+        //    //Start at the beginning
+        //    ActivateWave(encounters[0]);
 
-            //You Won!
-            //Debug.Log("You win!");
-            //weWon = true;
-        }
+        //    //You Won!
+        //    //Debug.Log("You win!");
+        //    //weWon = true;
+        //}
     }
 
     public void SetTimeToNextWave(float timer)

@@ -51,11 +51,12 @@ public class EnemyScript : Entity
         var step = turnSpeed * Time.deltaTime;
 
         // Rotate our transform a step closer to the target's.
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, target.rotation, step);
+        Vector3 dir = target.position - transform.position;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dir), step);
 
     }
 
-    public override void TakeDamage(int amount, SkillData.DamageType damageType = SkillData.DamageType.PHYSICAL)
+    public override void TakeDamage(int amount)
     {
         Debug.Log("OOF x " + amount);
         if (isDead)
@@ -78,7 +79,12 @@ public class EnemyScript : Entity
         //Ensure that the target is no longer in the initiative 
         myEncounter.initiativeList.Remove(this);
         myEncounter.healList.Remove(this);
+        //myEncounter.masterInitiativeList.Remove(this);
+        //myEncounter.playerInclusiveInitiativeList.Remove(this);
         nav.enabled = false;
+
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 
 

@@ -14,6 +14,10 @@ public class RespawnControl : MonoBehaviour
 
     WinLoseCanvasControl winLoseCanvas;
 
+    EnemyManager enemyManager;
+
+    bool moneyRewarded = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +29,9 @@ public class RespawnControl : MonoBehaviour
         player = GetComponent<Player>();
         respawnPoint = GameObject.FindGameObjectWithTag("MainRespawn").transform;
         winLoseCanvas = FindObjectOfType<WinLoseCanvasControl>();
+        enemyManager = FindObjectOfType<EnemyManager>();
+
+        moneyRewarded = false;
     }
 
     // Update is called once per frame
@@ -47,7 +54,7 @@ public class RespawnControl : MonoBehaviour
                         }
                         if (item.isEquipped)
                         {
-                            CharacterPanelStatControl.OnItemRemove(item.itemInfoBlock);
+                            CharacterPanelStatControl.OnItemRemove(item);
 
                             item.usedEquipSlot.equippedItem = null;
                             item.usedEquipSlot.isUsed = false;
@@ -63,21 +70,39 @@ public class RespawnControl : MonoBehaviour
                 }
 
                 //player.transform.position = respawnPoint.position;
-                player.nav.Warp(respawnPoint.position);
-                player.Revive();
-                itemsCleared = false;
-            }
-        }
-        else
-        {
-            if (winLoseCanvas != null)
-            {
-                if (winLoseCanvas.gameWon)
+                //player.nav.Warp(respawnPoint.position);
+                //player.Revive();
+                //itemsCleared = false;
+
+                int wavesCleared = 0;
+                // Add an amount of upgrade money = wavesCompleted
+                foreach (Encounter encounter in enemyManager.encounters)
                 {
-                    string currentScene = SceneManager.GetActiveScene().name;
-                    SceneManager.LoadSceneAsync(currentScene);
+                    if (encounter.cleared)
+                    {
+                        wavesCleared++;
+                    }
                 }
+                if (!moneyRewarded)
+                {
+                    //CurrencyManager.AddUpgradeMoney(enemyManager.numOfClearedEncounters);
+                    CurrencyManager.AddUpgradeMoney(wavesCleared);
+                    SaveManager.SaveUpgradeMoney();
+                    moneyRewarded = true;
+                }
+                SceneManager.LoadSceneAsync(SaveManager.upgradeShopScene);
             }
         }
+        //else
+        //{
+        //    if (winLoseCanvas != null)
+        //    {
+        //        if (winLoseCanvas.gameWon)
+        //        {
+        //            string currentScene = SceneManager.GetActiveScene().name;
+        //            SceneManager.LoadSceneAsync(currentScene);
+        //        }
+        //    }
+        //}
     }
 }
