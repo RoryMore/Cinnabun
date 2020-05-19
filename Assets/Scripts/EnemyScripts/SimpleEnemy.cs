@@ -546,8 +546,8 @@ public class SimpleEnemy : EnemyScript
                     {
                         anim.SetBool("isWalking", true);
                         nav.enabled = true;
-                        nav.SetDestination(Vector3.MoveTowards(transform.position, destination, nav.speed));
-
+                    //nav.SetDestination(Vector3.MoveTowards(transform.position, destination, nav.speed));
+                    nav.SetDestination(destination);
                     }
 
 
