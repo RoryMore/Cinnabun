@@ -10,7 +10,13 @@ public class Player : Entity
     public float moveRaycastDistance;
     public LayerMask itemInteractLayerMask;
     public CameraController cameraShake;
-    TextSystem textSystem;
+
+	public bool attackSkill;
+	public bool telepotSkill;
+	public bool bombSkill;
+	public bool rewindSkill;
+
+	TextSystem textSystem;
     [HideInInspector] public bool triggerBox = false;
     public enum PlayerState
     {
@@ -72,6 +78,11 @@ public class Player : Entity
         //baseMovementSpeed = movementSpeed;
 
         playerState = PlayerState.FREE;
+
+		telepotSkill = false;
+		attackSkill = false;
+		bombSkill = false;
+		rewindSkill = false;
     }
 
     private void Awake()
@@ -415,24 +426,36 @@ public class Player : Entity
         {
             if (weaponAttack != null)
             {
-                if (weaponAttack.isAllowedToCast)
-                {
-                    selectedSkill = weaponAttack;
-                    playerState = PlayerState.DOINGSKILL;
-                }
+				if (attackSkill == true)
+				{
+					if (weaponAttack.isAllowedToCast)
+					{
+						selectedSkill = weaponAttack;
+						playerState = PlayerState.DOINGSKILL;
+					}
+				}
             }
         }
         else if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.skillSlot2))
         {
-            SelectSkill(1);
+			if (bombSkill == true)
+			{
+				SelectSkill(1);
+			}
         }
         else if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.skillSlot3))
         {
-            SelectSkill(2);
+			if (telepotSkill == true)
+			{
+				SelectSkill(2);
+			}
         }
         else if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.skillSlot4))
         {
-            SelectSkill(3);
+			if (rewindSkill == true)
+			{
+				SelectSkill(3);
+			}
         }
         //else if (Input.GetKeyDown(KeyCode.Alpha5))
         //{
@@ -566,7 +589,11 @@ public class Player : Entity
         // How effective armour is at 'armourPointThreshold' points of armour
         // 0.25f effectiveness && 100.0f threshold = 25% damage reduction at 100 points of armour
         float armourEffectiveness = 0.25f;
-        armourEffectiveness += SaveManager.GetUpgradeList().armourEffectiveness.GetUpgradedMagnitude();
+        Debug.LogWarning(SaveManager.GetUpgradeList().armourEffectiveness);
+        if (SaveManager.GetUpgradeList().armourEffectiveness != null)
+        {
+            armourEffectiveness += SaveManager.GetUpgradeList().armourEffectiveness.GetUpgradedMagnitude();
+        }
         float armourPointThreshold = 100.0f;
 
         if (damageType == SkillData.DamageType.PHYSICAL)

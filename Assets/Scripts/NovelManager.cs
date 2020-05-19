@@ -16,14 +16,14 @@ public class NovelManager : MonoBehaviour
 
 
 	//Triggers
-	bool Trigger1 = false;
-	bool Trigger2 = false;
-	bool Trigger3 = false;
-	bool Trigger4 = false;
-	bool Trigger5 = false;
-	bool Trigger6 = false;
-	bool Trigger7 = false;
-	bool Trigger8 = false;
+	public bool Trigger1 = false;
+	public bool Trigger2 = false;
+	public bool Trigger3 = false;
+	public bool Trigger4 = false;
+	public bool Trigger5 = false;
+	public bool Trigger6 = false;
+	public bool Trigger7 = false;
+	public bool Trigger8 = false;
 
 	bool on = false;
 
@@ -48,8 +48,10 @@ public class NovelManager : MonoBehaviour
 		NoMoreBattle();
 		UsedRewind();
 		UsedInventory();
-		
+		//PlayerDead();
 	}
+
+
 
 	void AcrossBridge()
 	{
@@ -163,6 +165,7 @@ public class NovelManager : MonoBehaviour
 		}
 
 	}
+
 
 
 

@@ -136,7 +136,7 @@ public class ItemData : ScriptableObject
             equipmentTrait = new EquipmentTrait()
         };
         itemStatBlock.equipmentTrait = itemStatBlock.equipmentTrait.GetRandomTraitType(itemType);
-        //itemStatBlock.equipmentTrait = itemStatBlock.equipmentTrait.GetSpecificTrait(EquipmentTrait.TraitType.SkillWUR);
+        //itemStatBlock.equipmentTrait = itemStatBlock.equipmentTrait.GetSpecificTrait(EquipmentTrait.TraitType.SkillPercentDmg);
         itemStatBlock.equipmentTrait.Initialise(rarity);
 
         return itemStatBlock;

@@ -51,7 +51,8 @@ public class EnemyScript : Entity
         var step = turnSpeed * Time.deltaTime;
 
         // Rotate our transform a step closer to the target's.
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, target.rotation, step);
+        Vector3 dir = target.position - transform.position;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dir), step);
 
     }
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxRange: 7
   minRange: 0
-  farWidth: 2
+  farWidth: 7
   nearWidth: 0
   verticalRange: 0
   angle: 0

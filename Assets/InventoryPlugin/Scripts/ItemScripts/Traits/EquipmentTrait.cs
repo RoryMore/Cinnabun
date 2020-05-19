@@ -15,7 +15,8 @@ public class EquipmentTrait
     {
         None,
         SkillCDR,
-        SkillWUR
+        SkillWUR,
+        SkillPercentDmg
     }
 
     protected TraitType trait;
@@ -40,13 +41,13 @@ public class EquipmentTrait
         {
             case ItemData.ItemType.Weapon:
                 {
-                    traitRange.AddRange(new TraitType[] { TraitType.None, TraitType.SkillCDR, TraitType.SkillWUR });
+                    traitRange.AddRange(new TraitType[] { TraitType.None, TraitType.SkillCDR, TraitType.SkillWUR, TraitType.SkillPercentDmg });
                    // traitRange = new Trait[] { Trait.None, Trait.SkillCDR };
                     break;
                 }
             case ItemData.ItemType.Armour:
                 {
-                    traitRange.AddRange(new TraitType[] { TraitType.None, TraitType.SkillCDR, TraitType.SkillWUR });
+                    traitRange.AddRange(new TraitType[] { TraitType.None, TraitType.SkillCDR, TraitType.SkillWUR, TraitType.SkillPercentDmg });
                     break;
                 }
         }
@@ -70,6 +71,10 @@ public class EquipmentTrait
                     //Debug.Log("RandomTrait Type set as SkillCTRTrait");
                     return new SkillWURTrait();
                 }
+            case TraitType.SkillPercentDmg:
+                {
+                    return new SkillPercentDmgTrait();
+                }
         }
         return this;
     }
@@ -85,6 +90,10 @@ public class EquipmentTrait
             case TraitType.SkillWUR:
                 {
                     return new SkillWURTrait();
+                }
+            case TraitType.SkillPercentDmg:
+                {
+                    return new SkillPercentDmgTrait();
                 }
         }
         return this;
