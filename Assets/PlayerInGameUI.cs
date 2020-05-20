@@ -67,13 +67,34 @@ public class PlayerInGameUI : MonoBehaviour
         {
 			   PauseButton.gameObject.SetActive(false);
 				PlayButton.gameObject.SetActive(true);
+			VHSimage.gameObject.SetActive(true);
+			timeSinceStartUp.gameObject.SetActive(true);
+
+			if (sceneName != "JasmineScene")
+			{
 				RewindButtonBackground.interactable = true;
 				DelayedBlastButtonBackground.interactable = true;
 				TeleportBackground.interactable = true;
 				WeaponAttackButtonBackground.interactable = true;
-				VHSimage.gameObject.SetActive(true);
-				timeSinceStartUp.gameObject.SetActive(true);
+			}
 
+			if (sceneName == "JasmineScene")
+			{
+				if (novelM.Trigger1 == true)
+				{
+					WeaponAttackButtonBackground.interactable = true;
+				}
+
+				if (novelM.Trigger3 == true)
+				{
+					RewindButtonBackground.interactable = true;
+				}
+
+				if (novelM.Trigger4 == true)
+				{
+					DelayedBlastButtonBackground.interactable = true;
+				}
+			}
 
         }
         if (pauseAbility.states != PauseAbility.GameStates.TIMESTOP)

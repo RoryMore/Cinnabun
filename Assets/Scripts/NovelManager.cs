@@ -172,7 +172,7 @@ public class NovelManager : MonoBehaviour
 		{
 			if (!visualNovel.activeSelf)
 			{
-				SceneManager.LoadScene(0);
+				//SceneManager.LoadScene(0);
 			}
 		}
 	}
