@@ -1507,17 +1507,17 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 0.9528302, g: 0.6911798, b: 0.29214135, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.251
+    m_Bias: 0.234
     m_NormalBias: 0.1
     m_NearPlane: 0.1
     m_CullingMatrixOverride:
@@ -1563,13 +1563,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 366111980}
-  m_LocalRotation: {x: 0.5828198, y: 0.63266313, z: 0.10477838, w: 0.49907908}
+  m_LocalRotation: {x: 0.6159965, y: 0.33427635, z: 0.12619613, w: 0.70205575}
   m_LocalPosition: {x: 134.0419, y: 59.203346, z: 129.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 24
-  m_LocalEulerAnglesHint: {x: 153.31, y: 302.487, z: 250.47}
+  m_LocalEulerAnglesHint: {x: 128.68799, y: 268.385, z: 250.443}
 --- !u!1 &367147484
 GameObject:
   m_ObjectHideFlags: 0
@@ -2339,12 +2339,12 @@ Terrain:
   m_Enabled: 1
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: 36d682a19d9300c488bde13925bb5b28, type: 2}
-  m_TreeDistance: 5000
+  m_TreeDistance: 1000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 250
-  m_DetailObjectDensity: 1
+  m_DetailObjectDensity: 0.2
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
