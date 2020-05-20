@@ -42,6 +42,8 @@ public class Encounter : MonoBehaviour
     [SerializeField]
     private float waveOverTicker;
 
+    public float WaveOverTicker { get => waveOverTicker; }
+
     public enum WaveType
     {
         SLAUGHTER, //Kill all enemies who spawn to progress

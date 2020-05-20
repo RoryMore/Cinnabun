@@ -48,7 +48,7 @@ public class WaveUIManager : MonoBehaviour
                         case Encounter.WaveType.ENDLESS:
                             {
                                 waveTypeText.text = "ENDLESS";
-                                waveTimerText.text = "SURVIVE FOR <color=maroon>" + Mathf.Round(enemyManager.enemyMangerCurrentEncounter.waveOverTimer) + "s</color>";
+                                waveTimerText.text = "SURVIVE FOR <color=maroon>" + Mathf.Round(enemyManager.enemyMangerCurrentEncounter.WaveOverTicker) + "s</color>";
                                 break;
                             }
                         case Encounter.WaveType.MINIBOSS:
