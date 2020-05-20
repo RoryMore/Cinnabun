@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class EnemyManager : MonoBehaviour
 {
@@ -44,7 +46,23 @@ public class EnemyManager : MonoBehaviour
 
         //Start with First basic wave
         ActivateWave(encounters[0]);
-        
+
+        //Mini stop
+        if (SceneManager.GetActiveScene().name == "JasmineScene")
+        {
+            timeBetweenWaves = 10000000000000000000;
+        }
+        else
+        {
+            timeBetweenWaves = 10;
+        }
+
+
+    }
+
+    private void Awake()
+    {
+
     }
 
     // Update is called once per frame
