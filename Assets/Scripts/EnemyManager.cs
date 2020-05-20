@@ -14,6 +14,7 @@ public class EnemyManager : MonoBehaviour
     public bool inBattle;
 
     public int numOfClearedEncounters = 0;
+    public int encounterSpawnBoostVar = 0;
 
     public bool WaveActive;
 
@@ -80,7 +81,7 @@ public class EnemyManager : MonoBehaviour
         {
             int randNum = Random.Range(0, encounters.Count);
 
-            if (encounters[randNum].cleared == false && encounters[randNum].gameObject.activeInHierarchy == false)
+            if (encounters[randNum].cleared == false)
             {
                 ActivateWave(encounters[randNum]);
             }
@@ -98,17 +99,16 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    public void CalculateSpawnBoost()
+    {
+        //The equation
+        encounterSpawnBoostVar = (int)(2 + ((float)numOfClearedEncounters * 0.5f));
+    }
+
     public void CheckVictory()
     {
         
 
-        foreach (Encounter encounter in encounters)
-        {
-            if (encounter.cleared == true)
-            {
-                numOfClearedEncounters++;
-            }
-        }
         // If the player has beaten every wave
         if (numOfClearedEncounters >= encounters.Count)
         {
@@ -118,10 +118,12 @@ public class EnemyManager : MonoBehaviour
             foreach (Encounter encounter in encounters)
             {
                 encounter.cleared = false;
-                encounter.gameObject.SetActive(false);
+                encounter.playerInArea = false;
+                //encounter.gameObject.SetActive(false);
+
             }
             //Start at the beginning
-            ActivateWave(encounters[0]);
+            //ActivateWave(encounters[0]);
 
             //You Won!
             //Debug.Log("You win!");
@@ -136,9 +138,13 @@ public class EnemyManager : MonoBehaviour
 
     public void ActivateWave(Encounter encounter)
     {
+        encounter.gameObject.SetActive(true);
         inBattle = true;
         WaveActive = true;
-        encounter.gameObject.SetActive(true);
+        
+
+        //Set the spawnpoints here!
+
         encounter.Initialise();
         enemyMangerCurrentEncounter = encounter;
 
