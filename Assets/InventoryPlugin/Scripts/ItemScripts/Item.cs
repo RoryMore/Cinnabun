@@ -37,6 +37,12 @@ public class Item : MonoBehaviour
     [SerializeField]
     RarityColour rarityColour;
 
+    AttractedPickup attractor;
+    [SerializeField]
+    float attractorDisableTime = 5.0f;
+    [SerializeField]
+    float attractorDisableTimer = 0.0f;
+
     private void Awake()
     {
         if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 20.0f, NavMesh.AllAreas))
@@ -48,6 +54,8 @@ public class Item : MonoBehaviour
             Debug.LogError("Dropped Item could not find suitable location on NavMesh to drop at! Item may be inside an object or underground if the spawnLocation was near unsuitable terrain/objects");
         }
 
+        attractor = GetComponent<AttractedPickup>();
+
         enemyManager = FindObjectOfType<EnemyManager>();
     }
 
@@ -58,6 +66,8 @@ public class Item : MonoBehaviour
 
         timeAlive = 0.0f;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
+        attractor.SetTarget(player.transform);
 
         resCon = player.gameObject.GetComponent<RespawnControl>();
         if (resCon == null)
@@ -150,8 +160,44 @@ public class Item : MonoBehaviour
     void Update()
     {
         UpdateLifetime();
-        UpdateClickState();
-        EvaluateItemGiven();
+        //UpdateClickState();
+        //EvaluateItemGiven();
+
+        if (attractor.enabled)
+        {
+            if (attractor.targetInRange)
+            {
+                // Give item to Player
+                if (inventoryBase.AddItem(this))
+                {
+                    Destroy(gameObject);
+                }
+                // Player had a full inventory
+                else
+                {
+                    // Disable Attractor for some time
+                    attractorDisableTimer = attractorDisableTime;
+                    attractor.enabled = false;
+                }
+            }
+        }
+        else
+        {
+            if (attractorDisableTimer >= 0.0f)
+            {
+                attractorDisableTimer -= Time.deltaTime;
+            }
+            else
+            {
+                attractor.enabled = true;
+            }
+        }
+    }
+
+    public void SetAttractorDisabledOnTimer()
+    {
+        attractor.enabled = false;
+        attractorDisableTimer = attractorDisableTime;
     }
 
     void UpdateLifetime()

@@ -220,13 +220,14 @@ public class MouseItemControl : MonoBehaviour
 
                     if (mouseItem.itemData != null)
                     {
-                        Vector3 dropLocation = player.transform.position;
-                        dropLocation.x += Random.Range(-2.0f, 2.0f);
-                        dropLocation.z += Random.Range(-2.0f, 2.0f);
+                        //Vector3 dropLocation = player.transform.position;
+                        //dropLocation.x += Random.Range(-2.0f, 2.0f);
+                        //dropLocation.z += Random.Range(-2.0f, 2.0f);
                         
 
-                        Item droppedItem = Instantiate(itemDrop, dropLocation, Quaternion.identity).GetComponent<Item>();
-                        droppedItem.Initialise(mouseItem.itemData, mouseItem.itemInfoBlock, 30.0f);
+                        //Item droppedItem = Instantiate(itemDrop, dropLocation, Quaternion.identity).GetComponent<Item>();
+                        //droppedItem.Initialise(mouseItem.itemData, mouseItem.itemInfoBlock, 30.0f);
+                        //droppedItem.SetAttractorDisabledOnTimer();
 
                         itemDroppedToGround = true;
                         mouseItem.ClearItem();

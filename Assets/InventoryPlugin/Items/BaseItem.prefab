@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 9128234640917826910}
   - component: {fileID: 8009078187366052676}
   - component: {fileID: 806337114176400408}
+  - component: {fileID: 5812504245254425337}
   m_Layer: 11
   m_Name: BaseItem
   m_TagString: Item
@@ -111,13 +112,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemData: {fileID: 0}
   dropHeight: 1
-  lifetime: 120
+  lifetime: 30
   timeAlive: 0
   itemClicked: 0
   itemMask:
     serializedVersion: 2
     m_Bits: 2048
   rarityColour: {fileID: 11400000, guid: 972eafea893a6694ea94747a94169c68, type: 2}
+  attractorDisableTime: 5
+  attractorDisableTimer: 0
 --- !u!114 &9128234640917826910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,3 +213,21 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &5812504245254425337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2770946621699391493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29607f381865ff14baad75c7dfe08b7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  attractionDistance: 10
+  minDistance: 1
+  maxTravelSpeed: 80
+  acceleration: 7.5
+  targetInRange: 0
