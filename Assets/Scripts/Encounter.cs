@@ -386,7 +386,7 @@ public class Encounter : MonoBehaviour
 
         foreach (SimpleEnemy enemy in masterInitiativeList)
         {
-            Destroy(enemy); // Why is the enemy script being destroyed and the gameObject being left alone. Anything that was attached to the enemy still attempting to reference the enemy is obviously throwing errors. This is a strange thing to do in my opinion instead of having the enemy entity be dead if you don't want to just remove the gameObject
+            //Destroy(enemy); // Why is the enemy script being destroyed and the gameObject being left alone. Anything that was attached to the enemy still attempting to reference the enemy is obviously throwing errors. This is a strange thing to do in my opinion instead of having the enemy entity be dead if you don't want to just remove the gameObject
             initiativeList.Clear();
             masterInitiativeList.Clear();
             playerInclusiveInitiativeList.Clear();
