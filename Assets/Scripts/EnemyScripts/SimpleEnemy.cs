@@ -27,6 +27,7 @@ public class SimpleEnemy : EnemyScript
 
     public List<EnemyScript> enemyForces;
 
+
     TextSystem textSystem;
     PauseAbility pauseAbility;
     [SerializeField] private Transform damageNumbers;
@@ -48,6 +49,9 @@ public class SimpleEnemy : EnemyScript
 
     bool goalset = false;
     public float radis = 0;
+
+
+
     public enum AGRESSION
     {
         AGRESSIVE,
@@ -68,7 +72,7 @@ public class SimpleEnemy : EnemyScript
 
     void Awake()
     {
-
+        baseHP = 35;
         InitialiseAll();
 
 
@@ -100,7 +104,7 @@ public class SimpleEnemy : EnemyScript
 
         // skillList = GetComponentsInChildren<BaseSkill>();
 
-        chosenSkill = skillList[3];
+        chosenSkill = skillList[1];
 
         isActive = true;
 
@@ -280,25 +284,18 @@ public class SimpleEnemy : EnemyScript
 //}
 }*/
         // Update turn cooldown
-        Turn();
 
-        //Update all cooldowns and conditons
-        UpdateAllConditions();
-
-        //basic attack is casting
-        if (chosenSkill.currentlyCasting)
+        if (isActive)
         {
-            chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
-            if (!chosenSkill.currentlyCasting)
-            {
-                isAttacking = false;
-                hasDecided = false;
 
-            }
-        }
-        else
-        {
-            //choosen skill is casting
+
+
+            Turn();
+
+            //Update all cooldowns and conditons
+            UpdateAllConditions();
+
+            //basic attack is casting
             if (chosenSkill.currentlyCasting)
             {
                 chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
@@ -311,44 +308,59 @@ public class SimpleEnemy : EnemyScript
             }
             else
             {
-                if (Vector3.Distance(transform.position, player.transform.position) > (chosenSkill.skillData.maxRange - 2 / 2))
+                //choosen skill is casting
+                if (chosenSkill.currentlyCasting)
                 {
-                    move();
-                    goalset = true;
-                    HoldTurn();
+                    chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
+                    if (!chosenSkill.currentlyCasting)
+                    {
+                        isAttacking = false;
+                        hasDecided = false;
+
+                    }
                 }
                 else
                 {
-                    //nav.enabled = false;
-                    Debug.LogWarning("attack");
-
-                    if (nav.enabled != false)
+                    if (Vector3.Distance(transform.position, player.transform.position) > (chosenSkill.skillData.maxRange - 2 / 2))
                     {
-                        nav.isStopped = true;
-                        goalset = false;
-
-                        Debug.LogWarning("stop walking");
-                        anim.SetBool("isWalking", false);
-                        nav.enabled = false;
+                        move();
+                        goalset = true;
+                        HoldTurn();
                     }
+                    else
+                    {
+                        //nav.enabled = false;
+                        Debug.LogWarning("attack");
 
-                    FaceTarget(player.transform);
-                    basicAttack();
-                    //Attack(chosenSkill);
-                    //goalset = false;
+                        if (nav.enabled != false)
+                        {
+                            nav.isStopped = true;
+                            goalset = false;
+
+                            Debug.LogWarning("stop walking");
+                            anim.SetBool("isWalking", false);
+                            nav.enabled = false;
+                        }
+
+                        FaceTarget(player.transform);
+                        basicAttack();
+                        //Attack(chosenSkill);
+                        //goalset = false;
+                    }
                 }
             }
-        }
 
-       
 
-        if (!CurrentlyCasting)
-        {
-            
-        }
-        else
-        {
-            
+
+            if (!CurrentlyCasting)
+            {
+
+            }
+            else
+            {
+
+            }
+
         }
 
     }
@@ -546,8 +558,8 @@ public class SimpleEnemy : EnemyScript
                     {
                         anim.SetBool("isWalking", true);
                         nav.enabled = true;
-                        nav.SetDestination(Vector3.MoveTowards(transform.position, destination, nav.speed));
-
+                    //nav.SetDestination(Vector3.MoveTowards(transform.position, destination, nav.speed));
+                    nav.SetDestination(destination);
                     }
 
 

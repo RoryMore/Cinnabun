@@ -21,6 +21,7 @@ public class Item : MonoBehaviour
     [SerializeField]
     // If the item has been clicked & the Player is nearby, give the item to the Player. Reset the bool if a click has been input but not on the Item
     bool itemClicked;
+    public LayerMask itemMask;
 
     Player player;
     RespawnControl resCon;
@@ -116,7 +117,7 @@ public class Item : MonoBehaviour
                     break;
                 }
         }
-        rarityLight.enabled = false;
+        rarityLight.enabled = true;
     }
 
     /// <summary>
@@ -173,7 +174,7 @@ public class Item : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 400.0f))
+            if (Physics.Raycast(ray, out RaycastHit hit, 400.0f, itemMask))
             {
                 // Did this object get clicked
                 if (hit.collider.gameObject == gameObject)

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3110f89451f743848910c598af7ff19f, type: 3}
   m_Name: TeleportData
   m_EditorClassIdentifier: 
-  maxRange: 10
+  maxRange: 15
   minRange: 0
   farWidth: 0
   nearWidth: 0
@@ -20,6 +20,7 @@ MonoBehaviour:
   angle: 0
   cooldown: 15
   windUp: 0.75
+  DelayAttack: 0
   skill: 0
   baseMagnitude: 10
   damageType: 0
