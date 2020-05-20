@@ -19876,6 +19876,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 2.18
       objectReference: {fileID: 0}
+    - target: {fileID: 3699210431295158686, guid: 3439b444dacb43f4aa477ee2f85d6f78,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13.31
+      objectReference: {fileID: 0}
     - target: {fileID: 5123119383639109196, guid: 3439b444dacb43f4aa477ee2f85d6f78,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -19990,6 +19995,23 @@ PrefabInstance:
       propertyPath: itemSpawner.ultraRatio
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
+        type: 3}
+      propertyPath: waveType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
+        type: 3}
+      propertyPath: enemy1
+      value: 
+      objectReference: {fileID: 2062244974298442787, guid: 9caa3b776d4b48d42bb046526fef5f3a,
+        type: 3}
+    - target: {fileID: 7232339297610492454, guid: 3439b444dacb43f4aa477ee2f85d6f78,
+        type: 3}
+      propertyPath: enemy2
+      value: 
+      objectReference: {fileID: 2062244974298442787, guid: 9caa3b776d4b48d42bb046526fef5f3a,
+        type: 3}
     - target: {fileID: 7232339297610492455, guid: 3439b444dacb43f4aa477ee2f85d6f78,
         type: 3}
       propertyPath: m_IsActive

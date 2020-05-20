@@ -87,7 +87,7 @@ public class BasicSkill : BaseSkill
             case SkillState.DOAFFECT:
                 {
                     //Debug.Log("Skill Effect Activated");
-                    Debug.Log("effect");
+                    
                     ActivateSkill(entityList);
 
                     break;
@@ -132,7 +132,7 @@ public class BasicSkill : BaseSkill
 
     protected override void ActivateSkill(List<Entity> entityList)
     {
-        Debug.Log("dummyattack");
+        
         base.ActivateSkill();
 
 
@@ -190,6 +190,8 @@ public class BasicSkill : BaseSkill
         {
             GetComponentInParent<BuffEffect>().applyEffects(base.casterSelf, Buff.EffectApplyType.EndSkill);
         }
+        casterSelf.acttackdelay = skillData.DelayAttack;
+
         ApplySkillProplys();
     }
 

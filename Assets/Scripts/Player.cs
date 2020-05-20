@@ -589,7 +589,11 @@ public class Player : Entity
         // How effective armour is at 'armourPointThreshold' points of armour
         // 0.25f effectiveness && 100.0f threshold = 25% damage reduction at 100 points of armour
         float armourEffectiveness = 0.25f;
-        armourEffectiveness += SaveManager.GetUpgradeList().armourEffectiveness.GetUpgradedMagnitude();
+        Debug.LogWarning(SaveManager.GetUpgradeList().armourEffectiveness);
+        if (SaveManager.GetUpgradeList().armourEffectiveness != null)
+        {
+            armourEffectiveness += SaveManager.GetUpgradeList().armourEffectiveness.GetUpgradedMagnitude();
+        }
         float armourPointThreshold = 100.0f;
 
         if (damageType == SkillData.DamageType.PHYSICAL)
