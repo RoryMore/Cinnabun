@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using System.Linq;
 
 public class Encounter : MonoBehaviour
@@ -8,6 +9,7 @@ public class Encounter : MonoBehaviour
 
     public Entity enemy1;
     public Entity enemy2;
+    public GameObject spawnPoint1;
 
     public HoldPoint holdPoint;
 
@@ -20,7 +22,7 @@ public class Encounter : MonoBehaviour
     //NIK___List of skill which each enemy is going to use
 
     public List<EnemyScript> enemies;
-    public Transform[] spawnPoints;
+    public List<Transform> spawnPoints;
     public EnemyManager enemyManager;
 
     public bool cleared = false;
@@ -65,7 +67,9 @@ public class Encounter : MonoBehaviour
 
     public void Initialise()
     {
-        spawnPoints = transform.Cast<Transform>().ToArray();
+        //spawnPoints = transform.Cast<Transform>().ToArray();
+        ClearSpawnPoints();
+        SpawnSpawnPoints();
 
         switch (waveType)
         {
@@ -132,7 +136,58 @@ public class Encounter : MonoBehaviour
         
     }
 
-    
+    public void ClearSpawnPoints()
+    {
+        //Destroy all existing spawn points
+        int childs = transform.childCount;
+        for (int i = childs - 1; i >= 0; i--)
+        {
+            GameObject.DestroyImmediate(transform.GetChild(i).gameObject);
+        }
+        spawnPoints.Clear();
+        
+    }
+
+    public void SpawnSpawnPoints()
+    {
+
+        for (int i = 0; i <= enemyManager.encounterSpawnBoostVar; i++)
+        {
+
+        
+
+            float playerX = enemyManager.player.transform.position.x;
+            float playerz = enemyManager.player.transform.position.z;
+
+            float bestDistance = 5.0f + enemyManager.numOfClearedEncounters;
+
+            float spawnLocationx = Random.Range(playerX- bestDistance, playerX + bestDistance);
+            float spawnLocationz = Random.Range(playerz- bestDistance, playerz + bestDistance);
+
+            Vector3 intendedPosition = new Vector3(spawnLocationx, enemyManager.player.transform.position.y, spawnLocationz);
+
+
+            if (NavMesh.SamplePosition(intendedPosition, out NavMeshHit hit, 20, NavMesh.AllAreas))
+            {
+                GameObject spawnPointAlpha = Instantiate(spawnPoint1);
+                spawnPointAlpha.transform.position = intendedPosition;
+                spawnPointAlpha.transform.SetParent(this.transform);
+                spawnPoints.Add(spawnPointAlpha.transform);
+                
+            }
+            else
+            {
+                SpawnSpawnPoints();
+            }
+
+
+
+
+
+        }
+
+
+    }
 
     public void SpawnEnemies()
     {
@@ -169,7 +224,7 @@ public class Encounter : MonoBehaviour
 
     public void SpawnBoss(int countMinus1)
     {
-        int randomNum = Random.Range(0, spawnPoints.Length);
+        int randomNum = Random.Range(0, spawnPoints.Count);
 
 
         if (spawnPoints[randomNum].name.Contains("Enemy1"))
@@ -223,11 +278,12 @@ public class Encounter : MonoBehaviour
             case WaveType.SLAUGHTER:
             if (initiativeList.Count == 0)
             {
-                //if (!cleared)
-                //{
+                if (!cleared)
+                {
                     Debug.Log("The Slaughter encounter has been cleared!");
                     Cleared();
-                //}
+                     
+                }
 
             }
             break;
@@ -321,21 +377,24 @@ public class Encounter : MonoBehaviour
     {
         //The encounter has been defeated!
         cleared = true;
+        
         enemyManager.WaveActive = false;
         enemyManager.inBattle = false;
-        enemyManager.SetTimeToNextWave(enemyManager.timeBetweenWaves);
-
-        //foreach (SimpleEnemy enemy in masterInitiativeList)
-        //{
-        //    // FUCKING REEEEEEEEEEE
-        //    Destroy(enemy.gameObject); // Why is the enemy script being destroyed and the gameObject being left alone. Anything that was attached to the enemy still attempting to reference the enemy is obviously throwing errors. This is a strange thing to do in my opinion instead of having the enemy entity be dead if you don't want to just remove the gameObject
-        //    initiativeList.Clear();
-        //    masterInitiativeList.Clear();
-        //    playerInclusiveInitiativeList.Clear();
-        //}
-
-        enemyManager.CheckVictory();
+        enemyManager.enemyMangerCurrentEncounter = null;
         enemyManager.numOfClearedEncounters++;
+        enemyManager.CalculateSpawnBoost();
+        enemyManager.SetTimeToNextWave(enemyManager.timeBetweenWaves);
+        enemyManager.CheckVictory();
+
+        foreach (SimpleEnemy enemy in masterInitiativeList)
+        {
+            //Destroy(enemy); // Why is the enemy script being destroyed and the gameObject being left alone. Anything that was attached to the enemy still attempting to reference the enemy is obviously throwing errors. This is a strange thing to do in my opinion instead of having the enemy entity be dead if you don't want to just remove the gameObject
+            initiativeList.Clear();
+            masterInitiativeList.Clear();
+            playerInclusiveInitiativeList.Clear();
+        }
+        
+        
 
         // THIS IS BACK BABYY
         gameObject.SetActive(false);
