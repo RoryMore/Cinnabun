@@ -166,7 +166,14 @@ public class BasicSkill : BaseSkill
                                     Debug.LogWarning("attack");
                                     skillHit(testedEntity);
                                 }
-                            }
+                                else
+                                {
+                                   // Debug.LogWarning("mis" + testedEntity.gameObject.tag);
+                                   //Debug.LogWarning("mis" + skillData.minRange+ "mis" + skillData.maxRange+ "mis" + skillData.nearWidth+ "mis" + skillData.farWidth);
+                                   // Debug.LogWarning( testedEntity.transform.position);
+                                }
+
+            }
                             else
                             {
                                 if (CheckInRange(transform.position, testedEntity.transform.position))

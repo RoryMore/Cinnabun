@@ -35,8 +35,6 @@ public class SimpleEnemy : EnemyScript
     //public BaseSkill basicAttack;
     public BaseSkill[] skillList;
 
-    public BaseSkill BasicAttackSkill;
-
     public TYPE type;
     public AGRESSION agression;
 
@@ -52,7 +50,7 @@ public class SimpleEnemy : EnemyScript
     bool goalset = false;
     public float radis = 0;
 
-
+    float DelayAttack=0;
 
     public enum AGRESSION
     {
@@ -292,40 +290,34 @@ public class SimpleEnemy : EnemyScript
 
             if (!isDead)
             {
-
-
-
                 Turn();
 
                 //Update all cooldowns and conditons
                 UpdateAllConditions();
 
                 //basic attack is casting
-                if (BasicAttackSkill.currentlyCasting)
-                {
-                    BasicAttackSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
-                    if (!BasicAttackSkill.currentlyCasting)
-                    {
-                        isAttacking = false;
-                        hasDecided = false;
 
-                    }
-                }
-                else
+                if (DelayAttack<=0)
                 {
-                    //choosen skill is casting
+                    //choosen skill is casting //current only using the basic attack(range Var)
                     if (chosenSkill.currentlyCasting)
                     {
                         chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
+                        //if finsih casting exit loop with a delay before next attack
                         if (!chosenSkill.currentlyCasting)
                         {
                             isAttacking = false;
                             hasDecided = false;
+                            
+                            DelayAttack = chosenSkill.skillData.DelayAttack;
+                            Debug.LogWarning(chosenSkill.skillData.DelayAttack+chosenSkill.skillData.name);
 
+                            // decide function would go here
                         }
                     }
                     else
                     {
+                        //move closer
                         if (Vector3.Distance(transform.position, player.transform.position) > (chosenSkill.skillData.maxRange - 2 / 2))
                         {
                             move();
@@ -334,9 +326,8 @@ public class SimpleEnemy : EnemyScript
                         }
                         else
                         {
-                            //nav.enabled = false;
                             Debug.LogWarning("attack");
-
+                            //stop moving on nav mesh
                             if (nav.enabled != false)
                             {
                                 nav.isStopped = true;
@@ -345,36 +336,30 @@ public class SimpleEnemy : EnemyScript
                                 Debug.LogWarning("stop walking");
                                 anim.SetBool("isWalking", false);
                                 nav.enabled = false;
-                            }
 
+                                //a var of dicide function should go here. 
+                                //this is to check if a better skill has gone of cooldown
+                            }
+                            //turn to face player then check if you can attack
                             FaceTarget(player.transform);
-                            basicAttack();
-                            //Attack(chosenSkill);
-                            //goalset = false;
+                            chosenAttack();
                         }
                     }
                 }
-
-
-
-                if (!CurrentlyCasting)
-                {
-
-                }
                 else
                 {
-
+                    //Debug.LogWarning("reruce");
+                    DelayAttack -= Time.deltaTime;
                 }
-
             }
         }
     }
     
-    void basicAttack()
+    void chosenAttack()
     {
        
        
-        //trigger choosen skill
+        //in area of attack
 
         if (chosenSkill.CheckLineSkillHit(target.position,
                 chosenSkill.skillData.minRange,
@@ -382,7 +367,7 @@ public class SimpleEnemy : EnemyScript
                 chosenSkill.skillData.nearWidth,
                 chosenSkill.skillData.farWidth))
         {
-            // Debug.LogWarning("attacking");
+            // lets attack and move to attack loop 
             if (!isAttacking)
             {
                 isAttacking = true;
@@ -408,16 +393,10 @@ public class SimpleEnemy : EnemyScript
             }
             else if (type == TYPE.RANGED)
             {
-               // if (Vector3.Distance(transform.position, player.transform.position) > (chosenSkill.skillData.maxRange - 1) / 2)
-               // {
+                //move around player with a bit of a spread
                     ChooseDestination(chosenSkill);
 
                     Movement(destination);
-               //}
-               // else
-               // {
-                    
-               // }
             }
         }
         else
