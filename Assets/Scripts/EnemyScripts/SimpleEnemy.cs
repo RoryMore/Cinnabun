@@ -35,6 +35,8 @@ public class SimpleEnemy : EnemyScript
     //public BaseSkill basicAttack;
     public BaseSkill[] skillList;
 
+    public BaseSkill BasicAttackSkill;
+
     public TYPE type;
     public AGRESSION agression;
 
@@ -288,31 +290,21 @@ public class SimpleEnemy : EnemyScript
         if (isActive)
         {
 
-
-
-            Turn();
-
-            //Update all cooldowns and conditons
-            UpdateAllConditions();
-
-            //basic attack is casting
-            if (chosenSkill.currentlyCasting)
+            if (!isDead)
             {
-                chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
-                if (!chosenSkill.currentlyCasting)
-                {
-                    isAttacking = false;
-                    hasDecided = false;
 
-                }
-            }
-            else
-            {
-                //choosen skill is casting
-                if (chosenSkill.currentlyCasting)
+
+
+                Turn();
+
+                //Update all cooldowns and conditons
+                UpdateAllConditions();
+
+                //basic attack is casting
+                if (BasicAttackSkill.currentlyCasting)
                 {
-                    chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
-                    if (!chosenSkill.currentlyCasting)
+                    BasicAttackSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
+                    if (!BasicAttackSkill.currentlyCasting)
                     {
                         isAttacking = false;
                         hasDecided = false;
@@ -321,60 +313,84 @@ public class SimpleEnemy : EnemyScript
                 }
                 else
                 {
-                    if (Vector3.Distance(transform.position, player.transform.position) > (chosenSkill.skillData.maxRange - 2 / 2))
+                    //choosen skill is casting
+                    if (chosenSkill.currentlyCasting)
                     {
-                        move();
-                        goalset = true;
-                        HoldTurn();
+                        chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
+                        if (!chosenSkill.currentlyCasting)
+                        {
+                            isAttacking = false;
+                            hasDecided = false;
+
+                        }
                     }
                     else
                     {
-                        //nav.enabled = false;
-                        Debug.LogWarning("attack");
-
-                        if (nav.enabled != false)
+                        if (Vector3.Distance(transform.position, player.transform.position) > (chosenSkill.skillData.maxRange - 2 / 2))
                         {
-                            nav.isStopped = true;
-                            goalset = false;
-
-                            Debug.LogWarning("stop walking");
-                            anim.SetBool("isWalking", false);
-                            nav.enabled = false;
+                            move();
+                            goalset = true;
+                            HoldTurn();
                         }
+                        else
+                        {
+                            //nav.enabled = false;
+                            Debug.LogWarning("attack");
 
-                        FaceTarget(player.transform);
-                        basicAttack();
-                        //Attack(chosenSkill);
-                        //goalset = false;
+                            if (nav.enabled != false)
+                            {
+                                nav.isStopped = true;
+                                goalset = false;
+
+                                Debug.LogWarning("stop walking");
+                                anim.SetBool("isWalking", false);
+                                nav.enabled = false;
+                            }
+
+                            FaceTarget(player.transform);
+                            basicAttack();
+                            //Attack(chosenSkill);
+                            //goalset = false;
+                        }
                     }
                 }
+
+
+
+                if (!CurrentlyCasting)
+                {
+
+                }
+                else
+                {
+
+                }
+
             }
-
-
-
-            if (!CurrentlyCasting)
-            {
-
-            }
-            else
-            {
-
-            }
-
         }
-
     }
-
+    
     void basicAttack()
     {
        
-        if (!isAttacking)
-        {
-            isAttacking = true;
-            anim.SetTrigger("attacking");
-        }
+       
         //trigger choosen skill
-        chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
+
+        if (chosenSkill.CheckLineSkillHit(target.position,
+                chosenSkill.skillData.minRange,
+                chosenSkill.skillData.maxRange,
+                chosenSkill.skillData.nearWidth,
+                chosenSkill.skillData.farWidth))
+        {
+            // Debug.LogWarning("attacking");
+            if (!isAttacking)
+            {
+                isAttacking = true;
+                anim.SetTrigger("attacking");
+            }
+            chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
+        }
+        
     }
 
     void move()
