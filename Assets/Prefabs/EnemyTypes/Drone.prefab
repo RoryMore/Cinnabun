@@ -7,6 +7,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4709087618572605185, guid: 698616940c17fb847836ecdc8eb93f4e,
+        type: 3}
+      propertyPath: skillData
+      value: 
+      objectReference: {fileID: 11400000, guid: 72c6fdc6ee8870247a6e39046586c832,
+        type: 2}
     - target: {fileID: 7732105370794740937, guid: 698616940c17fb847836ecdc8eb93f4e,
         type: 3}
       propertyPath: m_Name
