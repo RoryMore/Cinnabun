@@ -15,6 +15,7 @@ public class Player : Entity
 	public bool telepotSkill;
 	public bool bombSkill;
 	public bool rewindSkill;
+	public bool tutorialDone;
 
 	TextSystem textSystem;
     [HideInInspector] public bool triggerBox = false;
@@ -664,23 +665,28 @@ public class Player : Entity
         {
             if (other.tag == "TriggerBox")
             {
-                Debug.Log("I walked through it");
+                //Debug.Log("I walked through it");
                 triggerBox = true;
             }
         }
 
 		if (other.tag == "Water")
 		{
-			Debug.Log("I walked through it");
+			//Debug.Log("I walked through it");
 			WaterSounds = true;
 			
 		}
 
 		if (other.tag == "Forest")
 		{
-			Debug.Log("I walked through it");
+			//Debug.Log("I walked through it");
 			BirdSounds = true;
 
+		}
+
+		if (other.tag == "TutorialOver")
+		{
+			tutorialDone = true;
 		}
 	}
 

@@ -80,9 +80,12 @@ public class PlayerInGameUI : MonoBehaviour
 
 			if (sceneName == "JasmineScene")
 			{
-				if (novelM.Trigger1 == true)
+				if (novelM.Trigger1 == true & novelM.Trigger3 != true )
 				{
-					WeaponAttackButtonBackground.interactable = true;
+					if (novelM.Trigger7 == false)
+					{
+						WeaponAttackButtonBackground.interactable = true;
+					}
 				}
 
 				if (novelM.Trigger3 == true)
@@ -92,8 +95,11 @@ public class PlayerInGameUI : MonoBehaviour
 
 				if (novelM.Trigger4 == true)
 				{
+					WeaponAttackButtonBackground.interactable = true;
 					DelayedBlastButtonBackground.interactable = true;
 				}
+
+				
 			}
 
         }
