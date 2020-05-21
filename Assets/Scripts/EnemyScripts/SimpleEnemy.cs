@@ -299,6 +299,14 @@ public class SimpleEnemy : EnemyScript
 
                 if (DelayAttack<=0)
                 {
+
+                    if (proatication())
+                    {
+                        return;
+                    }
+                   
+                          
+
                     //choosen skill is casting //current only using the basic attack(range Var)
                     if (chosenSkill.currentlyCasting)
                     {
@@ -313,6 +321,7 @@ public class SimpleEnemy : EnemyScript
                             Debug.LogWarning(chosenSkill.skillData.DelayAttack+chosenSkill.skillData.name);
 
                             // decide function would go here
+                            Deciding();
                         }
                     }
                     else
@@ -339,6 +348,7 @@ public class SimpleEnemy : EnemyScript
 
                                 //a var of dicide function should go here. 
                                 //this is to check if a better skill has gone of cooldown
+                                Deciding();
                             }
                             //turn to face player then check if you can attack
                             FaceTarget(player.transform);
@@ -355,7 +365,92 @@ public class SimpleEnemy : EnemyScript
             }
         }
     }
-    
+
+    public void Deciding() {
+
+        chosenSkill = null;
+        //For each skill...
+        foreach (BasicSkill checkedSkill in skillList)
+        {
+
+            //Check if the cooldown is complete...
+            if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
+            {
+                //check to see if the people target by the skills are inrange
+                switch (checkedSkill.TargetEntity[0])
+                {
+                    //if main target is player
+                    case "Player":
+                        //target is player.
+                        //Check if we are in range...
+                        if (checkedSkill.CheckInRange(transform.position, target.position))
+                        {
+                            //Debug.LogWarning("skill");
+                            basicSkillChecker(checkedSkill, target.gameObject);
+                        }
+                        break;
+
+                    case "Self":
+                        //no checks need as you are always in range
+                        basicSkillChecker(checkedSkill, gameObject);
+                        break;
+
+                    default:
+                        //target any possable entity which is in the TargetEntity.
+                        for (int i = 0; i < checkedSkill.TargetEntity.Count; i++)
+                        {
+                            //find all posable target
+                            GameObject[] AllTargets = GameObject.FindGameObjectsWithTag(checkedSkill.TargetEntity[i]);
+                            foreach (var Target in AllTargets)
+                            {
+                                //check to see if the skill can hit a target
+                                if (Vector3.Distance(this.transform.position, Target.transform.position)
+                                    <= checkedSkill.skillData.maxRange)
+                                {
+
+
+                                    basicSkillChecker(checkedSkill, Target);
+                                    break;
+                                }
+                            }
+                        }
+
+                        //can still cast skill on self
+
+                        break;
+                }
+            }
+        }
+
+
+    }
+
+    bool proatication()
+    {
+        bool action = false;
+
+        //enemy behavior
+        int a =0;
+        switch (a)
+        {
+            //type of behavior
+            case 1:
+                //conduction is ment
+                if (true)
+                {
+                    //do action
+
+
+                    action = true;
+                }
+                break;
+            default:
+                break;
+        }
+
+        return action;
+    }
+
     void chosenAttack()
     {
        
