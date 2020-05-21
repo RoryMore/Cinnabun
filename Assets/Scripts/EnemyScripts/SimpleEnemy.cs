@@ -104,7 +104,7 @@ public class SimpleEnemy : EnemyScript
 
         // skillList = GetComponentsInChildren<BaseSkill>();
 
-        chosenSkill = skillList[1];
+        chosenSkill = skillList[0];
 
         isActive = true;
 
