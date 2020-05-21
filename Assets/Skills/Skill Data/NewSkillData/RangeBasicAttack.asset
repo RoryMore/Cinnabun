@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RangeBasicAttack
   m_EditorClassIdentifier: 
   maxRange: 10
-  minRange: 5
+  minRange: 0
   farWidth: 3
   nearWidth: 1
   verticalRange: 20

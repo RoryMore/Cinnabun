@@ -350,6 +350,7 @@ public class SimpleEnemy : EnemyScript
                 {
                     //Debug.LogWarning("reruce");
                     DelayAttack -= Time.deltaTime;
+                    FaceTarget(player.transform);
                 }
             }
         }
