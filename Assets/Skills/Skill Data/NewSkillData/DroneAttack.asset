@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3110f89451f743848910c598af7ff19f, type: 3}
-  m_Name: BossBasicAttack
+  m_Name: DroneAttack
   m_EditorClassIdentifier: 
-  maxRange: 7
+  maxRange: 2
   minRange: 0
-  farWidth: 7
+  farWidth: 2
   nearWidth: 1
   verticalRange: 20
   angle: 25
-  cooldown: 0
-  windUp: 1
-  DelayAttack: 1
+  cooldown: 0.5
+  windUp: 0.5
+  DelayAttack: 0.2
   skill: 3
-  baseMagnitude: 15
+  baseMagnitude: 2
   damageType: 0

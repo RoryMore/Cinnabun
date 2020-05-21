@@ -7,15 +7,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4709087618572605185, guid: 698616940c17fb847836ecdc8eb93f4e,
+        type: 3}
+      propertyPath: skillData
+      value: 
+      objectReference: {fileID: 11400000, guid: 72c6fdc6ee8870247a6e39046586c832,
+        type: 2}
     - target: {fileID: 7732105370794740937, guid: 698616940c17fb847836ecdc8eb93f4e,
         type: 3}
       propertyPath: m_Name
-      value: Enemy 3
+      value: Drone
       objectReference: {fileID: 0}
     - target: {fileID: 7732105370794740937, guid: 698616940c17fb847836ecdc8eb93f4e,
         type: 3}
       propertyPath: m_TagString
       value: Enemy3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7732105370794740942, guid: 698616940c17fb847836ecdc8eb93f4e,
+        type: 3}
+      propertyPath: skillList.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7732105370794740942, guid: 698616940c17fb847836ecdc8eb93f4e,
         type: 3}
@@ -32,6 +43,31 @@ PrefabInstance:
       propertyPath: skillList.Array.data[0]
       value: 
       objectReference: {fileID: 3742539015655553812}
+    - target: {fileID: 7732105370794740942, guid: 698616940c17fb847836ecdc8eb93f4e,
+        type: 3}
+      propertyPath: constitution
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7732105370794740942, guid: 698616940c17fb847836ecdc8eb93f4e,
+        type: 3}
+      propertyPath: intellect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7732105370794740942, guid: 698616940c17fb847836ecdc8eb93f4e,
+        type: 3}
+      propertyPath: strength
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7732105370794740942, guid: 698616940c17fb847836ecdc8eb93f4e,
+        type: 3}
+      propertyPath: physicalArmour
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7732105370794740942, guid: 698616940c17fb847836ecdc8eb93f4e,
+        type: 3}
+      propertyPath: magicalArmour
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8688108529850181967, guid: 698616940c17fb847836ecdc8eb93f4e,
         type: 3}
       propertyPath: m_LocalPosition.x

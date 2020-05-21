@@ -155,18 +155,24 @@ public class BasicSkill : BaseSkill
                 {
                     for (int i = 0; i < TargetEntity.Count; i++)
                     {
-                        Debug.LogWarning(testedEntity.gameObject.tag);
                         if (TargetEntity[i] == testedEntity.gameObject.tag)//testedEntity.EntityTag.ToString()
                         {
+                            Debug.LogWarning(testedEntity.gameObject.tag + "testiong" + TargetEntity[i] + "target" + (testedEntity.gameObject.tag == TargetEntity[i]));
                             if (fillType == CastFillType.LINEAR)
                             {
                                 //do skill effects
                                 if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                                 {
-                                    Debug.LogWarning("attack");
                                     skillHit(testedEntity);
                                 }
-                            }
+                                else
+                                {
+                                   //Debug.LogWarning("mis" + testedEntity.gameObject.tag);
+                                   //Debug.LogWarning("mis" + skillData.minRange+ "mis" + skillData.maxRange+ "mis" + skillData.nearWidth+ "mis" + skillData.farWidth);
+                                   //Debug.LogWarning( testedEntity.transform.position);
+                                }
+
+            }
                             else
                             {
                                 if (CheckInRange(transform.position, testedEntity.transform.position))
