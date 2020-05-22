@@ -15,6 +15,7 @@ public class Player : Entity
 	public bool telepotSkill;
 	public bool bombSkill;
 	public bool rewindSkill;
+	public bool tutorialDone;
 
 	TextSystem textSystem;
     [HideInInspector] public bool triggerBox = false;
@@ -209,8 +210,8 @@ public class Player : Entity
                                             delayedBlastCastParticles.SetActive(true);
 											
 										}
-                                        animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
-                                        animator.SetBool("skillCast", true);
+                                        animator.SetFloat("castingPlaybackMultiplier", (animSpeed / (selectedSkill.skillData.windUp * 1.7f)));
+                                        animator.SetBool("blastCast", true);
 										
 									}
                                 }
@@ -224,7 +225,7 @@ public class Player : Entity
 
                                     // Reset animator variables
                                     animator.SetBool("weaponAttack", false);
-                                    animator.SetBool("skillCast", false);
+                                    animator.SetBool("blastCast", false);
 
                                     // Deactivate any active cast particles
 									
@@ -247,7 +248,7 @@ public class Player : Entity
                                         rewindCastParticles.SetActive(true);
                                     }
                                     animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
-                                    animator.SetBool("skillCast", true);
+                                    animator.SetBool("blastCast", true);
                                 }
                                 break;
 
@@ -262,7 +263,7 @@ public class Player : Entity
                                         teleportCastParticles.SetActive(true);
                                     }
                                     animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
-                                    animator.SetBool("skillCast", true);
+                                    animator.SetBool("teleportCast", true);
                                 }
                                 break;
 
@@ -279,7 +280,7 @@ public class Player : Entity
                                             // We are currently casting a skill
                                             // Animate attack animation here
 
-                                            animator.SetFloat("weaponAttackPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
+                                            animator.SetFloat("weaponAttackPlaybackMultiplier", (animSpeed / (selectedSkill.skillData.windUp * 1.0f)));
                                             animator.SetBool("weaponAttack", true);
                                         }
                                     }
@@ -292,7 +293,8 @@ public class Player : Entity
 
                                         // Reset animator variables
                                         animator.SetBool("weaponAttack", false);
-                                        animator.SetBool("skillCast", false);
+                                        animator.SetBool("blastCast", false);
+                                        animator.SetBool("teleportCast", false);
 
                                         // Deactivate any active cast particles
                                         delayedBlastCastParticles.SetActive(false);
@@ -310,7 +312,7 @@ public class Player : Entity
                                         // Animate cast animation here
 
                                         animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
-                                        animator.SetBool("skillCast", true);
+                                        animator.SetBool("blastCast", true);
                                     }
                                 }
 
@@ -328,7 +330,8 @@ public class Player : Entity
 
                                 // Reset animator variables
                                 animator.SetBool("weaponAttack", false);
-                                animator.SetBool("skillCast", false);
+                                animator.SetBool("teleportCast", false);
+                                animator.SetBool("blastCast", false);
 
                                 // Deactivate any active cast particles
                                 delayedBlastCastParticles.SetActive(false);
@@ -664,23 +667,28 @@ public class Player : Entity
         {
             if (other.tag == "TriggerBox")
             {
-                Debug.Log("I walked through it");
+                //Debug.Log("I walked through it");
                 triggerBox = true;
             }
         }
 
 		if (other.tag == "Water")
 		{
-			Debug.Log("I walked through it");
+			//Debug.Log("I walked through it");
 			WaterSounds = true;
 			
 		}
 
 		if (other.tag == "Forest")
 		{
-			Debug.Log("I walked through it");
+			//Debug.Log("I walked through it");
 			BirdSounds = true;
 
+		}
+
+		if (other.tag == "TutorialOver")
+		{
+			tutorialDone = true;
 		}
 	}
 

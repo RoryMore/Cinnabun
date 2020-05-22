@@ -16,7 +16,7 @@ MonoBehaviour:
   minRange: 0
   farWidth: 0
   nearWidth: 0
-  verticalRange: 10
+  verticalRange: 25
   angle: 0
   cooldown: 15
   windUp: 0.75

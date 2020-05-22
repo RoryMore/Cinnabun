@@ -122,7 +122,7 @@ public class PauseAbility : MonoBehaviour
     }
     public void ButtonPaused()
     {
-        if (states == GameStates.PLAY)
+        if (states == GameStates.PLAY && timeStopCoolDown < 0)
         {
             states = GameStates.TIMESTOP;
         }
@@ -130,7 +130,7 @@ public class PauseAbility : MonoBehaviour
 
    public void ButtonPlay()
     {
-        if (player.playerState != Player.PlayerState.DOINGSKILL)
+        if (player.playerState != Player.PlayerState.DOINGSKILL )
         {
 
             states = GameStates.PLAY;

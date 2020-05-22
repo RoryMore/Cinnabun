@@ -74,19 +74,19 @@ public class RespawnControl : MonoBehaviour
                 //player.Revive();
                 //itemsCleared = false;
 
-                int wavesCleared = 0;
-                // Add an amount of upgrade money = wavesCompleted
-                foreach (Encounter encounter in enemyManager.encounters)
-                {
-                    if (encounter.cleared)
-                    {
-                        wavesCleared++;
-                    }
-                }
+                //int wavesCleared = 0;
+                //// Add an amount of upgrade money = wavesCompleted
+                //foreach (Encounter encounter in enemyManager.encounters)
+                //{
+                //    if (encounter.cleared)
+                //    {
+                //        wavesCleared++;
+                //    }
+                //}
                 if (!moneyRewarded)
                 {
                     //CurrencyManager.AddUpgradeMoney(enemyManager.numOfClearedEncounters);
-                    CurrencyManager.AddUpgradeMoney(wavesCleared);
+                    CurrencyManager.AddUpgradeMoney(enemyManager.numOfClearedEncounters);
                     SaveManager.SaveUpgradeMoney();
                     moneyRewarded = true;
                 }

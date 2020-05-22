@@ -427,11 +427,11 @@ public class SoundManager : MonoBehaviour
                     inBattle = false;
                 }
             }
-            else
-            {
-                state = MusicState.START;
+         //   else
+         //   {
+           //     state = MusicState.START;
 				//inBattle = true;
-            }
+           // }
 		}
 		else
 		{

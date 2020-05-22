@@ -72,7 +72,16 @@ public class SimpleEnemy : EnemyScript
 
     void Awake()
     {
-        baseHP = 35;
+        // SCALING NOTES WITH CURRENT FORMULAS
+        // CONSTITUTION:                Every 6 CON = +10 HP
+        // AGILITY (Movement Speed):    Every 10 AGI = +10% faster 
+        // (The formula uses the baseMovementSpeed variable to calculate the movementSpeed, so make sure enemies use this var)
+        // AGILITY (Critical Strike):   Every 25 AGI = +10% critical strike
+        // STRENGTH:                    Every 2 STR = +1 damage
+        // INTELLECT:                   Every 2 INT = +1 damage
+        // MAGIC/PHYSICAL ARMOUR:       Every 100 ARMOUR = +25% damage reduction
+
+        baseHP = 15;
         InitialiseAll();
 
 
@@ -304,55 +313,58 @@ public class SimpleEnemy : EnemyScript
                     {
                         return;
                     }
-                   
-                          
 
-                    //choosen skill is casting //current only using the basic attack(range Var)
-                    if (chosenSkill.currentlyCasting)
+                    // ADDED THIS CATCH TO CHECK IF CHOSENSKILL IS NULL. IT WAS THROWING AN ERROR. THE ENEMY USES MAYBE 1-3 SKILLS THEN BREAKS
+                    if (chosenSkill != null)
                     {
-                        chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
-                        //if finsih casting exit loop with a delay before next attack
-                        if (!chosenSkill.currentlyCasting)
+                        //choosen skill is casting //current only using the basic attack(range Var)
+                        if (chosenSkill.currentlyCasting)
                         {
-                            isAttacking = false;
-                            hasDecided = false;
-                            
-                            DelayAttack = chosenSkill.skillData.DelayAttack;
-                            Debug.LogWarning(chosenSkill.skillData.DelayAttack+chosenSkill.skillData.name);
+                            chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
+                            //if finsih casting exit loop with a delay before next attack
+                            if (!chosenSkill.currentlyCasting)
+                            {
+                                isAttacking = false;
+                                hasDecided = false;
 
-                            // decide function would go here
-                            Deciding();
-                        }
-                    }
-                    else
-                    {
-                        //move closer
-                        if (Vector3.Distance(transform.position, player.transform.position) > (chosenSkill.skillData.maxRange - 2 / 2))
-                        {
-                            move();
-                            goalset = true;
-                            HoldTurn();
+                                DelayAttack = chosenSkill.skillData.DelayAttack;
+                                Debug.LogWarning(chosenSkill.skillData.DelayAttack + chosenSkill.skillData.name);
+
+                                // decide function would go here
+                                //Deciding();
+                            }
                         }
                         else
                         {
-                            Debug.LogWarning("attack");
-                            //stop moving on nav mesh
-                            if (nav.enabled != false)
+                            //move closer
+                            if (Vector3.Distance(transform.position, player.transform.position) > (chosenSkill.skillData.maxRange - 2 / 2))
                             {
-                                nav.isStopped = true;
-                                goalset = false;
-
-                                Debug.LogWarning("stop walking");
-                                anim.SetBool("isWalking", false);
-                                nav.enabled = false;
-
-                                //a var of dicide function should go here. 
-                                //this is to check if a better skill has gone of cooldown
-                                Deciding();
+                                move();
+                                goalset = true;
+                                HoldTurn();
                             }
-                            //turn to face player then check if you can attack
-                            FaceTarget(player.transform);
-                            chosenAttack();
+                            else
+                            {
+                                Debug.LogWarning("attack");
+                                //stop moving on nav mesh
+                                if (nav.enabled != false)
+                                {
+                                    nav.isStopped = true;
+                                    goalset = false;
+
+                                    Debug.LogWarning("stop walking");
+                                    anim.SetBool("isWalking", false);
+                                    nav.enabled = false;
+
+                                    //a var of dicide function should go here. 
+                                    //this is to check if a better skill has gone of cooldown
+                                    //Deciding();
+                                }
+                                //turn to face player then check if you can attack
+                                FaceTarget(player.transform);
+                               // Debug.LogWarning("b");
+                                chosenAttack();
+                            }
                         }
                     }
                 }
@@ -886,11 +898,15 @@ public class SimpleEnemy : EnemyScript
         {
             skill.DisableProjector();
         }
-        anim.enabled = false;
+
+        // LMFAO WTF IS THIS LINE DOING WHO THE FUCK - it's commented out now cos it's fucking RETARDED
+        //anim.enabled = false;
 
         GetComponent<BloodOrbDropControl>().DropItem(transform.position);
 
         ItemSpawner.SpawnItem(transform.position);
+
+        nav.enabled = false;
     }
 
     public void Create(Vector3 position, int damageAmount, bool crit)
