@@ -546,6 +546,19 @@ public class BaseSkill : MonoBehaviour
         return false;
     }
 
+    public bool CheckInFlatRange(Vector3 castPosition, Vector3 targetPosition)
+    {
+        Vector3 castPosition0Y = castPosition;
+        castPosition0Y.y = targetPosition.y;
+
+        if (Vector3.Distance(castPosition0Y, targetPosition) <= skillData.maxRange)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public bool CheckInVerticalRange(Vector3 targetPosition)
 
     {
@@ -576,11 +589,18 @@ public class BaseSkill : MonoBehaviour
                     //Debug.Log("Skill is raycasting");
                     if (checkInRange)
                     {
-                        if (CheckInRange(casterSelf.transform.position, hit.point))
+                        if (CheckInFlatRange(casterSelf.transform.position, hit.point))
                         {
-                            //Debug.Log("Entity reference set for skill");
-                            entityToSet = hit.collider.gameObject.GetComponent<Entity>();
+                            if (CheckInVerticalRange(hit.point))
+                            {
+                                entityToSet = hit.collider.gameObject.GetComponent<Entity>();
+                            }
                         }
+                        //if (CheckInRange(casterSelf.transform.position, hit.point))
+                        //{
+                        //    //Debug.Log("Entity reference set for skill");
+                        //    entityToSet = hit.collider.gameObject.GetComponent<Entity>();
+                        //}
                     }
                     else
                     {
@@ -600,12 +620,20 @@ public class BaseSkill : MonoBehaviour
             {
                 if (checkInRange)
                 {
-                    if (CheckInRange(casterSelf.transform.position, hit.point))
+                    if (CheckInFlatRange(casterSelf.transform.position, hit.point))
                     {
-                        Debug.Log("Position reference set for skill");
-                        pointToSet = hit.point;
-                        return true;
+                        if (CheckInVerticalRange(hit.point))
+                        {
+                            pointToSet = hit.point;
+                            return true;
+                        }
                     }
+                    //if (CheckInRange(casterSelf.transform.position, hit.point))
+                    //{
+                    //    //Debug.Log("Position reference set for skill");
+                    //    pointToSet = hit.point;
+                    //    return true;
+                    //}
                 }
                 else
                 {
