@@ -25,6 +25,7 @@ public class NovelManager : MonoBehaviour
 	public bool Trigger7 = false;
 	public bool Trigger8 = false;
 
+	bool waveSpawn = false;
 	bool on = false;
 
 	// Start is called before the first frame update
@@ -48,7 +49,8 @@ public class NovelManager : MonoBehaviour
 		NoMoreBattle();
 		UsedRewind();
 		UsedInventory();
-		endTutorial();
+		teleport();
+		tutorialDone();
 	}
 
 
@@ -166,14 +168,22 @@ public class NovelManager : MonoBehaviour
 
 	}
 
-	void endTutorial()
+	void teleport()
 	{
 		if (Trigger6 == true)
 		{
-			if (!visualNovel.activeSelf)
+			if (waveSpawn == true)
 			{
-				SceneManager.LoadScene(0);
+				PopUpBox();
 			}
+		}
+	}
+
+	void tutorialDone()
+	{
+		if (player.tutorialDone == true)
+		{
+			SceneManager.LoadScene(0);
 		}
 	}
 
