@@ -898,11 +898,15 @@ public class SimpleEnemy : EnemyScript
         {
             skill.DisableProjector();
         }
-        anim.enabled = false;
+
+        // LMFAO WTF IS THIS LINE DOING WHO THE FUCK - it's commented out now cos it's fucking RETARDED
+        //anim.enabled = false;
 
         GetComponent<BloodOrbDropControl>().DropItem(transform.position);
 
         ItemSpawner.SpawnItem(transform.position);
+
+        nav.enabled = false;
     }
 
     public void Create(Vector3 position, int damageAmount, bool crit)

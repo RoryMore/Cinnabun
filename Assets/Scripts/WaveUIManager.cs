@@ -26,7 +26,8 @@ public class WaveUIManager : MonoBehaviour
     {
         if (enemyManager != null)
         {
-            waveCounterText.text = "WAVE #" + (enemyManager.numOfClearedEncounters + 1).ToString();
+            int waveNumber = enemyManager.numOfClearedEncounters + 1;
+            waveCounterText.text = "WAVE #" + waveNumber.ToString();
             if (!enemyManager.WaveActive)
             {
                 waveTypeText.text = "NO WAVE ACTIVE";
