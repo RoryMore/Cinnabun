@@ -254,7 +254,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SURVIVE FOR Xs
+  m_Text: SURVIVE FOR Xs NEAR THE POINT
 --- !u!1 &6939853025078419787
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,4 +378,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ENDLESS
+  m_Text: HOLD THE POINT

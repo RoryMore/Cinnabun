@@ -44,25 +44,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 548c8e78b101e5840868a16b55e645fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy1: {fileID: 5366817791025178609, guid: c6f53d989ae07e44a8f03592dd95f744, type: 3}
-  enemy2: {fileID: 7095586062020726643, guid: d2b4fa129624ed442b4092660a8c5862, type: 3}
+  enemy1: {fileID: 2062244974298442787, guid: 9caa3b776d4b48d42bb046526fef5f3a, type: 3}
+  enemy2: {fileID: 2062244974298442787, guid: 9caa3b776d4b48d42bb046526fef5f3a, type: 3}
+  spawnPoint1: {fileID: 368917267583243728, guid: 126ecb1da2129d244921b62133c9cbc1,
+    type: 3}
+  holdPoint: {fileID: 0}
   masterInitiativeList: []
   initiativeList: []
   playerInclusiveInitiativeList: []
   healList: []
   enemies: []
-  spawnPoints:
-  - {fileID: 7330141680264777112}
-  - {fileID: 0}
-  - {fileID: 0}
+  spawnPoints: []
   enemyManager: {fileID: 0}
   cleared: 0
-  items:
-  - {fileID: 11400000, guid: 1c120b402120d63458665ea30b67d31d, type: 2}
-  - {fileID: 11400000, guid: 44aa8a5ab488de04f9efc061557c9bdc, type: 2}
-  - {fileID: 11400000, guid: a1b10dc5a2b9a664f8b4db44a518b9bb, type: 2}
-  - {fileID: 11400000, guid: db1539a6cbfc6034fa54af4752d4063b, type: 2}
-  inventory: {fileID: 0}
+  playerInArea: 0
+  waveType: 0
+  milestone: 0
+  countdownToNextRespawn: 0
+  waveOverTimer: 0
+  respawnTicker: 0
+  waveOverTicker: 0
 --- !u!1 &7330141680264777112
 GameObject:
   m_ObjectHideFlags: 0

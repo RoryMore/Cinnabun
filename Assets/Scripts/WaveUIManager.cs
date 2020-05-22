@@ -57,6 +57,12 @@ public class WaveUIManager : MonoBehaviour
                                 waveTimerText.text = "THE BIG ONE COMES";
                                 break;
                             }
+                        case Encounter.WaveType.HOLDTHELINE:
+                            {
+                                waveTypeText.text = "HOLD THE POINT";
+                                waveTimerText.text = "SURVIVE FOR <color=maroon>" + Mathf.Round(enemyManager.enemyMangerCurrentEncounter.WaveOverTicker) + "s</color> NEAR THE POINT";
+                                break;
+                            }
                     }
                 }
             }
