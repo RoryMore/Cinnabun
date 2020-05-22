@@ -17,6 +17,8 @@ public class Player : Entity
 	public bool rewindSkill;
 	public bool tutorialDone;
 
+	public bool playBlastSound = false;
+
 	TextSystem textSystem;
     [HideInInspector] public bool triggerBox = false;
     public enum PlayerState
@@ -212,7 +214,8 @@ public class Player : Entity
 										}
                                         animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
                                         animator.SetBool("skillCast", true);
-										
+									
+
 									}
                                 }
                                 else
@@ -222,9 +225,9 @@ public class Player : Entity
 
                                     selectedSkill = null;
                                     playerState = PlayerState.FREE;
-
-                                    // Reset animator variables
-                                    animator.SetBool("weaponAttack", false);
+									
+									// Reset animator variables
+									animator.SetBool("weaponAttack", false);
                                     animator.SetBool("skillCast", false);
 
                                     // Deactivate any active cast particles
@@ -234,7 +237,7 @@ public class Player : Entity
                                     teleportCastParticles.SetActive(false);
 
 									
-                                }
+								}
                                 break;
 
                             case SkillData.SkillList.REWIND:
@@ -249,7 +252,9 @@ public class Player : Entity
                                     }
                                     animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
                                     animator.SetBool("skillCast", true);
-                                }
+
+								
+								}
                                 break;
 
                             case SkillData.SkillList.TELEPORT:
