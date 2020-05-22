@@ -67,13 +67,50 @@ public class PlayerInGameUI : MonoBehaviour
         {
 			   PauseButton.gameObject.SetActive(false);
 				PlayButton.gameObject.SetActive(true);
+			VHSimage.gameObject.SetActive(true);
+			timeSinceStartUp.gameObject.SetActive(true);
+
+			if (sceneName != "JasmineScene")
+			{
 				RewindButtonBackground.interactable = true;
 				DelayedBlastButtonBackground.interactable = true;
 				TeleportBackground.interactable = true;
 				WeaponAttackButtonBackground.interactable = true;
-				VHSimage.gameObject.SetActive(true);
-				timeSinceStartUp.gameObject.SetActive(true);
+			}
 
+			if (sceneName == "JasmineScene")
+			{
+				
+
+				if (novelM.Trigger1 == true & novelM.Trigger3 != true )
+				{
+					if (novelM.Trigger7 == false)
+					{
+						if (novelM.Trigger6 == false)
+						{
+							WeaponAttackButtonBackground.interactable = true;
+						}
+					}
+				}
+
+				if (novelM.Trigger3 == true && novelM.Trigger6 == false)
+				{
+					RewindButtonBackground.interactable = true;
+				}
+
+				if (novelM.Trigger4 == true && novelM.Trigger6 == false)
+				{
+					WeaponAttackButtonBackground.interactable = true;
+					DelayedBlastButtonBackground.interactable = true;
+				}
+
+				if (novelM.Trigger6 == true)
+				{
+					TeleportBackground.interactable = true;
+				}
+
+				
+			}
 
         }
         if (pauseAbility.states != PauseAbility.GameStates.TIMESTOP)
@@ -221,6 +258,10 @@ public class PlayerInGameUI : MonoBehaviour
 				if (novelM.Trigger4 == true)
 				{
 					player.bombSkill = true;
+				}
+				if (novelM.Trigger6 == true)
+				{
+					player.telepotSkill = true;
 				}
 			}
 		}
