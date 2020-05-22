@@ -80,6 +80,8 @@ public class PlayerInGameUI : MonoBehaviour
 
 			if (sceneName == "JasmineScene")
 			{
+				
+
 				if (novelM.Trigger1 == true & novelM.Trigger3 != true )
 				{
 					if (novelM.Trigger7 == false)
@@ -97,6 +99,11 @@ public class PlayerInGameUI : MonoBehaviour
 				{
 					WeaponAttackButtonBackground.interactable = true;
 					DelayedBlastButtonBackground.interactable = true;
+				}
+
+				if (novelM.Trigger6 == true)
+				{
+					TeleportBackground.interactable = true;
 				}
 
 				
@@ -248,6 +255,10 @@ public class PlayerInGameUI : MonoBehaviour
 				if (novelM.Trigger4 == true)
 				{
 					player.bombSkill = true;
+				}
+				if (novelM.Trigger6 == true)
+				{
+					player.telepotSkill = true;
 				}
 			}
 		}

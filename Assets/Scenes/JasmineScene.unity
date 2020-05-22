@@ -7699,7 +7699,7 @@ GameObject:
   - component: {fileID: 1794763524}
   m_Layer: 0
   m_Name: TutorialDone
-  m_TagString: SoundWater
+  m_TagString: TutorialOver
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7712,8 +7712,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1794763522}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -339.91, y: -175.14, z: 449.52}
-  m_LocalScale: {x: 3.5831, y: 3.5831, z: 3.5831}
+  m_LocalPosition: {x: -339.91, y: -188.46, z: 517.73}
+  m_LocalScale: {x: 42.197674, y: 3.6336217, z: 19.36741}
   m_Children: []
   m_Father: {fileID: 1013049788}
   m_RootOrder: 2
@@ -8714,7 +8714,7 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[6].text.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -8911,7 +8911,7 @@ PrefabInstance:
         type: 3}
       propertyPath: text.Array.data[6].text.Array.data[2]
       value: The last thing I have to teach you is teleport. You can teleport enemys
-        as well as your slef. Try teleport your slef done to the lower edge of the
+        as well as your wlf. Try teleport your self down to the lower edge of the
         cliff here.
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
@@ -8979,6 +8979,12 @@ PrefabInstance:
       propertyPath: text.Array.data[7].text.Array.data[0]
       value: Oh no, a huge have just spawned behind you. Quick use teleport to get
         to the lower cliff.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[6].text.Array.data[3]
+      value: To do the go right up to the edge of the cliff and click on the teleport
+        button. Then click on your self then where you want to go.
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782395, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}

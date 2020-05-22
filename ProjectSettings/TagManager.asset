@@ -19,6 +19,7 @@ TagManager:
   - SoundWater
   - Enemy2
   - Enemy3
+  - TutorialOver
   layers:
   - Default
   - TransparentFX
