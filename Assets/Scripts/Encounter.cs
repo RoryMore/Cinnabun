@@ -44,6 +44,8 @@ public class Encounter : MonoBehaviour
     [SerializeField]
     private float waveOverTicker;
 
+    public float WaveOverTicker { get => waveOverTicker; }
+
     public enum WaveType
     {
         SLAUGHTER, //Kill all enemies who spawn to progress
@@ -267,7 +269,7 @@ public class Encounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        KillCode();
+        //KillCode();
 
         //Each wave has its own update function to determine if you have completed it
         switch(waveType)
@@ -394,7 +396,8 @@ public class Encounter : MonoBehaviour
         
         
 
-        //gameObject.SetActive(false);
+        // THIS IS BACK BABYY
+        gameObject.SetActive(false);
         
     }
 

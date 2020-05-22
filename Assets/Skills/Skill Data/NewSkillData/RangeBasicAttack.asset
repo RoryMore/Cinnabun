@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: RangeBasicAttack
   m_EditorClassIdentifier: 
   maxRange: 10
-  minRange: 5
+  minRange: 0
   farWidth: 3
   nearWidth: 1
   verticalRange: 20
   angle: 25
   cooldown: 1
   windUp: 1
-  DelayAttack: 0
+  DelayAttack: 1
   skill: 3
   baseMagnitude: 5
   damageType: 0
