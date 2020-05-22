@@ -77,7 +77,7 @@ public class EnemyScript : Entity
     public override void Death()
     {
         isDead = true;
-        //anim.SetTrigger("Dead");
+        anim.SetBool("isDead", true);
         //Ensure that the target is no longer in the initiative 
         myEncounter.initiativeList.Remove(this);
         myEncounter.healList.Remove(this);

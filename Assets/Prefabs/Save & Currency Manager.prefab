@@ -59,7 +59,7 @@ MonoBehaviour:
   upgradeSaveFileName: /upgrades.CINNABUN
   upgradeMoneyFileName: /permanentCurrency.CINNABUN
   settingsFileName: /gameSettings.CINNABUN
-  upgradeShopSceneName: SunnyTest
+  upgradeShopSceneName: UpgradeScene
   gameSceneName: UpdatedLevel_V2
   tutorialSceneName: JasmineScene
   defaultCharacterUpgrades:
