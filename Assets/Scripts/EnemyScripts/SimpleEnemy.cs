@@ -322,7 +322,7 @@ public class SimpleEnemy : EnemyScript
                                 Debug.LogWarning(chosenSkill.skillData.DelayAttack + chosenSkill.skillData.name);
 
                                 // decide function would go here
-                                Deciding();
+                               // Deciding();
                             }
                         }
                         else
@@ -349,7 +349,7 @@ public class SimpleEnemy : EnemyScript
 
                                     //a var of dicide function should go here. 
                                     //this is to check if a better skill has gone of cooldown
-                                    Deciding();
+                                    //Deciding();
                                 }
                                 //turn to face player then check if you can attack
                                 FaceTarget(player.transform);
