@@ -91,23 +91,20 @@ public class Teleport : BaseSkill
             //ResetIndicatorImages();
             EnableProjector();
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 400, groundMask))
-            {
-                Vector3 lookat = new Vector3(hit.point.x, casterSelf.transform.position.y, hit.point.z);
-                casterSelf.transform.LookAt(lookat);
-
-
-            }
-
-            //DrawRangeIndicator(zoneStart, shape);
-            SelectTargetRay(ref entityTarget1, true);
-
+            //SelectTargetRay(ref entityTarget1, true);
+            entityTarget1 = casterSelf;
 
         }
         //If we have our target but no destination
         else if (entityTarget1 != null && !destination1Set)
         {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 400, groundMask))
+            {
+                Vector3 lookat = new Vector3(hit.point.x, casterSelf.transform.position.y, hit.point.z);
+                casterSelf.transform.LookAt(lookat);
+            }
+
             //DrawRangeIndicator(zoneStart, shape);
             destination1Set = SelectTargetRay(ref teleportLocation, groundMask, true);
 
