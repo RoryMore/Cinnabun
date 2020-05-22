@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using System.Linq;
 
 public class Encounter : MonoBehaviour
@@ -67,9 +68,20 @@ public class Encounter : MonoBehaviour
 
     public void Initialise()
     {
-        //spawnPoints = transform.Cast<Transform>().ToArray();
-        ClearSpawnPoints();
-        SpawnSpawnPoints();
+        //
+
+        //Mini stop
+        if (SceneManager.GetActiveScene().name == "JasmineScene")
+        {
+            spawnPoints = transform.Cast<Transform>().ToList();
+        }
+        else
+        {
+            ClearSpawnPoints();
+            SpawnSpawnPoints();
+        }
+
+
 
         switch (waveType)
         {
@@ -216,10 +228,14 @@ public class Encounter : MonoBehaviour
         }
 
         masterInitiativeList.AddRange(initiativeList);
+        masterInitiativeList = masterInitiativeList.Distinct().ToList();
+
 
         //Set up player inclusive
         playerInclusiveInitiativeList.AddRange(masterInitiativeList);
         playerInclusiveInitiativeList.Add(GameObject.Find("Player").GetComponent<Entity>());
+        playerInclusiveInitiativeList = playerInclusiveInitiativeList.Distinct().ToList();
+
     }
 
     public void SpawnBoss(int countMinus1)
@@ -309,7 +325,7 @@ public class Encounter : MonoBehaviour
                             foreach (Entity enemy in masterInitiativeList)
                             {
 
-                                enemy.TakeDamage(enemy.maxHP);
+                                enemy.GetComponent<SimpleEnemy>().Remove();
                             }
                         }
                         Cleared();
@@ -358,7 +374,7 @@ public class Encounter : MonoBehaviour
                             foreach (Entity enemy in masterInitiativeList)
                             {
 
-                                enemy.TakeDamage(enemy.maxHP);
+                                enemy.GetComponent<SimpleEnemy>().Remove();
                             }
                         }
                         Cleared();
@@ -381,8 +397,8 @@ public class Encounter : MonoBehaviour
         enemyManager.WaveActive = false;
         enemyManager.inBattle = false;
         enemyManager.enemyMangerCurrentEncounter = null;
-        enemyManager.numOfClearedEncounters++;
-        enemyManager.CalculateSpawnBoost();
+        
+        
         enemyManager.SetTimeToNextWave(enemyManager.timeBetweenWaves);
         enemyManager.CheckVictory();
 
@@ -393,8 +409,9 @@ public class Encounter : MonoBehaviour
             masterInitiativeList.Clear();
             playerInclusiveInitiativeList.Clear();
         }
-        
-        
+
+        enemyManager.numOfClearedEncounters++;
+        enemyManager.CalculateSpawnBoost();
 
         // THIS IS BACK BABYY
         gameObject.SetActive(false);
