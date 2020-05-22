@@ -86,16 +86,19 @@ public class PlayerInGameUI : MonoBehaviour
 				{
 					if (novelM.Trigger7 == false)
 					{
-						WeaponAttackButtonBackground.interactable = true;
+						if (novelM.Trigger6 == false)
+						{
+							WeaponAttackButtonBackground.interactable = true;
+						}
 					}
 				}
 
-				if (novelM.Trigger3 == true)
+				if (novelM.Trigger3 == true && novelM.Trigger6 == false)
 				{
 					RewindButtonBackground.interactable = true;
 				}
 
-				if (novelM.Trigger4 == true)
+				if (novelM.Trigger4 == true && novelM.Trigger6 == false)
 				{
 					WeaponAttackButtonBackground.interactable = true;
 					DelayedBlastButtonBackground.interactable = true;
