@@ -362,6 +362,7 @@ public class SimpleEnemy : EnemyScript
                                 }
                                 //turn to face player then check if you can attack
                                 FaceTarget(player.transform);
+                               // Debug.LogWarning("b");
                                 chosenAttack();
                             }
                         }
