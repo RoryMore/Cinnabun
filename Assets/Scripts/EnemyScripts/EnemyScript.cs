@@ -85,7 +85,7 @@ public class EnemyScript : Entity
         //myEncounter.playerInclusiveInitiativeList.Remove(this);
         nav.enabled = false;
 
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
         //Destroy(gameObject);
     }
 
