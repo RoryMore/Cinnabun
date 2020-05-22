@@ -22,5 +22,5 @@ MonoBehaviour:
   windUp: 1
   DelayAttack: 0.2
   skill: 7
-  baseMagnitude: 20
+  baseMagnitude: 6
   damageType: 0
