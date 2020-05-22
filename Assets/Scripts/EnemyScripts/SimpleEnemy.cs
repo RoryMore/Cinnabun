@@ -50,7 +50,7 @@ public class SimpleEnemy : EnemyScript
     bool goalset = false;
     public float radis = 0;
 
-
+    float DelayAttack=0;
 
     public enum AGRESSION
     {
@@ -104,7 +104,7 @@ public class SimpleEnemy : EnemyScript
 
         // skillList = GetComponentsInChildren<BaseSkill>();
 
-        chosenSkill = skillList[1];
+        chosenSkill = skillList[0];
 
         isActive = true;
 
@@ -288,93 +288,190 @@ public class SimpleEnemy : EnemyScript
         if (isActive)
         {
 
-
-
-            Turn();
-
-            //Update all cooldowns and conditons
-            UpdateAllConditions();
-
-            //basic attack is casting
-            if (chosenSkill.currentlyCasting)
+            if (!isDead)
             {
-                chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
-                if (!chosenSkill.currentlyCasting)
-                {
-                    isAttacking = false;
-                    hasDecided = false;
+                Turn();
 
-                }
-            }
-            else
-            {
-                //choosen skill is casting
-                if (chosenSkill.currentlyCasting)
+                //Update all cooldowns and conditons
+                UpdateAllConditions();
+
+                //basic attack is casting
+
+                if (DelayAttack<=0)
                 {
-                    chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
-                    if (!chosenSkill.currentlyCasting)
+
+                    if (proatication())
                     {
-                        isAttacking = false;
-                        hasDecided = false;
+                        return;
+                    }
+                   
+                          
 
+                    //choosen skill is casting //current only using the basic attack(range Var)
+                    if (chosenSkill.currentlyCasting)
+                    {
+                        chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
+                        //if finsih casting exit loop with a delay before next attack
+                        if (!chosenSkill.currentlyCasting)
+                        {
+                            isAttacking = false;
+                            hasDecided = false;
+                            
+                            DelayAttack = chosenSkill.skillData.DelayAttack;
+                            Debug.LogWarning(chosenSkill.skillData.DelayAttack+chosenSkill.skillData.name);
+
+                            // decide function would go here
+                            Deciding();
+                        }
+                    }
+                    else
+                    {
+                        //move closer
+                        if (Vector3.Distance(transform.position, player.transform.position) > (chosenSkill.skillData.maxRange - 2 / 2))
+                        {
+                            move();
+                            goalset = true;
+                            HoldTurn();
+                        }
+                        else
+                        {
+                            Debug.LogWarning("attack");
+                            //stop moving on nav mesh
+                            if (nav.enabled != false)
+                            {
+                                nav.isStopped = true;
+                                goalset = false;
+
+                                Debug.LogWarning("stop walking");
+                                anim.SetBool("isWalking", false);
+                                nav.enabled = false;
+
+                                //a var of dicide function should go here. 
+                                //this is to check if a better skill has gone of cooldown
+                                Deciding();
+                            }
+                            //turn to face player then check if you can attack
+                            FaceTarget(player.transform);
+                            chosenAttack();
+                        }
                     }
                 }
                 else
                 {
-                    if (Vector3.Distance(transform.position, player.transform.position) > (chosenSkill.skillData.maxRange - 2 / 2))
-                    {
-                        move();
-                        goalset = true;
-                        HoldTurn();
-                    }
-                    else
-                    {
-                        //nav.enabled = false;
-                        Debug.LogWarning("attack");
-
-                        if (nav.enabled != false)
-                        {
-                            nav.isStopped = true;
-                            goalset = false;
-
-                            Debug.LogWarning("stop walking");
-                            anim.SetBool("isWalking", false);
-                            nav.enabled = false;
-                        }
-
-                        FaceTarget(player.transform);
-                        basicAttack();
-                        //Attack(chosenSkill);
-                        //goalset = false;
-                    }
+                    //Debug.LogWarning("reruce");
+                    DelayAttack -= Time.deltaTime;
+                    FaceTarget(player.transform);
                 }
             }
-
-
-
-            if (!CurrentlyCasting)
-            {
-
-            }
-            else
-            {
-
-            }
-
         }
+    }
+
+    public void Deciding() {
+
+        chosenSkill = null;
+        //For each skill...
+        foreach (BasicSkill checkedSkill in skillList)
+        {
+
+            //Check if the cooldown is complete...
+            if (checkedSkill.timeBeenOnCooldown >= checkedSkill.skillData.cooldown)
+            {
+                //check to see if the people target by the skills are inrange
+                switch (checkedSkill.TargetEntity[0])
+                {
+                    //if main target is player
+                    case "Player":
+                        //target is player.
+                        //Check if we are in range...
+                        if (checkedSkill.CheckInRange(transform.position, target.position))
+                        {
+                            //Debug.LogWarning("skill");
+                            basicSkillChecker(checkedSkill, target.gameObject);
+                        }
+                        break;
+
+                    case "Self":
+                        //no checks need as you are always in range
+                        basicSkillChecker(checkedSkill, gameObject);
+                        break;
+
+                    default:
+                        //target any possable entity which is in the TargetEntity.
+                        for (int i = 0; i < checkedSkill.TargetEntity.Count; i++)
+                        {
+                            //find all posable target
+                            GameObject[] AllTargets = GameObject.FindGameObjectsWithTag(checkedSkill.TargetEntity[i]);
+                            foreach (var Target in AllTargets)
+                            {
+                                //check to see if the skill can hit a target
+                                if (Vector3.Distance(this.transform.position, Target.transform.position)
+                                    <= checkedSkill.skillData.maxRange)
+                                {
+
+
+                                    basicSkillChecker(checkedSkill, Target);
+                                    break;
+                                }
+                            }
+                        }
+
+                        //can still cast skill on self
+
+                        break;
+                }
+            }
+        }
+
 
     }
 
-    void basicAttack()
+    bool proatication()
+    {
+        bool action = false;
+
+        //enemy behavior
+        int a =0;
+        switch (a)
+        {
+            //type of behavior
+            case 1:
+                //conduction is ment
+                if (true)
+                {
+                    //do action
+
+
+                    action = true;
+                }
+                break;
+            default:
+                break;
+        }
+
+        return action;
+    }
+
+    void chosenAttack()
     {
        
-        if (!isAttacking)
+       
+        //in area of attack
+
+        if (chosenSkill.CheckLineSkillHit(target.position,
+                chosenSkill.skillData.minRange,
+                chosenSkill.skillData.maxRange,
+                chosenSkill.skillData.nearWidth,
+                chosenSkill.skillData.farWidth))
         {
-            isAttacking = true;
-            anim.SetTrigger("attacking");
+            // lets attack and move to attack loop 
+            if (!isAttacking)
+            {
+                isAttacking = true;
+                anim.SetTrigger("attacking");
+            }
+            chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
         }
-        //trigger choosen skill
-        chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
+        
     }
 
     void move()
@@ -392,16 +489,10 @@ public class SimpleEnemy : EnemyScript
             }
             else if (type == TYPE.RANGED)
             {
-               // if (Vector3.Distance(transform.position, player.transform.position) > (chosenSkill.skillData.maxRange - 1) / 2)
-               // {
+                //move around player with a bit of a spread
                     ChooseDestination(chosenSkill);
 
                     Movement(destination);
-               //}
-               // else
-               // {
-                    
-               // }
             }
         }
         else
