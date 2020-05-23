@@ -104,8 +104,10 @@ public class EnemyManager : MonoBehaviour
 
     public void CalculateSpawnBoost()
     {
+
+        float copy = numOfClearedEncounters;
         //The equation
-        encounterSpawnBoostVar = (int)(2 + ((float)numOfClearedEncounters * 0.5f));
+        encounterSpawnBoostVar = (int)(2 + (copy * 0.5f));
     }
 
     public void CheckVictory()

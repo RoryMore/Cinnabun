@@ -26,7 +26,8 @@ public class WaveUIManager : MonoBehaviour
     {
         if (enemyManager != null)
         {
-            waveCounterText.text = "WAVE #" + (enemyManager.numOfClearedEncounters + 1).ToString();
+            int waveNumber = enemyManager.numOfClearedEncounters + 1;
+            waveCounterText.text = "WAVE #" + waveNumber.ToString();
             if (!enemyManager.WaveActive)
             {
                 waveTypeText.text = "NO WAVE ACTIVE";
@@ -55,6 +56,12 @@ public class WaveUIManager : MonoBehaviour
                             {
                                 waveTypeText.text = "MINI-BOSS";
                                 waveTimerText.text = "THE BIG ONE COMES";
+                                break;
+                            }
+                        case Encounter.WaveType.HOLDTHELINE:
+                            {
+                                waveTypeText.text = "HOLD THE POINT";
+                                waveTimerText.text = "SURVIVE FOR <color=maroon>" + Mathf.Round(enemyManager.enemyMangerCurrentEncounter.WaveOverTicker) + "s</color> NEAR THE POINT";
                                 break;
                             }
                     }

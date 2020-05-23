@@ -457,7 +457,7 @@ public class WeaponAttack : BaseSkill
             slashLocation = transform.position;
             slashLocation = slashLocation + (transform.forward * 1.67f);
             slashRotation = transform.rotation;
-            slashRotation.eulerAngles = new Vector3(-90, slashRotation.eulerAngles.y, slashRotation.eulerAngles.z);
+            slashRotation.eulerAngles = new Vector3(-270, slashRotation.eulerAngles.y + 90, slashRotation.eulerAngles.z - 90);
         }
     }
 }

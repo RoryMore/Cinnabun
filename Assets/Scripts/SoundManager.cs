@@ -4,27 +4,29 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    // public AudioSource battleAmbient;
-    // public AudioSource battleMusic;
-    // public AudioSource slowMostionAmbient;
-    // public AudioSource slowMotionMusic;
+	// public AudioSource battleAmbient;
+	// public AudioSource battleMusic;
+	// public AudioSource slowMostionAmbient;
+	// public AudioSource slowMotionMusic;
 
-    [Header("Main Menu Music")]
-  //[Space(10)]
-    public AudioSource mainMenuMusic;
+	[Header("Main Menu Music")]
+	//[Space(10)]
+	public AudioSource mainMenuMusic;
 
-    [Header("Battle Music")]
+	[Header("Battle Music")]
 
-    public AudioSource[] BattleMusic;
-    public AudioSource testSong;
-
-
-    [Header("Idle Music")]
-
-    public AudioSource[] IdleMusic;
+	public AudioSource[] BattleMusic;
+	public AudioSource testSong;
 
 
-    [Header("Sound Effects")]
+	[Header("Idle Music")]
+
+	public AudioSource[] IdleMusic;
+
+	[SerializeField]
+	AudioSource blast;
+	[HideInInspector] public static AudioSource blastsound;
+	[Header("Sound Effects")]
     //public AudioSource meeleeSwing;
     [SerializeField]
     AudioSource meeleSwing;
@@ -109,6 +111,7 @@ public class SoundManager : MonoBehaviour
     {
         // Setting static sound effect variables to inspector set data
         meleeSwing = meeleSwing;
+		blastsound = blast;
 
         leftFootstep = footStepLeft;
         rightFootstep = footstepRight;
@@ -141,6 +144,7 @@ public class SoundManager : MonoBehaviour
    //     MuteAllAudio();
         CheckInBattle();
         checkState();
+	
 		//Blast();
 
         switch (state)
@@ -427,11 +431,11 @@ public class SoundManager : MonoBehaviour
                     inBattle = false;
                 }
             }
-            else
-            {
-                state = MusicState.START;
+         //   else
+         //   {
+           //     state = MusicState.START;
 				//inBattle = true;
-            }
+           // }
 		}
 		else
 		{
@@ -493,6 +497,7 @@ public class SoundManager : MonoBehaviour
            IdleMusic[i].Stop();
         }
     }
+
 
 	/*public void Blast()
 	{
