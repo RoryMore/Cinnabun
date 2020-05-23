@@ -26,7 +26,7 @@ PrefabInstance:
         type: 3}
       propertyPath: skillList.Array.data[0]
       value: 
-      objectReference: {fileID: 2365500738336683210}
+      objectReference: {fileID: 124152024731434927}
     - target: {fileID: 645716675767509175, guid: 890f816d83a2e0342be5ac8e67da2dcd,
         type: 3}
       propertyPath: skillList.Array.data[2]
@@ -166,6 +166,42 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 548f9f9763628864fbe963c055863c0c,
         type: 2}
+    - target: {fileID: 2513559474065816440, guid: 890f816d83a2e0342be5ac8e67da2dcd,
+        type: 3}
+      propertyPath: TargetEntity.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513559474065816440, guid: 890f816d83a2e0342be5ac8e67da2dcd,
+        type: 3}
+      propertyPath: skillData
+      value: 
+      objectReference: {fileID: 11400000, guid: 4c49c6b733297cb4ca24a9f3a4852586,
+        type: 2}
+    - target: {fileID: 2513559474065816440, guid: 890f816d83a2e0342be5ac8e67da2dcd,
+        type: 3}
+      propertyPath: TargetEntity.Array.data[0]
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513559474065816440, guid: 890f816d83a2e0342be5ac8e67da2dcd,
+        type: 3}
+      propertyPath: TargetEntity.Array.data[1]
+      value: Enemy1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513559474065816440, guid: 890f816d83a2e0342be5ac8e67da2dcd,
+        type: 3}
+      propertyPath: TargetEntity.Array.data[2]
+      value: Enemy2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513559474065816440, guid: 890f816d83a2e0342be5ac8e67da2dcd,
+        type: 3}
+      propertyPath: TargetEntity.Array.data[3]
+      value: Enemy3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2513559474065816440, guid: 890f816d83a2e0342be5ac8e67da2dcd,
+        type: 3}
+      propertyPath: casterSelf
+      value: 
+      objectReference: {fileID: 1837046819906525499}
     - target: {fileID: 3048246519386114707, guid: 890f816d83a2e0342be5ac8e67da2dcd,
         type: 3}
       propertyPath: m_RootOrder
@@ -222,24 +258,30 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 0625bc00892642340a3270bf74ee76d5,
         type: 2}
+    - target: {fileID: 8931803968427291264, guid: 890f816d83a2e0342be5ac8e67da2dcd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9087542556511018044, guid: 890f816d83a2e0342be5ac8e67da2dcd,
         type: 3}
       propertyPath: skillData
       value: 
       objectReference: {fileID: 11400000, guid: 781671c32616deb46ac18388fbf9b7d8,
         type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3556570332722253126, guid: 890f816d83a2e0342be5ac8e67da2dcd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 890f816d83a2e0342be5ac8e67da2dcd, type: 3}
---- !u!114 &2365500738336683210 stripped
+--- !u!114 &1837046819906525499 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3556570332722253126, guid: 890f816d83a2e0342be5ac8e67da2dcd,
+  m_CorrespondingSourceObject: {fileID: 645716675767509175, guid: 890f816d83a2e0342be5ac8e67da2dcd,
     type: 3}
   m_PrefabInstance: {fileID: 1263413338216413580}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9515cca2412fbee409c3034a5347a4e0, type: 3}
+  m_Script: {fileID: 11500000, guid: fdf7ad995055b284386351e7e725be9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &124152024731434927 stripped
