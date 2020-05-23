@@ -294,10 +294,10 @@ public class SimpleEnemy : EnemyScript
 //}
 }*/
         // Update turn cooldown
-
+        Debug.LogWarning(isActive);
         if (isActive)
         {
-
+            
             if (!isDead)
             {
                 Turn();
@@ -316,8 +316,7 @@ public class SimpleEnemy : EnemyScript
                     }
 
                     // ADDED THIS CATCH TO CHECK IF CHOSENSKILL IS NULL. IT WAS THROWING AN ERROR. THE ENEMY USES MAYBE 1-3 SKILLS THEN BREAKS
-                    if (chosenSkill != null)
-                    {
+                   
                         //choosen skill is casting //current only using the basic attack(range Var)
                         if (chosenSkill.currentlyCasting)
                         {
@@ -367,7 +366,7 @@ public class SimpleEnemy : EnemyScript
                                 chosenAttack();
                             }
                         }
-                    }
+                    
                 }
                 else
                 {
@@ -977,10 +976,19 @@ public class SimpleEnemy : EnemyScript
 
     }
 
-    public void SwitchActiveBehavior()
+    public void SwitchActiveBehavior(bool active)
     {
-        nav.enabled = !nav.enabled;
-        isActive = !isActive;
+        if (active)
+        {
+            nav.enabled = true;
+            isActive = true;
+        }
+        else
+        {
+            nav.enabled = false;
+            isActive = false;
+        }
+        
     }
 
 

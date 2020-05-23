@@ -444,12 +444,12 @@ public class Encounter : MonoBehaviour
         }
     }
 
-    public void SetActiveBehavior()
+    public void SetActiveBehavior(bool act)
     {
 
         foreach (SimpleEnemy enemy in masterInitiativeList)
         {
-            enemy.SwitchActiveBehavior();
+            enemy.SwitchActiveBehavior(act);
         }
 
         

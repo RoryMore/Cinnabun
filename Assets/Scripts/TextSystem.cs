@@ -130,7 +130,7 @@ public class TextSystem : MonoBehaviour
                 {
                     if (index >= text[wordIndex].text.Length)
                     {
-						enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior();
+						enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior(true);
 						hideNovel = true;
 						Debug.Log("Text,Done");
 						novelActive = true;
@@ -156,6 +156,10 @@ public class TextSystem : MonoBehaviour
 				getBackGroundName();
 					checkBackground();
 
+                }
+                else
+                {
+                    enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior(false);
                 }
 
             }
