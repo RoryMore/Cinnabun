@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -905,6 +906,23 @@ public class SimpleEnemy : EnemyScript
         GetComponent<BloodOrbDropControl>().DropItem(transform.position);
 
         ItemSpawner.SpawnItem(transform.position);
+
+        nav.enabled = false;
+    }
+
+    public void Remove()
+    {
+        isDead = true;
+        anim.SetBool("isDead", true);
+        //Ensure that the target is no longer in the initiative 
+        myEncounter.initiativeList.Remove(this);
+        myEncounter.healList.Remove(this);
+        nav.enabled = false;
+        foreach (BaseSkill skill in skillList)
+        {
+            skill.DisableProjector();
+        }
+
 
         nav.enabled = false;
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using System.Linq;
 
 public class Encounter : MonoBehaviour
@@ -67,9 +68,20 @@ public class Encounter : MonoBehaviour
 
     public void Initialise()
     {
-        //spawnPoints = transform.Cast<Transform>().ToArray();
-        ClearSpawnPoints();
-        SpawnSpawnPoints();
+        //
+
+        //Mini stop
+        if (SceneManager.GetActiveScene().name == "JasmineScene")
+        {
+            spawnPoints = transform.Cast<Transform>().ToList();
+        }
+        else
+        {
+            ClearSpawnPoints();
+            SpawnSpawnPoints();
+        }
+
+
 
         switch (waveType)
         {
@@ -216,10 +228,14 @@ public class Encounter : MonoBehaviour
         }
 
         masterInitiativeList.AddRange(initiativeList);
+        masterInitiativeList = masterInitiativeList.Distinct().ToList();
+
 
         //Set up player inclusive
         playerInclusiveInitiativeList.AddRange(masterInitiativeList);
         playerInclusiveInitiativeList.Add(GameObject.Find("Player").GetComponent<Entity>());
+        playerInclusiveInitiativeList = playerInclusiveInitiativeList.Distinct().ToList();
+
     }
 
     public void SpawnBoss(int countMinus1)
@@ -309,7 +325,7 @@ public class Encounter : MonoBehaviour
                             foreach (Entity enemy in masterInitiativeList)
                             {
 
-                                enemy.TakeDamage(enemy.maxHP);
+                                enemy.GetComponent<SimpleEnemy>().Remove();
                             }
                         }
                         Cleared();
@@ -358,7 +374,7 @@ public class Encounter : MonoBehaviour
                             foreach (Entity enemy in masterInitiativeList)
                             {
 
-                                enemy.TakeDamage(enemy.maxHP);
+                                enemy.GetComponent<SimpleEnemy>().Remove();
                             }
                         }
                         Cleared();
@@ -381,23 +397,33 @@ public class Encounter : MonoBehaviour
         enemyManager.WaveActive = false;
         enemyManager.inBattle = false;
         enemyManager.enemyMangerCurrentEncounter = null;
-        enemyManager.numOfClearedEncounters++;
-        enemyManager.CalculateSpawnBoost();
+        
+        
         enemyManager.SetTimeToNextWave(enemyManager.timeBetweenWaves);
         enemyManager.CheckVictory();
 
-        foreach (SimpleEnemy enemy in masterInitiativeList)
-        {
+        //foreach (SimpleEnemy enemy in masterInitiativeList)
+        //{
             //Destroy(enemy); // Why is the enemy script being destroyed and the gameObject being left alone. Anything that was attached to the enemy still attempting to reference the enemy is obviously throwing errors. This is a strange thing to do in my opinion instead of having the enemy entity be dead if you don't want to just remove the gameObject
             initiativeList.Clear();
             masterInitiativeList.Clear();
             playerInclusiveInitiativeList.Clear();
-        }
-        
-        
+        //}
 
-        // THIS IS BACK BABYY
-        gameObject.SetActive(false);
+        enemyManager.numOfClearedEncounters++;
+        enemyManager.CalculateSpawnBoost();
+
+        if (SceneManager.GetActiveScene().name == "JasmineScene")
+        {
+            enemyManager.enemyMangerCurrentEncounter = this;
+        }
+        else
+        {       
+            // THIS IS BACK BABYY
+            gameObject.SetActive(false);
+        }
+
+
         
     }
 
