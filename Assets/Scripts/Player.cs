@@ -615,7 +615,7 @@ public class Player : Entity
 
     void UpdateAnimator()
     {
-        if (nav.velocity.magnitude > 0.3f)
+        if (nav.velocity.magnitude > 0.5f)
         {
             animator.SetBool("moving", true);
         }
