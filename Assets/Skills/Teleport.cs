@@ -22,7 +22,7 @@ public class Teleport : BaseSkill
     protected override void Initialise()
     {
         base.Initialise();
-
+        
         if (SaveManager.GetUpgradeList().teleportRange != null)
         {
             skillData.maxRange += SaveManager.GetUpgradeList().teleportRange.GetUpgradedMagnitude();
@@ -152,7 +152,7 @@ public class Teleport : BaseSkill
         }
         //entityTarget1.transform.position = teleportLocation;
         
-        entityTarget1.TakeDamage(Mathf.RoundToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * damageMultiplier), skillData.damageType, casterSelf.CalculateCriticalStrike());
+        //entityTarget1.TakeDamage(Mathf.RoundToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * damageMultiplier), skillData.damageType, casterSelf.CalculateCriticalStrike());
 
         entityTarget1 = null;
         teleportLocation.Set(0, 0, 0);

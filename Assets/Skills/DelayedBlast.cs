@@ -72,8 +72,10 @@ public class DelayedBlast : BaseSkill
         if (SaveManager.GetUpgradeList().blastExplosionRadius != null)
         {
             explosionRadius += SaveManager.GetUpgradeList().blastExplosionRadius.GetUpgradedMagnitude();
+            skillData.maxRange += (SaveManager.GetUpgradeList().blastExplosionRadius.GetUpgradedMagnitude() * 0.5f);
+
+            explosionDamageMultiplier += SaveManager.GetUpgradeList().blastExplosionDamage.GetUpgradedMagnitude();
         }
-        // TODO: Second upgrade for explosion damage multiplier here
         
     }
 
