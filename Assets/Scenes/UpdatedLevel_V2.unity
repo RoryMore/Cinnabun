@@ -3795,14 +3795,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4577219032212093784, guid: b715985195ec5a14a8289d3661420dd6,
         type: 3}
-      propertyPath: visualNovel
-      value: 
-      objectReference: {fileID: 1848401559}
-    - target: {fileID: 4577219032212093784, guid: b715985195ec5a14a8289d3661420dd6,
-        type: 3}
       propertyPath: playerUI
       value: 
       objectReference: {fileID: 1278495005}
+    - target: {fileID: 4577219032212093784, guid: b715985195ec5a14a8289d3661420dd6,
+        type: 3}
+      propertyPath: visualNovel
+      value: 
+      objectReference: {fileID: 1848401559}
     - target: {fileID: 4577219032212093785, guid: b715985195ec5a14a8289d3661420dd6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10263,7 +10263,7 @@ PrefabInstance:
     - target: {fileID: 8168740989260152238, guid: 45d896425b2598a4eaf1eb9a096fdd57,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.7
+      value: -50.3
       objectReference: {fileID: 0}
     - target: {fileID: 8168740989260152238, guid: 45d896425b2598a4eaf1eb9a096fdd57,
         type: 3}

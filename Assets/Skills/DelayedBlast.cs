@@ -20,6 +20,7 @@ public class DelayedBlast : BaseSkill
     Sprite explosionMainCookie;
     [SerializeField]
     Sprite explosionFillCookie;
+	
 
     CameraController cameraController;
 
@@ -123,6 +124,7 @@ public class DelayedBlast : BaseSkill
                 {
                     //Debug.Log("Skill Effect Activated");
                     ActivateSkill(entityList);
+					SoundManager.blastsound.Play(0);
                     break;
                 }
         }
