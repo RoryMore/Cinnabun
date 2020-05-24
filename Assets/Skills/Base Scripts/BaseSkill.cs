@@ -24,6 +24,13 @@ public class BaseSkill : MonoBehaviour
         CIRCULAR
     }
 
+    public enum AttackAnimation
+    {
+        Attacking,
+        LeapAttack,
+        ChargeAttack
+    }
+
     public enum IndicatorMoveType
     {
         ALWAYSNEARCASTER,
@@ -75,6 +82,8 @@ public class BaseSkill : MonoBehaviour
     [Header("Layer Masks if necessary to use")]
     public LayerMask groundMask;
     public LayerMask entityMask;
+
+    public AttackAnimation AttachingAnim;
 
     protected virtual void Initialise()
     {
