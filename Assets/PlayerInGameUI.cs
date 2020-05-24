@@ -30,6 +30,11 @@ public class PlayerInGameUI : MonoBehaviour
     public Button WeaponAttackButtonBackground;
     public Image MeleeAttack;
 
+	public Image MeleeArrow;
+	public Image TeleportArrow;
+	public Image BombArrow;
+	public Image RewindArrow;
+
     public Image VHSimage;
 
     public Text timeSinceStartUp;
@@ -89,6 +94,7 @@ public class PlayerInGameUI : MonoBehaviour
 						if (novelM.Trigger6 == false)
 						{
 							WeaponAttackButtonBackground.interactable = true;
+							//attack
 						}
 					}
 				}
