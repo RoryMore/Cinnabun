@@ -233,10 +233,10 @@ public class TextSystem : MonoBehaviour
         if (GameStart == true)
         {
 			//getBackGroundName();
-			if (enemyManager != null)
-			{
-				enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior();
-			}
+
+                enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior();
+          
+			
 			Say(text[wordIndex].text[index]);
 			//checkIfNull();
 			//checkBackground();
