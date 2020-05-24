@@ -138,22 +138,22 @@ public class Player : Entity
                                 {
                                     if (!inventory.activeSelf)
                                     {
-                                        pause.ButtonPaused();
+                                        
                                         inventory.SetActive(true);
 										
 									}
                                     else
                                     {
-                                        pause.ButtonPlay();
+                                     
                                         inventory.SetActive(false);
-										
+										checkInventory = true;
 									}
                                 }
                                 else
                                 {
                                     if (inventory.activeSelf)
                                     {
-                                        pause.ButtonPlay();
+                                        
                                         inventory.SetActive(false);
 										checkInventory = true;
 									}

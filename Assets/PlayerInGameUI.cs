@@ -240,7 +240,12 @@ public class PlayerInGameUI : MonoBehaviour
 		}
 	}
 
-    void UpdateHealth()
+	public void Inventorybackbutton()
+	{
+		player.inventory.SetActive(false);
+	}
+
+	void UpdateHealth()
     {
         Health.fillAmount = (float)player.currentHP/(float)player.maxHP ;
     }
