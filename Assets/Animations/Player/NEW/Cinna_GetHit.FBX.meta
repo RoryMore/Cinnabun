@@ -1,0 +1,244 @@
+fileFormatVersion: 2
+guid: 26e37d93102a094428ef9857d32dc8d1
+ModelImporter:
+  serializedVersion: 19300
+  internalIDToNameTable:
+  - first:
+      74: 1827226128182048838
+    second: CinnaGETHIT
+  externalObjects: {}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: CinnaGETHIT
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 20
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Cinnabun
+        weight: 1
+      - path: Cinnabun_final_2
+        weight: 1
+      - path: CinnabunLPlatform
+        weight: 1
+      - path: CinnabunPelvis
+        weight: 1
+      - path: CinnabunPelvis/CinnabunLThigh
+        weight: 1
+      - path: CinnabunPelvis/CinnabunLThigh/CinnabunLCalf
+        weight: 1
+      - path: CinnabunPelvis/CinnabunLThigh/CinnabunLCalf/CinnabunLFoot
+        weight: 1
+      - path: CinnabunPelvis/CinnabunRThigh
+        weight: 1
+      - path: CinnabunPelvis/CinnabunRThigh/CinnabunRCalf
+        weight: 1
+      - path: CinnabunPelvis/CinnabunRThigh/CinnabunRCalf/CinnabunRFoot
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit11
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit11/CinnabunLDigit12
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit11/CinnabunLDigit12/CinnabunLDigit13
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit21
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit21/CinnabunLDigit22
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit21/CinnabunLDigit22/CinnabunLDigit23
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit31
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit31/CinnabunLDigit32
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit31/CinnabunLDigit32/CinnabunLDigit33
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit41
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit41/CinnabunLDigit42
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit41/CinnabunLDigit42/CinnabunLDigit43
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit51
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit51/CinnabunLDigit52
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunLCollarbone/CinnabunLUpperarm/CinnabunLForearm/CinnabunLPalm/CinnabunLDigit51/CinnabunLDigit52/CinnabunLDigit53
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunNeck1
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunNeck1/CinnabunNeck2
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunNeck1/CinnabunNeck2/CinnabunHead
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit11
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit11/CinnabunRDigit12
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit11/CinnabunRDigit12/CinnabunRDigit13
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit21
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit21/CinnabunRDigit22
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit21/CinnabunRDigit22/CinnabunRDigit23
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit31
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit31/CinnabunRDigit32
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit31/CinnabunRDigit32/CinnabunRDigit33
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit41
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit41/CinnabunRDigit42
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit41/CinnabunRDigit42/CinnabunRDigit43
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit51
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit51/CinnabunRDigit52
+        weight: 1
+      - path: CinnabunPelvis/CinnabunSpine1/CinnabunSpine2/CinnabunSpine3/CinnabunSpine4/CinnabunRibcage/CinnabunRCollarbone/CinnabunRUpperarm/CinnabunRForearm/CinnabunRPalm/CinnabunRDigit51/CinnabunRDigit52/CinnabunRDigit53
+        weight: 1
+      - path: CinnabunRPlatform
+        weight: 1
+      maskType: 1
+      maskSource: {fileID: 31900000, guid: b499d6ce65a365949b21245cda70136f, type: 2}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

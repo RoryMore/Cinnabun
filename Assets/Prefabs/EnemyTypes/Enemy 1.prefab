@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drop: {fileID: 5146304953416599106, guid: e9315ab268eee1c4eada0cee7df62616, type: 3}
-  dropChance: 100
+  dropChance: 35
   randomOffset: {x: 0, y: 0, z: 0}
 --- !u!136 &9092658765055848247
 CapsuleCollider:
