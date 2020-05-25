@@ -53,6 +53,9 @@ MonoBehaviour:
   fillType: 1
   moveType: 0
   timeBeenOnCooldown: 10
+  cooldownReduction: 0
+  timeSpentOnWindUp: 0
+  windUpReduction: 0
   currentlyCasting: 0
   isAllowedToCast: 1
   casterSelf: {fileID: 0}
@@ -61,8 +64,11 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 1024
+  entityMask:
+    serializedVersion: 2
+    m_Bits: 0
   explosionProjector: {fileID: 5138613148438786636}
-  explosionRadius: 5
+  explosionRadius: 3
   explosionDamageMultiplier: 0.4
   explosionMainCookie: {fileID: 21300000, guid: 86fdcda00d6ed354893ecc5b80e017e8,
     type: 3}
