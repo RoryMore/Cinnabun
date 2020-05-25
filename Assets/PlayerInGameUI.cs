@@ -30,6 +30,11 @@ public class PlayerInGameUI : MonoBehaviour
     public Button WeaponAttackButtonBackground;
     public Image MeleeAttack;
 
+	public Image MeleeArrow;
+	public Image TeleportArrow;
+	public Image BombArrow;
+	public Image RewindArrow;
+
     public Image VHSimage;
 
     public Text timeSinceStartUp;
@@ -62,6 +67,7 @@ public class PlayerInGameUI : MonoBehaviour
     {
 		CHeckHealthForNovel();
 		tutorial();
+		arrow();
 
         if (pauseAbility.states == PauseAbility.GameStates.TIMESTOP)
         {
@@ -69,7 +75,7 @@ public class PlayerInGameUI : MonoBehaviour
 				PlayButton.gameObject.SetActive(true);
 			VHSimage.gameObject.SetActive(true);
 			timeSinceStartUp.gameObject.SetActive(true);
-
+		
 			if (sceneName != "JasmineScene")
 			{
 				RewindButtonBackground.interactable = true;
@@ -89,6 +95,7 @@ public class PlayerInGameUI : MonoBehaviour
 						if (novelM.Trigger6 == false)
 						{
 							WeaponAttackButtonBackground.interactable = true;
+							
 						}
 					}
 				}
@@ -123,7 +130,11 @@ public class PlayerInGameUI : MonoBehaviour
             WeaponAttackButtonBackground.interactable = false;
             VHSimage.gameObject.SetActive(false);
             timeSinceStartUp.gameObject.SetActive(false);
-        }
+			MeleeArrow.gameObject.SetActive(false);
+			BombArrow.gameObject.SetActive(false);
+			TeleportArrow.gameObject.SetActive(false);
+			RewindArrow.gameObject.SetActive(false);
+		}
 
 
         foreach (BaseSkill skill in player.skillList)
@@ -218,7 +229,23 @@ public class PlayerInGameUI : MonoBehaviour
         pauseAbility.ButtonPlay();
     }
 
-    void UpdateHealth()
+	public void Inventorybutton()
+	{
+		if (pauseAbility.states == PauseAbility.GameStates.PLAY)
+		{
+			if (!player.inventory.activeSelf)
+			{
+				player.inventory.SetActive(true);
+			}
+		}
+	}
+
+	public void Inventorybackbutton()
+	{
+		player.inventory.SetActive(false);
+	}
+
+	void UpdateHealth()
     {
         Health.fillAmount = (float)player.currentHP/(float)player.maxHP ;
     }
@@ -248,6 +275,7 @@ public class PlayerInGameUI : MonoBehaviour
 				if (novelM.Trigger1 == true)
 				{
 					player.attackSkill = true;
+					//MeleeArrow.gameObject.SetActive(true);
 				}
 
 				if (novelM.Trigger3 == true)
@@ -273,5 +301,22 @@ public class PlayerInGameUI : MonoBehaviour
 			player.telepotSkill = true;
 		}
 	}
-  
+
+	void arrow()
+	{
+		if (novelM.Trigger1 == true && novelM.Trigger3 != true)
+		{
+			MeleeArrow.gameObject.SetActive(true);
+		}
+
+		if (novelM.Trigger3 == true && novelM.Trigger4 != true)
+		{
+			RewindArrow.gameObject.SetActive(true);
+		}
+
+		if (novelM.Trigger6 == true)
+		{
+			TeleportArrow.gameObject.SetActive(true);
+		}
+	}
 }

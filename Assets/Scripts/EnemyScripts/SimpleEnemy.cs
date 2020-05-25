@@ -124,7 +124,7 @@ public class SimpleEnemy : EnemyScript
 
     void Update()
     {
-
+       
         //viewCurrentSkill = chosenSkill;
 
         /* if(isActive)
@@ -480,7 +480,20 @@ public class SimpleEnemy : EnemyScript
             if (!isAttacking)
             {
                 isAttacking = true;
-                anim.SetTrigger("attacking");
+                switch (chosenSkill.AttachingAnim)
+                {
+                    case BaseSkill.AttackAnimation.Attacking:
+                        anim.SetTrigger("attacking");
+                        break;
+                    case BaseSkill.AttackAnimation.LeapAttack:
+                        anim.SetTrigger("LeapAttack");
+                        break;
+                    case BaseSkill.AttackAnimation.ChargeAttack:
+                        anim.SetTrigger("ChargeAttack");
+                        break;
+                    default:
+                        break;
+                }
             }
             chosenSkill.TriggerSkill(myEncounter.playerInclusiveInitiativeList);
         }
@@ -894,7 +907,8 @@ public class SimpleEnemy : EnemyScript
     public override void Death()
     {
         base.Death();
-        anim.SetBool("isDead", true);
+        //anim.SetBool("isDead", true);
+        anim.SetTrigger("deadTrigger");
         foreach(BaseSkill skill in skillList)
         {
             skill.DisableProjector();
