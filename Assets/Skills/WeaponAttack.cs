@@ -28,6 +28,8 @@ public class WeaponAttack : BaseSkill
     public float staffDamageMultiplier;
     public float bowDamageMultiplier;
 
+    [HideInInspector] public float traitPercentDmg;
+
     [Tooltip("The width the line indicator will use. \nAngleWidth will be what is used for sword")]
     //public float lineWidth;
 
@@ -60,6 +62,8 @@ public class WeaponAttack : BaseSkill
     Vector3 slashLocation = Vector3.zero;
     Quaternion slashRotation = Quaternion.identity;
 
+    CameraController cameraController;
+
     private void Start()
     {
         Initialise();
@@ -72,6 +76,19 @@ public class WeaponAttack : BaseSkill
 
         meshCollider.sharedMesh = GenerateRectHitboxMesh();
         meshCollider.enabled = false;
+
+        cameraController = GetComponent<CameraController>();
+
+        traitPercentDmg = 0.0f;
+    }
+
+    public override void ResetSkillVars()
+    {
+        base.ResetSkillVars();
+        attackAreaChosen = false;
+        entityTarget = null;
+        slashLocation = Vector3.zero;
+        slashRotation = Quaternion.identity;
     }
 
     protected void SetIndicatorImages(Sprite mainCookie, Sprite fillCookie)
@@ -315,7 +332,7 @@ public class WeaponAttack : BaseSkill
         }
 
         // When the skill can be activated
-        if (timeSpentOnWindUp >= skillData.windUp)
+        if (timeSpentOnWindUp >= GetCalculatedWindUp())
         {
             skillState = SkillState.DOAFFECT;
             //ActivateSkill(entityList);
@@ -333,10 +350,13 @@ public class WeaponAttack : BaseSkill
         {
             case UsedWeaponType.Unarmed:
                 int unarmedDamage = Mathf.FloorToInt((skillData.baseMagnitude + casterSelf.GetStrengthDamageBonus()) * unarmedDamageMultiplier);
-                //unarmedDamage += casterSelf.GetStrengthDamageBonus();
+
+                // Apply trait damage percent changes if there is a value
+                unarmedDamage = Mathf.FloorToInt(unarmedDamage - (unarmedDamage * (traitPercentDmg * 1.5f)) + (entityTarget.maxHP * traitPercentDmg));
+
                 unarmedDamage = Mathf.Clamp(unarmedDamage, 1, int.MaxValue);
 
-                entityTarget.TakeDamage(unarmedDamage, SkillData.DamageType.PHYSICAL);
+                entityTarget.TakeDamage(unarmedDamage, SkillData.DamageType.PHYSICAL, casterSelf.CalculateCriticalStrike());
 
                 //SoundManager.meleeSwing.Play();
                 break;
@@ -349,8 +369,6 @@ public class WeaponAttack : BaseSkill
                     bool weaponhit = false;
 
                     int swordDamage = Mathf.FloorToInt((skillData.baseMagnitude + casterSelf.GetStrengthDamageBonus()) * swordDamageMultiplier);
-                    //swordDamage += casterSelf.GetStrengthDamageBonus();
-                    swordDamage = Mathf.Clamp(swordDamage, 1, int.MaxValue);
 
                     foreach (Entity testedEntity in entityList)
                     {
@@ -358,13 +376,20 @@ public class WeaponAttack : BaseSkill
                         {
                             weaponhit = true;
 
-                            testedEntity.TakeDamage(swordDamage, SkillData.DamageType.PHYSICAL);
+                            // Apply trait damage percent changes if there is a value
+                            // swordDamage is reduced by amount equal to percent of itself, then is increased by amount equal to percent of target maxHP
+                            swordDamage = Mathf.FloorToInt(swordDamage - (swordDamage * (traitPercentDmg * 1.5f)) + (testedEntity.maxHP * traitPercentDmg));
+
+                            swordDamage = Mathf.Clamp(swordDamage, 1, int.MaxValue);
+                            testedEntity.TakeDamage(swordDamage, SkillData.DamageType.PHYSICAL, casterSelf.CalculateCriticalStrike());
                         }
                     }
 
                     if (weaponhit)
                     {
                         SoundManager.meleeSwing.Play(0);
+
+                        // Do a camera shake effect
                     }
                     //SoundManager.meleeSwing.Play(0);
                     break;
@@ -373,23 +398,27 @@ public class WeaponAttack : BaseSkill
             case UsedWeaponType.Staff:
                 int staffDamage = Mathf.FloorToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * staffDamageMultiplier);
                 //staffDamage += casterSelf.GetIntellectDamageBonus();
-                staffDamage = Mathf.Clamp(staffDamage, 1, int.MaxValue);
 
                 foreach (Entity testedEntity in entityList)
                 {
                     if (CheckLineSkillHit(testedEntity.transform.position, skillData.minRange, skillData.maxRange, skillData.nearWidth, skillData.farWidth))
                     {
-                        testedEntity.TakeDamage(staffDamage, SkillData.DamageType.MAGICAL);
+                        staffDamage = Mathf.FloorToInt(staffDamage - (staffDamage * (traitPercentDmg * 1.5f)) + (testedEntity.maxHP * traitPercentDmg));
+
+                        staffDamage = Mathf.Clamp(staffDamage, 1, int.MaxValue);
+                        testedEntity.TakeDamage(staffDamage, SkillData.DamageType.MAGICAL, casterSelf.CalculateCriticalStrike());
                     }
                 }
                 break;
 
             case UsedWeaponType.Bow:
                 int bowDamage = Mathf.FloorToInt((skillData.baseMagnitude + casterSelf.GetStrengthDamageBonus()) * bowDamageMultiplier);
-                //bowDamage += casterSelf.GetStrengthDamageBonus();
+
+                bowDamage = Mathf.FloorToInt(bowDamage - (bowDamage * (traitPercentDmg * 1.5f)) + (entityTarget.maxHP * traitPercentDmg));
+
                 bowDamage = Mathf.Clamp(bowDamage, 1, int.MaxValue);
 
-                entityTarget.TakeDamage(bowDamage, SkillData.DamageType.PHYSICAL);
+                entityTarget.TakeDamage(bowDamage, SkillData.DamageType.PHYSICAL, casterSelf.CalculateCriticalStrike());
                 break;
             default:
                 break;
@@ -428,7 +457,7 @@ public class WeaponAttack : BaseSkill
             slashLocation = transform.position;
             slashLocation = slashLocation + (transform.forward * 1.67f);
             slashRotation = transform.rotation;
-            slashRotation.eulerAngles = new Vector3(-90, slashRotation.eulerAngles.y, slashRotation.eulerAngles.z);
+            slashRotation.eulerAngles = new Vector3(-270, slashRotation.eulerAngles.y + 90, slashRotation.eulerAngles.z - 90);
         }
     }
 }

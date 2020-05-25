@@ -9,4 +9,8 @@ public class UpgradeSave
     public CharacterUpgrade playerMovespeed = new CharacterUpgrade();
     public CharacterUpgrade bloodOrbEffectiveness = new CharacterUpgrade();
     public CharacterUpgrade blastExplosionRadius = new CharacterUpgrade();
+    public CharacterUpgrade blastExplosionDamage = new CharacterUpgrade();
+    public CharacterUpgrade extraPauseAction = new CharacterUpgrade();
+    public CharacterUpgrade bonusAgilityCrit = new CharacterUpgrade();
+    public CharacterUpgrade armourEffectiveness = new CharacterUpgrade();
 }

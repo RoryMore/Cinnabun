@@ -32,6 +32,7 @@ public class MainMenuUI : MonoBehaviour
     {
         menuButtons.SetActive(true);
         credits.SetActive(false);
+        OptionsUI.SetActive(false);
     }
 
     public void Options()
@@ -42,4 +43,10 @@ public class MainMenuUI : MonoBehaviour
 
      //   SaveManager.SaveSettings();
     }
+
+	public void Tutorial()
+	{
+		SceneManager.LoadScene(1);
+		Time.timeScale = 1;
+	}
 }

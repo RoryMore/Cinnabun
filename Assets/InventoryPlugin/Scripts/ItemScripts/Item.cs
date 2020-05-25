@@ -7,6 +7,7 @@ public class Item : MonoBehaviour
 {
     public ItemData itemData;
     public InventoryItem.ItemInfoBlock itemStatBlock;
+    public EquipmentTrait equipmentTrait;
 
     [Header("Item World-Object Settings")]
     [SerializeField]
@@ -20,6 +21,7 @@ public class Item : MonoBehaviour
     [SerializeField]
     // If the item has been clicked & the Player is nearby, give the item to the Player. Reset the bool if a click has been input but not on the Item
     bool itemClicked;
+    public LayerMask itemMask;
 
     Player player;
     RespawnControl resCon;
@@ -30,6 +32,16 @@ public class Item : MonoBehaviour
 
     Material material;
     MeshRenderer meshRenderer;
+
+    Light rarityLight;
+    [SerializeField]
+    RarityColour rarityColour;
+
+    AttractedPickup attractor;
+    [SerializeField]
+    float attractorDisableTime = 5.0f;
+    [SerializeField]
+    float attractorDisableTimer = 0.0f;
 
     private void Awake()
     {
@@ -42,6 +54,8 @@ public class Item : MonoBehaviour
             Debug.LogError("Dropped Item could not find suitable location on NavMesh to drop at! Item may be inside an object or underground if the spawnLocation was near unsuitable terrain/objects");
         }
 
+        attractor = GetComponent<AttractedPickup>();
+
         enemyManager = FindObjectOfType<EnemyManager>();
     }
 
@@ -52,6 +66,8 @@ public class Item : MonoBehaviour
 
         timeAlive = 0.0f;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
+        attractor.SetTarget(player.transform);
 
         resCon = player.gameObject.GetComponent<RespawnControl>();
         if (resCon == null)
@@ -71,7 +87,7 @@ public class Item : MonoBehaviour
             {
                 if (itemData.applyRandomStats)
                 {
-                    float statScalar = enemyManager.numOfClearedEncounters * 0.2f;
+                    float statScalar = enemyManager.numOfClearedEncounters * 0.1f;
                     itemStatBlock = itemData.GetRandomItemStats(statScalar);
                 }
                 else
@@ -85,6 +101,33 @@ public class Item : MonoBehaviour
                 meshRenderer.material = material;
             }
         }
+
+        rarityLight = GetComponent<Light>();
+        switch (itemStatBlock.rarity)
+        {
+            case ItemData.ItemRarity.COMMON:
+                {
+                    rarityLight.color = rarityColour.commonColour;
+                    rarityLight.enabled = false;
+                    break;
+                }
+            case ItemData.ItemRarity.UNCOMMON:
+                {
+                    rarityLight.color = rarityColour.uncommonColour;
+                    break;
+                }
+            case ItemData.ItemRarity.RARE:
+                {
+                    rarityLight.color = rarityColour.rareColour;
+                    break;
+                }
+            case ItemData.ItemRarity.ULTRA:
+                {
+                    rarityLight.color = rarityColour.ultraColour;
+                    break;
+                }
+        }
+        rarityLight.enabled = true;
     }
 
     /// <summary>
@@ -105,6 +148,7 @@ public class Item : MonoBehaviour
 
         itemData = data;
         itemStatBlock = stats;
+        //equipmentTrait = trait;
 
         meshRenderer = GetComponent<MeshRenderer>();
         material = new Material(Shader.Find("Standard"));
@@ -116,8 +160,44 @@ public class Item : MonoBehaviour
     void Update()
     {
         UpdateLifetime();
-        UpdateClickState();
-        EvaluateItemGiven();
+        //UpdateClickState();
+        //EvaluateItemGiven();
+
+        if (attractor.enabled)
+        {
+            if (attractor.targetInRange)
+            {
+                // Give item to Player
+                if (inventoryBase.AddItem(this))
+                {
+                    Destroy(gameObject);
+                }
+                // Player had a full inventory
+                else
+                {
+                    // Disable Attractor for some time
+                    attractorDisableTimer = attractorDisableTime;
+                    attractor.enabled = false;
+                }
+            }
+        }
+        else
+        {
+            if (attractorDisableTimer >= 0.0f)
+            {
+                attractorDisableTimer -= Time.deltaTime;
+            }
+            else
+            {
+                attractor.enabled = true;
+            }
+        }
+    }
+
+    public void SetAttractorDisabledOnTimer()
+    {
+        attractor.enabled = false;
+        attractorDisableTimer = attractorDisableTime;
     }
 
     void UpdateLifetime()
@@ -140,7 +220,7 @@ public class Item : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 400.0f))
+            if (Physics.Raycast(ray, out RaycastHit hit, 400.0f, itemMask))
             {
                 // Did this object get clicked
                 if (hit.collider.gameObject == gameObject)

@@ -13,6 +13,13 @@ TagManager:
   - PlayerUI
   - VisualNovel
   - TriggerBox
+  - Water
+  - Forest
+  - Enemy1
+  - SoundWater
+  - Enemy2
+  - Enemy3
+  - TutorialOver
   layers:
   - Default
   - TransparentFX
@@ -25,8 +32,8 @@ TagManager:
   - CharacterRender
   - EquipmentPanelRender
   - Ground
-  - 
-  - 
+  - ItemDrops
+  - Enemy
   - 
   - 
   - 

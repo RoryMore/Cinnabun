@@ -13,6 +13,7 @@ public class MouseItemControl : MonoBehaviour
     EquipmentPanelControl equipPanelControl = null;
 
     public Canvas inventoryCanvas;
+    RectTransform canvasRectTransform = null;
 
     GraphicRaycaster raycaster;
     PointerEventData pointerEventData;
@@ -27,6 +28,7 @@ public class MouseItemControl : MonoBehaviour
     void Start()
     {
         raycaster = inventoryCanvas.GetComponent<GraphicRaycaster>();
+        canvasRectTransform = inventoryCanvas.GetComponent<RectTransform>();
         eventSystem = GetComponent<EventSystem>();
         player = FindObjectOfType<Player>();
 
@@ -46,7 +48,7 @@ public class MouseItemControl : MonoBehaviour
     void Update()
     {
         CheckItemClick();
-        if (mouseItem.enabled)
+        if (mouseItem.isActiveAndEnabled)
         {
             transform.position = Input.mousePosition;
         }
@@ -59,9 +61,16 @@ public class MouseItemControl : MonoBehaviour
         {
             tooltip.gameObject.SetActive(false);
         }
-        if (tooltip.enabled)
+        if (tooltip.isActiveAndEnabled)
         {
-            tooltip.transform.position = Input.mousePosition;
+            Vector3 tooltipTargetPosition = Input.mousePosition;
+            // Change the position of the tooltip if it is going offscreen
+            if (tooltip.rectTransform != null)
+            {
+                tooltipTargetPosition.y = Mathf.Clamp(tooltipTargetPosition.y, (tooltip.rectTransform.rect.height * canvasRectTransform.lossyScale.y), Screen.height);
+            }
+
+            tooltip.transform.position = tooltipTargetPosition;
         }
     }
 
@@ -118,14 +127,17 @@ public class MouseItemControl : MonoBehaviour
                         // Item was equipped - unequipping now
                         if (checkedResult.isEquipped)
                         {
+                            //invBase.playerEquippedItems.Remove(checkedResult);
+                            CharacterPanelStatControl.OnItemRemove(mouseItem);
+
                             checkedResult.usedEquipSlot.isUsed = false;
                             checkedResult.usedEquipSlot.equippedItem = null;
 
                             mouseItem.isEquipped = true;
                             mouseItem.usedEquipSlot = checkedResult.usedEquipSlot;
                             //checkedResult.usedEquipSlot = null;
-                            CharacterPanelStatControl.OnItemRemove(mouseItem.itemInfoBlock);
-                            //invBase.playerEquippedItems.Remove(checkedResult);
+                            
+                            //
                         }
                         else // Item was in inventory
                         {
@@ -208,13 +220,14 @@ public class MouseItemControl : MonoBehaviour
 
                     if (mouseItem.itemData != null)
                     {
-                        Vector3 dropLocation = player.transform.position;
-                        dropLocation.x += Random.Range(-2.0f, 2.0f);
-                        dropLocation.z += Random.Range(-2.0f, 2.0f);
+                        //Vector3 dropLocation = player.transform.position;
+                        //dropLocation.x += Random.Range(-2.0f, 2.0f);
+                        //dropLocation.z += Random.Range(-2.0f, 2.0f);
                         
 
-                        Item droppedItem = Instantiate(itemDrop, dropLocation, Quaternion.identity).GetComponent<Item>();
-                        droppedItem.Initialise(mouseItem.itemData, mouseItem.itemInfoBlock, 30.0f);
+                        //Item droppedItem = Instantiate(itemDrop, dropLocation, Quaternion.identity).GetComponent<Item>();
+                        //droppedItem.Initialise(mouseItem.itemData, mouseItem.itemInfoBlock, 30.0f);
+                        //droppedItem.SetAttractorDisabledOnTimer();
 
                         itemDroppedToGround = true;
                         mouseItem.ClearItem();

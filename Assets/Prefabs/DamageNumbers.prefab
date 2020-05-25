@@ -218,4 +218,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 203cdd8256577cd4e8da3882808d63ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageNumbers: {fileID: 5336142488549943110}
+  normalColours:
+    faceColour: {r: 0.32156864, g: 0.02745098, b: 0.42352942, a: 1}
+    outlineColour: {r: 1, g: 0.4392157, b: 0.9843137, a: 1}
+  critColours:
+    faceColour: {r: 0.8396226, g: 0, b: 0, a: 1}
+    outlineColour: {r: 1, g: 0.4392157, b: 0.9843137, a: 1}

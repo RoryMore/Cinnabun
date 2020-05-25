@@ -24,6 +24,13 @@ public class BaseSkill : MonoBehaviour
         CIRCULAR
     }
 
+    public enum AttackAnimation
+    {
+        Attacking,
+        LeapAttack,
+        ChargeAttack
+    }
+
     public enum IndicatorMoveType
     {
         ALWAYSNEARCASTER,
@@ -47,14 +54,19 @@ public class BaseSkill : MonoBehaviour
     [Tooltip("Indicator Moveability for this skill. \nMOVEABLE: For skills that wants the indicator to follow a targeted position for example. \nALWAYSNEARCASTER: Will always stay at the caster and rotate where the caster is facing. Circular Fill type won't use rotation, Linear fill type will rotate where the player is looking")]
     public IndicatorMoveType moveType;
 
-    [HideInInspector]
+    //[HideInInspector]
     public float timeBeenOnCooldown = 10.0f;
-
+    [Tooltip("Cooldown reduction makes a skill take less time to come off of cooldown \nCalculated by multiplying 'cooldown' with this value. 'cooldown * (1-CDR)' \nTherefore this should be a value between 0-1 for normal affects \nSome items in the game will increase this stat themselves")]
+    public float cooldownReduction = 0.0f;
+    [SerializeField]
     protected float timeSpentOnWindUp = 0;
+    [Tooltip("WindUp reduction makes a skill take less time to cast \nCalculated by multiplying 'windUp' with this value. 'windUp * (1-WUR)' \nTherefore this should be a value between 0-1 for normal affects \nSome items in the game will increase this stat themselves")]
+    public float windUpReduction = 0.0f;
+
     //[HideInInspector]
     public bool currentlyCasting;
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool isAllowedToCast;
     protected bool skillTriggered = false;
 
@@ -67,8 +79,11 @@ public class BaseSkill : MonoBehaviour
     [SerializeField]
     protected Sprite fillCookie;
 
-    [Header("Ground Layer Mask if necessary to use")]
+    [Header("Layer Masks if necessary to use")]
     public LayerMask groundMask;
+    public LayerMask entityMask;
+
+    public AttackAnimation AttachingAnim;
 
     protected virtual void Initialise()
     {
@@ -147,12 +162,20 @@ public class BaseSkill : MonoBehaviour
         }
     }
 
-    public void DisableProjector()
+    public virtual void DisableProjector()
     {
         if (projector.enabled)
         {
             projector.enabled = false;
         }
+    }
+
+    public virtual void ResetSkillVars() 
+    {
+        currentlyCasting = false;
+        timeBeenOnCooldown = skillData.cooldown;
+        timeSpentOnWindUp = 0.0f;
+        skillState = SkillState.INACTIVE;
     }
 
     void UpdateCastTime()
@@ -161,7 +184,7 @@ public class BaseSkill : MonoBehaviour
         {
             case SkillState.CASTING:
                 {
-                    Debug.Log("SkillUpdate: Casting windUp being incremented");
+                    //Debug.Log("SkillUpdate: Casting windUp being incremented");
                     // Increment the delta value for time spent casting ability
                     timeSpentOnWindUp += Time.deltaTime;
                     //Debug.Log("Cast time for Windup being calculated and passed to shader");
@@ -197,7 +220,7 @@ public class BaseSkill : MonoBehaviour
     void UpdateCooldownTime()
     {
         // If the time this skill has been on cooldown is less than the cooldown time
-        if (timeBeenOnCooldown < skillData.cooldown)
+        if (timeBeenOnCooldown < (Mathf.Clamp(skillData.cooldown * (1.0f - cooldownReduction), 0.001f, float.MaxValue)))
         {
             isAllowedToCast = false;
             // Increment timeBeenOnCooldown
@@ -227,84 +250,156 @@ public class BaseSkill : MonoBehaviour
     /// <param name="farWidth"></param>
     /// <returns>Returns TRUE if given Vector3 is within bounds and can can be damaged</returns>
     public bool CheckLineSkillHit(Vector3 hitCheckPosition, float minLength, float maxLength, float nearWidth, float farWidth)
-    {
-        float angleLookAt = GetForwardAngle(casterSelf.transform);
-
-        float halfFarWidth = farWidth * 0.5f;
-        float halfNearWidth = nearWidth * 0.5f;
-
-        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
-
-        posCurrentMin = casterSelf.transform.position;
-        posCurrentMin.x += minLength;
-        posCurrentMin.z -= halfNearWidth;
-
-        posCurrentMax = casterSelf.transform.position;
-        posCurrentMax.x += maxLength;
-        posCurrentMax.z -= halfFarWidth;
-
-        posNextMin = casterSelf.transform.position;
-        posNextMin.x += minLength;
-        posNextMin.z += halfNearWidth;
-
-        posNextMax = casterSelf.transform.position;
-        posNextMax.z += halfFarWidth;
-
-        posNextMax.x += maxLength;
-
-        Vector3[] hitCheckBounds = new Vector3[4];
-
-        hitCheckBounds[0] = posCurrentMin;
-        hitCheckBounds[1] = posCurrentMax;
-        hitCheckBounds[2] = posNextMax;
-        hitCheckBounds[3] = posNextMin;
-
-        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
-
-        for (int i = 0; i < hitCheckBounds.Length; i++)
-        {
-            hitCheckBounds[i] -= casterSelf.transform.position;
-            hitCheckBounds[i] = qAngle * hitCheckBounds[i];
-            hitCheckBounds[i] += casterSelf.transform.position;
-        }
-
-        // hitCheckBounds holds the 4 coordinates of where an enemy has to be standing within to be hit
-        // continue to calculate if the target location is within given rectangle
-        //Debug.Log("WeaponAttack Hit Results: " + CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition));
-        if (CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition))
-        {
-            return true;
+    {
+
+        float angleLookAt = GetForwardAngle(casterSelf.transform);
+
+
+
+        float halfFarWidth = farWidth * 0.5f;
+
+        float halfNearWidth = nearWidth * 0.5f;
+
+
+
+        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
+
+
+
+        posCurrentMin = casterSelf.transform.position;
+
+        posCurrentMin.x += minLength;
+
+        posCurrentMin.z -= halfNearWidth;
+
+
+
+        posCurrentMax = casterSelf.transform.position;
+
+        posCurrentMax.x += maxLength;
+
+        posCurrentMax.z -= halfFarWidth;
+
+
+
+        posNextMin = casterSelf.transform.position;
+
+        posNextMin.x += minLength;
+
+        posNextMin.z += halfNearWidth;
+
+
+
+        posNextMax = casterSelf.transform.position;
+
+        posNextMax.z += halfFarWidth;
+
+
+
+        posNextMax.x += maxLength;
+
+
+
+        Vector3[] hitCheckBounds = new Vector3[4];
+
+
+
+        hitCheckBounds[0] = posCurrentMin;
+
+        hitCheckBounds[1] = posCurrentMax;
+
+        hitCheckBounds[2] = posNextMax;
+
+        hitCheckBounds[3] = posNextMin;
+
+
+
+        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
+
+
+
+        for (int i = 0; i < hitCheckBounds.Length; i++)
+
+        {
+
+            hitCheckBounds[i] -= casterSelf.transform.position;
+
+            hitCheckBounds[i] = qAngle * hitCheckBounds[i];
+
+            hitCheckBounds[i] += casterSelf.transform.position;
+
         }
-        else
-        {
-            return false;
+
+
+
+        // hitCheckBounds holds the 4 coordinates of where an enemy has to be standing within to be hit
+
+        // continue to calculate if the target location is within given rectangle
+
+        //Debug.Log("WeaponAttack Hit Results: " + CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition));
+        if (CheckPointInBounds(hitCheckBounds[0], hitCheckBounds[1], hitCheckBounds[2], hitCheckBounds[3], hitCheckPosition))
+
+        {
+
+            return true;
+
+        }
+        else
+
+        {
+
+            return false;
+
         }
     }
 
     protected Mesh GenerateRectHitboxMesh()
     {
-        float angleLookAt = GetForwardAngle(casterSelf.transform);
+        float angleLookAt = GetForwardAngle(casterSelf.transform);
+
         float halfFarWidth = skillData.farWidth * 0.5f;
-        float halfNearWidth = skillData.nearWidth * 0.5f;
-        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
+        float halfNearWidth = skillData.nearWidth * 0.5f;
+
+        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
+
         posCurrentMin = Vector3.zero;// casterSelf.transform.position;
         posCurrentMin.x += skillData.minRange;
-        posCurrentMin.z -= halfNearWidth;        posCurrentMin.y += skillData.verticalRange;
+        posCurrentMin.z -= halfNearWidth;
+        posCurrentMin.y += skillData.verticalRange;
+
         posCurrentMax = Vector3.zero;// casterSelf.transform.position;
         posCurrentMax.x += skillData.maxRange;
-        posCurrentMax.z -= halfFarWidth;        posCurrentMax.y += skillData.verticalRange;
+        posCurrentMax.z -= halfFarWidth;
+        posCurrentMax.y += skillData.verticalRange;
+
         posNextMin = Vector3.zero; //casterSelf.transform.position;
         posNextMin.x += skillData.minRange;
-        posNextMin.z += halfNearWidth;        posNextMin.y += skillData.verticalRange;
+        posNextMin.z += halfNearWidth;
+        posNextMin.y += skillData.verticalRange;
+
         posNextMax = Vector3.zero; //casterSelf.transform.position;
         posNextMax.z += halfFarWidth;
-        posNextMax.x += skillData.maxRange;        posNextMax.y += skillData.verticalRange;
+        posNextMax.x += skillData.maxRange;
+        posNextMax.y += skillData.verticalRange;
+
         Vector3[] hitCheckBounds = new Vector3[8];
         hitCheckBounds[0] = posCurrentMin;
         hitCheckBounds[1] = posCurrentMax;
         hitCheckBounds[2] = posNextMax;
-        hitCheckBounds[3] = posNextMin;        posCurrentMin.y -= skillData.verticalRange * 2.0f;        posCurrentMax.y -= skillData.verticalRange * 2.0f;        posNextMax.y -= skillData.verticalRange * 2.0f;        posNextMin.y -= skillData.verticalRange * 2.0f;        hitCheckBounds[4] = posNextMin;        hitCheckBounds[5] = posNextMax;        hitCheckBounds[6] = posCurrentMax;        hitCheckBounds[7] = posCurrentMin;
-        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
+        hitCheckBounds[3] = posNextMin;
+
+        posCurrentMin.y -= skillData.verticalRange * 2.0f;
+        posCurrentMax.y -= skillData.verticalRange * 2.0f;
+        posNextMax.y -= skillData.verticalRange * 2.0f;
+        posNextMin.y -= skillData.verticalRange * 2.0f;
+
+        hitCheckBounds[4] = posNextMin;
+        hitCheckBounds[5] = posNextMax;
+        hitCheckBounds[6] = posCurrentMax;
+        hitCheckBounds[7] = posCurrentMin;
+
+        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
+
         for (int i = 0; i < hitCheckBounds.Length; i++)
         {
             //hitCheckBounds[i] -= casterSelf.transform.position;
@@ -460,14 +555,35 @@ public class BaseSkill : MonoBehaviour
         return false;
     }
 
-    public bool CheckInVerticalRange(Vector3 targetPosition)
-    {
-        // Basic distance check with 2 floats from caster and target positions to see if they are near eachother enough of the Y axis to damage one another
-        if (Mathf.Abs(casterSelf.transform.position.y - targetPosition.y) <= skillData.verticalRange)
-        {
-            return true;
-        }
-        return false;
+    public bool CheckInFlatRange(Vector3 castPosition, Vector3 targetPosition)
+    {
+        Vector3 castPosition0Y = castPosition;
+        castPosition0Y.y = targetPosition.y;
+
+        if (Vector3.Distance(castPosition0Y, targetPosition) <= skillData.maxRange)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool CheckInVerticalRange(Vector3 targetPosition)
+
+    {
+
+        // Basic distance check with 2 floats from caster and target positions to see if they are near eachother enough of the Y axis to damage one another
+
+        if (Mathf.Abs(casterSelf.transform.position.y - targetPosition.y) <= skillData.verticalRange)
+
+        {
+
+            return true;
+
+        }
+
+        return false;
+
     }
 
     protected void SelectTargetRay(ref Entity entityToSet, bool checkInRange = false)
@@ -477,16 +593,23 @@ public class BaseSkill : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, entityMask))
                 {
                     //Debug.Log("Skill is raycasting");
                     if (checkInRange)
                     {
-                        if (CheckInRange(casterSelf.transform.position, hit.point))
+                        if (CheckInFlatRange(casterSelf.transform.position, hit.point))
                         {
-                            //Debug.Log("Entity reference set for skill");
-                            entityToSet = hit.collider.gameObject.GetComponent<Entity>();
+                            if (CheckInVerticalRange(hit.point))
+                            {
+                                entityToSet = hit.collider.gameObject.GetComponent<Entity>();
+                            }
                         }
+                        //if (CheckInRange(casterSelf.transform.position, hit.point))
+                        //{
+                        //    //Debug.Log("Entity reference set for skill");
+                        //    entityToSet = hit.collider.gameObject.GetComponent<Entity>();
+                        //}
                     }
                     else
                     {
@@ -502,16 +625,24 @@ public class BaseSkill : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(ray, out RaycastHit hit, raycastMask))
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, raycastMask))
             {
                 if (checkInRange)
                 {
-                    if (CheckInRange(casterSelf.transform.position, hit.point))
+                    if (CheckInFlatRange(casterSelf.transform.position, hit.point))
                     {
-                        Debug.Log("Position reference set for skill");
-                        pointToSet = hit.point;
-                        return true;
+                        if (CheckInVerticalRange(hit.point))
+                        {
+                            pointToSet = hit.point;
+                            return true;
+                        }
                     }
+                    //if (CheckInRange(casterSelf.transform.position, hit.point))
+                    //{
+                    //    //Debug.Log("Position reference set for skill");
+                    //    pointToSet = hit.point;
+                    //    return true;
+                    //}
                 }
                 else
                 {
@@ -521,6 +652,12 @@ public class BaseSkill : MonoBehaviour
             }
         }
         return false;
+    }
+
+    protected float GetCalculatedWindUp()
+    {
+        float effectiveWindUp = skillData.windUp * (1 - windUpReduction);
+        return effectiveWindUp;
     }
 
     protected virtual void CastSkill() { }
@@ -541,57 +678,57 @@ public class BaseSkill : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        //Gizmos.color = Color.red;
 
-        float farWidth = skillData.farWidth;
-        float nearWidth = skillData.nearWidth;
-        float maxLength = skillData.maxRange;
-        float minLength = skillData.minRange;
+        //float farWidth = skillData.farWidth;
+        //float nearWidth = skillData.nearWidth;
+        //float maxLength = skillData.maxRange;
+        //float minLength = skillData.minRange;
 
-        float angleLookAt = GetForwardAngle(casterSelf.transform);
+        //float angleLookAt = GetForwardAngle(casterSelf.transform);
 
-        float halfFarWidth = farWidth * 0.5f;
-        float halfNearWidth = nearWidth * 0.5f;
+        //float halfFarWidth = farWidth * 0.5f;
+        //float halfNearWidth = nearWidth * 0.5f;
 
-        Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
+        //Vector3 posCurrentMin, posCurrentMax, posNextMin, posNextMax;
 
-        posCurrentMin = casterSelf.transform.position;
-        posCurrentMin.x += minLength;
-        posCurrentMin.z -= halfNearWidth;
+        //posCurrentMin = casterSelf.transform.position;
+        //posCurrentMin.x += minLength;
+        //posCurrentMin.z -= halfNearWidth;
 
-        posCurrentMax = casterSelf.transform.position;
-        posCurrentMax.z -= halfFarWidth;
+        //posCurrentMax = casterSelf.transform.position;
+        //posCurrentMax.z -= halfFarWidth;
 
-        posCurrentMax.x += maxLength;
+        //posCurrentMax.x += maxLength;
 
-        posNextMin = casterSelf.transform.position;
-        posNextMin.x += minLength;
-        posNextMin.z += halfNearWidth;
+        //posNextMin = casterSelf.transform.position;
+        //posNextMin.x += minLength;
+        //posNextMin.z += halfNearWidth;
 
-        posNextMax = casterSelf.transform.position;
-        posNextMax.z += halfFarWidth;
+        //posNextMax = casterSelf.transform.position;
+        //posNextMax.z += halfFarWidth;
 
-        posNextMax.x += maxLength;
+        //posNextMax.x += maxLength;
 
-        Vector3[] hitCheckBounds = new Vector3[4];
+        //Vector3[] hitCheckBounds = new Vector3[4];
 
-        hitCheckBounds[0] = posCurrentMin;
-        hitCheckBounds[1] = posCurrentMax;
-        hitCheckBounds[2] = posNextMax;
-        hitCheckBounds[3] = posNextMin;
+        //hitCheckBounds[0] = posCurrentMin;
+        //hitCheckBounds[1] = posCurrentMax;
+        //hitCheckBounds[2] = posNextMax;
+        //hitCheckBounds[3] = posNextMin;
 
-        Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
+        //Quaternion qAngle = Quaternion.AngleAxis(angleLookAt - 90.0f, Vector3.up);
 
-        for (int i = 0; i < hitCheckBounds.Length; i++)
-        {
-            hitCheckBounds[i] -= casterSelf.transform.position;
-            hitCheckBounds[i] = qAngle * hitCheckBounds[i];
-            hitCheckBounds[i] += casterSelf.transform.position;
-        }
+        //for (int i = 0; i < hitCheckBounds.Length; i++)
+        //{
+        //    hitCheckBounds[i] -= casterSelf.transform.position;
+        //    hitCheckBounds[i] = qAngle * hitCheckBounds[i];
+        //    hitCheckBounds[i] += casterSelf.transform.position;
+        //}
 
-        Gizmos.DrawLine(hitCheckBounds[0], hitCheckBounds[1]);
-        Gizmos.DrawLine(hitCheckBounds[1], hitCheckBounds[2]);
-        Gizmos.DrawLine(hitCheckBounds[2], hitCheckBounds[3]);
-        Gizmos.DrawLine(hitCheckBounds[3], hitCheckBounds[0]);
+        //Gizmos.DrawLine(hitCheckBounds[0], hitCheckBounds[1]);
+        //Gizmos.DrawLine(hitCheckBounds[1], hitCheckBounds[2]);
+        //Gizmos.DrawLine(hitCheckBounds[2], hitCheckBounds[3]);
+        //Gizmos.DrawLine(hitCheckBounds[3], hitCheckBounds[0]);
     }
 }

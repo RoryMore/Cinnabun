@@ -46,3 +46,11 @@ MonoBehaviour:
   player: {fileID: 0}
   encounters:
   - {fileID: 0}
+  - {fileID: 0}
+  weWon: 0
+  inBattle: 0
+  numOfClearedEncounters: 0
+  WaveActive: 0
+  enemyMangerCurrentEncounter: {fileID: 0}
+  waveCooldownTimer: 0
+  timeBetweenWaves: 5

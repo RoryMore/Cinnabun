@@ -21,9 +21,12 @@ EditorBuildSettings:
     path: Assets/Scenes/GreyboxLevel.unity
     guid: 6ff6f7b756ce7df4aa8b0c8bc81ea597
   - enabled: 1
-    path: Assets/Scenes/SunnyTest.unity
+    path: Assets/Scenes/UpgradeScene.unity
     guid: 2bbb0beaba2b56c46b364fb734ecc3af
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/NewLevel.unity
     guid: f16133e5f2f6e734ea3444520e0b543f
+  - enabled: 1
+    path: Assets/Scenes/UpdatedLevel_V2.unity
+    guid: 873e2be58404f8449b1289971d386646
   m_configObjects: {}

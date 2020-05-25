@@ -54,7 +54,7 @@ public class RespawnControl : MonoBehaviour
                         }
                         if (item.isEquipped)
                         {
-                            CharacterPanelStatControl.OnItemRemove(item.itemInfoBlock);
+                            CharacterPanelStatControl.OnItemRemove(item);
 
                             item.usedEquipSlot.equippedItem = null;
                             item.usedEquipSlot.isUsed = false;
@@ -74,17 +74,18 @@ public class RespawnControl : MonoBehaviour
                 //player.Revive();
                 //itemsCleared = false;
 
-                int wavesCleared = 0;
-                // Add an amount of upgrade money = wavesCompleted
-                foreach (Encounter encounter in enemyManager.encounters)
-                {
-                    if (encounter.cleared)
-                    {
-                        wavesCleared++;
-                    }
-                }
+                //int wavesCleared = 0;
+                //// Add an amount of upgrade money = wavesCompleted
+                //foreach (Encounter encounter in enemyManager.encounters)
+                //{
+                //    if (encounter.cleared)
+                //    {
+                //        wavesCleared++;
+                //    }
+                //}
                 if (!moneyRewarded)
                 {
+                    //CurrencyManager.AddUpgradeMoney(enemyManager.numOfClearedEncounters);
                     CurrencyManager.AddUpgradeMoney(enemyManager.numOfClearedEncounters);
                     SaveManager.SaveUpgradeMoney();
                     moneyRewarded = true;
