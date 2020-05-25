@@ -41,6 +41,9 @@ public class TextSystem : MonoBehaviour
     [Tooltip("Which scene to go to")]
     public int sceneNumber;
 
+	Scene currentScene = SceneManager.GetActiveScene();
+	string sceneName;
+
 	[System.Serializable]
 	public struct Text
         {
@@ -111,6 +114,9 @@ public class TextSystem : MonoBehaviour
 		playerUI = GameObject.FindGameObjectsWithTag("PlayerUI");
 		enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
 		dialogue.waitfor = textSpeed;
+
+		Scene currentScene = SceneManager.GetActiveScene();
+		sceneName = currentScene.name;
 	}
 
 	void Update()
@@ -130,7 +136,8 @@ public class TextSystem : MonoBehaviour
                 {
                     if (index >= text[wordIndex].text.Length)
                     {
-						enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior();
+
+						enemyStopStart();
 						hideNovel = true;
 						Debug.Log("Text,Done");
 						novelActive = true;
@@ -233,8 +240,9 @@ public class TextSystem : MonoBehaviour
         if (GameStart == true)
         {
 			//getBackGroundName();
-
-                enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior();
+
+
+			enemyStopStart();
           
 			
 			Say(text[wordIndex].text[index]);
@@ -368,7 +376,21 @@ public class TextSystem : MonoBehaviour
 			
 	}
 
+	void enemyStopStart()
+	{
 
+		if (sceneName == "JasmineScene")
+		{
+			
+				enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior();
+			
+		}
+
+		if (sceneName != "JasmineScene")
+		{
+			enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior();
+		}
+	}
 }
 
 

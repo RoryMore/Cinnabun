@@ -8952,7 +8952,7 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[0].text.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -9025,13 +9025,13 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[0].text.Array.data[1]
-      value: 'Well since you are here why don''t you try to help me with those guys
-        across the bridge. '
+      value: Well, take a look around by holding down middle mouse button.
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[0].text.Array.data[2]
-      value: Go on click on the ground to walk over there.
+      value: 'Since you are here why don''t you try to help me with that guy across
+        the bridge. '
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -9248,6 +9248,11 @@ PrefabInstance:
       propertyPath: text.Array.data[6].text.Array.data[3]
       value: To do the go right up to the edge of the cliff and click on the teleport
         button. Then click on your self then where you want to go.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[0].text.Array.data[3]
+      value: Go on click on the ground to walk over there.
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782395, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
