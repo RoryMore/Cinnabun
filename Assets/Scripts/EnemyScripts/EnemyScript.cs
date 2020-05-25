@@ -28,12 +28,10 @@ public class EnemyScript : Entity
     public Animator anim;
     //AudioSource enemyAudio;
     public ParticleSystem hitParticles;
-    public NavMeshAgent nav;
-    public List<SkillData> skillList;
 
     public EnemyManager enemyManager;
     public Encounter myEncounter;
-    
+
 
     public void Turn()
     {
@@ -53,7 +51,10 @@ public class EnemyScript : Entity
         var step = turnSpeed * Time.deltaTime;
 
         // Rotate our transform a step closer to the target's.
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, target.rotation, step);
+        Vector3 dir = target.position - transform.position;
+        //need to find a way to stop enemy from rotating to much y
+        dir.y = 0;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(dir), step);
 
     }
 
@@ -73,22 +74,19 @@ public class EnemyScript : Entity
         }
     }
 
-    public void UpdateAllSkillCooldowns()
-    {
-        foreach (SkillData skill in skillList)
-        {
-            skill.ProgressCooldown();
-        }
-    }
-
     public override void Death()
     {
         isDead = true;
-        //anim.SetTrigger("Dead");
+        anim.SetBool("isDead", true);
         //Ensure that the target is no longer in the initiative 
         myEncounter.initiativeList.Remove(this);
         myEncounter.healList.Remove(this);
+        //myEncounter.masterInitiativeList.Remove(this);
+        //myEncounter.playerInclusiveInitiativeList.Remove(this);
         nav.enabled = false;
+
+        //gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 
 

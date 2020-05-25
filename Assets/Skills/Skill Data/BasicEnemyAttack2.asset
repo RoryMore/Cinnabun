@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3110f89451f743848910c598af7ff19f, type: 3}
+  m_Name: BasicEnemyAttack2
+  m_EditorClassIdentifier: 
+  maxRange: 10
+  minRange: 0
+  farWidth: 6
+  nearWidth: 2
+  verticalRange: 20
+  angle: 50
+  cooldown: 12
+  windUp: 2
+  DelayAttack: 0
+  skill: 0
+  baseMagnitude: 5
+  damageType: 0

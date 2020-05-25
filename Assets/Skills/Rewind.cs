@@ -2,62 +2,135 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Rewind", order = 1)]
+//[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Skills/Rewind", order = 1)]
 
 
-public class Rewind : SkillData
+public class Rewind : BaseSkill
 {
 
     Entity entity = null;
     // If wanting to draw indicators here without doing it outside the skill
     // This function needs to take in a Transform, otherwise it doesn't need any parameter
 
-    public override void TargetSkill(Transform zoneStart)
+    private void Start()
+    {
+        Initialise();
+    }
+
+    protected override void Initialise()
+    {
+        base.Initialise();
+    }
+
+    public override void ResetSkillVars()
+    {
+        base.ResetSkillVars();
+        entity = null;
+    }
+
+    private void Update()
+    {
+        SkillDeltaUpdate();
+    }
+
+    public override void TriggerSkill()
+    {
+        base.TriggerSkill();
+        switch (skillState)
+        {
+            case SkillState.INACTIVE:
+                {
+                    if (isAllowedToCast)
+                    {
+                        skillState = SkillState.TARGETTING;
+                    }
+                    break;
+                }
+
+            case SkillState.TARGETTING:
+                {
+                    //Debug.Log("Skill being Targetted");
+                    TargetSkill();
+                    break;
+                }
+
+            case SkillState.CASTING:
+                {
+                    //Debug.Log("Skill being cast!");
+                    //UpdateCastTime();
+                    CastSkill();
+                    break;
+                }
+
+            case SkillState.DOAFFECT:
+                {
+                    //Debug.Log("Skill Effect Activated");
+                    ActivateSkill();
+                    break;
+                }
+        }
+    }
+
+    protected override void TargetSkill()
     {
         if (entity == null)
         {
+            EnableProjector();
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 400))
+            if (Physics.Raycast(ray, out RaycastHit hit, 400, groundMask))
             {
-                Vector3 lookAt = new Vector3(hit.point.x, zoneStart.position.y, hit.point.z);
-                zoneStart.LookAt(lookAt);
+                Vector3 lookAt = new Vector3(hit.point.x, casterSelf.transform.position.y, hit.point.z);
+                casterSelf.transform.LookAt(lookAt);
             }
 
-            DrawRangeIndicator(zoneStart, shape);
-            SelectTargetRay(zoneStart, ref entity);
+            //DrawRangeIndicator(zoneStart, shape);
+            SelectTargetRay(ref entity);
 
         }
         else
         {
-            CastSkill(zoneStart);
+            skillState = SkillState.CASTING;
+            //CastSkill();
         }
     }
 
-    protected override void CastSkill(Transform zoneStart)
+    protected override void CastSkill()
     {
         currentlyCasting = true;
-        DrawRangeIndicator(zoneStart, shape);
+        //DrawRangeIndicator(zoneStart, shape);
 
-        float drawPercent = (timeSpentOnWindUp / windUp);
-        rangeIndicator.DrawCastTimeIndicator(zoneStart, angleWidth, 0.0f, range, drawPercent);
+        //float drawPercent = (timeSpentOnWindUp / skillData.windUp);
+        //rangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, maxRange, drawPercent);
 
         // Increment the time spent winding up the skill
-        timeSpentOnWindUp += Time.deltaTime;
+        //timeSpentOnWindUp += Time.deltaTime;
 
         // When the skill can be activated
-        if (timeSpentOnWindUp >= windUp)
+        if (timeSpentOnWindUp >= GetCalculatedWindUp())
         {
-            ActivateSkill();
-            timeSpentOnWindUp = 0.0f;
+            //ActivateSkill();
+            skillState = SkillState.DOAFFECT;
+            
             currentlyCasting = false;
+            DisableProjector();
         }
     }
 
     protected override void ActivateSkill()
     {
         timeBeenOnCooldown = 0.0f;
-        entity.RewindBack();
-
+        if (entity != null)
+        {
+            entity.RewindBack();
+        }
+        else
+        {
+            Debug.LogWarning("Rewind Entity == null");
+        }
+        timeSpentOnWindUp = 0.0f;
         entity = null;
+
+        skillState = SkillState.INACTIVE;
     }
 }

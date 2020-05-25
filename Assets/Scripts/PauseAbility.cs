@@ -5,8 +5,8 @@ using UnityEngine;
 public class PauseAbility : MonoBehaviour
 {
 
-    public int actionsLeft = 2;
-    [SerializeField] int maxActions = 2;
+    public int actionsLeft = 1;
+    [SerializeField] int maxActions = 1;
     public float timeStopCoolDown;
     public float abilityCastTime = 0;
     public bool inBattle;
@@ -25,12 +25,17 @@ public class PauseAbility : MonoBehaviour
     }
     public GameStates states;
     PauseMenuUI pauseMenu;
+    TextSystem textSystem;
 
     // Start is called before the first frame update
     void Start()
     {
        pauseMenu = FindObjectOfType<PauseMenuUI>();
+        textSystem = FindObjectOfType<TextSystem>();
        states = GameStates.PLAY;
+
+        maxActions += (int)SaveManager.GetUpgradeList().extraPauseAction.GetUpgradedMagnitude();
+        actionsLeft = maxActions;
     }
 
     private void Awake()
@@ -39,7 +44,7 @@ public class PauseAbility : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
         entity.AddRange(GameObject.FindObjectsOfType<Entity>());
-
+        
     }
 
     // Update is called once per frame
@@ -80,7 +85,7 @@ public class PauseAbility : MonoBehaviour
         }
         else if (pauseMenu.isPaused)
         {
-            Time.timeScale = 0;
+            Time.timeScale = 0.0f;
         }
 
         checkAbilityCastTime();
@@ -90,20 +95,48 @@ public class PauseAbility : MonoBehaviour
 
     void TimeStop()
     {
-        //Add in to check if player is casting an ability, cannot Starttime again until this is complete
-        if (Input.GetKeyDown(KeyCode.Space))
-        {    
-          if (states == GameStates.PLAY)
-          {    
-                states = GameStates.TIMESTOP;  
-          }
-          else if (states == GameStates.TIMESTOP)
-          {
-                states = GameStates.PLAY;
-                clearAllList();
-                calculateTimeStop();
-                takeingTurn = false;
+        if (textSystem.novelActive == true)
+        {
+            //Add in to check if player is casting an ability, cannot Starttime again until this is complete
+            if (Input.GetKeyDown(SaveManager.GetSettings().keybindings.pauseAbility))
+            {
+                if (player.playerState != Player.PlayerState.DOINGSKILL)
+                {
+                    if (!player.inventory.activeSelf)
+                    {
+                        if (states == GameStates.PLAY)
+                        {
+                            states = GameStates.TIMESTOP;
+                        }
+                        else if (states == GameStates.TIMESTOP)
+                        {
+                            states = GameStates.PLAY;
+                            clearAllList();
+                            calculateTimeStop();
+                            takeingTurn = false;
+                        }
+                    }
+                }
             }
+        }
+    }
+    public void ButtonPaused()
+    {
+        if (states == GameStates.PLAY && timeStopCoolDown < 0)
+        {
+            states = GameStates.TIMESTOP;
+        }
+    }
+
+   public void ButtonPlay()
+    {
+        if (player.playerState != Player.PlayerState.DOINGSKILL )
+        {
+
+            states = GameStates.PLAY;
+            clearAllList();
+            calculateTimeStop();
+            takeingTurn = false;
         }
     }
 
@@ -111,7 +144,7 @@ public class PauseAbility : MonoBehaviour
     {
         if (isTimeStopped == true)
         {
-            Time.timeScale = 0;
+            Time.timeScale = 0.0f;
         }
         else if (isTimeStopped == false)
         {
@@ -189,9 +222,12 @@ public class PauseAbility : MonoBehaviour
 
         // For our current encounter (other entities are irrelevant)
         // Clear the rewind points
-        foreach (Entity checkedEntity in Entity.currentEncounter.initiativeList)
+        if (Entity.currentEncounter != null)
         {
-            checkedEntity.ClearList();
+            foreach (Entity checkedEntity in Entity.currentEncounter.initiativeList)
+            {
+                checkedEntity.ClearList();
+            }
         }
         // Player isn't held in encounter
         // Clear player rewindpoints

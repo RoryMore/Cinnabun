@@ -2,133 +2,255 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/DelayedBlast", order = 1)]
+//[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Skills/DelayedBlast", order = 1)]
 
-public class DelayedBlast : SkillData
+public class DelayedBlast : BaseSkill
 {
-    Entity entityTarget1 = null;
-    int numOfDelayedBlasts = 0;
+    // SUGGESTION: Make the Blast a targetted area.
+    Vector3 explosionLocation = Vector3.zero;
+    bool explosionLocationSet = false;
 
+    [Header("Blast Explosion")]
+    [SerializeField]
+    Projector explosionProjector;
     public float explosionRadius;
-    
+    public float explosionDamageMultiplier;
+    Material explosionMaterial;
+    [SerializeField]
+    Sprite explosionMainCookie;
+    [SerializeField]
+    Sprite explosionFillCookie;
+	
 
-    public override void TargetSkill(Transform zoneStart, List<Entity> entityList)
+    CameraController cameraController;
+
+    [SerializeField]
+    GameObject explosionParticles;
+    Quaternion explosionRotation;
+
+    private void Start()
+    {
+	
+        Initialise();
+    }
+
+    public override void DisableProjector()
+    {
+        base.DisableProjector();
+        if (explosionProjector.enabled)
+        {
+            explosionProjector.enabled = false;
+        }
+    }
+
+    public override void ResetSkillVars()
+    {
+        base.ResetSkillVars();
+        explosionLocationSet = false;
+        explosionLocation = Vector3.zero;
+    }
+
+    protected override void Initialise()
+    {
+        base.Initialise();
+        cameraController = FindObjectOfType<CameraController>();
+
+        // Explosion Projector Setup
+        explosionMaterial = new Material(Shader.Find("Projector/Tattoo"));
+
+        explosionMaterial.SetTexture("_ShadowTex", explosionMainCookie.texture);
+        explosionMaterial.SetTexture("_FillTex", explosionFillCookie.texture);
+
+        explosionMaterial.SetInt("_SkillType", 1);
+
+        explosionProjector.material = explosionMaterial;
+        explosionProjector.orthographicSize = explosionRadius;
+        explosionProjector.farClipPlane = skillData.verticalRange;
+        explosionProjector.nearClipPlane = -skillData.verticalRange;
+
+        // Upgrade Initialisation if they are active
+        if (SaveManager.GetUpgradeList().blastExplosionRadius != null)
+        {
+            explosionRadius += SaveManager.GetUpgradeList().blastExplosionRadius.GetUpgradedMagnitude();
+            skillData.maxRange += (SaveManager.GetUpgradeList().blastExplosionRadius.GetUpgradedMagnitude() * 0.5f);
+
+            explosionDamageMultiplier += SaveManager.GetUpgradeList().blastExplosionDamage.GetUpgradedMagnitude();
+        }
+        
+    }
+
+    private void Update()
+    {
+        SkillDeltaUpdate();
+        if (explosionProjector.enabled)
+        {
+            explosionProjector.material.SetFloat("_Progress", (timeSpentOnWindUp / skillData.windUp) * 0.5f);
+        }
+        if (explosionParticles.activeSelf)
+        {
+            explosionParticles.transform.position = explosionLocation;
+            explosionParticles.transform.rotation = explosionRotation;
+        }
+    }
+
+    public override void TriggerSkill(List<Entity> entityList)
+    {
+        base.TriggerSkill();
+        switch (skillState)
+        {
+            case SkillState.INACTIVE:
+                {
+                    if (isAllowedToCast)
+                    {
+                        skillState = SkillState.TARGETTING;
+                    }
+                    break;
+                }
+
+            case SkillState.TARGETTING:
+                {
+                    //Debug.Log("Skill being Targetted");
+                    TargetSkill();
+                    break;
+                }
+
+            case SkillState.CASTING:
+                {
+                    //Debug.Log("Skill being cast!");
+                    //UpdateCastTime();
+                    CastSkill();
+                    break;
+                }
+
+            case SkillState.DOAFFECT:
+                {
+                    //Debug.Log("Skill Effect Activated");
+                    ActivateSkill(entityList);
+					SoundManager.blastsound.Play(0);
+                    break;
+                }
+        }
+    }
+
+    protected override void TargetSkill()
     {
         // Entity is not set; therefore we need to wait until the user has set the entity
-        if (entityTarget1 == null)
+        if (!explosionLocationSet)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 400))
+            //ResetIndicatorImages();
+            EnableProjector();
+            if (!explosionProjector.enabled)
             {
-                Vector3 lookAt = new Vector3(hit.point.x, zoneStart.position.y, hit.point.z);
-                zoneStart.LookAt(lookAt);
+                explosionProjector.enabled = true;
+            }
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 400, groundMask))
+            {
+                Vector3 lookAt = new Vector3(hit.point.x, casterSelf.transform.position.y, hit.point.z);
+                casterSelf.transform.LookAt(lookAt);
+
+                explosionProjector.transform.position = hit.point;
             }
 
             // We are drawing the range indicator here so the player knows if what they are clicking is in range
             // If being in range is relevant
-            DrawRangeIndicator(zoneStart, shape);
+            //DrawRangeIndicator(zoneStart, shape);
 
             // Select our entity target
-            SelectTargetRay(zoneStart, ref entityTarget1, true);
+            explosionLocationSet = SelectTargetRay(ref explosionLocation, groundMask, true);
+
             // The true value in the SelectTargetRay function is specifying that we want to also make a check
             // to see if the target is in range
             // We can leave that extra field blank, or false, if we don't want to make that check
         }
-        else if (entityTarget1 != null)
+        else if (explosionLocationSet)
         {
             // Start casting the skill
-            CastSkill(zoneStart, entityList);
+            skillState = SkillState.CASTING;
+            explosionProjector.transform.position = explosionLocation;
+            //CastSkill(entityList);
         }
 
     }
 
-    protected override void CastSkill(Transform zoneStart, List<Entity> entityList)
+    protected override void CastSkill()
     {
+        DisableProjector();
+        if (!explosionProjector.enabled)
+        {
+            explosionProjector.enabled = true;
+        }
+        //SetFillType(fillType);
+
         currentlyCasting = true;
 
-        DrawRangeIndicator(zoneStart, shape);
+        //DrawRangeIndicator(zoneStart, shape);
 
-        float drawPercent = (timeSpentOnWindUp / windUp);
-        rangeIndicator.DrawCastTimeIndicator(zoneStart, angleWidth, 0.0f, range, drawPercent);
+        //float drawPercent = (timeSpentOnWindUp / skillData.windUp);
+        //rangeIndicator.DrawCastTimeIndicator(zoneStart, angle, 0.0f, maxRange, drawPercent);
 
         // Increment the time spent winding up the skill
-        timeSpentOnWindUp += Time.deltaTime;
+        //timeSpentOnWindUp += Time.deltaTime;
 
         // When the skill can be activated
-        if (timeSpentOnWindUp >= windUp)
+        if (timeSpentOnWindUp >= GetCalculatedWindUp())
         {
             currentlyCasting = false;
-            ActivateSkill(entityList);
-            timeSpentOnWindUp = 0.0f;
+
+            skillState = SkillState.DOAFFECT;
+            //ActivateSkill(entityList);
+            if (explosionProjector.enabled)
+            {
+                explosionProjector.enabled = false;
+            }
         }
     }
 
     protected override void ActivateSkill(List<Entity> entityList)
     {
         timeBeenOnCooldown = 0.0f;
-        numOfDelayedBlasts = 0;
+        timeSpentOnWindUp = 0.0f;
 
-        //Assuming the list is empty, give it a delayed blast condition
-        if (entityTarget1.ReturnConditions().Count == 0)
+        skillState = SkillState.INACTIVE;
+
+        // Whether the hit is a crit or not is rolled independantly for each target
+        // Create local bool here which equals casterSelf.CalculateCriticalStrike() and use that result to have the entire skill crit or not. Not independant per target
+
+        // Camera shake effect on explosion
+        StartCoroutine(cameraController.cShake(0.5f, 1.5f));
+
+        //entityTarget1.TakeDamage(skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus(), skillData.damageType, casterSelf.CalculateCriticalStrike());
+        ParticleExplosion(explosionLocation);
+
+        if (entityList != null)
         {
-            Entity.Condition delayedBlast = new Entity.Condition();
-            delayedBlast.conditionType = Entity.ConditionType.DELAYEDBLAST;
-            delayedBlast.duration = 9.0f;
-            entityTarget1.currentConditions.Add(delayedBlast);
-            Debug.Log("Tick tick tick...");
-            entityTarget1 = null;
-
-        }
-        else
-        {
-
-            for (int i = 0; i < entityTarget1.currentConditions.Count; i++)
-            {
-                if (entityTarget1.currentConditions[i].conditionType == Entity.ConditionType.DELAYEDBLAST)
-                {
-                    entityTarget1.currentConditions.Remove(entityTarget1.currentConditions[i]);
-                    //entityTarget1.TakeDamage(baseDamage);
-
-                    if (entityList != null)
-                    {
  
-                        //Deal splash damage to enemies
-                        rangeIndicator.DrawIndicator(entityTarget1.transform, 360, 0, explosionRadius);
-                        foreach (Entity enemy in entityList)
-                        {
-                            //Make sure we don't deal double damage
-                            //if (enemy == entityTarget1)
-                            //{
-                                //break;
-                            //}
-                            if (Vector3.Distance(enemy.transform.position, entityTarget1.transform.position) < explosionRadius)
-                            {
-                                enemy.TakeDamage(baseDamage);
-
-                                // Call function that activates explosion particles
-                                enemy.ParticleExplosion();
-                            }
-                        }
-
-                    }
-
-
-                    numOfDelayedBlasts++;
-                    Debug.Log("BOOM!");
-                    entityTarget1 = null;
-                    break;
+            //Deal splash damage to enemies
+            //rangeIndicator.DrawIndicator(entityTarget1.transform, 360, 0, explosionRadius);
+            foreach (Entity enemy in entityList)
+            {
+                if (Vector3.Distance(enemy.transform.position, explosionLocation) < explosionRadius)
+                {
+                    enemy.TakeDamage(Mathf.RoundToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * explosionDamageMultiplier), skillData.damageType, casterSelf.CalculateCriticalStrike());
                 }
             }
 
-            if (numOfDelayedBlasts == 0)
-            {
-            Entity.Condition delayedBlast = new Entity.Condition();
-            delayedBlast.conditionType = Entity.ConditionType.DELAYEDBLAST;
-            delayedBlast.duration = 9.0f;
-            entityTarget1.currentConditions.Add(delayedBlast);
-            Debug.Log("Tick tick tick...");
-            entityTarget1 = null;
-            }
+        }
+        explosionLocationSet = false;
+        //explosionLocation = Vector3.zero;
+
+    }
+
+    public void ParticleExplosion(Vector3 location)
+    {
+        if (explosionParticles != null)
+        {
+            explosionParticles.transform.position = location;
+            explosionRotation = transform.rotation;
+
+            explosionParticles.SetActive(false);
+            explosionParticles.SetActive(true);
         }
     }
 }
