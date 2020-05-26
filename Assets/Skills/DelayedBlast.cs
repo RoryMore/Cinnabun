@@ -84,7 +84,7 @@ public class DelayedBlast : BaseSkill
         SkillDeltaUpdate();
         if (explosionProjector.enabled)
         {
-            explosionProjector.material.SetFloat("_Progress", (timeSpentOnWindUp / skillData.windUp) * 0.5f);
+            explosionProjector.material.SetFloat("_Progress", (timeSpentOnWindUp / GetCalculatedWindUp()) * 0.5f);
         }
         if (explosionParticles.activeSelf)
         {

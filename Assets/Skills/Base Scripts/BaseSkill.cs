@@ -199,14 +199,14 @@ public class BaseSkill : MonoBehaviour
             {
                 case CastFillType.LINEAR:
                     {
-                        projector.material.SetFloat("_Progress", (timeSpentOnWindUp / skillData.windUp));
+                        projector.material.SetFloat("_Progress", (timeSpentOnWindUp / GetCalculatedWindUp()));
                         break;
                     }
 
                 case CastFillType.CIRCULAR:
                     {
                         // Convert this percentage value to cap at 0.5 rather than 1. Circular fill fills from the centre outward; half as much to fill
-                        projector.material.SetFloat("_Progress", (timeSpentOnWindUp / skillData.windUp) * 0.5f);
+                        projector.material.SetFloat("_Progress", (timeSpentOnWindUp / GetCalculatedWindUp()) * 0.5f);
                         break;
                     }
             }
