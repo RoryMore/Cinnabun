@@ -124,7 +124,7 @@ public class SimpleEnemy : EnemyScript
 
     void Update()
     {
-
+       
         //viewCurrentSkill = chosenSkill;
 
         /* if(isActive)
@@ -294,7 +294,7 @@ public class SimpleEnemy : EnemyScript
 //}
 }*/
         // Update turn cooldown
-
+        Debug.Log(chosenSkill.name); 
         if (isActive)
         {
 
@@ -332,7 +332,7 @@ public class SimpleEnemy : EnemyScript
                                 Debug.LogWarning(chosenSkill.skillData.DelayAttack + chosenSkill.skillData.name);
 
                                 // decide function would go here
-                                //Deciding();
+                                Deciding();
                             }
                         }
                         else
@@ -359,7 +359,7 @@ public class SimpleEnemy : EnemyScript
 
                                     //a var of dicide function should go here. 
                                     //this is to check if a better skill has gone of cooldown
-                                    //Deciding();
+                                    Deciding();
                                 }
                                 //turn to face player then check if you can attack
                                 FaceTarget(player.transform);
@@ -381,7 +381,7 @@ public class SimpleEnemy : EnemyScript
 
     public void Deciding() {
 
-        chosenSkill = null;
+        chosenSkill = skillList[0]; ;
         //For each skill...
         foreach (BasicSkill checkedSkill in skillList)
         {
@@ -704,7 +704,7 @@ public class SimpleEnemy : EnemyScript
 
         
 
-                    chosenSkill = null;
+                    chosenSkill = skillList[0];
                     //For each skill...
                     foreach (BasicSkill checkedSkill in skillList)
                     {
@@ -773,21 +773,7 @@ public class SimpleEnemy : EnemyScript
    //check to see if viable right now
     public void basicSkillChecker(BasicSkill checkedSkill , GameObject Target)
     {
-        //if linear do one more check
-        if (checkedSkill.fillType == BaseSkill.CastFillType.LINEAR)
-        {
-            //More performance intensive, check that the player would be hit if we used it now
-            if (!checkedSkill.CheckLineSkillHit(target.position,
-                                                checkedSkill.skillData.minRange,
-                                                checkedSkill.skillData.maxRange,
-                                                checkedSkill.skillData.nearWidth,
-                                                checkedSkill.skillData.farWidth))
-
-            {
-                return;
-            }
-
-        }
+       
         //if skill is healing check to see if they do need healing
         if (checkedSkill.skillData.skill == SkillData.SkillList.HEAL)
         {
@@ -907,7 +893,8 @@ public class SimpleEnemy : EnemyScript
     public override void Death()
     {
         base.Death();
-        anim.SetBool("isDead", true);
+        //anim.SetBool("isDead", true);
+        anim.SetTrigger("deadTrigger");
         foreach(BaseSkill skill in skillList)
         {
             skill.DisableProjector();
