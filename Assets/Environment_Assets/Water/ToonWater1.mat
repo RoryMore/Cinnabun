@@ -34,7 +34,7 @@ Material:
     - _SurfaceDistortionAmount: 0.103
     - _SurfaceNoiseCutoff: 0.924
     m_Colors:
-    - _DepthGradientDeep: {r: 0, g: 0.81057835, b: 1, a: 0.46666667}
-    - _DepthGradientShallow: {r: 0.39150935, g: 1, b: 0.964649, a: 0.20392157}
+    - _DepthGradientDeep: {r: 0.9339623, g: 0.5771182, b: 0.8752042, a: 0.46666667}
+    - _DepthGradientShallow: {r: 1, g: 0.6392157, b: 0.84313726, a: 0.20392157}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 0.28235295}
     - _SurfaceNoiseScroll: {r: 0.03, g: 0.03, b: 0, a: 0}
