@@ -379,16 +379,11 @@ public class TextSystem : MonoBehaviour
 
 	void enemyStopStart()
 	{
-
-		if (sceneName == "JasmineScene")
-		{	
-			enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior();
-		}
-
-		if (sceneName != "JasmineScene")
+		if (enemyManager.enemyMangerCurrentEncounter != null)
 		{
 			enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior();
 		}
+		
 	}
 }
 

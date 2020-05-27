@@ -64,6 +64,7 @@ public class NovelManager : MonoBehaviour
 		teleport();
 		tutorialDone();
 		waveCheck();
+		Story();
 	}
 
 
@@ -194,11 +195,13 @@ public class NovelManager : MonoBehaviour
 
 	void Story()
 	{
-		if (wavesCleared == 5)
+		if (wavesCleared == 2)
 		{
 			if (story1 == false)
 			{
 				PopUpBox();
+
+				story1 = true;
 			}
 		}
 	}
@@ -224,6 +227,5 @@ public class NovelManager : MonoBehaviour
 	void waveCheck()
 	{
 		wavesCleared = enemyManager.numOfClearedEncounters + 1;
-		
 	}
 }
