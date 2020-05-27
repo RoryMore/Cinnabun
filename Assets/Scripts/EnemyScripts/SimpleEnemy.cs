@@ -124,7 +124,7 @@ public class SimpleEnemy : EnemyScript
 
     void Update()
     {
-
+       
         //viewCurrentSkill = chosenSkill;
 
         /* if(isActive)
@@ -893,7 +893,8 @@ public class SimpleEnemy : EnemyScript
     public override void Death()
     {
         base.Death();
-        anim.SetBool("isDead", true);
+        //anim.SetBool("isDead", true);
+        anim.SetTrigger("deadTrigger");
         foreach(BaseSkill skill in skillList)
         {
             skill.DisableProjector();
