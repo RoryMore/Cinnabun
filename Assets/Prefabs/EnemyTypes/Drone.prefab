@@ -83,6 +83,11 @@ PrefabInstance:
       propertyPath: magicalArmour
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7732105370794740942, guid: 698616940c17fb847836ecdc8eb93f4e,
+        type: 3}
+      propertyPath: turnSpeed
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 8688108529850181967, guid: 698616940c17fb847836ecdc8eb93f4e,
         type: 3}
       propertyPath: m_LocalPosition.x
