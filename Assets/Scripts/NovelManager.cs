@@ -16,17 +16,29 @@ public class NovelManager : MonoBehaviour
 
 
 	//Triggers
+	[HideInInspector]
 	public bool Trigger1 = false;
+	[HideInInspector]
 	public bool Trigger2 = false;
+	[HideInInspector]
 	public bool Trigger3 = false;
+	[HideInInspector]
 	public bool Trigger4 = false;
+	[HideInInspector]
 	public bool Trigger5 = false;
+	[HideInInspector]
 	public bool Trigger6 = false;
+	[HideInInspector]
 	public bool Trigger7 = false;
+	[HideInInspector]
 	public bool Trigger8 = false;
 
 	bool waveSpawn = false;
 	bool on = false;
+
+	bool story1 = false;
+
+	int wavesCleared;
 
 	// Start is called before the first frame update
 	void Start()
@@ -51,6 +63,7 @@ public class NovelManager : MonoBehaviour
 		UsedInventory();
 		teleport();
 		tutorialDone();
+		waveCheck();
 	}
 
 
@@ -179,6 +192,17 @@ public class NovelManager : MonoBehaviour
 		}
 	}
 
+	void Story()
+	{
+		if (wavesCleared == 5)
+		{
+			if (story1 == false)
+			{
+				PopUpBox();
+			}
+		}
+	}
+
 	void tutorialDone()
 	{
 		if (player.tutorialDone == true)
@@ -195,5 +219,11 @@ public class NovelManager : MonoBehaviour
 		textSystem.GameStart = true;
 		textSystem.novelActive = false;
 		player.triggerBox = false;
+	}
+
+	void waveCheck()
+	{
+		wavesCleared = enemyManager.numOfClearedEncounters + 1;
+		
 	}
 }
