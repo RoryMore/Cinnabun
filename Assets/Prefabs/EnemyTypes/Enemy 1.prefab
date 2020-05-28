@@ -245,7 +245,7 @@ MonoBehaviour:
   baseHP: 0
   maxHP: 0
   currentHP: 0
-  baseMovementSpeed: 0
+  baseMovementSpeed: 5
   movementSpeed: 0
   dodgeChance: 0
   physDamagePotential: 0

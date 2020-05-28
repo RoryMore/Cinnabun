@@ -78,6 +78,13 @@ public class UpgradeShop : MonoBehaviour
     public GameObject skillTabObject;
     public GameObject statTabObject;
     public GameObject itemTabObject;
+    public Image skillTabImage;
+    public Text skillTabText;
+    public Image statTabImage;
+    public Text statTabText;
+    public Image itemTabImage;
+    public Text itemTabText;
+    public Color hoverColour;
 
     
     EventSystem eventSystem;
@@ -440,16 +447,73 @@ public class UpgradeShop : MonoBehaviour
     public void SkillTabClicked()
     {
         selectedShopTab = SelectedShopTab.SKILLS;
+        Color tempCol = skillTabImage.color;
+        tempCol.a = 1;
+        skillTabImage.color = tempCol;
+
+        tempCol = statTabImage.color;
+        tempCol.a = 0;
+        statTabImage.color = tempCol;
+
+        tempCol = itemTabImage.color;
+        tempCol.a = 0;
+        itemTabImage.color = tempCol;
+    }
+    public void SkillTabHover()
+    {
+        skillTabText.color = hoverColour;
+    }
+    public void SkillTabExit()
+    {
+        skillTabText.color = Color.white;
     }
 
     public void StatsTabClicked()
     {
         selectedShopTab = SelectedShopTab.STATS;
+        Color tempCol = statTabImage.color;
+        tempCol.a = 1;
+        statTabImage.color = tempCol;
+
+        tempCol = skillTabImage.color;
+        tempCol.a = 0;
+        skillTabImage.color = tempCol;
+
+        tempCol = itemTabImage.color;
+        tempCol.a = 0;
+        itemTabImage.color = tempCol;
+    }
+    public void StatsTabHover()
+    {
+        statTabText.color = hoverColour;
+    }
+    public void StatsTabExit()
+    {
+        statTabText.color = Color.white;
     }
 
     public void ItemsTabClicked()
     {
         selectedShopTab = SelectedShopTab.ITEMS;
+        Color tempCol = itemTabImage.color;
+        tempCol.a = 1;
+        itemTabImage.color = tempCol;
+
+        tempCol = skillTabImage.color;
+        tempCol.a = 0;
+        skillTabImage.color = tempCol;
+
+        tempCol = statTabImage.color;
+        tempCol.a = 0;
+        statTabImage.color = tempCol;
+    }
+    public void ItemsTabHover()
+    {
+        itemTabText.color = hoverColour;
+    }
+    public void ItemsTabExit()
+    {
+        itemTabText.color = Color.white;
     }
 
     public void LoadGameScene()

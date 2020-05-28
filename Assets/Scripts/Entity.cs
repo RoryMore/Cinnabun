@@ -613,7 +613,7 @@ public struct RewindPoint
     public int GetStrengthDamageBonus()
     {
         // We get 50% of our strength value as added damage to physical attacks
-        float strengthEffectiveness = 0.5f;
+        float strengthEffectiveness = 0.4f;
         // Should we floor to an int, or round to nearest
         // Floor could be safe enough, for now this function means we get 1 extra damage every 2 strength
         return Mathf.FloorToInt(strength * strengthEffectiveness);
@@ -686,6 +686,23 @@ public struct RewindPoint
         CalculatePhysDamagePotential();
 
         criticalStrikeMultiplier = 1.5f;
+    }
+
+    public void ScaleStats(float scalar)
+    {
+    //    public int strength;
+    //public int agility;
+    //public int constitution;
+    //public int intellect;
+    //public int physicalArmour;
+    //public int magicalArmour;
+        // Basic way of scaling stats - scalar may equal something like enemyManager.numOfClearedEncounters * 0.1f
+        constitution = constitution + Mathf.RoundToInt(scalar * constitution);
+        agility = agility + Mathf.RoundToInt(scalar * agility);
+        strength = strength + Mathf.RoundToInt(scalar * (strength * 0.75f));
+        intellect = intellect + Mathf.RoundToInt(scalar * intellect);
+        physicalArmour = physicalArmour + Mathf.RoundToInt(scalar * physicalArmour);
+        magicalArmour = magicalArmour + Mathf.RoundToInt(scalar * magicalArmour);
     }
 
 

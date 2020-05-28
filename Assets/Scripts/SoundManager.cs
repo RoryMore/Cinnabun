@@ -289,7 +289,11 @@ public class SoundManager : MonoBehaviour
                 }
             case MusicState.MAINMENU:
                 {
-                    mainMenuMusic.volume = 0.7f;
+                    if (!mainMenuMusic.isPlaying)
+                    {
+                        mainMenuMusic.Play();
+                    }
+                    mainMenuMusic.volume = 0.7f * SaveManager.GetSettings().musicVolume;
                     break;
                 }
                 case MusicState.PAUSED:
@@ -299,7 +303,7 @@ public class SoundManager : MonoBehaviour
                 }
         }
 
-    
+        UpdateSFXVolumes();
     }
 
 
@@ -308,7 +312,7 @@ public class SoundManager : MonoBehaviour
 
         for (int i = 0; i < BattleMusic.Length; i++)
         {
-            BattleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, 0.2f, Time.unscaledDeltaTime / 0.2f);
+            BattleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, 0.2f * SaveManager.GetSettings().musicVolume, Time.unscaledDeltaTime / 0.2f);
         }
     }
 
@@ -318,7 +322,7 @@ public class SoundManager : MonoBehaviour
     {
        for (int i = 0; i < IdleMusic.Length; i++)
         {
-            IdleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, 0.2f, Time.unscaledDeltaTime / 0.2f);
+            IdleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, 0.2f * SaveManager.GetSettings().musicVolume, Time.unscaledDeltaTime / 0.2f);
         }
     }
 
@@ -328,7 +332,7 @@ public class SoundManager : MonoBehaviour
     {
         for (int i = 0; i < BattleMusic.Length; i++)
         {
-            BattleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, setVolume, Time.unscaledDeltaTime / 2f); 
+            BattleMusic[i].volume = Mathf.Lerp(BattleMusic[i].volume, setVolume * SaveManager.GetSettings().musicVolume, Time.unscaledDeltaTime / 2f); 
         }
     }
 
@@ -338,7 +342,7 @@ public class SoundManager : MonoBehaviour
     {
         for (int i = 0; i < IdleMusic.Length; i++)
         {
-           IdleMusic[i].volume = Mathf.Lerp(IdleMusic[i].volume, setVolume, Time.unscaledDeltaTime / 2f); 
+           IdleMusic[i].volume = Mathf.Lerp(IdleMusic[i].volume, setVolume * SaveManager.GetSettings().musicVolume, Time.unscaledDeltaTime / 2f); 
         }
     }
 
@@ -495,6 +499,49 @@ public class SoundManager : MonoBehaviour
        for (int i = 0; i < IdleMusic.Length; i++)
         {
            IdleMusic[i].Stop();
+        }
+    }
+
+    void UpdateSFXVolumes()
+    {
+        if (SaveManager.GetSettings() != null)
+        {
+            blastsound.volume = setVolume * SaveManager.GetSettings().sfxVolume;
+
+            meleeSwing.volume = setVolume * SaveManager.GetSettings().sfxVolume;
+
+            leftFootstep.volume = setVolume * SaveManager.GetSettings().sfxVolume;
+
+            rightFootstep.volume = setVolume * SaveManager.GetSettings().sfxVolume;
+
+            foreach (AudioSource source in EnemyHit)
+            {
+                if (source != null)
+                {
+                    source.volume = setVolume * SaveManager.GetSettings().sfxVolume;
+                }
+            }
+            foreach (AudioSource source in Enemydeath)
+            {
+                if (source != null)
+                {
+                    source.volume = setVolume * SaveManager.GetSettings().sfxVolume;
+                }
+            }
+            foreach (AudioSource source in EnemyAttack)
+            {
+                if (source != null)
+                {
+                    source.volume = setVolume * SaveManager.GetSettings().sfxVolume;
+                }
+            }
+            foreach (AudioSource source in EnemyFoot)
+            {
+                if (source != null)
+                {
+                    source.volume = setVolume * SaveManager.GetSettings().sfxVolume;
+                }
+            }
         }
     }
 
