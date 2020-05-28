@@ -568,6 +568,19 @@ public class BaseSkill : MonoBehaviour
         return false;
     }
 
+    public bool CheckInFlatRange(Vector3 castPosition, Vector3 targetPosition, float checkedRange)
+    {
+        Vector3 castPosition0Y = castPosition;
+        castPosition0Y.y = targetPosition.y;
+
+        if (Vector3.Distance(castPosition0Y, targetPosition) <= checkedRange)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public bool CheckInVerticalRange(Vector3 targetPosition)
 
     {
