@@ -52,7 +52,7 @@ public class SimpleEnemy : EnemyScript
     public float radis = 0;
 
     float DelayAttack=0;
-
+    float maxRating = 0;
     public enum AGRESSION
     {
         AGRESSIVE,
@@ -381,7 +381,7 @@ public class SimpleEnemy : EnemyScript
 
     public void Deciding() {
 
-        chosenSkill = skillList[0]; ;
+        chosenSkill = skillList[0];
         //For each skill...
         foreach (BasicSkill checkedSkill in skillList)
         {
@@ -414,18 +414,7 @@ public class SimpleEnemy : EnemyScript
                         {
                             //find all posable target
                             GameObject[] AllTargets = GameObject.FindGameObjectsWithTag(checkedSkill.TargetEntity[i]);
-                            foreach (var Target in AllTargets)
-                            {
-                                //check to see if the skill can hit a target
-                                if (Vector3.Distance(this.transform.position, Target.transform.position)
-                                    <= checkedSkill.skillData.maxRange)
-                                {
-
-
-                                    basicSkillChecker(checkedSkill, Target);
-                                    break;
-                                }
-                            }
+                            basicSkillChecker(checkedSkill, AllTargets);
                         }
 
                         //can still cast skill on self
@@ -773,49 +762,204 @@ public class SimpleEnemy : EnemyScript
    //check to see if viable right now
     public void basicSkillChecker(BasicSkill checkedSkill , GameObject Target)
     {
-       
+        float Rating = 0;
         //if skill is healing check to see if they do need healing
-        if (checkedSkill.skillData.skill == SkillData.SkillList.HEAL)
-        {
-            if (Target.GetComponent<SimpleEnemy>().currentHP == Target.GetComponent<SimpleEnemy>().maxHP)
-            {
-                return;
-            }
-        }
+        bool exist = false;
 
-        //if their is no skill selected yet
-        if ((chosenSkill == null))
+        switch (checkedSkill.skillData.skill)
         {
+            
+            case SkillData.SkillList.WEAPONATTACK:
+                if (Target.GetComponent<Player>().currentHP <= checkedSkill.skillData.baseMagnitude)
+                {
+                    Rating += 55;
+                }
+                else
+                {
+                    Rating += (Target.GetComponent<Player>().currentHP*25) /
+                        checkedSkill.skillData.baseMagnitude;
+                }
+                
+                break;
+            case SkillData.SkillList.STATUS:
+
+               
+                if (Target.GetComponent<Player>().currentEffConditions.Count != 0)
+                    {
+                        foreach (var item in Target.GetComponent<Player>().currentEffConditions)
+                        {
+                            if (item.conditionType.ToString() == checkedSkill.skillData.skill.ToString())
+                            {
+                                if (item.duration < 2)
+                                {
+                                    Rating += 15;
+                                    exist = true;
+                                }
+                                else
+                                {
+                                    Rating += 10;
+                                    exist = true;
+                                }
+                            }
+                        }
+                        if (!exist)
+                        {
+                            Rating += 40;
+                        }
+                    }
+                break;
+            case SkillData.SkillList.HEAL:
+                if (Target.GetComponent<SimpleEnemy>().currentHP == Target.GetComponent<SimpleEnemy>().maxHP)
+                {
+                    Rating += 0;
+                }
+                else
+                {
+                    if (Target.GetComponent<SimpleEnemy>().currentHP <= Target.GetComponent<SimpleEnemy>().maxHP / 4)
+                    {
+                        Rating += 60;
+                    }
+                    else
+                    {
+                        Rating += 20;
+                    }
+                }
+                break;
+            case SkillData.SkillList.BUFF:
+               
+                if (Target.GetComponent<SimpleEnemy>().currentBufConditions.Count != 0)
+                {
+                    foreach (var item in Target.GetComponent<SimpleEnemy>().currentBufConditions)
+                    {
+                        if (item.conditionType.ToString() == checkedSkill.skillData.skill.ToString())
+                        {
+                            if (item.duration < 2)
+                            {
+                                Rating += 10;
+                                exist = true;
+                            }
+                            else
+                            {
+                                Rating += 5;
+                                exist = true;
+                            }
+                        }
+                    }
+                    if (!exist)
+                    {
+                        Rating += 25;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        
+
+        if( (maxRating == 0) || (maxRating < Rating)|| (chosenSkill == null))
+        {
+            maxRating = Rating;
+
             isAttacking = true;
             hasDecided = true;
             chosenSkill = checkedSkill;
 
             //Reset the enemy turn
             enemyCooldown = chosenSkill.skillData.windUp + chosenSkill.skillData.DelayAttack;
-
-            return;
         }
+    }
 
-        //Check if damage of prior skill is greater than base damange
-        if (chosenSkill.skillData.baseMagnitude <= checkedSkill.skillData.baseMagnitude)
+    public void basicSkillChecker(BasicSkill checkedSkill, GameObject[] Target)
+    {
+        float Rating = 0;
+        foreach (var freids in Target)
+        {
+            //check to see if the skill can hit a target
+            if (Vector3.Distance(this.transform.position, freids.transform.position)
+                <= checkedSkill.skillData.maxRange)
             {
-                isAttacking = true;
-                hasDecided = true;
-                chosenSkill = checkedSkill;
+
+                switch (checkedSkill.skillData.skill)
+                {
+
+                    case SkillData.SkillList.BUFF:
+                        bool exist = false;
+                        foreach (var Allie in Target)
+                        {
+
+                            if (Allie.GetComponent<SimpleEnemy>().currentBufConditions.Count != 0)
+                            {
+                                foreach (var item in Allie.GetComponent<SimpleEnemy>().currentBufConditions)
+                                {
+                                    if (item.conditionType.ToString() == checkedSkill.skillData.skill.ToString())
+                                    {
+                                        if (item.duration < 2)
+                                        {
+                                            Rating += 10;
+                                            exist = true;
+                                        }
+                                        else
+                                        {
+                                            Rating += 5;
+                                            exist = true;
+                                        }
+                                    }
+                                }
+                                if (!exist)
+                                {
+                                    Rating += 25;
+                                }
+                            }
+                        }
+                        break;
+                    case SkillData.SkillList.HEAL:
+                        foreach (var Allie in Target)
+                        {
+                            if (Allie.GetComponent<SimpleEnemy>().currentHP == Allie.GetComponent<SimpleEnemy>().maxHP)
+                            {
+                                Rating += 0;
+                            }
+                            else
+                            {
+                                if (Allie.GetComponent<SimpleEnemy>().currentHP <= Allie.GetComponent<SimpleEnemy>().maxHP / 4)
+                                {
+                                    Rating += 50;
+                                }
+                                else
+                                {
+                                    Rating += 10;
+                                }
+                            }
+                        }
+                        break;
+                    case SkillData.SkillList.AOE:
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+        }
+        //if skill is healing check to see if they do need healing
+
+        Rating = Rating / Target.Length;
+
+
+        if ((maxRating == 0) || (maxRating < Rating) || (chosenSkill == null))
+        {
+            maxRating = Rating;
+
+            isAttacking = true;
+            hasDecided = true;
+            chosenSkill = checkedSkill;
 
             //Reset the enemy turn
             enemyCooldown = chosenSkill.skillData.windUp + chosenSkill.skillData.DelayAttack;
-
         }
-        
-
     }
 
-    
 
 
-
- 
 
 
     public Entity CheckAttackers()
