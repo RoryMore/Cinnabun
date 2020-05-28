@@ -217,7 +217,7 @@ public class Encounter : MonoBehaviour
 
                 Entity enemy = Instantiate(enemy1, location);
                 initiativeList.Add(enemy);
-                enemy.ScaleStats(statScalar);
+                enemy.ScaleEnemyStats(statScalar);
             }
             else if (location.name.Contains("Enemy2"))
             {
@@ -225,7 +225,7 @@ public class Encounter : MonoBehaviour
 
                 Entity enemy = Instantiate(enemy2, location);
                 initiativeList.Add(enemy);
-                enemy.ScaleStats(statScalar);
+                enemy.ScaleEnemyStats(statScalar);
             }
             else if (location.name.Contains("Enemy3"))
             {
@@ -258,7 +258,7 @@ public class Encounter : MonoBehaviour
             Entity enemy = Instantiate(enemy1, spawnPoints[randomNum]);
             initiativeList.Add(enemy);
             initiativeList[countMinus1].gameObject.transform.localScale = initiativeList[countMinus1].gameObject.transform.localScale * 2;
-            enemy.ScaleStats(statScalar * 2.0f);
+            enemy.ScaleEnemyStats(statScalar * 2.0f);
 
         }
         else if (spawnPoints[randomNum].name.Contains("Enemy2"))
@@ -269,7 +269,7 @@ public class Encounter : MonoBehaviour
             Entity enemy = Instantiate(enemy2, spawnPoints[randomNum]);
             initiativeList.Add(enemy);
             initiativeList[countMinus1].gameObject.transform.localScale = initiativeList[countMinus1].gameObject.transform.localScale * 2;
-            enemy.ScaleStats(statScalar * 2.0f);
+            enemy.ScaleEnemyStats(statScalar * 2.0f);
         }
         else if (spawnPoints[randomNum].name.Contains("Enemy3"))
         {

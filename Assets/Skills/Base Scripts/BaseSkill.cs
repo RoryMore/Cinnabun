@@ -233,6 +233,12 @@ public class BaseSkill : MonoBehaviour
         }
     }
 
+    public float GetCalculatedCooldown()
+    {
+        float cd = Mathf.Clamp(skillData.cooldown * (1.0f - cooldownReduction), 0.001f, float.MaxValue);
+        return cd;
+    }
+
     /// <summary>
     /// Must be used in inherited skills Update method
     /// </summary>
