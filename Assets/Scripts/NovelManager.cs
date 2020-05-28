@@ -206,15 +206,6 @@ public class NovelManager : MonoBehaviour
 		}
 	}
 
-	void tutorialDone()
-	{
-		if (player.tutorialDone == true)
-		{
-			SceneManager.LoadScene(0);
-		}
-	}
-
-
 
 	void PopUpBox()
 	{
@@ -227,5 +218,18 @@ public class NovelManager : MonoBehaviour
 	void waveCheck()
 	{
 		wavesCleared = enemyManager.numOfClearedEncounters + 1;
+	}
+
+	void tutorialDone()
+	{
+		if (player.tutorialDone == true)
+		{
+			if (textSystem == null)
+			{
+
+				SceneManager.LoadScene(0);
+
+			}
+		}
 	}
 }

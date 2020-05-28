@@ -136,17 +136,20 @@ public class Player : Entity
                             {
                                 if (pause.states == PauseAbility.GameStates.PLAY)
                                 {
-                                    if (!inventory.activeSelf)
-                                    {
-                                        
-                                        inventory.SetActive(true);
-										
-									}
-                                    else
-                                    {
-                                     
-                                        inventory.SetActive(false);
-										checkInventory = true;
+									if (textSystem.novelActive == true)
+									{
+										if (!inventory.activeSelf)
+										{
+
+											inventory.SetActive(true);
+
+										}
+										else
+										{
+
+											inventory.SetActive(false);
+											checkInventory = true;
+										}
 									}
                                 }
                                 else
