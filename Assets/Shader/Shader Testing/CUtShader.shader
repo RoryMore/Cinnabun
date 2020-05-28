@@ -3,11 +3,11 @@
     Properties
     {
         _Color ("Color", Color) = (1,1,1,1)
-		 _MainTex("Base (RGB)", 2D) = "white" {}
+		 _MainTex("Color (RGB) Alpha (A)", 2D) = "white" {}
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
 		LOD 200
 		
 		
@@ -15,14 +15,15 @@
 			Ref 1
 			Comp notequal
 			Pass keep
+		
 		}
 
         CGPROGRAM
-        #pragma surface surf Lambert
-
+        #pragma surface surf Lambert alpha  
+		 
 		sampler2D _MainTex;
 		 float4 _Color;
-
+		 
         struct Input
         {
 			float2 uv_MainTex;
@@ -34,7 +35,7 @@
             // Albedo comes from a texture tinted by color
 			fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
 			o.Albedo = c.rgb;
-			o.Alpha = c.a;
+			o.Alpha = tex2D(_MainTex, IN.uv_MainTex).a;
         }
         ENDCG
     }
