@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 059f6bcc50c845540a7039bccdc67d1b, type: 3}
-  m_Name: UltraLegs1
+  m_Name: RareLegs
   m_EditorClassIdentifier: 
   itemType: 1
   armourType: 0
@@ -23,21 +23,21 @@ MonoBehaviour:
   intellect: 0
   physicalArmour: 0
   magicalArmour: 0
-  strengthRangeMin: 8
-  strengthRangeMax: 12
-  agilityRangeMin: 8
-  agilityRangeMax: 12
-  constitutionRangeMin: 8
-  constitutionRangeMax: 12
-  intellectRangeMin: 8
-  intellectRangeMax: 12
-  physicalArmourRangeMin: 9
-  physicalArmourRangeMax: 15
-  magicalArmourRangeMin: 9
-  magicalArmourRangeMax: 15
-  inventorySprite: {fileID: 21300000, guid: c49470584ed4e804c9a1ed6dcd58470d, type: 3}
-  equippedSprite: {fileID: 21300000, guid: c49470584ed4e804c9a1ed6dcd58470d, type: 3}
+  strengthRangeMin: 6
+  strengthRangeMax: 10
+  agilityRangeMin: 6
+  agilityRangeMax: 10
+  constitutionRangeMin: 6
+  constitutionRangeMax: 10
+  intellectRangeMin: 6
+  intellectRangeMax: 10
+  physicalArmourRangeMin: 7
+  physicalArmourRangeMax: 13
+  magicalArmourRangeMin: 7
+  magicalArmourRangeMax: 13
+  inventorySprite: {fileID: 21300000, guid: dd7b42778a3a95c4d8f4ecfe729aaef7, type: 3}
+  equippedSprite: {fileID: 21300000, guid: dd7b42778a3a95c4d8f4ecfe729aaef7, type: 3}
   inventorySpaceX: 2
   inventorySpaceY: 3
-  rarity: 3
-  itemName: stylish shorts
+  rarity: 2
+  itemName: nifty shorts

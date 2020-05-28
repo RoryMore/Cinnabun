@@ -699,7 +699,7 @@ public struct RewindPoint
         // Basic way of scaling stats - scalar may equal something like enemyManager.numOfClearedEncounters * 0.1f
         constitution = constitution + Mathf.RoundToInt(scalar * constitution);
         agility = agility + Mathf.RoundToInt(scalar * agility);
-        strength = strength + Mathf.RoundToInt(scalar * (strength * 0.8f));
+        strength = strength + Mathf.RoundToInt(scalar * (strength * 0.75f));
         intellect = intellect + Mathf.RoundToInt(scalar * intellect);
         physicalArmour = physicalArmour + Mathf.RoundToInt(scalar * physicalArmour);
         magicalArmour = magicalArmour + Mathf.RoundToInt(scalar * magicalArmour);

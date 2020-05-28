@@ -52,15 +52,23 @@ MonoBehaviour:
   - {fileID: 191257334380854180, guid: 9851f73f46935f2409fb933c52589e02, type: 3}
   - {fileID: 3142997932447137090, guid: ab83ccfb10688b74bad6d0376d4f7b19, type: 3}
   - {fileID: 2274588209890222965, guid: 73db8db5b44a7134e91619ecfeb73a3a, type: 3}
-  uncommonItems: []
-  rareItems: []
+  uncommonItems:
+  - {fileID: 6401987334740110360, guid: 344c0aa84ca717a43b4d89ea0f1d8aec, type: 3}
+  - {fileID: 1752006047901038085, guid: 0d132049681e5f443a31bf54c2591757, type: 3}
+  - {fileID: 791369408516736950, guid: a7b4394a3b944ff4695ca3410965509b, type: 3}
+  - {fileID: 1157611906731624137, guid: 2b3f86658706e3b4da96134c927e8407, type: 3}
+  rareItems:
+  - {fileID: 4614785153874667767, guid: 413a1a6d5cae6f24f95769269ff45cd0, type: 3}
+  - {fileID: 7559597678829460702, guid: 1eacc8a1f4c6e514a82fd8d18545ab23, type: 3}
+  - {fileID: 69216237997141756, guid: 7e9bca6333b7b804c9ab15980b06bf57, type: 3}
+  - {fileID: 6840154449571574548, guid: c046527d8232df64fb8cf5f0333a62d7, type: 3}
   ultraItems:
   - {fileID: 5532828376481931553, guid: 30b40d3d1a4a6fb48817e4989a0024d1, type: 3}
   - {fileID: 4439177388469462412, guid: 890b3ca0b37ab8e499d217c0f47b25b2, type: 3}
   - {fileID: 2934424198788435539, guid: b5974f245b7541041a4ed35dff176f3d, type: 3}
   - {fileID: 4867941062328590087, guid: 5f60987a0709936449bd66d5bea84093, type: 3}
-  noLootRatio: 45
-  commonRatio: 35
-  uncommonRatio: 0
-  rareRatio: 0
-  ultraRatio: 6
+  noLootRatio: 30
+  commonRatio: 25
+  uncommonRatio: 20
+  rareRatio: 15
+  ultraRatio: 10

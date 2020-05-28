@@ -141,12 +141,12 @@ PrefabInstance:
     - target: {fileID: 7330141679716592775, guid: e9657db93e051a34aaff4380ca64400e,
         type: 3}
       propertyPath: countdownToNextRespawn
-      value: 30
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7330141679716592775, guid: e9657db93e051a34aaff4380ca64400e,
         type: 3}
       propertyPath: waveOverTimer
-      value: 360
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7330141679716592775, guid: e9657db93e051a34aaff4380ca64400e,
         type: 3}

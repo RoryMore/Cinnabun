@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 059f6bcc50c845540a7039bccdc67d1b, type: 3}
-  m_Name: UltraHead1
+  m_Name: RareHat
   m_EditorClassIdentifier: 
   itemType: 1
   armourType: 0
@@ -23,21 +23,21 @@ MonoBehaviour:
   intellect: 0
   physicalArmour: 0
   magicalArmour: 0
-  strengthRangeMin: 7
-  strengthRangeMax: 11
-  agilityRangeMin: 7
-  agilityRangeMax: 11
-  constitutionRangeMin: 7
-  constitutionRangeMax: 11
-  intellectRangeMin: 7
-  intellectRangeMax: 11
-  physicalArmourRangeMin: 8
-  physicalArmourRangeMax: 14
-  magicalArmourRangeMin: 8
-  magicalArmourRangeMax: 14
-  inventorySprite: {fileID: 21300000, guid: 8a2027822f41b4d4fb13af895728f05d, type: 3}
-  equippedSprite: {fileID: 21300000, guid: 8a2027822f41b4d4fb13af895728f05d, type: 3}
+  strengthRangeMin: 5
+  strengthRangeMax: 9
+  agilityRangeMin: 5
+  agilityRangeMax: 9
+  constitutionRangeMin: 5
+  constitutionRangeMax: 9
+  intellectRangeMin: 5
+  intellectRangeMax: 9
+  physicalArmourRangeMin: 6
+  physicalArmourRangeMax: 12
+  magicalArmourRangeMin: 6
+  magicalArmourRangeMax: 12
+  inventorySprite: {fileID: 21300000, guid: 90ae5ad8635385c4e962dca2575b5de4, type: 3}
+  equippedSprite: {fileID: 21300000, guid: 90ae5ad8635385c4e962dca2575b5de4, type: 3}
   inventorySpaceX: 2
   inventorySpaceY: 2
-  rarity: 3
-  itemName: warm hat
+  rarity: 2
+  itemName: bucket hat
