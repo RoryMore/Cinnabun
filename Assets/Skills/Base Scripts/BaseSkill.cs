@@ -606,6 +606,16 @@ public class BaseSkill : MonoBehaviour
 
     }
 
+    public bool CheckInVerticalRange(Vector3 targetPosition, float differentVerticalRange)
+    {
+        // Basic distance check with 2 floats from caster and target positions to see if they are near eachother enough of the Y axis to damage one another
+        if (Mathf.Abs(casterSelf.transform.position.y - targetPosition.y) <= differentVerticalRange)
+        {
+            return true;
+        }
+        return false;
+    }
+
     protected void SelectTargetRay(ref Entity entityToSet, bool checkInRange = false)
     {
         if (entityToSet == null)

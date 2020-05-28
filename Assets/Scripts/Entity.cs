@@ -395,26 +395,26 @@ public struct RewindPoint
         buff.cooldown = 0;
         if (currentBufConditions.Count != 0)
         {
-            foreach (var item in currentBufConditions)
-            {
+            //foreach (var item in currentBufConditions)
+            //{
 
-                //offences buff number change and 
-                switch (item.conditionType)
-                {
-                    case ConditionBuff.FOCUS:
-                        buff.cooldown -= (int)item.Buff;
-                        break;
-                    case ConditionBuff.RAGE:
-                        buff.damage += (((int)item.Buff/100) * Data.baseMagnitude);
-                        break;
-                    case ConditionBuff.DAMAGEBUFF:
-                        buff.damage = (Data.baseMagnitude * (item.Buff/100));
-                        currentBufConditions.Remove(item);
-                        break;
-                    default:
-                        break;
-                }
-            }
+            //    //offences buff number change and 
+            //    switch (item.conditionType)
+            //    {
+            //        case ConditionBuff.FOCUS:
+            //            buff.cooldown -= (int)item.Buff;
+            //            break;
+            //        case ConditionBuff.RAGE:
+            //            buff.damage += (((int)item.Buff/100) * Data.baseMagnitude);
+            //            break;
+            //        case ConditionBuff.DAMAGEBUFF:
+            //            buff.damage = (Data.baseMagnitude * (item.Buff/100));
+            //            currentBufConditions.Remove(item);
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
         }
         return buff;
     }
@@ -459,8 +459,8 @@ public struct RewindPoint
                 switch (item.conditionType)
                 {
                     case ConditionBuff.DODGE:
-                       
-                        if (Random.Range(0, 100) <= item.Buff) 
+
+                        if (Random.Range(0, 100) <= item.Buff)
                         {
                             amount = 0;
                         }

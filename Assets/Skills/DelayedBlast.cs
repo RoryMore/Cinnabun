@@ -64,10 +64,7 @@ public class DelayedBlast : BaseSkill
         explosionMaterial.SetInt("_SkillType", 1);
 
         explosionProjector.material = explosionMaterial;
-        explosionProjector.orthographicSize = explosionRadius;
-        explosionProjector.farClipPlane = skillData.verticalRange;
-        explosionProjector.nearClipPlane = -skillData.verticalRange;
-
+        
         // Upgrade Initialisation if they are active
         if (SaveManager.GetUpgradeList().blastExplosionRadius != null)
         {
@@ -76,7 +73,10 @@ public class DelayedBlast : BaseSkill
 
             explosionDamageMultiplier += SaveManager.GetUpgradeList().blastExplosionDamage.GetUpgradedMagnitude();
         }
-        
+
+        explosionProjector.orthographicSize = explosionRadius;
+        explosionProjector.farClipPlane = explosionRadius;
+        explosionProjector.nearClipPlane = -explosionRadius;
     }
 
     private void Update()
@@ -232,7 +232,7 @@ public class DelayedBlast : BaseSkill
             {
                 if (CheckInFlatRange(enemy.transform.position, explosionLocation, explosionRadius))
                 {
-                    if (CheckInVerticalRange(enemy.transform.position))
+                    if (CheckInVerticalRange(enemy.transform.position, explosionRadius))
                     {
                         enemy.TakeDamage(Mathf.RoundToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * explosionDamageMultiplier), skillData.damageType, casterSelf.CalculateCriticalStrike());
                     }

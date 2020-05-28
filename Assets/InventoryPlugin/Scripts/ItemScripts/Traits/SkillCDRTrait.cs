@@ -18,29 +18,30 @@ public class SkillCDRTrait : EquipmentTrait
 
         effectedSkill = possibleSkillsEffected[Random.Range(0, possibleSkillsEffected.Length)];
 
-        switch (rarity)
-        {
-            case ItemData.ItemRarity.COMMON:
-                {
-                    magnitude = Random.Range(0.01f, 0.15f);
-                    break;
-                }
-            case ItemData.ItemRarity.UNCOMMON:
-                {
-                    magnitude = Random.Range(0.05f, 0.25f);
-                    break;
-                }
-            case ItemData.ItemRarity.RARE:
-                {
-                    magnitude = Random.Range(0.15f, 0.40f);
-                    break;
-                }
-            case ItemData.ItemRarity.ULTRA:
-                {
-                    magnitude = Random.Range(0.30f, 0.70f);
-                    break;
-                }
-        }
+        //switch (rarity)
+        //{
+        //    case ItemData.ItemRarity.COMMON:
+        //        {
+        //            magnitude = Random.Range(0.01f, 0.15f);
+        //            break;
+        //        }
+        //    case ItemData.ItemRarity.UNCOMMON:
+        //        {
+        //            magnitude = Random.Range(0.05f, 0.25f);
+        //            break;
+        //        }
+        //    case ItemData.ItemRarity.RARE:
+        //        {
+        //            magnitude = Random.Range(0.15f, 0.40f);
+        //            break;
+        //        }
+        //    case ItemData.ItemRarity.ULTRA:
+        //        {
+        //            magnitude = Random.Range(0.30f, 0.70f);
+        //            break;
+        //        }
+        //}
+        magnitude = Random.Range(0.05f, 0.40f);
         magnitude = Mathf.Round(magnitude * 100.0f) / 100.0f;
 
         description = "";
