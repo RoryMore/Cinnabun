@@ -87,7 +87,7 @@ MonoBehaviour:
     blastExplosionRadius:
       maxUpgrades: 5
       upgradeCount: 0
-      upgradeMagnitude: 2
+      upgradeMagnitude: 0.5
       progressToUpgrade: 0
       initialUpgradeCost: 3
       upgradeCostIncrements: 2

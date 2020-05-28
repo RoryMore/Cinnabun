@@ -179,7 +179,7 @@ public class Encounter : MonoBehaviour
             Vector3 intendedPosition = new Vector3(spawnLocationx, enemyManager.player.transform.position.y, spawnLocationz);
 
 
-            if (NavMesh.SamplePosition(intendedPosition, out NavMeshHit hit, 20, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(intendedPosition, out NavMeshHit hit, 400, NavMesh.AllAreas))
             {
                 GameObject spawnPointAlpha = Instantiate(spawnPoint1);
                 spawnPointAlpha.transform.position = intendedPosition;
@@ -218,6 +218,9 @@ public class Encounter : MonoBehaviour
                 Entity enemy = Instantiate(enemy1, location);
                 initiativeList.Add(enemy);
                 enemy.ScaleEnemyStats(statScalar);
+
+                SimpleEnemy simpleEnemy = enemy as SimpleEnemy;
+                simpleEnemy.RandomiseMaterial();
             }
             else if (location.name.Contains("Enemy2"))
             {
@@ -226,6 +229,9 @@ public class Encounter : MonoBehaviour
                 Entity enemy = Instantiate(enemy2, location);
                 initiativeList.Add(enemy);
                 enemy.ScaleEnemyStats(statScalar);
+
+                SimpleEnemy simpleEnemy = enemy as SimpleEnemy;
+                simpleEnemy.RandomiseMaterial();
             }
             else if (location.name.Contains("Enemy3"))
             {
@@ -260,6 +266,9 @@ public class Encounter : MonoBehaviour
             initiativeList[countMinus1].gameObject.transform.localScale = initiativeList[countMinus1].gameObject.transform.localScale * 2;
             enemy.ScaleEnemyStats(statScalar * 2.0f);
 
+            SimpleEnemy simpleEnemy = enemy as SimpleEnemy;
+            simpleEnemy.SetBossMaterial();
+
         }
         else if (spawnPoints[randomNum].name.Contains("Enemy2"))
         {
@@ -270,6 +279,9 @@ public class Encounter : MonoBehaviour
             initiativeList.Add(enemy);
             initiativeList[countMinus1].gameObject.transform.localScale = initiativeList[countMinus1].gameObject.transform.localScale * 2;
             enemy.ScaleEnemyStats(statScalar * 2.0f);
+
+            SimpleEnemy simpleEnemy = enemy as SimpleEnemy;
+            simpleEnemy.SetBossMaterial();
         }
         else if (spawnPoints[randomNum].name.Contains("Enemy3"))
         {
