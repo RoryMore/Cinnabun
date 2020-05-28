@@ -35,9 +35,9 @@ MonoBehaviour:
   physicalArmourRangeMax: 3
   magicalArmourRangeMin: 1
   magicalArmourRangeMax: 3
-  inventorySprite: {fileID: 21300000, guid: 23f267142481dcb468b618cb9b42fde6, type: 3}
-  equippedSprite: {fileID: 21300000, guid: 23f267142481dcb468b618cb9b42fde6, type: 3}
+  inventorySprite: {fileID: 21300000, guid: 97b729d5d5beb1e40964fb2134bc9dd3, type: 3}
+  equippedSprite: {fileID: 21300000, guid: 97b729d5d5beb1e40964fb2134bc9dd3, type: 3}
   inventorySpaceX: 2
   inventorySpaceY: 3
   rarity: 0
-  itemName: pants [beginner]
+  itemName: newbies skirt
