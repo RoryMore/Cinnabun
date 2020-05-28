@@ -6,7 +6,12 @@ using System.IO;
 
 public class SaveManager : MonoBehaviour
 {
-    
+    public struct SaveObjectsLoadState
+    {
+        public bool settingsLoaded;
+        public bool moneyLoaded;
+        public bool upgradesLoaded;
+    }
 
     [System.Serializable]
     public struct UpgradeList
@@ -58,6 +63,9 @@ public class SaveManager : MonoBehaviour
 
     static int savedUpgradeMoney;
 
+    SaveObjectsLoadState objLoaded;
+    static SaveObjectsLoadState objectsLoaded;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +75,9 @@ public class SaveManager : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+
+        objLoaded = new SaveObjectsLoadState() { moneyLoaded = false, settingsLoaded = false, upgradesLoaded = false };
+        objectsLoaded = new SaveObjectsLoadState();
         //Debug.Log(Application.persistentDataPath);
         staticUpgradeSaveFileName = upgradeSaveFileName;
         staticUpgradeMoneyFileName = upgradeMoneyFileName;
@@ -98,28 +109,25 @@ public class SaveManager : MonoBehaviour
 
         if (LoadUpgradeSave())
         {
-            Debug.Log("SaveManager: Upgrades Loaded");
-        }
-        else
-        {
-            Debug.Log("SaveManager: No UpgradeSave file to load");
+            objLoaded.upgradesLoaded = true;
         }
         if (LoadUpgradeMoney())
         {
-            Debug.Log("SaveManager: UpgradeMoney Loaded");
-        }
-        else
-        {
-            Debug.Log("SaveManager: No UpgradeMoney file to load");
+            objLoaded.moneyLoaded = true;
         }
         if (LoadSettingsSave())
         {
-            Debug.Log("SaveManager: Settings Loaded");
+            objLoaded.settingsLoaded = true;
         }
-        else
-        {
-            Debug.Log("SaveManager: No Saved Settings file to load");
-        }
+
+        objectsLoaded.moneyLoaded = objLoaded.moneyLoaded;
+        objectsLoaded.settingsLoaded = objLoaded.settingsLoaded;
+        objectsLoaded.upgradesLoaded = objLoaded.upgradesLoaded;
+    }
+
+    public static SaveObjectsLoadState GetObjectsLoaded()
+    {
+        return objectsLoaded;
     }
 
     // Update is called once per frame
