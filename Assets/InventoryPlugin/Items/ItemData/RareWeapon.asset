@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 059f6bcc50c845540a7039bccdc67d1b, type: 3}
+  m_Name: RareWeapon
+  m_EditorClassIdentifier: 
+  itemType: 0
+  armourType: 0
+  weaponType: 0
+  equipmentSlot: 0
+  applyRandomStats: 1
+  strength: 0
+  agility: 0
+  constitution: 0
+  intellect: 0
+  physicalArmour: 0
+  magicalArmour: 0
+  strengthRangeMin: 6
+  strengthRangeMax: 10
+  agilityRangeMin: 6
+  agilityRangeMax: 10
+  constitutionRangeMin: 0
+  constitutionRangeMax: 0
+  intellectRangeMin: 6
+  intellectRangeMax: 10
+  physicalArmourRangeMin: 0
+  physicalArmourRangeMax: 0
+  magicalArmourRangeMin: 0
+  magicalArmourRangeMax: 0
+  inventorySprite: {fileID: 21300000, guid: a1a407c8386c4614c827a74f067a0fa6, type: 3}
+  equippedSprite: {fileID: 21300000, guid: df5e69382cf5ea0488b70dc022d657a2, type: 3}
+  inventorySpaceX: 1
+  inventorySpaceY: 4
+  rarity: 2
+  itemName: blue foam sword

@@ -23,21 +23,21 @@ MonoBehaviour:
   intellect: 0
   physicalArmour: 0
   magicalArmour: 0
-  strengthRangeMin: 10
-  strengthRangeMax: 20
-  agilityRangeMin: 10
-  agilityRangeMax: 40
-  constitutionRangeMin: 10
-  constitutionRangeMax: 15
-  intellectRangeMin: 10
-  intellectRangeMax: 30
-  physicalArmourRangeMin: 10
-  physicalArmourRangeMax: 25
-  magicalArmourRangeMin: 10
-  magicalArmourRangeMax: 25
-  inventorySprite: {fileID: 21300000, guid: 23f267142481dcb468b618cb9b42fde6, type: 3}
-  equippedSprite: {fileID: 21300000, guid: 23f267142481dcb468b618cb9b42fde6, type: 3}
+  strengthRangeMin: 8
+  strengthRangeMax: 12
+  agilityRangeMin: 8
+  agilityRangeMax: 12
+  constitutionRangeMin: 8
+  constitutionRangeMax: 12
+  intellectRangeMin: 8
+  intellectRangeMax: 12
+  physicalArmourRangeMin: 9
+  physicalArmourRangeMax: 15
+  magicalArmourRangeMin: 9
+  magicalArmourRangeMax: 15
+  inventorySprite: {fileID: 21300000, guid: c49470584ed4e804c9a1ed6dcd58470d, type: 3}
+  equippedSprite: {fileID: 21300000, guid: c49470584ed4e804c9a1ed6dcd58470d, type: 3}
   inventorySpaceX: 2
   inventorySpaceY: 3
   rarity: 3
-  itemName: cargo pants
+  itemName: stylish shorts

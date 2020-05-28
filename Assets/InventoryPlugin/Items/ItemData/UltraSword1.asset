@@ -23,21 +23,21 @@ MonoBehaviour:
   intellect: 0
   physicalArmour: 0
   magicalArmour: 0
-  strengthRangeMin: 10
-  strengthRangeMax: 40
-  agilityRangeMin: 10
-  agilityRangeMax: 40
+  strengthRangeMin: 8
+  strengthRangeMax: 12
+  agilityRangeMin: 8
+  agilityRangeMax: 12
   constitutionRangeMin: 0
   constitutionRangeMax: 0
-  intellectRangeMin: 10
-  intellectRangeMax: 40
-  physicalArmourRangeMin: 3
-  physicalArmourRangeMax: 20
-  magicalArmourRangeMin: 3
-  magicalArmourRangeMax: 20
-  inventorySprite: {fileID: 21300000, guid: 3613a410bbe250548a2f3399935eb781, type: 3}
-  equippedSprite: {fileID: 21300000, guid: 3613a410bbe250548a2f3399935eb781, type: 3}
+  intellectRangeMin: 8
+  intellectRangeMax: 12
+  physicalArmourRangeMin: 0
+  physicalArmourRangeMax: 0
+  magicalArmourRangeMin: 0
+  magicalArmourRangeMax: 0
+  inventorySprite: {fileID: 21300000, guid: 931d947df458dcc4cbe911792210a749, type: 3}
+  equippedSprite: {fileID: 21300000, guid: 97ddea4304e836d4e943835162f6829a, type: 3}
   inventorySpaceX: 1
   inventorySpaceY: 4
   rarity: 3
-  itemName: super whack stick
+  itemName: rare foam sword

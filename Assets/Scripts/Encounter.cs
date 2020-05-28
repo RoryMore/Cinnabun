@@ -203,9 +203,9 @@ public class Encounter : MonoBehaviour
 
     public void SpawnEnemies()
     {
-        
 
 
+        float statScalar = enemyManager.numOfClearedEncounters * 0.1f;
         //Spawn enemies
         //WARNING: If more spawn points are open than prefabs to fill them, this function breaks
         foreach (Transform location in spawnPoints)
@@ -213,12 +213,19 @@ public class Encounter : MonoBehaviour
 
             if (location.name.Contains("Enemy1"))
             {
-                initiativeList.Add(Instantiate(enemy1, location));
+                //initiativeList.Add(Instantiate(enemy1, location));
 
+                Entity enemy = Instantiate(enemy1, location);
+                initiativeList.Add(enemy);
+                enemy.ScaleStats(statScalar);
             }
             else if (location.name.Contains("Enemy2"))
             {
-                initiativeList.Add(Instantiate(enemy2, location));
+                //initiativeList.Add(Instantiate(enemy2, location));
+
+                Entity enemy = Instantiate(enemy2, location);
+                initiativeList.Add(enemy);
+                enemy.ScaleStats(statScalar);
             }
             else if (location.name.Contains("Enemy3"))
             {
@@ -241,18 +248,28 @@ public class Encounter : MonoBehaviour
     public void SpawnBoss(int countMinus1)
     {
         int randomNum = Random.Range(0, spawnPoints.Count);
-
+        float statScalar = enemyManager.numOfClearedEncounters * 0.1f;
 
         if (spawnPoints[randomNum].name.Contains("Enemy1"))
         {
-            initiativeList.Add(Instantiate(enemy1, spawnPoints[randomNum]));
+            //initiativeList.Add(Instantiate(enemy1, spawnPoints[randomNum]));
+            //initiativeList[countMinus1].gameObject.transform.localScale = initiativeList[countMinus1].gameObject.transform.localScale * 2;
+
+            Entity enemy = Instantiate(enemy1, spawnPoints[randomNum]);
+            initiativeList.Add(enemy);
             initiativeList[countMinus1].gameObject.transform.localScale = initiativeList[countMinus1].gameObject.transform.localScale * 2;
+            enemy.ScaleStats(statScalar * 2.0f);
 
         }
         else if (spawnPoints[randomNum].name.Contains("Enemy2"))
         {
-            initiativeList.Add(Instantiate(enemy2, spawnPoints[randomNum]));
+            //initiativeList.Add(Instantiate(enemy2, spawnPoints[randomNum]));
+            //initiativeList[countMinus1].gameObject.transform.localScale = initiativeList[countMinus1].gameObject.transform.localScale * 2;
+
+            Entity enemy = Instantiate(enemy2, spawnPoints[randomNum]);
+            initiativeList.Add(enemy);
             initiativeList[countMinus1].gameObject.transform.localScale = initiativeList[countMinus1].gameObject.transform.localScale * 2;
+            enemy.ScaleStats(statScalar * 2.0f);
         }
         else if (spawnPoints[randomNum].name.Contains("Enemy3"))
         {
@@ -311,7 +328,8 @@ public class Encounter : MonoBehaviour
 
                 if (respawnTicker <= 0)
                 {
-                    ClearSpawnPoints();
+                    //ClearSpawnPoints();
+                    spawnPoints.Clear();
                     SpawnSpawnPoints();
                     SpawnEnemies();
                     respawnTicker = countdownToNextRespawn;
@@ -362,7 +380,8 @@ public class Encounter : MonoBehaviour
 
                 if (respawnTicker <= 0)
                 {
-                    ClearSpawnPoints();
+                    //ClearSpawnPoints();
+                    spawnPoints.Clear();
                     SpawnSpawnPoints();
                     SpawnEnemies();
                     respawnTicker = countdownToNextRespawn;

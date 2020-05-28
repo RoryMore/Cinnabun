@@ -7,12 +7,12 @@ TerrainLayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: G_Orange
-  m_DiffuseTexture: {fileID: 2800000, guid: 1101d065526e60044a1bf47494bf28fe, type: 3}
+  m_DiffuseTexture: {fileID: 2800000, guid: d5b7eecabe3e23748afdf304df3c29b6, type: 3}
   m_NormalMapTexture: {fileID: 0}
   m_MaskMapTexture: {fileID: 0}
   m_TileSize: {x: 30, y: 30}
   m_TileOffset: {x: 0, y: 0}
-  m_Specular: {r: 0, g: 0, b: 0, a: 0}
+  m_Specular: {r: 0.8113208, g: 0.17221434, b: 0.17221434, a: 0}
   m_Metallic: 0
   m_Smoothness: 0
   m_NormalScale: 1
