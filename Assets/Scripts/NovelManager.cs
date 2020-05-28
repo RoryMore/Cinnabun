@@ -41,6 +41,16 @@ public class NovelManager : MonoBehaviour
 	public bool canWalk = true;
 
 	bool story1 = false;
+	bool story2 = false;
+	bool story3 = false;
+	bool story4 = false;
+	bool story5 = false;
+	bool story6 = false;
+	bool story7 = false;
+	bool story8 = false;
+	bool story9 = false;
+
+
 
 	int wavesCleared;
 
@@ -213,13 +223,94 @@ public class NovelManager : MonoBehaviour
 
 	void Story()
 	{
-		if (wavesCleared == 2)
+		if (wavesCleared == 5)
 		{
 			if (story1 == false)
 			{
 				PopUpBox();
 
 				story1 = true;
+			}
+		}
+		if (wavesCleared == 10)
+		{
+			if (story2 == false)
+			{
+				PopUpBox();
+
+				story2 = true;
+			}
+		}
+		if (wavesCleared == 15)
+		{
+			if (story3 == false)
+			{
+				PopUpBox();
+
+				story3 = true;
+			}
+		}
+		if (wavesCleared == 20)
+		{
+			if (story4 == false)
+			{
+				PopUpBox();
+
+				story4 = true;
+			}
+		}
+		if (wavesCleared == 25)
+		{
+			if (story5 == false)
+			{
+				PopUpBox();
+
+				story5 = true;
+			}
+		}
+		if (wavesCleared == 30)
+		{
+			if (story6 == false)
+			{
+				PopUpBox();
+
+				story6 = true;
+			}
+		}
+		if (wavesCleared == 35)
+		{
+			if (story7 == false)
+			{
+				PopUpBox();
+
+				story7 = true;
+			}
+		}
+		if (wavesCleared == 40)
+		{
+			if (story8 == false)
+			{
+				PopUpBox();
+
+				story8 = true;
+			}
+		}
+		if (wavesCleared == 45)
+		{
+			if (story1 == false)
+			{
+				PopUpBox();
+
+				story1 = true;
+			}
+		}
+		if (wavesCleared == 50)
+		{
+			if (story9 == false)
+			{
+				PopUpBox();
+
+				story9 = true;
 			}
 		}
 	}

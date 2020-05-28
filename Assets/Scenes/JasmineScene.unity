@@ -9054,8 +9054,8 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[1].text.Array.data[3]
-      value: 'To do this while paused click the fist botton on the left and then
-        click on the ground to punch in that direction. '
+      value: 'To do this while paused click the sword on the left and then click
+        on the ground to punch in that direction. '
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -9132,7 +9132,7 @@ PrefabInstance:
         type: 3}
       propertyPath: text.Array.data[5].text.Array.data[2]
       value: Press I and then drag what ever you got on to your self and this should
-        equip it. If not well then I dont know.
+        equip it.
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
