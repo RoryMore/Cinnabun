@@ -276,7 +276,7 @@ MonoBehaviour:
   enemyTakingAction: 0
   turnsHeld: 0
   timeSpentDoingAction: 0
-  turnSpeed: 1000
+  turnSpeed: 80
   anim: {fileID: 2025261081831177242}
   hitParticles: {fileID: 4812800003376449072}
   enemyManager: {fileID: 0}
@@ -374,6 +374,7 @@ MonoBehaviour:
   entityMask:
     serializedVersion: 2
     m_Bits: 0
+  AttachingAnim: 0
   TargetEntity:
   - Player
   - Enemy1
@@ -413,6 +414,7 @@ MonoBehaviour:
   entityMask:
     serializedVersion: 2
     m_Bits: 0
+  AttachingAnim: 0
   TargetEntity:
   - Player
   - Enemy1
