@@ -20,6 +20,7 @@ public class Player : Entity
 	public bool playBlastSound = false;
 
 	TextSystem textSystem;
+	NovelManager novelManger;
     [HideInInspector] public bool triggerBox = false;
     public enum PlayerState
     {
@@ -93,8 +94,9 @@ public class Player : Entity
         pause = FindObjectOfType<PauseAbility>();
         pauseMenu = FindObjectOfType<PauseMenuUI>();
         textSystem = FindObjectOfType<TextSystem>();
-        //InitialiseSkills();
-    }
+		novelManger = FindObjectOfType<NovelManager>();
+		//InitialiseSkills();
+	}
 
     // Update is called once per frame
     void Update()
@@ -400,7 +402,7 @@ public class Player : Entity
     {
         if (textSystem != null)
         {
-            if (textSystem.novelActive == true)
+            if (textSystem.novelActive == true && novelManger.canWalk == true)
             {
 
                 if (Input.GetMouseButton(0))

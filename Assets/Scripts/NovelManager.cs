@@ -34,7 +34,8 @@ public class NovelManager : MonoBehaviour
 	public bool Trigger8 = false;
 
 	bool waveSpawn = false;
-	bool on = false;
+	public bool on = false;
+	public bool canWalk = true;
 
 	bool story1 = false;
 
@@ -84,7 +85,7 @@ public class NovelManager : MonoBehaviour
 
     void TriggerBox()
     {
-        if (player.triggerBox == true || Input.GetKeyDown(KeyCode.L))
+        if (player.triggerBox == true)
         {
 			
 			PopUpBox();
@@ -121,18 +122,26 @@ public class NovelManager : MonoBehaviour
 		
 		if (on == false)
 		{
-			textSystem.novelActive = false;
+			textSystem.novelActive = true;
+			canWalk = false;
 			
+		}
+
+		if (on == true)
+		{
+			canWalk = true;
 		}
 	}
 
 	void TurnWalkOn()
 	{
 		bool off = false;
+		canWalk = true;
 		if (off == false)
 		{
 			textSystem.novelActive = true;
 			off = true;
+			
 		}
 
 	}
@@ -224,12 +233,8 @@ public class NovelManager : MonoBehaviour
 	{
 		if (player.tutorialDone == true)
 		{
-			if (textSystem == null)
-			{
-
-				SceneManager.LoadScene(0);
-
-			}
+			PopUpBox();
+			
 		}
 	}
 }
