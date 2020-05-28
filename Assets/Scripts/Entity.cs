@@ -688,7 +688,7 @@ public struct RewindPoint
         criticalStrikeMultiplier = 1.5f;
     }
 
-    public void ScaleStats(float scalar)
+    public void ScaleEnemyStats(float scalar)
     {
     //    public int strength;
     //public int agility;
@@ -697,12 +697,12 @@ public struct RewindPoint
     //public int physicalArmour;
     //public int magicalArmour;
         // Basic way of scaling stats - scalar may equal something like enemyManager.numOfClearedEncounters * 0.1f
-        constitution = constitution + Mathf.RoundToInt(scalar * constitution);
+        constitution = constitution + Mathf.RoundToInt(scalar * (constitution * 1.2f));
         agility = agility + Mathf.RoundToInt(scalar * agility);
         strength = strength + Mathf.RoundToInt(scalar * (strength * 0.75f));
         intellect = intellect + Mathf.RoundToInt(scalar * intellect);
-        physicalArmour = physicalArmour + Mathf.RoundToInt(scalar * physicalArmour);
-        magicalArmour = magicalArmour + Mathf.RoundToInt(scalar * magicalArmour);
+        physicalArmour = physicalArmour + Mathf.RoundToInt(scalar * (physicalArmour * 1.5f));
+        magicalArmour = magicalArmour + Mathf.RoundToInt(scalar * (magicalArmour * 1.5f));
     }
 
 
