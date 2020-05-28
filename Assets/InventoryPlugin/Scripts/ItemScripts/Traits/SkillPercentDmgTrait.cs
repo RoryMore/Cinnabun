@@ -8,7 +8,7 @@ public class SkillPercentDmgTrait : EquipmentTrait
     {
         trait = TraitType.SkillPercentDmg;
 
-        magnitude = Random.Range(0.025f, 0.3f);
+        magnitude = Random.Range(0.05f, 0.3f);
         // Round magnitude to 2 decimal places
         magnitude = Mathf.Round(magnitude * 100.0f) / 100.0f;
 

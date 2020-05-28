@@ -9,6 +9,30 @@ public class MainMenuUI : MonoBehaviour
     public GameObject credits;
     public GameObject OptionsUI;
 
+    [Header("Buttons")]
+    public GameObject newGameButton;
+    public GameObject continueButton;
+
+    bool initialised = false;
+
+    private void Update()
+    {
+        if (!initialised)
+        {
+            // Money file was loaded so they have definitely played before
+            if (SaveManager.GetObjectsLoaded().moneyLoaded)
+            {
+                newGameButton.SetActive(false);
+                continueButton.SetActive(true);
+            }
+            else // No money file so they're still a freshy
+            {
+                newGameButton.SetActive(true);
+                continueButton.SetActive(false);
+            }
+            initialised = true;
+        }
+    }
 
     public void OnClickPlay()
     {
