@@ -242,7 +242,8 @@ public class TextSystem : MonoBehaviour
 			//getBackGroundName();
 
 
-			enemyStopStart();
+			enemyStopStart();
+
           
 			
 			Say(text[wordIndex].text[index]);
@@ -378,18 +379,11 @@ public class TextSystem : MonoBehaviour
 
 	void enemyStopStart()
 	{
-
-		if (sceneName == "JasmineScene")
-		{
-			
-				enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior();
-			
-		}
-
-		if (sceneName != "JasmineScene")
+		if (enemyManager.enemyMangerCurrentEncounter != null)
 		{
 			enemyManager.enemyMangerCurrentEncounter.SetActiveBehavior();
 		}
+		
 	}
 }
 

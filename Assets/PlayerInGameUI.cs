@@ -147,7 +147,7 @@ public class PlayerInGameUI : MonoBehaviour
                     case SkillData.SkillList.DELAYEDBLAST:
                         {
                             DelayedBlastButton.gameObject.SetActive(true);
-                            DelayedBlastButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.skillData.cooldown);
+                            DelayedBlastButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.GetCalculatedCooldown());
                             break;
                         }
                     case SkillData.SkillList.REWIND:
@@ -158,13 +158,13 @@ public class PlayerInGameUI : MonoBehaviour
 								rewindOnce = true;
 							}
 							RewindButton.gameObject.SetActive(true);
-                            RewindButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.skillData.cooldown);
+                            RewindButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.GetCalculatedCooldown());
                             break;
                         }
                     case SkillData.SkillList.TELEPORT:
                         {
                             TeleportButton.gameObject.SetActive(true);
-                             TeleportButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.skillData.cooldown);
+                             TeleportButton.fillAmount = 1.0f - (skill.timeBeenOnCooldown / skill.GetCalculatedCooldown());
                             break;
                         }
                     default:
@@ -243,6 +243,7 @@ public class PlayerInGameUI : MonoBehaviour
 	public void Inventorybackbutton()
 	{
 		player.inventory.SetActive(false);
+		player.checkInventory = true;
 	}
 
 	void UpdateHealth()

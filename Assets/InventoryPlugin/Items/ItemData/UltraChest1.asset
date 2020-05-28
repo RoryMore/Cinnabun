@@ -23,18 +23,18 @@ MonoBehaviour:
   intellect: 0
   physicalArmour: 0
   magicalArmour: 0
-  strengthRangeMin: 10
-  strengthRangeMax: 30
-  agilityRangeMin: 10
-  agilityRangeMax: 30
-  constitutionRangeMin: 10
-  constitutionRangeMax: 40
-  intellectRangeMin: 10
-  intellectRangeMax: 30
-  physicalArmourRangeMin: 10
-  physicalArmourRangeMax: 50
-  magicalArmourRangeMin: 10
-  magicalArmourRangeMax: 50
+  strengthRangeMin: 8
+  strengthRangeMax: 13
+  agilityRangeMin: 8
+  agilityRangeMax: 13
+  constitutionRangeMin: 8
+  constitutionRangeMax: 13
+  intellectRangeMin: 8
+  intellectRangeMax: 13
+  physicalArmourRangeMin: 9
+  physicalArmourRangeMax: 16
+  magicalArmourRangeMin: 9
+  magicalArmourRangeMax: 16
   inventorySprite: {fileID: 21300000, guid: 5652f09b9ff4f6f4da238e8bda728968, type: 3}
   equippedSprite: {fileID: 21300000, guid: fd8284d9e19b3374bbe42375761748c1, type: 3}
   inventorySpaceX: 3

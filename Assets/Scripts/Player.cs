@@ -20,6 +20,7 @@ public class Player : Entity
 	public bool playBlastSound = false;
 
 	TextSystem textSystem;
+	NovelManager novelManger;
     [HideInInspector] public bool triggerBox = false;
     public enum PlayerState
     {
@@ -93,8 +94,9 @@ public class Player : Entity
         pause = FindObjectOfType<PauseAbility>();
         pauseMenu = FindObjectOfType<PauseMenuUI>();
         textSystem = FindObjectOfType<TextSystem>();
-        //InitialiseSkills();
-    }
+		novelManger = FindObjectOfType<NovelManager>();
+		//InitialiseSkills();
+	}
 
     // Update is called once per frame
     void Update()
@@ -136,17 +138,20 @@ public class Player : Entity
                             {
                                 if (pause.states == PauseAbility.GameStates.PLAY)
                                 {
-                                    if (!inventory.activeSelf)
-                                    {
-                                        
-                                        inventory.SetActive(true);
-										
-									}
-                                    else
-                                    {
-                                     
-                                        inventory.SetActive(false);
-										checkInventory = true;
+									if (textSystem.novelActive == true)
+									{
+										if (!inventory.activeSelf)
+										{
+
+											inventory.SetActive(true);
+
+										}
+										else
+										{
+
+											inventory.SetActive(false);
+											checkInventory = true;
+										}
 									}
                                 }
                                 else
@@ -207,11 +212,11 @@ public class Player : Entity
 
                                     if (selectedSkill.currentlyCasting)
                                     {
-                                        if (!delayedBlastCastParticles.activeSelf)
-                                        {
-                                            delayedBlastCastParticles.SetActive(true);
+          //                              if (!delayedBlastCastParticles.activeSelf)
+          //                              {
+          //                                  delayedBlastCastParticles.SetActive(true);
 											
-										}
+										//}
                                         animator.SetFloat("castingPlaybackMultiplier", (animSpeed / (selectedSkill.skillData.windUp * 1.7f)));
                                         animator.SetBool("blastCast", true);
 										
@@ -231,9 +236,9 @@ public class Player : Entity
 
                                     // Deactivate any active cast particles
 									
-                                    delayedBlastCastParticles.SetActive(false);
-                                    rewindCastParticles.SetActive(false);
-                                    teleportCastParticles.SetActive(false);
+                                    //delayedBlastCastParticles.SetActive(false);
+                                    //rewindCastParticles.SetActive(false);
+                                    //teleportCastParticles.SetActive(false);
 
 									
 								}
@@ -245,10 +250,10 @@ public class Player : Entity
 
                                 if (selectedSkill.currentlyCasting)
                                 {
-                                    if (!rewindCastParticles.activeSelf)
-                                    {
-                                        rewindCastParticles.SetActive(true);
-                                    }
+                                    //if (!rewindCastParticles.activeSelf)
+                                    //{
+                                    //    rewindCastParticles.SetActive(true);
+                                    //}
                                     animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
                                     animator.SetBool("skillCast", true);
                                 }
@@ -260,10 +265,10 @@ public class Player : Entity
 
                                 if (selectedSkill.currentlyCasting)
                                 {
-                                    if (!teleportCastParticles.activeSelf)
-                                    {
-                                        teleportCastParticles.SetActive(true);
-                                    }
+                                    //if (!teleportCastParticles.activeSelf)
+                                    //{
+                                    //    teleportCastParticles.SetActive(true);
+                                    //}
                                     animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
                                     animator.SetBool("teleportCast", true);
                                 }
@@ -299,9 +304,9 @@ public class Player : Entity
                                         animator.SetBool("teleportCast", false);
 
                                         // Deactivate any active cast particles
-                                        delayedBlastCastParticles.SetActive(false);
-                                        rewindCastParticles.SetActive(false);
-                                        teleportCastParticles.SetActive(false);
+                                        //delayedBlastCastParticles.SetActive(false);
+                                        //rewindCastParticles.SetActive(false);
+                                        //teleportCastParticles.SetActive(false);
                                     }
                                 }
                                 else
@@ -336,9 +341,9 @@ public class Player : Entity
                                 animator.SetBool("blastCast", false);
 
                                 // Deactivate any active cast particles
-                                delayedBlastCastParticles.SetActive(false);
-                                rewindCastParticles.SetActive(false);
-                                teleportCastParticles.SetActive(false);
+                                //delayedBlastCastParticles.SetActive(false);
+                                //rewindCastParticles.SetActive(false);
+                                //teleportCastParticles.SetActive(false);
                             }
                         }
 
@@ -397,7 +402,7 @@ public class Player : Entity
     {
         if (textSystem != null)
         {
-            if (textSystem.novelActive == true)
+            if (textSystem.novelActive == true && novelManger.canWalk == true)
             {
 
                 if (Input.GetMouseButton(0))

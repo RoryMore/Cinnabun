@@ -124,12 +124,18 @@ public class ItemData : ScriptableObject
     {
         InventoryItem.ItemInfoBlock itemStatBlock = new InventoryItem.ItemInfoBlock
         {
-            strength = Random.Range(strengthRangeMin + Mathf.RoundToInt(statScalar * strengthRangeMax), strengthRangeMax + Mathf.RoundToInt(statScalar * strengthRangeMax)),
-            agility = Random.Range(agilityRangeMin + Mathf.RoundToInt(statScalar * agilityRangeMax), agilityRangeMax + Mathf.RoundToInt(statScalar * agilityRangeMax)),
-            constitution = Random.Range(constitutionRangeMin + Mathf.RoundToInt(statScalar * constitutionRangeMax), constitutionRangeMax + Mathf.RoundToInt(statScalar * constitutionRangeMax)),
-            intellect = Random.Range(intellectRangeMin + Mathf.RoundToInt(statScalar * intellectRangeMax), intellectRangeMax + Mathf.RoundToInt(statScalar * intellectRangeMax)),
-            physicalArmour = Random.Range(physicalArmourRangeMin + Mathf.RoundToInt(statScalar * physicalArmourRangeMax), physicalArmourRangeMax + Mathf.RoundToInt(statScalar * physicalArmourRangeMax)),
-            magicalArmour = Random.Range(magicalArmourRangeMin + Mathf.RoundToInt(statScalar * magicalArmourRangeMax), magicalArmourRangeMax + Mathf.RoundToInt(statScalar * magicalArmourRangeMax)),
+            //strength = Random.Range(strengthRangeMin + Mathf.RoundToInt(statScalar * (strengthRangeMax * 0.75f)), strengthRangeMax + Mathf.RoundToInt(statScalar * (strengthRangeMax * 0.75f))),
+            //agility = Random.Range(agilityRangeMin + Mathf.RoundToInt(statScalar * agilityRangeMax), agilityRangeMax + Mathf.RoundToInt(statScalar * agilityRangeMax)),
+            //constitution = Random.Range(constitutionRangeMin + Mathf.RoundToInt(statScalar * constitutionRangeMax), constitutionRangeMax + Mathf.RoundToInt(statScalar * constitutionRangeMax)),
+            //intellect = Random.Range(intellectRangeMin + Mathf.RoundToInt(statScalar * intellectRangeMax), intellectRangeMax + Mathf.RoundToInt(statScalar * intellectRangeMax)),
+            //physicalArmour = Random.Range(physicalArmourRangeMin + Mathf.RoundToInt(statScalar * physicalArmourRangeMax), physicalArmourRangeMax + Mathf.RoundToInt(statScalar * physicalArmourRangeMax)),
+            //magicalArmour = Random.Range(magicalArmourRangeMin + Mathf.RoundToInt(statScalar * magicalArmourRangeMax), magicalArmourRangeMax + Mathf.RoundToInt(statScalar * magicalArmourRangeMax)),
+            strength = Random.Range(strengthRangeMin, strengthRangeMax + Mathf.RoundToInt(statScalar * (strengthRangeMax * 0.75f))),
+            agility = Random.Range(agilityRangeMin, agilityRangeMax + Mathf.RoundToInt(statScalar * agilityRangeMax)),
+            constitution = Random.Range(constitutionRangeMin, constitutionRangeMax + Mathf.RoundToInt(statScalar * constitutionRangeMax)),
+            intellect = Random.Range(intellectRangeMin, intellectRangeMax + Mathf.RoundToInt(statScalar * intellectRangeMax)),
+            physicalArmour = Random.Range(physicalArmourRangeMin, physicalArmourRangeMax + Mathf.RoundToInt(statScalar * physicalArmourRangeMax)),
+            magicalArmour = Random.Range(magicalArmourRangeMin, magicalArmourRangeMax + Mathf.RoundToInt(statScalar * magicalArmourRangeMax)),
 
             itemName = itemName,
             rarity = rarity,

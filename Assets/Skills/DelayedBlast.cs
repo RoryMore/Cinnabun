@@ -230,10 +230,17 @@ public class DelayedBlast : BaseSkill
             //rangeIndicator.DrawIndicator(entityTarget1.transform, 360, 0, explosionRadius);
             foreach (Entity enemy in entityList)
             {
-                if (Vector3.Distance(enemy.transform.position, explosionLocation) < explosionRadius)
+                if (CheckInFlatRange(enemy.transform.position, explosionLocation, explosionRadius))
                 {
-                    enemy.TakeDamage(Mathf.RoundToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * explosionDamageMultiplier), skillData.damageType, casterSelf.CalculateCriticalStrike());
+                    if (CheckInVerticalRange(enemy.transform.position))
+                    {
+                        enemy.TakeDamage(Mathf.RoundToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * explosionDamageMultiplier), skillData.damageType, casterSelf.CalculateCriticalStrike());
+                    }
                 }
+                //if (Vector3.Distance(enemy.transform.position, explosionLocation) < explosionRadius)
+                //{
+                //    enemy.TakeDamage(Mathf.RoundToInt((skillData.baseMagnitude + casterSelf.GetIntellectDamageBonus()) * explosionDamageMultiplier), skillData.damageType, casterSelf.CalculateCriticalStrike());
+                //}
             }
 
         }

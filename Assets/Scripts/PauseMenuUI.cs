@@ -29,7 +29,9 @@ public class PauseMenuUI : MonoBehaviour
         playerUI = GameObject.FindGameObjectsWithTag("PlayerUI"); 
         textSystem = FindObjectOfType<TextSystem>();
         pauseAbility = FindObjectOfType<PauseAbility>();
-        hidePaused();
+
+
+		hidePaused();
     }
 
     public void OnClickResume()
@@ -52,9 +54,17 @@ public class PauseMenuUI : MonoBehaviour
 
     void Update()
     {
-       // VHS();
+		// VHS();
 
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
+		if(textSystem.novelActive == false)
+		{
+			foreach (GameObject g in playerUI)
+			{
+				g.SetActive(false);
+			}
+		}
+
+		if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
         {
             onPaused();
         }
@@ -122,10 +132,7 @@ public class PauseMenuUI : MonoBehaviour
 
     public void hidePaused()
     {
-        if (visualNovel != null)
-        {
-           
-        }
+      
         foreach (GameObject g in pauseObjects)
         {
             g.SetActive(false);

@@ -36,7 +36,7 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         weWon = false;
-        waveCooldownTimer = 0.0f;
+        
         numOfClearedEncounters = 0;
 
         player = GameObject.Find("Player");
@@ -45,20 +45,20 @@ public class EnemyManager : MonoBehaviour
             encounter.enemyManager = this;
         }
 
-        //Start with First basic wave
-        ActivateWave(encounters[0]);
-
         //Mini stop
         if (SceneManager.GetActiveScene().name == "JasmineScene")
         {
             timeBetweenWaves = 10000000000000000000;
+
+            ActivateWave(encounters[0]);
         }
         else
         {
             timeBetweenWaves = 10;
+
+            waveCooldownTimer = timeBetweenWaves;
+            enemyMangerCurrentEncounter = encounters[0];
         }
-
-
     }
 
     private void Awake()

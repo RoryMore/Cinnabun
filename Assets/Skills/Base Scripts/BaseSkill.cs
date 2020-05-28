@@ -97,6 +97,7 @@ public class BaseSkill : MonoBehaviour
 
         material.SetTexture("_ShadowTex", mainCookie.texture);
         material.SetTexture("_FillTex", fillCookie.texture);
+        // example
 
         projector.material = material;
 
@@ -230,6 +231,12 @@ public class BaseSkill : MonoBehaviour
         {
             isAllowedToCast = true;
         }
+    }
+
+    public float GetCalculatedCooldown()
+    {
+        float cd = Mathf.Clamp(skillData.cooldown * (1.0f - cooldownReduction), 0.001f, float.MaxValue);
+        return cd;
     }
 
     /// <summary>
@@ -561,6 +568,19 @@ public class BaseSkill : MonoBehaviour
         castPosition0Y.y = targetPosition.y;
 
         if (Vector3.Distance(castPosition0Y, targetPosition) <= skillData.maxRange)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool CheckInFlatRange(Vector3 castPosition, Vector3 targetPosition, float checkedRange)
+    {
+        Vector3 castPosition0Y = castPosition;
+        castPosition0Y.y = targetPosition.y;
+
+        if (Vector3.Distance(castPosition0Y, targetPosition) <= checkedRange)
         {
             return true;
         }
