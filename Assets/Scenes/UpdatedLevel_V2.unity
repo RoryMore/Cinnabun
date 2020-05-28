@@ -4971,7 +4971,7 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.size
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -4991,21 +4991,36 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[3].text.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[4].text.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[5].text.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[6].text.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[7].text.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[8].text.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[9].text.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
@@ -5073,7 +5088,8 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[2].text.Array.data[0]
-      value: Wow ok, your still alive. That is somthing.
+      value: Nice work Cinnabun. Well keep going we have to hold them back for as
+        long as possible.
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -5105,8 +5121,9 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[3].text.Array.data[0]
-      value: Oh no, you have been hit! You suck. To get your health back you can
-        either rewind your self or when you kill an enemy they will drop blood orbs.
+      value: Dam Cinna, you are getting strong. You might be able to save Chadberry.
+        He was the first on to get teleported to this place so finding him might
+        be difficult.
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -5121,7 +5138,9 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[4].text.Array.data[0]
-      value: 'Wow, Im suprised that you can follow simple instructions.  '
+      value: In ever time line so far you have failed to get here but again you have
+        proven me wrong. Keep getting stronger. You have to be if you ever want to
+        get back to our timeline.
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -5144,7 +5163,7 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[5].CharacterName
-      value: Cinnabun
+      value: Cupcake
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -5154,8 +5173,8 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[5].text.Array.data[0]
-      value: 'Ok, well. I did not think you would be able to kill it. Nice work?
-        I suppose. '
+      value: Wow ok, your still alive. That is somthing. Well keep going we have
+        to hold them back for as long as possible.
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -5182,8 +5201,8 @@ PrefabInstance:
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
       propertyPath: text.Array.data[6].text.Array.data[0]
-      value: Dam that looks so cute. I wish I got that. No matter what matters is
-        that I think you could actaully help which was the main goal.
+      value: No, this cant be. Why, Why havent I gone back yet. I did everything
+        he told me to do. I gave you everything I could WHY AM I STILL HERE.
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -5245,6 +5264,67 @@ PrefabInstance:
         type: 3}
       propertyPath: nameTextColour.b
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[7].CharacterName
+      value: Cupcake
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[7].BackgroundName
+      value: Cafe
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[7].text.Array.data[0]
+      value: There is no hope Cinnabun. We a trapped here. In all the time lines
+        nothing we do can stop them. You are doomed to live this life dying over
+        and over to try reach a goal thats not there.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[8].CharacterName
+      value: Cupcake
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[8].BackgroundName
+      value: Cafe
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[8].text.Array.data[0]
+      value: Wow ok, your still alive. That is somthing. Well keep going we have
+        to hold them back for as long as possible.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[9].CharacterName
+      value: Cupcake
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[9].BackgroundName
+      value: Cafe
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[9].text.Array.data[0]
+      value: Wow ok, your still alive. That is somthing. Well keep going we have
+        to hold them back for as long as possible.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[7].text.Array.data[1]
+      value: 'Chadberry is gone. Hillamayas lied to me about all of this. He knew
+        there was no going back. I thought this time would be different. I...I''m
+        sorry. This is the last time you will hear from me in this timeline. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461440228753782392, guid: 579f3cb34635a9440a2a49db9077f0fb,
+        type: 3}
+      propertyPath: text.Array.data[7].text.Array.data[2]
+      value: Until next time.
       objectReference: {fileID: 0}
     - target: {fileID: 4461440228753782395, guid: 579f3cb34635a9440a2a49db9077f0fb,
         type: 3}
@@ -11182,7 +11262,7 @@ PrefabInstance:
     - target: {fileID: 8168740989053220343, guid: 45d896425b2598a4eaf1eb9a096fdd57,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 545.9
+      value: 564.1
       objectReference: {fileID: 0}
     - target: {fileID: 8168740989053220343, guid: 45d896425b2598a4eaf1eb9a096fdd57,
         type: 3}
@@ -17676,12 +17756,12 @@ PrefabInstance:
     - target: {fileID: 4146340688400059487, guid: da83eb1076ca7b64ebe9e1be1f34c087,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 19.870838
+      value: 12.38
       objectReference: {fileID: 0}
     - target: {fileID: 4146340688400059487, guid: da83eb1076ca7b64ebe9e1be1f34c087,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 455.2
+      value: 444.98
       objectReference: {fileID: 0}
     - target: {fileID: 4146340688400059487, guid: da83eb1076ca7b64ebe9e1be1f34c087,
         type: 3}
