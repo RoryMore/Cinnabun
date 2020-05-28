@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 059f6bcc50c845540a7039bccdc67d1b, type: 3}
-  m_Name: UltraChest1
+  m_Name: RareChest
   m_EditorClassIdentifier: 
   itemType: 1
   armourType: 0
@@ -23,21 +23,21 @@ MonoBehaviour:
   intellect: 0
   physicalArmour: 0
   magicalArmour: 0
-  strengthRangeMin: 8
-  strengthRangeMax: 13
-  agilityRangeMin: 8
-  agilityRangeMax: 13
-  constitutionRangeMin: 8
-  constitutionRangeMax: 13
-  intellectRangeMin: 8
-  intellectRangeMax: 13
-  physicalArmourRangeMin: 9
-  physicalArmourRangeMax: 16
-  magicalArmourRangeMin: 9
-  magicalArmourRangeMax: 16
-  inventorySprite: {fileID: 21300000, guid: 5652f09b9ff4f6f4da238e8bda728968, type: 3}
-  equippedSprite: {fileID: 21300000, guid: fd8284d9e19b3374bbe42375761748c1, type: 3}
+  strengthRangeMin: 6
+  strengthRangeMax: 11
+  agilityRangeMin: 6
+  agilityRangeMax: 11
+  constitutionRangeMin: 6
+  constitutionRangeMax: 11
+  intellectRangeMin: 6
+  intellectRangeMax: 11
+  physicalArmourRangeMin: 7
+  physicalArmourRangeMax: 14
+  magicalArmourRangeMin: 7
+  magicalArmourRangeMax: 14
+  inventorySprite: {fileID: 21300000, guid: e49f0a855213a884f893653f5cca988b, type: 3}
+  equippedSprite: {fileID: 21300000, guid: 9cd5a6e584625824a8ef906552707549, type: 3}
   inventorySpaceX: 3
   inventorySpaceY: 2
-  rarity: 3
-  itemName: short sleeve turtle neck
+  rarity: 2
+  itemName: off-the-shoulder top

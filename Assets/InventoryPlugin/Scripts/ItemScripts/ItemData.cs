@@ -124,7 +124,7 @@ public class ItemData : ScriptableObject
     {
         InventoryItem.ItemInfoBlock itemStatBlock = new InventoryItem.ItemInfoBlock
         {
-            strength = Random.Range(strengthRangeMin + Mathf.RoundToInt(statScalar * strengthRangeMax), strengthRangeMax + Mathf.RoundToInt(statScalar * strengthRangeMax)),
+            strength = Random.Range(strengthRangeMin + Mathf.RoundToInt(statScalar * (strengthRangeMax * 0.75f)), strengthRangeMax + Mathf.RoundToInt(statScalar * (strengthRangeMax * 0.75f))),
             agility = Random.Range(agilityRangeMin + Mathf.RoundToInt(statScalar * agilityRangeMax), agilityRangeMax + Mathf.RoundToInt(statScalar * agilityRangeMax)),
             constitution = Random.Range(constitutionRangeMin + Mathf.RoundToInt(statScalar * constitutionRangeMax), constitutionRangeMax + Mathf.RoundToInt(statScalar * constitutionRangeMax)),
             intellect = Random.Range(intellectRangeMin + Mathf.RoundToInt(statScalar * intellectRangeMax), intellectRangeMax + Mathf.RoundToInt(statScalar * intellectRangeMax)),
