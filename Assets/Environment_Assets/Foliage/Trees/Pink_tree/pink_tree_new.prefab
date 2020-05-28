@@ -59,11 +59,11 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -7328252100812037318, guid: a38a733671b3fc0488fd1b497a9f74cd, type: 3}
-  - {fileID: 2199120704198615478, guid: a38a733671b3fc0488fd1b497a9f74cd, type: 3}
-  - {fileID: -5436373902313760286, guid: a38a733671b3fc0488fd1b497a9f74cd, type: 3}
-  - {fileID: 8804311528272406631, guid: a38a733671b3fc0488fd1b497a9f74cd, type: 3}
-  - {fileID: 8304787819193809666, guid: a38a733671b3fc0488fd1b497a9f74cd, type: 3}
-  - {fileID: 9065566801934704946, guid: a38a733671b3fc0488fd1b497a9f74cd, type: 3}
+  - {fileID: 2100000, guid: de7d8e50551dbc449a0cb7aa9b9785e4, type: 2}
+  - {fileID: 2100000, guid: de7d8e50551dbc449a0cb7aa9b9785e4, type: 2}
+  - {fileID: 2100000, guid: de7d8e50551dbc449a0cb7aa9b9785e4, type: 2}
+  - {fileID: 2100000, guid: de7d8e50551dbc449a0cb7aa9b9785e4, type: 2}
+  - {fileID: 2100000, guid: de7d8e50551dbc449a0cb7aa9b9785e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 7936168403794688109}
   - component: {fileID: 8208635191685714093}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: pink_tree_new
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
