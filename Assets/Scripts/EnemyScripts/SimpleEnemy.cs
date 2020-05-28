@@ -327,7 +327,7 @@ public class SimpleEnemy : EnemyScript
                             {
                                 isAttacking = false;
                                 hasDecided = false;
-
+                                maxRating = 0;
                                 DelayAttack = chosenSkill.skillData.DelayAttack;
                                 
                                 // decide function would go here
