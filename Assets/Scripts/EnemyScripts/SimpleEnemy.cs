@@ -67,8 +67,8 @@ public class SimpleEnemy : EnemyScript
 
     private void Start()
     {
-
-
+        InitialiseAll();
+        currentHP = maxHP;
     }
 
     void Awake()
@@ -83,7 +83,7 @@ public class SimpleEnemy : EnemyScript
         // MAGIC/PHYSICAL ARMOUR:       Every 100 ARMOUR = +25% damage reduction
 
         baseHP = 15;
-        InitialiseAll();
+        
 
 
         //THIS ONLY WORKS WITH CURRENT HIARCHY OF ENCOUNTER, SPAWN POINT AND THEN THE ENEMY!
@@ -93,12 +93,13 @@ public class SimpleEnemy : EnemyScript
 
         nav = GetComponent<NavMeshAgent>();
 
+        InitialiseAll();
 
         //Personal Variables
         enemyCooldown = Random.Range(5.5f, 6.5f);//6.0f;
         initiativeSpeed = 1.5f;
 
-        currentHP = maxHP;
+        //currentHP = maxHP;
 
         textSystem = GetComponent<TextSystem>();
 
@@ -119,8 +120,7 @@ public class SimpleEnemy : EnemyScript
         isActive = true;
 
     }
-
-
+    
 
     void Update()
     {
