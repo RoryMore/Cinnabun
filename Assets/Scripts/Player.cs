@@ -212,11 +212,11 @@ public class Player : Entity
 
                                     if (selectedSkill.currentlyCasting)
                                     {
-                                        if (!delayedBlastCastParticles.activeSelf)
-                                        {
-                                            delayedBlastCastParticles.SetActive(true);
+          //                              if (!delayedBlastCastParticles.activeSelf)
+          //                              {
+          //                                  delayedBlastCastParticles.SetActive(true);
 											
-										}
+										//}
                                         animator.SetFloat("castingPlaybackMultiplier", (animSpeed / (selectedSkill.skillData.windUp * 1.7f)));
                                         animator.SetBool("blastCast", true);
 										
@@ -236,9 +236,9 @@ public class Player : Entity
 
                                     // Deactivate any active cast particles
 									
-                                    delayedBlastCastParticles.SetActive(false);
-                                    rewindCastParticles.SetActive(false);
-                                    teleportCastParticles.SetActive(false);
+                                    //delayedBlastCastParticles.SetActive(false);
+                                    //rewindCastParticles.SetActive(false);
+                                    //teleportCastParticles.SetActive(false);
 
 									
 								}
@@ -250,10 +250,10 @@ public class Player : Entity
 
                                 if (selectedSkill.currentlyCasting)
                                 {
-                                    if (!rewindCastParticles.activeSelf)
-                                    {
-                                        rewindCastParticles.SetActive(true);
-                                    }
+                                    //if (!rewindCastParticles.activeSelf)
+                                    //{
+                                    //    rewindCastParticles.SetActive(true);
+                                    //}
                                     animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
                                     animator.SetBool("skillCast", true);
                                 }
@@ -265,10 +265,10 @@ public class Player : Entity
 
                                 if (selectedSkill.currentlyCasting)
                                 {
-                                    if (!teleportCastParticles.activeSelf)
-                                    {
-                                        teleportCastParticles.SetActive(true);
-                                    }
+                                    //if (!teleportCastParticles.activeSelf)
+                                    //{
+                                    //    teleportCastParticles.SetActive(true);
+                                    //}
                                     animator.SetFloat("castingPlaybackMultiplier", (animSpeed / selectedSkill.skillData.windUp));
                                     animator.SetBool("teleportCast", true);
                                 }
@@ -304,9 +304,9 @@ public class Player : Entity
                                         animator.SetBool("teleportCast", false);
 
                                         // Deactivate any active cast particles
-                                        delayedBlastCastParticles.SetActive(false);
-                                        rewindCastParticles.SetActive(false);
-                                        teleportCastParticles.SetActive(false);
+                                        //delayedBlastCastParticles.SetActive(false);
+                                        //rewindCastParticles.SetActive(false);
+                                        //teleportCastParticles.SetActive(false);
                                     }
                                 }
                                 else
@@ -341,9 +341,9 @@ public class Player : Entity
                                 animator.SetBool("blastCast", false);
 
                                 // Deactivate any active cast particles
-                                delayedBlastCastParticles.SetActive(false);
-                                rewindCastParticles.SetActive(false);
-                                teleportCastParticles.SetActive(false);
+                                //delayedBlastCastParticles.SetActive(false);
+                                //rewindCastParticles.SetActive(false);
+                                //teleportCastParticles.SetActive(false);
                             }
                         }
 

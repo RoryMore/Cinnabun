@@ -613,7 +613,7 @@ public struct RewindPoint
     public int GetStrengthDamageBonus()
     {
         // We get 50% of our strength value as added damage to physical attacks
-        float strengthEffectiveness = 0.4f;
+        float strengthEffectiveness = 0.35f;
         // Should we floor to an int, or round to nearest
         // Floor could be safe enough, for now this function means we get 1 extra damage every 2 strength
         return Mathf.FloorToInt(strength * strengthEffectiveness);

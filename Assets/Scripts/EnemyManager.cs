@@ -36,7 +36,7 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         weWon = false;
-        waveCooldownTimer = 0.0f;
+        
         numOfClearedEncounters = 0;
 
         player = GameObject.Find("Player");
@@ -46,7 +46,7 @@ public class EnemyManager : MonoBehaviour
         }
 
         //Start with First basic wave
-        ActivateWave(encounters[0]);
+        //ActivateWave(encounters[0]);  // I have removed this so an enemy isn't face-sitting the player immediately. Also removes wave0 from being the only starting wave
 
         //Mini stop
         if (SceneManager.GetActiveScene().name == "JasmineScene")
@@ -58,7 +58,9 @@ public class EnemyManager : MonoBehaviour
             timeBetweenWaves = 10;
         }
 
+        waveCooldownTimer = timeBetweenWaves;
 
+        enemyMangerCurrentEncounter = encounters[0];
     }
 
     private void Awake()

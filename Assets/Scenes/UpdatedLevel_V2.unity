@@ -7127,6 +7127,11 @@ PrefabInstance:
       propertyPath: encounters.Array.data[9]
       value: 
       objectReference: {fileID: 1659306101}
+    - target: {fileID: 7169829053648171811, guid: ad4f0e7e9a260aa4b8a9cd61ae95e8d0,
+        type: 3}
+      propertyPath: waveCooldownTimer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad4f0e7e9a260aa4b8a9cd61ae95e8d0, type: 3}
 --- !u!1 &986999613
