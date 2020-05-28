@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class Player : Entity
 {
@@ -28,7 +29,10 @@ public class Player : Entity
         DOINGSKILL
     }
 
-    [Header("State")]
+	Scene currentScene = SceneManager.GetActiveScene();
+	string sceneName;
+
+	[Header("State")]
     public PlayerState playerState;
 
     [Header("Skills & Casting")]
@@ -87,7 +91,11 @@ public class Player : Entity
 		attackSkill = false;
 		bombSkill = false;
 		rewindSkill = false;
-    }
+
+
+		Scene currentScene = SceneManager.GetActiveScene();
+		sceneName = currentScene.name;
+	}
 
     private void Awake()
     {
@@ -544,21 +552,24 @@ public class Player : Entity
     //OVERLOADS
     public override void Death()
     {
-        isDead = true;
-        animator.SetBool("isDead", isDead);
-        nav.destination = transform.position;
+		if (sceneName != "JasmineScene")
+		{
+			isDead = true;
+			animator.SetBool("isDead", isDead);
+			nav.destination = transform.position;
 
-        if (selectedSkill != null)
-        {
-            selectedSkill.DisableProjector();
-            selectedSkill.ResetSkillVars();
-        }
-        //selectedSkill = null;
+			if (selectedSkill != null)
+			{
+				selectedSkill.DisableProjector();
+				selectedSkill.ResetSkillVars();
+			}
+			//selectedSkill = null;
 
-        if (inventory.activeSelf)
-        {
-            inventory.SetActive(false);
-        }
+			if (inventory.activeSelf)
+			{
+				inventory.SetActive(false);
+			}
+		}
     }
 
     public void Revive()
