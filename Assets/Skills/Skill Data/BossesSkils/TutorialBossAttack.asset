@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3110f89451f743848910c598af7ff19f, type: 3}
-  m_Name: Data
+  m_Name: TutorialBossAttack
   m_EditorClassIdentifier: 
   maxRange: 0
   minRange: 0

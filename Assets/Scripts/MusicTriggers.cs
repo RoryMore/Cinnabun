@@ -47,7 +47,7 @@ public class MusicTriggers : MonoBehaviour
 			case SoundStates.WATER:
 				{
 					
-					Water.volume = Mathf.Lerp(Water.volume, 0.8f, Time.unscaledDeltaTime / 0.2f);
+					Water.volume = Mathf.Lerp(Water.volume, 0.8f * SaveManager.GetSettings().sfxVolume, Time.unscaledDeltaTime / 0.2f);
 					Birds.volume = Mathf.Lerp(Birds.volume, 0.0f, Time.unscaledDeltaTime / 0.2f);
 					player.WaterSounds = false;
 					//Water.volume = 0.8f;
@@ -56,7 +56,7 @@ public class MusicTriggers : MonoBehaviour
 			case SoundStates.BIRD:
 				{
 					Water.volume = Mathf.Lerp(Water.volume, 0.0f, Time.unscaledDeltaTime / 1f);
-					Birds.volume = Mathf.Lerp(Birds.volume, 0.8f, Time.unscaledDeltaTime / 0.2f);
+					Birds.volume = Mathf.Lerp(Birds.volume, 0.8f * SaveManager.GetSettings().sfxVolume, Time.unscaledDeltaTime / 0.2f);
 					player.BirdSounds = false;
 					//  Mathf.Lerp(WaterSounds.volume, 7.0f, Time.unscaledDeltaTime / 1f);
 					break;
