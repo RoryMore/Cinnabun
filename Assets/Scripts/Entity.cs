@@ -454,26 +454,26 @@ public struct RewindPoint
         //apply defence Buff
         if (currentBufConditions.Count != 0)
         {
-            foreach (var item in currentBufConditions)
-            {
-                switch (item.conditionType)
-                {
-                    case ConditionBuff.DODGE:
+            //foreach (var item in currentBufConditions)
+            //{
+            //    switch (item.conditionType)
+            //    {
+            //        case ConditionBuff.DODGE:
 
-                        if (Random.Range(0, 100) <= item.Buff)
-                        {
-                            amount = 0;
-                        }
-                        break;
-                    case ConditionBuff.COUNTER:
-                        currentBufConditions.Add(new ConditionBuf(2, ConditionBuff.DAMAGEBUFF, item.Buff));
-                        currentBufConditions.Remove(item);
-                        amount = 0;
-                        break;
-                    default:
-                        break;
-                }
-            }
+            //            if (Random.Range(0, 100) <= item.Buff)
+            //            {
+            //                amount = 0;
+            //            }
+            //            break;
+            //        case ConditionBuff.COUNTER:
+            //            currentBufConditions.Add(new ConditionBuf(2, ConditionBuff.DAMAGEBUFF, item.Buff));
+            //            currentBufConditions.Remove(item);
+            //            amount = 0;
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
         }
 
         int damageTaken = Mathf.Clamp(amount - DamageNegated(amount, damageType), 0, int.MaxValue);
@@ -505,7 +505,7 @@ public struct RewindPoint
     //add buff to entity
     public void AddCurrentBuf(float dur, ConditionBuff effect, float Buff)
     {
-        currentBufConditions.Add(new Entity.ConditionBuf(dur, effect, Buff));
+        //currentBufConditions.Add(new Entity.ConditionBuf(dur, effect, Buff));
     }
     public void UpdateAllConditions()
     {
@@ -530,22 +530,22 @@ public struct RewindPoint
         //update buff condition
         if (currentBufConditions.Count != 0)
         {
-            int conditionIndex = 0;
-            foreach (ConditionBuf condition in currentBufConditions.ToArray())
-            {
-                if (condition.duration > 0)
-                {
+            //int conditionIndex = 0;
+            //foreach (ConditionBuf condition in currentBufConditions.ToArray())
+            //{
+            //    if (condition.duration > 0)
+            //    {
                     
-                    condition.ReduceDuration(Time.deltaTime);
-                    currentBufConditions[conditionIndex] = condition;
+            //        condition.ReduceDuration(Time.deltaTime);
+            //        currentBufConditions[conditionIndex] = condition;
 
-                }
-                else
-                {
-                    currentBufConditions.RemoveAt(conditionIndex);
-                }
-                conditionIndex++;
-            }
+            //    }
+            //    else
+            //    {
+            //        currentBufConditions.RemoveAt(conditionIndex);
+            //    }
+            //    conditionIndex++;
+            //}
         }
 
         RecordRewind();
