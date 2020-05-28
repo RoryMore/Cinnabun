@@ -311,7 +311,8 @@ public class Encounter : MonoBehaviour
 
                 if (respawnTicker <= 0)
                 {
-                    ClearSpawnPoints();
+                    //ClearSpawnPoints();
+                    spawnPoints.Clear();
                     SpawnSpawnPoints();
                     SpawnEnemies();
                     respawnTicker = countdownToNextRespawn;
@@ -362,7 +363,8 @@ public class Encounter : MonoBehaviour
 
                 if (respawnTicker <= 0)
                 {
-                    ClearSpawnPoints();
+                    //ClearSpawnPoints();
+                    spawnPoints.Clear();
                     SpawnSpawnPoints();
                     SpawnEnemies();
                     respawnTicker = countdownToNextRespawn;
