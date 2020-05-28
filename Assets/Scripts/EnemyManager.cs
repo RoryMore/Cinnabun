@@ -36,7 +36,7 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         weWon = false;
-        waveCooldownTimer = 0.0f;
+        
         numOfClearedEncounters = 0;
 
         player = GameObject.Find("Player");
@@ -58,7 +58,7 @@ public class EnemyManager : MonoBehaviour
             timeBetweenWaves = 10;
         }
 
-
+        waveCooldownTimer = timeBetweenWaves;
     }
 
     private void Awake()
