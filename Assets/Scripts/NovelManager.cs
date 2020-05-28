@@ -34,6 +34,7 @@ public class NovelManager : MonoBehaviour
 	public bool Trigger8 = false;
 
 	bool Trigger9 = false;
+	bool Trigger10 = false;
 
 	bool waveSpawn = false;
 	public bool on = false;
@@ -100,21 +101,27 @@ public class NovelManager : MonoBehaviour
 		if (Trigger7 == true)
 		{
 			TurnWalkOff();
-			
-			if (playerUI.healthDown == true)
+
+			if (visualNovel.activeSelf == false)
 			{
-				if (Trigger2 == false)
+
+				if (playerUI.healthDown == true)
 				{
-					//textSystem.novelActive = true;
-					on = true;
-					//TurnWalkOn();
-					PopUpBox();
-					Trigger2 = true;
-					Trigger3 = true;
-					//TurnWalkOn();
-				
+
+					if (Trigger2 == false)
+					{
+						//textSystem.novelActive = true;
+						on = true;
+						//TurnWalkOn();
+						PopUpBox();
+						Trigger2 = true;
+						Trigger3 = true;
+						//TurnWalkOn();
+
+					}
 				}
 			}
+			
 		}
 
 	}
