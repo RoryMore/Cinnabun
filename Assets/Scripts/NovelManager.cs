@@ -16,17 +16,30 @@ public class NovelManager : MonoBehaviour
 
 
 	//Triggers
+	[HideInInspector]
 	public bool Trigger1 = false;
+	[HideInInspector]
 	public bool Trigger2 = false;
+	[HideInInspector]
 	public bool Trigger3 = false;
+	[HideInInspector]
 	public bool Trigger4 = false;
+	[HideInInspector]
 	public bool Trigger5 = false;
+	[HideInInspector]
 	public bool Trigger6 = false;
+	[HideInInspector]
 	public bool Trigger7 = false;
+	[HideInInspector]
 	public bool Trigger8 = false;
 
 	bool waveSpawn = false;
-	bool on = false;
+	public bool on = false;
+	public bool canWalk = true;
+
+	bool story1 = false;
+
+	int wavesCleared;
 
 	// Start is called before the first frame update
 	void Start()
@@ -51,6 +64,8 @@ public class NovelManager : MonoBehaviour
 		UsedInventory();
 		teleport();
 		tutorialDone();
+		waveCheck();
+		Story();
 	}
 
 
@@ -70,7 +85,7 @@ public class NovelManager : MonoBehaviour
 
     void TriggerBox()
     {
-        if (player.triggerBox == true || Input.GetKeyDown(KeyCode.L))
+        if (player.triggerBox == true)
         {
 			
 			PopUpBox();
@@ -107,18 +122,26 @@ public class NovelManager : MonoBehaviour
 		
 		if (on == false)
 		{
-			textSystem.novelActive = false;
+			textSystem.novelActive = true;
+			canWalk = false;
 			
+		}
+
+		if (on == true)
+		{
+			canWalk = true;
 		}
 	}
 
 	void TurnWalkOn()
 	{
 		bool off = false;
+		canWalk = true;
 		if (off == false)
 		{
 			textSystem.novelActive = true;
 			off = true;
+			
 		}
 
 	}
@@ -179,14 +202,18 @@ public class NovelManager : MonoBehaviour
 		}
 	}
 
-	void tutorialDone()
+	void Story()
 	{
-		if (player.tutorialDone == true)
+		if (wavesCleared == 2)
 		{
-			SceneManager.LoadScene(0);
+			if (story1 == false)
+			{
+				PopUpBox();
+
+				story1 = true;
+			}
 		}
 	}
-
 
 
 	void PopUpBox()
@@ -195,5 +222,19 @@ public class NovelManager : MonoBehaviour
 		textSystem.GameStart = true;
 		textSystem.novelActive = false;
 		player.triggerBox = false;
+	}
+
+	void waveCheck()
+	{
+		wavesCleared = enemyManager.numOfClearedEncounters + 1;
+	}
+
+	void tutorialDone()
+	{
+		if (player.tutorialDone == true)
+		{
+			PopUpBox();
+			
+		}
 	}
 }

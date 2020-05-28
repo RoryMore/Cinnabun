@@ -243,6 +243,7 @@ public class PlayerInGameUI : MonoBehaviour
 	public void Inventorybackbutton()
 	{
 		player.inventory.SetActive(false);
+		player.checkInventory = true;
 	}
 
 	void UpdateHealth()
