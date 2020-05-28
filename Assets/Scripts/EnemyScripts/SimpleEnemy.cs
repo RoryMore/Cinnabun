@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -53,6 +54,12 @@ public class SimpleEnemy : EnemyScript
 
     float DelayAttack=0;
     float maxRating = 0;
+
+    [Header("Material")]
+    public Material[] normalEnemyMats;
+    public Material minibossMat;
+    public SkinnedMeshRenderer meshRenderer;
+
     public enum AGRESSION
     {
         AGRESSIVE,
@@ -118,7 +125,6 @@ public class SimpleEnemy : EnemyScript
         chosenSkill = skillList[0];
 
         isActive = true;
-
     }
     
 
@@ -1142,6 +1148,24 @@ public class SimpleEnemy : EnemyScript
           
            gameObject.transform.parent.transform.Translate(diretion/10);
         }  
+    }
+
+    public void RandomiseMaterial()
+    {
+        if (meshRenderer != null)
+        {
+
+            meshRenderer.sharedMaterial = normalEnemyMats[Random.Range(0, normalEnemyMats.Length)];
+
+        }
+    }
+
+    public void SetBossMaterial()
+    {
+        if (meshRenderer != null)
+        {
+            meshRenderer.sharedMaterial = minibossMat;
+        }
     }
 }
 
