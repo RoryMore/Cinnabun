@@ -97,6 +97,7 @@ public class BaseSkill : MonoBehaviour
 
         material.SetTexture("_ShadowTex", mainCookie.texture);
         material.SetTexture("_FillTex", fillCookie.texture);
+        // example
 
         projector.material = material;
 
