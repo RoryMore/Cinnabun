@@ -294,7 +294,7 @@ public class SimpleEnemy : EnemyScript
 //}
 }*/
         // Update turn cooldown
-        Debug.Log(chosenSkill.name); 
+        
         if (isActive)
         {
 
@@ -327,10 +327,9 @@ public class SimpleEnemy : EnemyScript
                             {
                                 isAttacking = false;
                                 hasDecided = false;
-
+                                maxRating = 0;
                                 DelayAttack = chosenSkill.skillData.DelayAttack;
-                                Debug.LogWarning(chosenSkill.skillData.DelayAttack + chosenSkill.skillData.name);
-
+                                
                                 // decide function would go here
                                 Deciding();
                             }
@@ -346,14 +345,13 @@ public class SimpleEnemy : EnemyScript
                             }
                             else
                             {
-                                Debug.LogWarning("attack");
+                               
                                 //stop moving on nav mesh
                                 if (nav.enabled != false)
                                 {
                                     nav.isStopped = true;
                                     goalset = false;
 
-                                    Debug.LogWarning("stop walking");
                                     anim.SetBool("isWalking", false);
                                     nav.enabled = false;
 
@@ -655,7 +653,7 @@ public class SimpleEnemy : EnemyScript
                     //else 
                         if (distance <= (chosenSkill.skillData.maxRange-2) * 0.5f)
                     {
-                        Debug.LogWarning("stop walking");
+                       
                         anim.SetBool("isWalking", false);
                         nav.enabled = false;
                     }
