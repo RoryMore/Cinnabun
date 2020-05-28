@@ -33,6 +33,8 @@ public class NovelManager : MonoBehaviour
 	[HideInInspector]
 	public bool Trigger8 = false;
 
+	bool Trigger9 = false;
+
 	bool waveSpawn = false;
 	public bool on = false;
 	public bool canWalk = true;
@@ -231,10 +233,18 @@ public class NovelManager : MonoBehaviour
 
 	void tutorialDone()
 	{
-		if (player.tutorialDone == true)
+		if (player.tutorialDone == true &&  Trigger9 == false)
 		{
 			PopUpBox();
-			
+			Trigger9 = true;
+		}
+
+		if (player.tutorialDone == true && Trigger9 == true)
+		{
+			if (visualNovel.activeSelf == false)
+			{
+				SceneManager.LoadScene("MainMenu");
+			}
 		}
 	}
 }
