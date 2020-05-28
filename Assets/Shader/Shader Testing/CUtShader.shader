@@ -7,7 +7,7 @@
     }
     SubShader
     {
-        Tags { "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
+        Tags { "Queue" = "Transparent" "RenderType" = "Transparent" "LightMode" = "ForwardBase"}
 		LOD 200
 		
 		
@@ -19,8 +19,7 @@
 		}
 
         CGPROGRAM
-        #pragma surface surf Lambert alpha  
-		 
+        #pragma surface surf Lambert alpha
 		sampler2D _MainTex;
 		 float4 _Color;
 		 
